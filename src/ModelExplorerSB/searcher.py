@@ -15,8 +15,8 @@ from whoosh.qparser import QueryParser
 import whoosh.index as index
 
 
-# The API Key must be updated periodically
-API_KEY = "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"
+# Refresh the key at https://platform.openai.com/account/api-keys
+API_KEY = "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"
 MODEL_ENGINE = "gpt-3.5-turbo"
 if os.path.isfile(cn.ABSTRACT_FILE):
     ABSTRACT_DF = pd.read_csv(cn.ABSTRACT_FILE)

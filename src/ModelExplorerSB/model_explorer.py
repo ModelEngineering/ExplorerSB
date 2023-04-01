@@ -5,9 +5,9 @@ TO DO
 """
 
 
-import src.constants as cn
-import src.util as util
-from src.searcher import Searcher
+import src.ModelExplorerSB.constants as cn
+import src.ModelExplorerSB.util as util
+from src.ModelExplorerSB.searcher import Searcher
 
 import dash
 from dash import html
@@ -25,7 +25,6 @@ import whoosh.index as index
 from whoosh.qparser import QueryParser
 from htmldom import htmldom
 from requests_html import HTMLSession
-from selenium import webdriver
 
 """
 Get the fiels in a run
@@ -295,7 +294,7 @@ def updateAbstractAndDropdown(dropdown1_value, radio_value, search_text):
         else:
             project_id = None
     # Construct the search result
-    if search_result_dct is None:
+    if (search_result_dct is None) or (project_id is None):
         search_result = None
     else:
         search_result = search_result_dct[project_id]
