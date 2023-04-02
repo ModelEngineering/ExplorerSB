@@ -8,7 +8,7 @@ INDEX_DIR = os.path.join(PROJECT_DIR, "indexdir")
 ABSTRACT_FILE = os.path.join(INDEX_DIR, "abstracts.csv")
 LOCAL_DIR = os.path.join(PROJECT_DIR, "local")
 APIKEY_FILE = os.path.join(LOCAL_DIR, "apikey.txt")
-CACHE_DIR = os.path.join(PROJECT_DIR, "cache")
+CACHE_DIR = os.path.join(LOCAL_DIR, "cache")
 
 # URLs
 API_URL = "https://api.biosimulations.org"

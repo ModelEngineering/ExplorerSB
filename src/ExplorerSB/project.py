@@ -8,6 +8,7 @@ from src.ExplorerSB.searcher import Searcher
 from dash import html
 import numpy as np
 import json
+import os
 import pandas as pd
 import requests
 import yaml
@@ -43,10 +44,8 @@ class Project(object):
         self.abstract = ABSTRACT_DF.loc[project_id, cn.ABSTRACT]
         self.citation = ABSTRACT_DF.loc[project_id, cn.CITATION]
         self.title = ABSTRACT_DF.loc[project_id, cn.TITLE]
-        self._file_urls = None
         self.summary_dct = self._getSummaryDct()
-        self.simulation_run = util.indexNested(self.summary_dct,
-              ["simulationRun", "id"])
+        self.runid = util.indexNested(self.summary_dct, ["simulationRun", "id"])
 
     def _getSummaryDct(self):
         """
@@ -85,14 +84,26 @@ class Project(object):
             return self.abstract
 
     # TODO: Finish
-    def getFileUrls(self):
+    def cacheFiles(self):
         """
-        Extracts the URLs of files for the simulation run.
+        Writes the files for this runid to the cache.
 
         Returns
         -------
         list-str (each string is a URL)
         """
-        if self._file_urls is None:
-            pass
-        return self._file_urls
+        url = API_URL + "/files/" + self.runid
+        response = requests.get(url)
+        null = None
+        false = False
+        true = True
+        lst = eval(response.content.decode())
+        urls = [x["url"] for x in lst]
+        # Write the files to cache
+        dir_path = os.path.join(cn.CACHE_DIR, self.runid)
+        if not os.path.isdir(dir_path):
+            os.mkdir(dir_path)
+        for url in urls:
+            util.copyUrlFile(url, dir_path)
+        #
+        return urls

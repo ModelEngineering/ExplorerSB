@@ -6,9 +6,10 @@ import os
 import unittest
 
 
-IGNORE_TEST = False
-IS_PLOT = False
+IGNORE_TEST = True
+IS_PLOT = True
 PROJECT_ID = "iYS854"
+PROJECT_ID = "Yeast-cell-cycle-Irons-J-Theor-Biol-2009"
 
 
 
@@ -23,6 +24,12 @@ class TestProjects(unittest.TestCase):
     def testConstructor(self):
         if IGNORE_TEST:
             return
+        self.assertGreater(len(self.project.summary_dct), 0)
+
+    # TODO: finish
+    def testGetFileUrls(self):
+        # TESTING
+        result = self.project.cacheFiles()
         import pdb; pdb.set_trace()
 
 
