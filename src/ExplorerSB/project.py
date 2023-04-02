@@ -44,8 +44,22 @@ class Project(object):
         self.citation = ABSTRACT_DF.loc[project_id, cn.CITATION]
         self.title = ABSTRACT_DF.loc[project_id, cn.TITLE]
         self._file_urls = None
-        # FIXME: add simulation runs
-        self.simulation_runs = []
+        self.summary_dct = self._getSummaryDct()
+        self.simulation_run = util.indexNested(self.summary_dct,
+              ["simulationRun", "id"])
+
+    def _getSummaryDct(self):
+        """
+        Gets the project summary as a nested dictionary.
+
+        Returns
+        -------
+        dict
+        """
+        summary_url = "%s/projects/%s/summary" % (API_URL, self.project_id)
+        response = requests.get(summary_url)
+        null = None
+        return eval(response.content.decode())
 
     def getAbstractWithHighlights(self, search_result):
         """
@@ -70,16 +84,14 @@ class Project(object):
         else:
             return self.abstract
 
-   @property
-   def file_urls(self):
+    # TODO: Finish
+    def getFileUrls(self):
         """
-        
-        Parameters
-        ----------
-        
+        Extracts the URLs of files for the simulation run.
+
         Returns
         -------
-        list-str
+        list-str (each string is a URL)
         """
         if self._file_urls is None:
             pass
