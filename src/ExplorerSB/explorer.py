@@ -5,9 +5,9 @@ TO DO
 """
 
 
-import src.ModelExplorerSB.constants as cn
-import src.ModelExplorerSB.util as util
-from src.ModelExplorerSB.searcher import Searcher
+import src.ExplorerSB.constants as cn
+import src.ExplorerSB.util as util
+from src.ExplorerSB.searcher import Searcher
 
 import dash
 from dash import html

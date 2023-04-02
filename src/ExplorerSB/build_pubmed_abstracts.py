@@ -6,8 +6,8 @@ Builds a CSV file with the fields:
     abstract
 """
 
-import src.ModelExplorerSB.constants as cn
-from src.ModelExplorerSB.searcher import Searcher
+import src.ExplorerSB.constants as cn
+from src.ExplorerSB.searcher import Searcher
 
 from html.parser import HTMLParser
 import os

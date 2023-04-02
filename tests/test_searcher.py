@@ -1,5 +1,5 @@
-from src.ModelExplorerSB.searcher import Searcher
-import src.ModelExplorerSB.constants as cn
+from src.ExplorerSB.searcher import Searcher
+import src.ExplorerSB.constants as cn
 
 import json
 import os

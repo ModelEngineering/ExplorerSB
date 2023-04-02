@@ -1,8 +1,8 @@
 """Generates content for search and searches content"""
 
 
-import src.ModelExplorerSB.constants as cn
-import src.ModelExplorerSB.util as util
+import src.ExplorerSB.constants as cn
+import src.ExplorerSB.util as util
 
 import openai
 import os
@@ -16,7 +16,7 @@ import whoosh.index as index
 
 
 # Refresh the key at https://platform.openai.com/account/api-keys
-API_KEY = "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"
+APIKEY = util.getApikey()
 MODEL_ENGINE = "gpt-3.5-turbo"
 if os.path.isfile(cn.ABSTRACT_FILE):
     ABSTRACT_DF = pd.read_csv(cn.ABSTRACT_FILE)
@@ -29,7 +29,7 @@ else:
 
 class Searcher(object):
 
-    def __init__(self, api_key=API_KEY):
+    def __init__(self, api_key=APIKEY):
         self.api_key = api_key
         openai.api_key = self.api_key
 

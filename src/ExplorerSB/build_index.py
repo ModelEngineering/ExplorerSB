@@ -4,7 +4,7 @@ from whoosh.index import create_in
 from whoosh.fields import *
 import pandas as pd
 
-import src.ModelExplorerSB.constants as cn
+import src.ExplorerSB.constants as cn
 
 API_URL = "https://api.biosimulations.org"
 PROJECT_URL = "%s/projects" % API_URL

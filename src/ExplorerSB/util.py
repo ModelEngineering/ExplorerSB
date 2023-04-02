@@ -1,5 +1,8 @@
+import src.ExplorerSB.constants as cn
+
 import copy
 import pandas as pd
+
 
 def cleanDF(df):
     """
@@ -77,3 +80,10 @@ def removeAngleBrackets(text):
                 new_text += segment[:pos]
         #
         return new_text
+
+def getApikey():
+    with open(cn.APIKEY_FILE, "r") as fd:
+        apikey = fd.readline()
+    if apikey[-1] == '\n':
+        apikey = apikey[:-1]
+    return apikey

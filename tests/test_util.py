@@ -1,5 +1,5 @@
-import src.ModelExplorerSB.util as util
-import src.ModelExplorerSB.constants as cn
+import src.ExplorerSB.util as util
+import src.ExplorerSB.constants as cn
 
 import os
 import unittest
@@ -34,6 +34,13 @@ class TestFunctions(unittest.TestCase):
         text = "hello <b class=x other=y>this is text</b> goodby"
         new_text = util.removeAngleBrackets(text)
         self.assertEqual(new_text, "hello this is text")
+
+    def testGetApikey(self):
+        if IGNORE_TEST:
+            return
+        apikey = util.getApikey()
+        self.assertTrue(isinstance(apikey, str))
+        self.assertGreater(len(apikey), 20)
 
 
 if __name__ == '__main__':
