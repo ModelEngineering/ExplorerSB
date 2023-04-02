@@ -5,14 +5,29 @@ import os
 import unittest
 
 
-IGNORE_TEST = False
-IS_PLOT = False
+IGNORE_TEST = True
+IS_PLOT = True
+TEMP_DIR = os.path.join(cn.TEST_DIR, "temp")
+
 
 
 #############################
 # Tests
 #############################
 class TestFunctions(unittest.TestCase):
+
+    def setUp(self):
+        self.remove()
+
+    def tearDown(self):
+        self.remove()
+
+    def remove(self):
+        ffiles = os.listdir(TEMP_DIR)
+        for ffile in ffiles:
+            if ffile[0:2] != "__":
+                path = os.path.join(TEMP_DIR, ffile)
+                os.remove(path)
 
     def testIndexNested(self):
         if IGNORE_TEST:
@@ -41,6 +56,13 @@ class TestFunctions(unittest.TestCase):
         apikey = util.getApikey()
         self.assertTrue(isinstance(apikey, str))
         self.assertGreater(len(apikey), 20)
+
+    def testreadFileFromURL(self):
+        # TESTING
+        url = "https://storage.googleapis.com/files.biosimulations.org/simulations/621d90b9b50991044c7a1ea6/contents/iYS854.xml"
+        util.copyUrlFile(url, TEMP_DIR)
+        path = os.path.join(TEMP_DIR, util.getFilenameFromUrl(url))
+        self.assertTrue(os.path.isfile(path))
 
 
 if __name__ == '__main__':

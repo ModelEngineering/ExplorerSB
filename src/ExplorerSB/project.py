@@ -30,7 +30,7 @@ PROJECT_DCT = {n: n if not n in ABSTRACT_DF.index
       else ABSTRACT_DF.loc[n, cn.TITLE] for n in PROJECT_IDS}
 
 
-class SimProject(object):
+class Project(object):
 
     def __init__(self, project_id):
         """

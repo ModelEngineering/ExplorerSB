@@ -1,7 +1,9 @@
 import src.ExplorerSB.constants as cn
 
 import copy
+import os
 import pandas as pd
+import requests
 
 
 def cleanDF(df):
@@ -82,8 +84,48 @@ def removeAngleBrackets(text):
         return new_text
 
 def getApikey():
+    """
+    Gets the API key from a local file.
+
+    Returns
+    -------
+    str
+    """
     with open(cn.APIKEY_FILE, "r") as fd:
         apikey = fd.readline()
     if apikey[-1] == '\n':
         apikey = apikey[:-1]
     return apikey
+
+def getFilenameFromUrl(file_url):
+    """
+    Extracts the file name from the URL.
+
+    Parameters
+    ----------
+    file_url: str
+
+    Returns
+    -------
+    str
+    """
+    splits = file_url.split("/")
+    return splits[-1]
+
+def copyUrlFile(file_url, dir_path):
+    """
+    Copies the file in the URL to the specifie directory.
+
+    Parameters
+    ----------
+    file_url: str
+    dir_path: str (path to output directory)
+
+    Returns
+    -------
+    """
+    r = requests.get(file_url, allow_redirects=True)
+    filename = getFilenameFromUrl(file_url)
+    output_path = os.path.join(dir_path, filename)
+    with open(output_path, 'wb') as fd:
+         fd.write(r.content)
