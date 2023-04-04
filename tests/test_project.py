@@ -26,11 +26,25 @@ class TestProjects(unittest.TestCase):
             return
         self.assertGreater(len(self.project.summary_dct), 0)
 
-    # TODO: finish
     def testGetFileUrls(self):
-        # TESTING
+        if IGNORE_TEST:
+            return
         result = self.project.cacheFiles()
-        import pdb; pdb.set_trace()
+        self.assertGreater(len(result), 0)
+        self.assertTrue(isinstance(result[0], str))
+
+    def testGetProjectIds(self):
+        if IGNORE_TEST:
+            return
+        def test(result):
+            self.assertGreater(len(result), 0)
+            self.assertTrue(isinstance(result[0], str))
+        #
+        self.assertIsNone(self.project.project_ids)
+        test(self.project.getProjectIds())
+        self.assertIsNotNone(self.project.project_ids)
+        test(self.project.getProjectIds())
+    
 
 
 

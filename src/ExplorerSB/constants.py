@@ -4,19 +4,21 @@ import os
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.dirname(PROJECT_DIR)
 TEST_DIR = os.path.join(PROJECT_DIR, "tests")
-INDEX_DIR = os.path.join(PROJECT_DIR, "indexdir")
-ABSTRACT_FILE = os.path.join(INDEX_DIR, "abstracts.csv")
 LOCAL_DIR = os.path.join(PROJECT_DIR, "local")
+INDEX_DIR = os.path.join(LOCAL_DIR, "indexdir")
+ABSTRACT_FILE = os.path.join(INDEX_DIR, "abstracts.csv")
 APIKEY_FILE = os.path.join(LOCAL_DIR, "apikey.txt")
 CACHE_DIR = os.path.join(LOCAL_DIR, "cache")
+CONTEXT_FILE = os.path.join(LOCAL_DIR, "context.csv")
 
 # URLs
 API_URL = "https://api.biosimulations.org"
 PROJECT_URL = "%s/projects" % API_URL
 
-# Fields
+# Fields in context.csv
 ABSTRACT = "abstract"
 CITATION = "citation"
 DOI = "doi"
 ID = "id"
 TITLE = "title"
+RUNID = "runid"

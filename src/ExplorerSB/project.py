@@ -1,4 +1,9 @@
-'''Collects information for a simulation project'''
+'''Encapsulates all information about a previously built project'''
+
+'''
+TO DO:
+1. Should just use "built" information, the file context.csv and the contents of CACHE_DIR.
+'''
 
 
 import src.ExplorerSB.constants as cn
@@ -6,32 +11,26 @@ import src.ExplorerSB.util as util
 from src.ExplorerSB.searcher import Searcher
 
 from dash import html
+from htmldom import htmldom
+from requests_html import HTMLSession
 import numpy as np
 import json
 import os
 import pandas as pd
 import requests
 import yaml
-from htmldom import htmldom
-from requests_html import HTMLSession
+
 
 
 ######## Constants #######
 ABSTRACT_DF = pd.read_csv(cn.ABSTRACT_FILE)
 ABSTRACT_DF.index = ABSTRACT_DF[cn.ID]
 ABSTRACT_DF = util.cleanDF(ABSTRACT_DF)
-API_URL = "https://api.biosimulations.org"
-PROJECT_URL = "%s/projects" % API_URL
-response = requests.get(PROJECT_URL)
-project_descs = response.json()
-PROJECT_DCT = {d["id"]: d for d in project_descs}
-PROJECT_IDS = list(PROJECT_DCT.keys())
-# The value is the abstract
-PROJECT_DCT = {n: n if not n in ABSTRACT_DF.index
-      else ABSTRACT_DF.loc[n, cn.TITLE] for n in PROJECT_IDS}
+
 
 
 class Project(object):
+    project_ids = None
 
     def __init__(self, project_id):
         """
@@ -107,3 +106,15 @@ class Project(object):
             util.copyUrlFile(url, dir_path)
         #
         return urls
+    
+    def listFiles(self)->list[str]:
+        """
+        Lists al files for the project
+
+        Returns:
+            list[str]: list of file paths
+        """
+        path_dir = os.path.join(cn.CACHE_DIR, self.runid)
+        return os.listdir(path_dir)
+
+    
