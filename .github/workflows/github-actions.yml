@@ -17,6 +17,6 @@ jobs:
         pip install -r requirements.txt
     - name: Run tests
       run: |
-        echo "{IS_GITHUB}={1}" >> $GITHUB_ENV
+        IS_GITHUB=1
         echo "value: " + ${{ env.IS_GITHUB}}
         #nosetests tests

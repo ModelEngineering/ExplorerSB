@@ -7,9 +7,8 @@ TODO:
 
 import src.ExplorerSB.constants as cn
 from src.ExplorerSB.searcher import Searcher
-from src.ExplorerSB.project import Project
+from src.ExplorerSB.summary_parser import SummaryParser
 
-from html.parser import HTMLParser
 import os
 import pandas as pd
 import requests
@@ -35,7 +34,7 @@ class ProjectContext(object):
         self.project_id = project_id
         self.summary_parsers = None
         # Context
-        self.project_id = project.project_id
+        self.project_id = project_id
         self.runid = None
         self.abstract = None
         self.citation = None
@@ -49,29 +48,14 @@ class ProjectContext(object):
         Returns:
             dict: key, value for each context entry
         """
-        self.context_dct = {}
-        self.summary_dct, self.summary_str = self._getSummaryDct()
-        # Context created
-        self.doi = self._extractDOI()
-        self.abstract = self._getAbstract()
-        self.citation = self._extractCitation()
-        self.title = self._extractTitle()
+        summary_parser = SummaryParser(self.project_id)
+        summary_parser.do()
+        self.abstract = summary_parser.abstract
+        self.citation = summary_parser.citation
+        self.title = summary_parser.title
+        self.doi = summary_parser.doi
+        #
         self._copyFiles()
-
-    def _getSummaryDct(self)->typing.Tuple[typing.Dict, str]:
-        """
-        Gets the project summary as a nested dictionary.
-
-        Returns
-        -------
-        dict: dictionary representation of the summary
-        str: string representation of the summary
-        """
-        summary_url = "%s/projects/%s/summary" % (API_URL, self.project_id)
-        response = requests.get(summary_url)
-        summary_str = response.decomde()
-        null = None
-        return eval(response.content.decode()), summary_str
     
     @classmethod
     def getProjectIds(cls):
@@ -80,5 +64,7 @@ class ProjectContext(object):
         """
         response = requests.get(cn.PROJECT_URL)
         project_descs = response.json()
+        _, response
         cls.PROJECT_DCT = {d["id"]: d for d in project_descs}
-        cls.PROJECT_IDS = list(PROJECT_DCT.keys())
+        cls.PROJECT_IDS = list(cls.PROJECT_DCT.keys())
+        import pdb; pdb.set_trace()

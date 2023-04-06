@@ -124,7 +124,7 @@ def copyUrlFile(file_url, dir_path):
     Returns
     -------
     """
-    response, _ = readBiosimulations(file_url, allow_redirects=True)
+    response, _, _ = readBiosimulations(file_url, allow_redirects=True)
     filename = getFilenameFromUrl(file_url)
     output_path = os.path.join(dir_path, filename)
     with open(output_path, 'wb') as fd:
@@ -139,7 +139,14 @@ def readBiosimulations(url:str, **kwargs):
         kwargs: keyword arguments passed to requests.get
     Returns:
         requests.models.Response
+        str
+        nested (dict, list, None): json interpreted as a python structure
     """
     response = requests.get(url, **kwargs)
     response_str = response.content.decode()
-    return response, response_str
+    null = None
+    try:
+        response_nst = eval(response_str)
+    except:
+        response_nst = None # Could not interpret the structure
+    return response, response_str, response_nst

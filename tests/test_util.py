@@ -69,9 +69,11 @@ class TestFunctions(unittest.TestCase):
         if IGNORE_TEST:
             return
         url1 = "https://api.biosimulations.org/projects"
-        response, response_str = util.readBiosimulations(url1)
+        response, response_str, response_nst = util.readBiosimulations(url1)
         self.assertTrue(isinstance(response_str, str))
         self.assertTrue("Response" in str(type(response)))
+        self.assertTrue(isinstance(response_nst, list))
+        self.assertTrue(isinstance(response_nst[0], dict))
 
 
 
