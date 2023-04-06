@@ -6,6 +6,8 @@ if "IS_GITHUB" in os.environ.keys():
 else:
     IS_GITHUB = False
 print("IS_GITHUB: %s" % IS_GITHUB)
+print(f"::set-output name=myOutput::{IS_GITHUB}")
+
 
 
 # Directories
