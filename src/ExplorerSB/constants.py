@@ -1,5 +1,13 @@
 import os
 
+# Environment
+if "IS_GITHUB" in os.environ.keys():
+    IS_GITHUB = True
+else:
+    IS_GITHUB = False
+print("IS_GITHUB: %s" % IS_GITHUB)
+
+
 # Directories
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.dirname(PROJECT_DIR)

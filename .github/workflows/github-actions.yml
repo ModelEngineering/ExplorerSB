@@ -13,10 +13,9 @@ jobs:
           AGENT_TOOLSDIRECTORY: /opt/hostedtoolcache
     - name: Install
       run: |
-        #pip install --upgrade pip
-        #pip install -r requirements.txt
+        pip install --upgrade pip
+        pip install -r requirements.txt
     - name: Run tests
       run: |
         IS_GITHUB=1
-        echo "value: " + $IS_GITHUB
-        #nosetests tests
+        nosetests tests
