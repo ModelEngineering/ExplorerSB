@@ -1,5 +1,7 @@
 name: Continous integration
 on: [push]
+env:
+  IS_GITHUB: 1
 jobs:
   Run-tests:
     runs-on: ubuntu-20.04
@@ -17,6 +19,6 @@ jobs:
         pip install -r requirements.txt
     - name: Run tests
       run: |
-        IS_GITHUB=1
+        echo "hello ${{ env.IS_GITHUB }}"
         python src/ExplorerSB/constants.py
         #nosetests tests
