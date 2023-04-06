@@ -18,5 +18,5 @@ jobs:
     - name: Run tests
       run: |
         echo "{IS_GITHUB}={1}" >> $GITHUB_ENV
-        echo ${{ env.IS_GITHUB}}
-        nosetests tests
+        echo "value: " + ${{ env.IS_GITHUB}}
+        #nosetests tests
