@@ -124,8 +124,22 @@ def copyUrlFile(file_url, dir_path):
     Returns
     -------
     """
-    r = requests.get(file_url, allow_redirects=True)
+    response, _ = readBiosimulations(file_url, allow_redirects=True)
     filename = getFilenameFromUrl(file_url)
     output_path = os.path.join(dir_path, filename)
     with open(output_path, 'wb') as fd:
-         fd.write(r.content)
+         fd.write(response.content)
+
+def readBiosimulations(url:str, **kwargs):
+    """
+    Issues REST command to api.biosimulations.org
+
+    Args:
+        url (str):
+        kwargs: keyword arguments passed to requests.get
+    Returns:
+        requests.models.Response
+    """
+    response = requests.get(url, **kwargs)
+    response_str = response.content.decode()
+    return response, response_str

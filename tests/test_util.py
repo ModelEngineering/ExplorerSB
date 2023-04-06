@@ -5,8 +5,8 @@ import os
 import unittest
 
 
-IGNORE_TEST = True
-IS_PLOT = True
+IGNORE_TEST = False
+IS_PLOT = False
 TEMP_DIR = os.path.join(cn.TEST_DIR, "temp")
 
 
@@ -57,12 +57,23 @@ class TestFunctions(unittest.TestCase):
         self.assertTrue(isinstance(apikey, str))
         self.assertGreater(len(apikey), 20)
 
-    def testreadFileFromURL(self):
-        # TESTING
+    def testReadFileFromURL(self):
+        if IGNORE_TEST:
+            return
         url = "https://storage.googleapis.com/files.biosimulations.org/simulations/621d90b9b50991044c7a1ea6/contents/iYS854.xml"
         util.copyUrlFile(url, TEMP_DIR)
         path = os.path.join(TEMP_DIR, util.getFilenameFromUrl(url))
         self.assertTrue(os.path.isfile(path))
+
+    def testReadBiosimulations(self):
+        if IGNORE_TEST:
+            return
+        url1 = "https://api.biosimulations.org/projects"
+        response, response_str = util.readBiosimulations(url1)
+        self.assertTrue(isinstance(response_str, str))
+        self.assertTrue("Response" in str(type(response)))
+
+
 
 
 if __name__ == '__main__':
