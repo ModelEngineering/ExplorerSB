@@ -7,10 +7,7 @@ import src.ExplorerSB.util as util
 import openai
 import os
 import pandas as pd
-import whoosh
-from whoosh.index import create_in
 from whoosh.fields import *
-from whoosh import qparser
 from whoosh.qparser import QueryParser
 import whoosh.index as index
 

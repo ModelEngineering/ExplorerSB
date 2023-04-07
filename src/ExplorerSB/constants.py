@@ -1,12 +1,10 @@
 import os
 
-# Environment
+# Environment: indicates if running in GitHub actions
 if "IS_GITHUB" in os.environ.keys():
     IS_GITHUB = True
 else:
     IS_GITHUB = False
-print("IS_GITHUB: %s" % IS_GITHUB)
-print(f"::set-output name=myOutput::{IS_GITHUB}")
 
 
 
