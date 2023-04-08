@@ -9,7 +9,7 @@ import unittest
 import urllib3
 
 
-IGNORE_TEST = True
+IGNORE_TEST = False
 IS_PLOT = False
 PROJECT_ID = "iYS854"
 PROJECT_ID = "Yeast-cell-cycle-Irons-J-Theor-Biol-2009"
@@ -59,6 +59,8 @@ class TestProject(unittest.TestCase):
         self.assertGreater(len(ffiles), 0)
         self.assertTrue(isinstance(ffiles[0], str))
         for ffile in ffiles:
+            if not os.path.isfile(ffile):
+                print(ffile)
             self.assertTrue(os.path.isfile(ffile))
 
     def testCopyUrlFile(self):
@@ -85,16 +87,14 @@ class TestProject(unittest.TestCase):
             self.assertTrue(is_parsed)
 
     def testCopyUrlFiles(self):
-        #if IGNORE_TEST:
-        #   return
+        if IGNORE_TEST:
+           return
         project = self.getInitializedProject()
         dir_path = self.mkdir(project)
         ffiles = project._copyURLFiles(dir_path=dir_path)
-        import pdb; pdb.set_trace()
         for ffile in ffiles:
             self.assertTrue(os.path.isfile(ffile))
         self.rmdir(dir_path)
-        import pdb; pdb.set_trace()
 
     def testBuildProject(self):
         if IGNORE_TEST:
