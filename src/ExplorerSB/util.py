@@ -83,19 +83,6 @@ def removeAngleBrackets(text):
         #
         return new_text
 
-def getApikey():
-    """
-    Gets the API key from a local file.
-
-    Returns
-    -------
-    str
-    """
-    with open(cn.APIKEY_FILE, "r") as fd:
-        apikey = fd.readline()
-    if apikey[-1] == '\n':
-        apikey = apikey[:-1]
-    return apikey
 
 def getFilenameFromUrl(file_url):
     """
@@ -112,24 +99,6 @@ def getFilenameFromUrl(file_url):
     splits = file_url.split("/")
     return splits[-1]
 
-def copyUrlFile(file_url, dir_path):
-    """
-    Copies the file in the URL to the specifie directory.
-
-    Parameters
-    ----------
-    file_url: str
-    dir_path: str (path to output directory)
-
-    Returns
-    -------
-    """
-    response, _, _ = readBiosimulations(file_url, allow_redirects=True)
-    filename = getFilenameFromUrl(file_url)
-    output_path = os.path.join(dir_path, filename)
-    with open(output_path, 'wb') as fd:
-         fd.write(response.content)
-
 def readBiosimulations(url:str, **kwargs):
     """
     Issues REST command to api.biosimulations.org
@@ -145,6 +114,8 @@ def readBiosimulations(url:str, **kwargs):
     response = requests.get(url, **kwargs)
     response_str = response.content.decode()
     null = None
+    false = False
+    true = True
     try:
         response_nst = eval(response_str)
     except:

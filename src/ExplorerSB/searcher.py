@@ -13,11 +13,11 @@ import whoosh.index as index
 
 
 # Refresh the key at https://platform.openai.com/account/api-keys
-APIKEY = util.getApikey()
 MODEL_ENGINE = "gpt-3.5-turbo"
 if os.path.isfile(cn.ABSTRACT_FILE):
     ABSTRACT_DF = pd.read_csv(cn.ABSTRACT_FILE)
-    ABSTRACT_DF.index = ABSTRACT_DF[cn.ID]
+    #ABSTRACT_DF.index = ABSTRACT_DF[cn.PROJECT_ID]
+    ABSTRACT_DF.index = ABSTRACT_DF["id"]
     ABSTRACT_DF = util.cleanDF(ABSTRACT_DF)
     ABSTRACTS = [v for v in ABSTRACT_DF.index]
 else:
@@ -26,9 +26,24 @@ else:
 
 class Searcher(object):
 
-    def __init__(self, api_key=APIKEY):
-        self.api_key = api_key
-        openai.api_key = self.api_key
+    def __init__(self):
+        openai.api_key = self._getApikey()
+    
+    def _getApikey(self):
+        """
+        Gets the API key from a local file.
+
+        Returns
+        -------
+        str
+        """
+        if cn.IS_GITHUB:
+            return ""
+        with open(cn.APIKEY_FILE, "r") as fd:
+            apikey = fd.readline()
+        if apikey[-1] == '\n':
+            apikey = apikey[:-1]
+        return apikey
 
     def get(self, citation_str):
         """
@@ -42,6 +57,9 @@ class Searcher(object):
         -------
         str
         """
+        if cn.IS_GITHUB:
+            return ""
+        # Not running in github
         query_str = "Summarize the paper %s" % citation_str
         response = openai.ChatCompletion.create(
             model='gpt-3.5-turbo',

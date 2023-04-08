@@ -21,7 +21,7 @@ for idx, row in ABSTRACT_DF.iterrows():
     abstract = row[cn.ABSTRACT]
     citation = row[cn.CITATION]
     content = abstract + "   " + citation
-    project_id = row[cn.ID]
+    project_id = row[cn.PROJECT_ID]
     writer.add_document(title=project_id, path=u"/a", content=content)
 #
 writer.commit()

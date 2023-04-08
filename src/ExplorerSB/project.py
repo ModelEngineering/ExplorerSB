@@ -1,89 +1,131 @@
-'''Encapsulates all information about a previously built project'''
+'''Abstraction for a project. Includes methods both for building project context and accessing it.'''
 
-'''
-TO DO:
-1. Should just use "built" information, the file context.csv and the contents of CACHE_DIR.
-'''
+"""
+Project context:
+    Abstract
+    Citation
+    DOI
+    PROJECT_ID (key)
+    RUNID
+    TITLE
+
+Also writes project files to CACHE_DIR under the RUNID.
+"""
+
+"""
+TO DO
+1. How incorporate building the whoosh index?
+2. Tests.
+
+"""
 
 
 import src.ExplorerSB.constants as cn
-import src.ExplorerSB.util as util
-from src.ExplorerSB.searcher import Searcher
+from src.ExplorerSB.summary_parser import SummaryParser
+from src.ExplorerSB import util
 
-from dash import html
-from htmldom import htmldom
-from requests_html import HTMLSession
-import numpy as np
-import json
 import os
 import pandas as pd
 import requests
-import yaml
-
-
-
-######## Constants #######
-ABSTRACT_DF = pd.read_csv(cn.ABSTRACT_FILE)
-ABSTRACT_DF.index = ABSTRACT_DF[cn.ID]
-ABSTRACT_DF = util.cleanDF(ABSTRACT_DF)
-
+import typing
 
 
 class Project(object):
-    project_ids = None
+    # Class data
+    PROJECT_DCT = None # Used to build context
+    PROJECT_IDS = None # Used to build context
+    PROJECT_DF = None  # Used to exploit existing context
 
-    def __init__(self, project_id):
+    def __init__(self, project_id: str, is_usecontext=True):
         """
-        Parameters
-        ----------
-        project_id: str
+        Creates the context entry for a project.
+
+        Args:
+            project (Project)
         """
+        self.summary_parsers = None
+        # Context. Attribute names must be the same as in cn.CONTEXT_KEYS
+        self.abstract = None
+        self.citation = None
+        self.doi = None
+        self.paper_url = None
         self.project_id = project_id
-        self.desc = PROJECT_DCT[self.project_id]
-        self.abstract = ABSTRACT_DF.loc[project_id, cn.ABSTRACT]
-        self.citation = ABSTRACT_DF.loc[project_id, cn.CITATION]
-        self.title = ABSTRACT_DF.loc[project_id, cn.TITLE]
-        self.summary_dct = self._getSummaryDct()
-        self.runid = util.indexNested(self.summary_dct, ["simulationRun", "id"])
+        self.runid = None
+        self.title = None
+        #
+        if is_usecontext:
+            # Use previously constructed context
+            self.get()
 
-    def _getSummaryDct(self):
+
+    ######################## 
+    # Common Methods
+    ######################## 
+    def getCacheDirectory(self)->str:
         """
-        Gets the project summary as a nested dictionary.
+        Finds the path to the file cache for this project.
 
-        Returns
-        -------
-        dict
+        Returns:
+            file path
         """
-        summary_url = "%s/projects/%s/summary" % (API_URL, self.project_id)
-        response = requests.get(summary_url)
-        null = None
-        return eval(response.content.decode())
+        return os.path.join(cn.CACHE_DIR, self.runid)
 
-    def getAbstractWithHighlights(self, search_result):
+    ######################## 
+    # Context building methods
+    ######################## 
+    def build(self):
         """
-        Creates Markdown text that bolds the highlights from search results.
+        Constructs the context entry for a project
 
-        Parameters
-        ----------
-        search_result: whoosh.search
-
-        Returns
-        -------
-        str (Markdown)
+        Returns:
+            dict: key, value for each context entry
         """
-        if search_result is not None:
-            highlights = search_result.highlights("content")
-            highlights = util.removeAngleBrackets(highlights)
-            splits = highlights.split("...")
-            for split in splits:
-                bold_split = "**" + split + "**"
-                abstract = self.abstract.replace(split, bold_split)
-            return abstract
-        else:
-            return self.abstract
+        # Handle class initialization
+        if self.PROJECT_DCT is None:
+            self.initializeClass()
+        #
+        summary_parser = SummaryParser(self.project_id)
+        summary_parser.do()
+        self.abstract = summary_parser.abstract
+        self.citation = summary_parser.citation
+        self.title = summary_parser.title
+        self.doi = summary_parser.doi
+        self.runid = self._getRunid()
+        #
+        self._copyUrlFiles()
 
-    # TODO: Finish
-    def cacheFiles(self):
+    def _copyURLFiles(self, dir_path:str=cn.CACHE_DIR)->typing.List[str]:
+        """
+        Copies the files to the Cache
+
+        Args:
+            dir_path: path to the parent directory destination directory
+
+        Returns:
+            list of paths copied
+        """
+        copied_paths = []
+        dir_path = self.getCacheDirectory()
+        if not os.path.isdir(dir_path):
+            os.mkdir(dir_path)
+        file_urls = self._getUrlFileList()
+        for file_url in file_urls:
+            path = self._copyUrlFile(file_url, dir_path=dir_path)
+            if path is not None:
+                copied_paths.append(path)
+        return copied_paths
+            
+    def _getRunid(self)->str:
+        dct = self.PROJECT_DCT[self.project_id]
+        return dct["simulationRun"]
+    
+    def _getUrlFileList(self)->typing.List[str]:
+        """
+        Gets the list of file URLs for the project.
+
+        Returns:
+            list of URLs for project files
+        """
         """
         Writes the files for this runid to the cache.
 
@@ -91,30 +133,103 @@ class Project(object):
         -------
         list-str (each string is a URL)
         """
-        url = API_URL + "/files/" + self.runid
-        response = requests.get(url)
-        null = None
-        false = False
-        true = True
-        lst = eval(response.content.decode())
-        urls = [x["url"] for x in lst]
-        # Write the files to cache
-        dir_path = os.path.join(cn.CACHE_DIR, self.runid)
-        if not os.path.isdir(dir_path):
-            os.mkdir(dir_path)
-        for url in urls:
-            util.copyUrlFile(url, dir_path)
-        #
-        return urls
-    
-    def listFiles(self)->list[str]:
+        url = cn.API_URL + "/files/" + self.runid
+        _, _, response_lst = util.readBiosimulations(url)
+        file_urls = [x["url"] for x in response_lst]
+        return file_urls
+
+    @classmethod
+    def initializeClass(cls):
         """
-        Lists al files for the project
+        Initializes values of the project ids
+        """
+        response = requests.get(cn.PROJECT_URL)
+        project_descs = response.json()
+        cls.PROJECT_DCT = {d["id"]: d for d in project_descs}
+        cls.PROJECT_IDS = list(cls.PROJECT_DCT.keys())
+
+    def _copyUrlFile(self, file_url:str, dir_path:str)->str:
+        """
+        Copies the file in the URL to the specified directory for the runid.
+
+        Args:
+            file_url: URL to the file
+            dir_path: Local directory in which file is placed
 
         Returns:
-            list[str]: list of file paths
+            path of copied file
         """
-        path_dir = os.path.join(cn.CACHE_DIR, self.runid)
-        return os.listdir(path_dir)
+        try:
+            response, _, _ = util.readBiosimulations(file_url, allow_redirects=True)
+        except:
+            print("\n**Could not access %s" % file_url)
+            return
+        filename = util.getFilenameFromUrl(file_url)
+        output_path = os.path.join(dir_path, filename)
+        with open(output_path, 'wb') as fd:
+            fd.write(response.content)
+        return output_path
 
-    
+    @classmethod
+    def buildAll(cls, out_path=cn.CONTEXT_FILE, report_interval:int=5, first:int=0, last:int=None):
+        """
+        Builds context for all projects. Writes the result to the context file
+
+        Args:
+            out_path: path for the output csv file
+            report_interval: projects processed between prints
+            first: first project to process
+            last: last project to proces
+        """
+        if cls.PROJECT_DCT is None:
+            cls.initializeClass()
+        # Check for an existing file
+        if os.path.isfile(out_path):
+            context_df = pd.read_csv(out_path, index_col=0)
+            completed_project_ids = list(context_df.index)
+        else:
+            completed_project_ids = []
+        #
+        dct = {k: [] for k in cn.CONTEXT_KEYS}
+        for count, project_id in enumerate(cls.PROJECT_IDS):
+            if project_id in completed_project_ids:
+                continue
+            if count < first:
+                continue
+            if count > last:
+                continue
+            project = Project(project_id)
+            project.build()
+            for key in cn.CONTEXT_KEYS:
+                dct[key] = project.__getattribute__(key)
+            #
+            df = pd.DataFrame(dct)
+            df.set_index(cn.PROJECT_ID)
+            df.to_csv(out_path, index=True)
+            if count % report_interval == 0:
+                print("** Processed %d projects" % count)
+
+    ######################## 
+    # Context access methods
+    ######################## 
+    def get(self)->None:
+        """
+        Initializes previously built context
+        """
+        cls = self.__class__
+        if cls.PROJECT_DF is None:
+            cls.PROJECT_DF = pd.read_csv(cn.CONTEXT_FILE, index_col=0)
+        #
+        for key in cn.CONTEXT_KEYS:
+            self.__setattr__(key, cls.PROJECT_DF.loc[cn.PROJECT_ID, key])
+
+    def getFilePaths(self)->typing.List[str]:
+        """
+        Lists all locally stored files for the project
+        """
+        path_dir = self.getCacheDirectory()
+        return [os.path.join(path_dir, f) for f in os.listdir(path_dir)]
+
+
+if __name__ == '__main__':
+    Project.buildAll()

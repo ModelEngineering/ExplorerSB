@@ -27,7 +27,7 @@ from htmldom import htmldom
 from requests_html import HTMLSession
 
 """
-Get the fiels in a run
+Get the files in a run
 https://api.biosimulations.org/files/<runid>
 # Model for the runid
 https://storage.googleapis.com/files.biosimulations.org/simulations/61fea483f499ccf25faafc4d/contents/model.xml
@@ -39,7 +39,8 @@ https://storage.googleapis.com/files.biosimulations.org/simulations/61fea483f499
 
 ######## Constants #######
 ABSTRACT_DF = pd.read_csv(cn.ABSTRACT_FILE)
-ABSTRACT_DF.index = ABSTRACT_DF[cn.ID]
+#ABSTRACT_DF.index = ABSTRACT_DF[cn.PROJECT_ID]
+ABSTRACT_DF.index = ABSTRACT_DF["id"]
 ABSTRACT_DF = util.cleanDF(ABSTRACT_DF)
 MAX_TITLE_LENGTH = 100
 CHILDREN = 'children'
@@ -210,7 +211,7 @@ app.layout = html.Div([
 ######### CALL BACKS ############
 #-------- HELPERS -----------#
 def calculateAbstractText(project_id, search_result=None):
-    summary_url = "%s/projects/%s/summary" % (API_URL, project_id)
+    summary_url = "%s/projects/%s/summary" % (cn.API_URL, project_id)
     response = requests.get(summary_url)
     null = None
     dct = eval(response.content.decode())
@@ -320,7 +321,7 @@ def updateAbstractAndDropdown(dropdown1_value, radio_value, search_text):
 @app.callback(Output(component_id='Details', component_property= CHILDREN),
               [Input(component_id='dropdown1', component_property= 'value')])
 def getProjectDetails(project_id):
-    summary_url = "%s/projects/%s/summary" % (API_URL, project_id)
+    summary_url = "%s/projects/%s/summary" % (cn.API_URL, project_id)
     response = requests.get(summary_url)
     null = None
     dct = eval(response.content.decode())

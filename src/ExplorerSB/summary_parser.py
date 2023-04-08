@@ -83,20 +83,20 @@ class SummaryParser(object):
         #
         self.summary_response = None
         self.summary_str = None
+        self.summary_dct = None
         #
         self.title = None
         self.abstract = None
         self.citation = None
         self.doi = None
+        self.paper_url = None
 
     def _initialize(self):
         """
         Acquires the summary description from BioSimulations
         """
         url = "%s/projects/%s/summary" % (cn.API_URL, self.project_id)
-        self.summary_response, self.summary_str = util.readBiosimulations(url)
-        null = None
-        self.summary_dct = eval(self.summary_str)
+        self.summary_response, self.summary_str, self.summary_dct = util.readBiosimulations(url)
 
     def do(self): 
         """
@@ -206,6 +206,17 @@ class SummaryParser(object):
         if (len(error_str) > 0) and (not self.is_report):
             raise RuntimeError(error_str)
         return title, error_str
+    
+    def getPaperurl(self)->str:
+        """
+        Extracts the paper URL.
+
+        Returns:
+            str
+        """
+        self.paper_url = util.setValue(util.indexNested(self.summary_dct,
+          ["simulationRun", "metadata", 0, "citations", 0, "uri"]),
+          "No URI found.")
 
     # FIXME: Find abstract inside the summary; handle no DOI
     @staticmethod
