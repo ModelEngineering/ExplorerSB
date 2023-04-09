@@ -98,6 +98,10 @@ class SummaryParser(object):
         url = "%s/projects/%s/summary" % (cn.API_URL, self.project_id)
         self.summary_response, self.summary_str, self.summary_dct = util.readBiosimulations(url)
 
+    def _check(self):
+        if self.summary_str is None:
+            raise RuntimeError("Must call _initialize before running this method.")
+
     def do(self): 
         """
         Build the summary data
@@ -110,6 +114,8 @@ class SummaryParser(object):
         self.citation, error_str = self._extractCitation()
         error_strs += error_str
         self.title, error_str = self._extractTitle(self.citation)
+        error_strs += error_str
+        self.paper_url, error_str = self._getPaperUrl()
         error_strs += error_str
         self.abstract = self._getAbstract(self.doi, self.citation)
         if len(error_str) > 0:
@@ -124,6 +130,7 @@ class SummaryParser(object):
             str: citation
             str: error string
         """
+        self._check()
         def extract(key):
             if key in self.summary_str:
                 pos = self.summary_str.index(key)
@@ -155,6 +162,7 @@ class SummaryParser(object):
             str: citation string
             str: error message if citation is empty
         """
+        self._check()
         citation = None
         is_error = False
         is_metadata = len(self.summary_dct["simulationRun"]["metadata"]) > 0
@@ -182,6 +190,7 @@ class SummaryParser(object):
             str: citation
             str: error message if null
         """
+        self._check()
         text = citation
         is_error = False
         while len(text) > 0:
@@ -207,63 +216,67 @@ class SummaryParser(object):
             raise RuntimeError(error_str)
         return title, error_str
     
-    def getPaperurl(self)->str:
+    def _getPaperUrl(self)->str:
         """
         Extracts the paper URL.
 
         Returns:
             str
         """
-        self.paper_url = util.setValue(util.indexNested(self.summary_dct,
-          ["simulationRun", "metadata", 0, "citations", 0, "uri"]),
-          "No URI found.")
+        self._check()
+        paper_url = util.setValue(util.indexNested(self.summary_dct,
+          ["simulationRun", "metadata", 0, "citations", 0, "uri"]), None)
+        if paper_url is None:
+            return "", "No URI found."
+        else:
+            return paper_url, ""
 
     # FIXME: Find abstract inside the summary; handle no DOI
     @staticmethod
     def _getAbstract(doi: str, citation: str) ->list[str]:
-            """
-            Obtains the abstract for the article. Abstract may be obtained from:
-                (1) inside the summary
-                (2) PubMed
-                (3) ChatGPT
+        """
+        Obtains the abstract for the article. Abstract may be obtained from:
+            (1) inside the summary
+            (2) PubMed
+            (3) ChatGPT
 
-            Args:
-                doi: str
-                citation: str
-            Returns:
-                list-str
-            """
-            def extractPmcids(response):
-                # Find the pmcid
-                parser = GenericParser()
-                parser.init()
-                parser.feed(response.content.decode())
-                pmcids = []
-                if "record" in parser.data_dct.keys():
-                    for record in parser.data_dct["record"]:
-                        if "pmcid" in record.keys():
-                            pmcids.append(record["pmcid"])
-                #
-                return pmcids
+        Args:
+            doi: str
+            citation: str
+        Returns:
+            list-str
+        """
+        def extractPmcids(response):
+            # Find the pmcid
+            parser = GenericParser()
+            parser.init()
+            parser.feed(response.content.decode())
+            pmcids = []
+            if "record" in parser.data_dct.keys():
+                for record in parser.data_dct["record"]:
+                    if "pmcid" in record.keys():
+                        pmcids.append(record["pmcid"])
             #
-            # Convert DOI to PMCID
-            query_url = PMCID_PAT % doi
+            return pmcids
+        #
+        # Convert DOI to PMCID
+        query_url = PMCID_PAT % doi
+        response = requests.get(query_url)
+        pmcids = extractPmcids(response)
+        # If we have a pmcid, retrieve the abstract
+        if len(pmcids) > 0:
+            pmcid = pmcids[0]
+            # Get the abstract from pubmed
+            digits = int(pmcid[3:])
+            query_url = URL_PAT % digits
             response = requests.get(query_url)
-            pmcids = extractPmcids(response)
-            # If we have a pmcid, retrieve the abstract
-            if len(pmcids) > 0:
-                pmcid = pmcids[0]
-                # Get the abstract from pubmed
-                digits = int(pmcid[3:])
-                query_url = URL_PAT % digits
-                response = requests.get(query_url)
-                parser = DataParser()
-                parser.init()
-                parser.feed(response.content.decode())
-                data = sorted(parser.data, key=lambda d: len(d), reverse=True)
-                abstract = data[0]
-            else:
-                searcher = Searcher()
-                abstract = searcher.get(citation)
-                abstract = CHATGPT_HEADER + abstract
-            return abstract
+            parser = DataParser()
+            parser.init()
+            parser.feed(response.content.decode())
+            data = sorted(parser.data, key=lambda d: len(d), reverse=True)
+            abstract = data[0]
+        else:
+            searcher = Searcher()
+            abstract = searcher.get(citation)
+            abstract = CHATGPT_HEADER + abstract
+        return abstract

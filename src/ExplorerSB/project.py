@@ -92,6 +92,7 @@ class Project(object):
         self.citation = summary_parser.citation
         self.title = summary_parser.title
         self.doi = summary_parser.doi
+        self.paper_url = summary_parser.paper_url
         self.runid = self._getRunid()
         #
         self._copyUrlFiles
@@ -210,7 +211,7 @@ class Project(object):
                 dct[key].append(project.__getattribute__(key))
             #
             df = pd.DataFrame(dct)
-            df.set_index(cn.PROJECT_ID)
+            df = df.set_index(cn.PROJECT_ID)
             df.to_csv(out_path, index=True)
             total = count + 1
             if count % report_interval == 0:
@@ -221,24 +222,27 @@ class Project(object):
     ######################## 
     # Context access methods
     ######################## 
-    def initialize(self)->None:
+    def initialize(self, context_file=cn.CONTEXT_FILE)->None:
         """
         Initializes previously built context
         """
         cls = self.__class__
         if cls.PROJECT_DF is None:
-            cls.PROJECT_DF = pd.read_csv(cn.CONTEXT_FILE, index_col=0)
+            cls.PROJECT_DF = pd.read_csv(context_file, index_col=0)
         #
-        for key in cn.CONTEXT_KEYS:
-            self.__setattr__(key, cls.PROJECT_DF.loc[cn.PROJECT_ID, key])
+        cls.PROJECT_IDS = list(cls.PROJECT_DF.index)
+        for idx, key in enumerate(cn.CONTEXT_KEYS):
+            if key != cn.PROJECT_ID:
+                self.__setattr__(key, cls.PROJECT_DF.loc[self.project_id, key])
 
     def getFilePaths(self)->typing.List[str]:
         """
         Lists all locally stored files for the project
         """
         path_dir = self.getCacheDirectory()
-        return [os.path.join(path_dir, f) for f in os.listdir(path_dir)]
-
-
-if __name__ == '__main__':
-    Project.buildAll()
+        ffiles = []
+        for ffile in os.listdir(path_dir):
+            file_path = os.path.join(path_dir, ffile)
+            if os.path.isfile(file_path):
+                ffiles.append(file_path)
+        return ffiles

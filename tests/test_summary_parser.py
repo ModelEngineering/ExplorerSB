@@ -8,8 +8,12 @@ import unittest
 
 IGNORE_TEST = False
 IS_PLOT = False
-PROJECT_IDS = ["Yeast-cell-cycle-irons-J-Theor-Biol-2009",
-               "HSP-synthesis-Szymanska-J-Theor-Biol-2009"]
+PROJECT_IDS = ["Yeast-cell-cycle-Irons-J-Theor-Biol-2009",
+               "EGF-TNFa-signaling-Chaouiya-BMC-Syst-Biol-2013",
+               "Escherichia-coli-core-metabolism-textbook",
+               "Escherichia-coli-resource-allocation-Bulovic-Metab-Eng-2019",
+               "HSP-synthesis-Szymanska-J-Theor-Biol-2009",
+               "Hodgkin-Huxley-cell-Gleeson"]
 TEST_FILES = [os.path.join(cn.TEST_DIR, "summary%d.txt" % n) for n in [1, 2]]
 SUMMARIES = []
 for ffile in TEST_FILES:
@@ -35,6 +39,14 @@ class TestSummaryParser(unittest.TestCase):
             return
         for parser in self.parsers:
             self.assertTrue(isinstance(parser.summary_dct, dict))
+
+    def testGetPaperUrl(self):
+        if IGNORE_TEST:
+            return
+        for parser in self.parsers:
+            paper_url, error_str = parser._getPaperUrl()
+            self.assertGreater(len(paper_url), 0)
+            self.assertEqual(len(error_str), 0)
 
     def testExtractDoi(self):
         if IGNORE_TEST:
@@ -63,15 +75,17 @@ class TestSummaryParser(unittest.TestCase):
     def testGetAbstract(self):
         if IGNORE_TEST:
             return
-        def test(idx):
-            parser = self.parsers[idx]
+        def test(project_id):
+            parser = sp.SummaryParser(project_id, is_report=True)
+            parser._initialize()
             doi, _ = parser._extractDOI()
             citation, _ = parser._extractCitation()
+            parser.do()
             abstract = parser._getAbstract(doi, citation)
             self.assertGreater(len(abstract), 0)
         #
-        test(0)
-        test(1)
+        for project_id in PROJECT_IDS:
+            test(project_id)
 
     def testDo(self):
         if IGNORE_TEST:

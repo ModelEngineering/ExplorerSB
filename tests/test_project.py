@@ -7,12 +7,15 @@ import unittest
 import urllib3
 
 
-IGNORE_TEST = True
+IGNORE_TEST = False
 IS_PLOT = False
 PROJECT_ID = "iYS854"
 PROJECT_ID = "Yeast-cell-cycle-Irons-J-Theor-Biol-2009"
 TEMP_DIR = os.path.dirname(os.path.abspath(__file__))
 CONTEXT_FILE = os.path.join(TEMP_DIR, "context.csv")
+SAVED_CONTEXT_FILE = os.path.join(TEMP_DIR, "saved_context.csv")
+if not os.path.isfile(SAVED_CONTEXT_FILE):
+    _ = pjt.Project.buildContext(out_path=SAVED_CONTEXT_FILE, first=0, last=2)
 
 
 #############################
@@ -47,20 +50,9 @@ class TestProject(unittest.TestCase):
     def testInitializeClass(self):
         if IGNORE_TEST:
             return
-        project = pjt.Project(PROJECT_ID, is_usecontext=False)
+        project = pjt.Project(PROJECT_ID)
         project.initializeClass()
         self.assertIsNotNone(project.PROJECT_DCT)
-
-    def testGetFilePaths(self):
-        if IGNORE_TEST:
-            return
-        ffiles = self.project.getFilePaths()
-        self.assertGreater(len(ffiles), 0)
-        self.assertTrue(isinstance(ffiles[0], str))
-        for ffile in ffiles:
-            if not os.path.isfile(ffile):
-                print(ffile)
-            self.assertTrue(os.path.isfile(ffile))
 
     def testCopyUrlFile(self):
         if IGNORE_TEST:
@@ -99,16 +91,35 @@ class TestProject(unittest.TestCase):
         if IGNORE_TEST:
             return
         self.project.buildProject()
-        import pdb; pdb.set_trace()
         for attribute in cn.CONTEXT_KEYS:
             self.assertIsNotNone(self.project.__getattribute__(attribute))
+        self.assertGreater(len(self.project.abstract), 0)
     
     def testBuildContext(self):
-        #if IGNORE_TEST:
-        #    returna
-        df = pjt.Project.buildContext(out_path=CONTEXT_FILE, report_interval=1, first=0, last=5)
-        import pdb; pdb.set_trace()
+        if IGNORE_TEST:
+            return
+        if os.path.isfile(CONTEXT_FILE):
+            os.remove(CONTEXT_FILE)
+        df = pjt.Project.buildContext(out_path=CONTEXT_FILE, report_interval=1, first=0, last=2)
+        self.assertTrue(os.path.isfile(CONTEXT_FILE))
+        os.remove(CONTEXT_FILE)
+
+    def testInitialize(self):
+        if IGNORE_TEST:
+            return
+        self.project.initialize(context_file=SAVED_CONTEXT_FILE)
+        for key in cn.CONTEXT_KEYS:
+            self.assertIsNotNone(self.project.__getattribute__(key))
+    
+    def testGetFilePaths(self):
+        if IGNORE_TEST:
+            return
+        ffiles = self.project.getFilePaths()
+        self.assertGreater(len(ffiles), 0)
+        self.assertTrue(isinstance(ffiles[0], str))
+        for ffile in ffiles:
+            self.assertTrue(os.path.isfile(ffile))    
 
 
 if __name__ == '__main__':
-  unittest.main()
+    unittest.main()
