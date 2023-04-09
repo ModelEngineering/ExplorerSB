@@ -1,19 +1,18 @@
-import src.ExplorerSB.util as util
 import src.ExplorerSB.constants as cn
 import src.ExplorerSB.project as pjt
 
 import os
-import tempfile
 import shutil
 import unittest
 import urllib3
 
 
-IGNORE_TEST = False
+IGNORE_TEST = True
 IS_PLOT = False
 PROJECT_ID = "iYS854"
 PROJECT_ID = "Yeast-cell-cycle-Irons-J-Theor-Biol-2009"
 TEMP_DIR = os.path.dirname(os.path.abspath(__file__))
+CONTEXT_FILE = os.path.join(TEMP_DIR, "context.csv")
 
 
 #############################
@@ -35,7 +34,7 @@ class TestProject(unittest.TestCase):
         shutil.rmtree(dir_path)
 
     def getInitializedProject(self):
-        project = pjt.Project(PROJECT_ID, is_usecontext=False)
+        project = pjt.Project(PROJECT_ID)
         project.initializeClass()
         project.runid = project._getRunid()
         return project
@@ -91,7 +90,7 @@ class TestProject(unittest.TestCase):
            return
         project = self.getInitializedProject()
         dir_path = self.mkdir(project)
-        ffiles = project._copyURLFiles(dir_path=dir_path)
+        ffiles = project._copyUrlFiles(dir_path=dir_path)
         for ffile in ffiles:
             self.assertTrue(os.path.isfile(ffile))
         self.rmdir(dir_path)
@@ -104,6 +103,12 @@ class TestProject(unittest.TestCase):
         for attribute in cn.CONTEXT_KEYS:
             self.assertIsNotNone(self.project.__getattribute__(attribute))
     
+    def testBuildContext(self):
+        #if IGNORE_TEST:
+        #    returna
+        df = pjt.Project.buildContext(out_path=CONTEXT_FILE, report_interval=1, first=0, last=5)
+        import pdb; pdb.set_trace()
+
 
 if __name__ == '__main__':
   unittest.main()

@@ -31,12 +31,19 @@ import typing
 
 
 class Project(object):
+    # Usage
+    #     Building context
+    #         Project.buildContext()
+    # .   Using existing context
+    #         project = Project(project_id)
+    #         project.initialize()
+    #
     # Class data
     PROJECT_DCT = None # Used to build context
     PROJECT_IDS = None # Used to build context
     PROJECT_DF = None  # Used to exploit existing context
 
-    def __init__(self, project_id: str, is_usecontext=True):
+    def __init__(self, project_id: str):
         """
         Creates the context entry for a project.
 
@@ -52,11 +59,6 @@ class Project(object):
         self.project_id = project_id
         self.runid = None
         self.title = None
-        #
-        if is_usecontext:
-            # Use previously constructed context
-            self.get()
-
 
     ######################## 
     # Common Methods
@@ -73,7 +75,7 @@ class Project(object):
     ######################## 
     # Context building methods
     ######################## 
-    def build(self):
+    def buildProject(self):
         """
         Constructs the context entry for a project
 
@@ -92,9 +94,9 @@ class Project(object):
         self.doi = summary_parser.doi
         self.runid = self._getRunid()
         #
-        self._copyUrlFiles()
+        self._copyUrlFiles
 
-    def _copyURLFiles(self, dir_path:str=cn.CACHE_DIR)->typing.List[str]:
+    def _copyUrlFiles(self, dir_path:str=cn.CACHE_DIR)->typing.List[str]:
         """
         Copies the files to the Cache
 
@@ -171,7 +173,7 @@ class Project(object):
         return output_path
 
     @classmethod
-    def buildAll(cls, out_path=cn.CONTEXT_FILE, report_interval:int=5, first:int=0, last:int=None):
+    def buildContext(cls, out_path=cn.CONTEXT_FILE, report_interval:int=5, first:int=0, last:int=None):
         """
         Builds context for all projects. Writes the result to the context file
 
@@ -180,9 +182,13 @@ class Project(object):
             report_interval: projects processed between prints
             first: first project to process
             last: last project to proces
+        Returns:
+            pd.DataFrame
         """
         if cls.PROJECT_DCT is None:
             cls.initializeClass()
+        if last is None:
+            last = 1e6
         # Check for an existing file
         if os.path.isfile(out_path):
             context_df = pd.read_csv(out_path, index_col=0)
@@ -199,20 +205,23 @@ class Project(object):
             if count > last:
                 continue
             project = Project(project_id)
-            project.build()
+            project.buildProject()
             for key in cn.CONTEXT_KEYS:
-                dct[key] = project.__getattribute__(key)
+                dct[key].append(project.__getattribute__(key))
             #
             df = pd.DataFrame(dct)
             df.set_index(cn.PROJECT_ID)
             df.to_csv(out_path, index=True)
+            total = count + 1
             if count % report_interval == 0:
-                print("** Processed %d projects" % count)
+                print("** Processed %d projects" % total)
+        #
+        return df
 
     ######################## 
     # Context access methods
     ######################## 
-    def get(self)->None:
+    def initialize(self)->None:
         """
         Initializes previously built context
         """
