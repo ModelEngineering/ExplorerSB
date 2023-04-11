@@ -23,10 +23,7 @@ URL_PAT = BASE_PUBMED_URL + QUERY_PAT
 PMCID_BASE_URL = "https://www.ncbi.nlm.nih.gov/pmc/utils/idconv/v1.0/"
 PMCID_PAT = PMCID_BASE_URL + "?tool=my_tool&email=my_email@example.com&ids=%s"
 TEST_DOI = "10.1093/bioinformatics/btaa720"
-CHATGPT_HEADER = """
-Abstract not found in PubMed. The following is obtained from ChatGPT.
 
-"""
 MINIMUM_TITLE_LENGTH = 40
 MAXIMUM_COMMA_IN_TITLE = 3
 
@@ -192,6 +189,8 @@ class SummaryParser(object):
         """
         self._check()
         text = citation
+        if text is None:
+            return "", "Citation not found; cannot calculate title."
         is_error = False
         while len(text) > 0:
             try:
@@ -278,5 +277,5 @@ class SummaryParser(object):
         else:
             searcher = Searcher()
             abstract = searcher.get(citation)
-            abstract = CHATGPT_HEADER + abstract
+            abstract = cn.CHATGPT_HEADER + abstract
         return abstract

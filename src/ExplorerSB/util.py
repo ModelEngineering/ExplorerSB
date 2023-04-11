@@ -112,7 +112,10 @@ def readBiosimulations(url:str, **kwargs):
         nested (dict, list, None): json interpreted as a python structure
     """
     response = requests.get(url, **kwargs)
-    response_str = response.content.decode()
+    try:
+        response_str = response.content.decode()
+    except:
+        response_str = None
     null = None
     false = False
     true = True

@@ -1,3 +1,7 @@
+'''Builds the context and index information needed for the runtime UI.'''
+
+
+
 import os
 
 # Environment: indicates if running in GitHub actions
@@ -32,3 +36,9 @@ PROJECT_ID = "project_id"
 TITLE = "title"
 RUNID = "runid"
 CONTEXT_KEYS = [ABSTRACT, CITATION, DOI, PAPER_URL, PROJECT_ID, RUNID, TITLE]
+
+#
+CHATGPT_HEADER = """
+Abstract not found in PubMed. The following is obtained from ChatGPT.
+
+"""

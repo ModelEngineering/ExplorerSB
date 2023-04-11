@@ -27,7 +27,11 @@ from src.ExplorerSB import util
 import os
 import pandas as pd
 import requests
+import shutil
+import tellurium as te
+import time
 import typing
+import zipfile
 
 
 class Project(object):
@@ -71,6 +75,10 @@ class Project(object):
             file path
         """
         return os.path.join(cn.CACHE_DIR, self.runid)
+    
+    def getOutputsDirectory(self)->str:
+        cache_path = self.getCacheDirectory()
+        return os.path.join(cache_path, "outputs")
 
     ######################## 
     # Context building methods
@@ -140,6 +148,31 @@ class Project(object):
         _, _, response_lst = util.readBiosimulations(url)
         file_urls = [x["url"] for x in response_lst]
         return file_urls
+    
+    def _downloadOutput(self)->str:
+        """
+        Downloads the output file and unzips it.
+
+        Returns:
+            path to the directory
+        """
+        url = "%s/results/%s/download" % (cn.API_URL, self.runid)
+        try:
+            response, _, _ = util.readBiosimulations(url, allow_redirects=True)
+        except Exception as exp:
+            import pdb; pdb.set_trace()
+            print("\n**Could not access %s" % url)
+            return
+        # Unzip the file
+        cache_path = self.getCacheDirectory()
+        output_path = self.getOutputsDirectory()
+        if os.path.isdir(output_path):
+            shutil.rmtree(output_path)
+        zip_path = os.path.join(cache_path, "output.zip")
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            zip_ref.extractall(cache_path)
+        #
+        return output_path
 
     @classmethod
     def initializeClass(cls):
@@ -174,7 +207,7 @@ class Project(object):
         return output_path
 
     @classmethod
-    def buildContext(cls, out_path=cn.CONTEXT_FILE, report_interval:int=5, first:int=0, last:int=None):
+    def buildContext(cls, out_path=cn.CONTEXT_FILE, report_interval:int=5, first:int=0, last:int=None, sleep_sec:float=0):
         """
         Builds context for all projects. Writes the result to the context file
 
@@ -183,6 +216,7 @@ class Project(object):
             report_interval: projects processed between prints
             first: first project to process
             last: last project to proces
+            sleep_sec: delay between each iteration
         Returns:
             pd.DataFrame
         """
@@ -196,6 +230,7 @@ class Project(object):
             completed_project_ids = list(context_df.index)
         else:
             completed_project_ids = []
+            context_df = pd.DataFrame()
         #
         dct = {k: [] for k in cn.CONTEXT_KEYS}
         for count, project_id in enumerate(cls.PROJECT_IDS):
@@ -212,10 +247,17 @@ class Project(object):
             #
             df = pd.DataFrame(dct)
             df = df.set_index(cn.PROJECT_ID)
+            df = pd.concat([context_df, df])
             df.to_csv(out_path, index=True)
+            _ = project._copyUrlFiles()
+            project._downloadOutput()  # Download the output files
             total = count + 1
             if count % report_interval == 0:
                 print("** Processed %d projects" % total)
+            completed_project_ids.append(project_id)
+            if sleep_sec > 0:
+                if cn.CHATGPT_HEADER in project.abstract:
+                    time.sleep(sleep_sec)
         #
         return df
 
@@ -246,3 +288,75 @@ class Project(object):
             if os.path.isfile(file_path):
                 ffiles.append(file_path)
         return ffiles
+    
+    def generateModelAndData(self, is_write=True)->pd.DataFrame:
+        """
+        Runs a simulation if there is an SBML file. Puts the antimony file
+        and the simulation results in the cache: model.ant, simulation_data.csv
+
+        Args:
+            is_write: write the model and data to the cache
+
+        Returns:
+            str: antimony model
+            pd.DataFrame: index is time, columns are species
+        """
+        # See if there is an SBML file
+        paths = self.getFilePaths()
+        sbml_path = None
+        for path in paths:
+            splits = os.path.splitext(path)
+            if splits[1] == ".xml":
+                with open(path, "r") as fd:
+                    lines = fd.readlines()
+                model = "\n".join(lines)
+                if not "sbml" in model:
+                    continue
+                sbml_path = path
+                break
+        #
+        df = None
+        antimony_str = None
+        if sbml_path is not None:
+            print("*** Simulating file %s" % path)
+            try:
+                rr = te.loadSBMLModel(model)
+                antimony_str = rr.getAntimony()
+                import pdb; pdb.set_trace()
+                data = rr.simulate()
+                df = pd.DataFrame(data, columns=data.colnames)
+                df = df.set_index(df["time"])
+                dir_path = self.getCacheDirectory()
+                data_path = os.path.join(dir_path, "simulation_data.csv")
+                antimony_path = os.path.join(dir_path, "model.ant")
+                df.to_csv(data_path, index=True)
+                with open(antimony_path, "w") as fd:
+                    fd.writelines(antimony_str)
+            except:
+                print("*** Could not simulate file %s" % path)
+        return antimony_str, df
+
+    @classmethod 
+    def iterateProjects(cls):
+        """
+        Iterates across all projects.
+
+        Yields:
+            Iterator[Project]: initialized project.
+        """
+        if cls.PROJECT_IDS is None:
+            cls.initializeClass()
+        for project_id in cls.PROJECT_IDS:
+            project = Project(project_id)
+            project.initialize()
+            yield project
+
+    def getH5FilePath(self)->str:
+        """
+        Provide the path to the HDF5 output file.
+
+        Returns:
+            path to file
+        """
+        output_dir = self.getOutputsDirectory()
+        return os.path.join(output_dir, "reports.h5")

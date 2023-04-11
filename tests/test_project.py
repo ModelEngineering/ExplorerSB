@@ -59,9 +59,16 @@ class TestProject(unittest.TestCase):
             return
         project = self.getInitializedProject()
         dir_path = self.mkdir(project)
-        file_url = "https://storage.googleapis.com/files.biosimulations.org/simulations/621d90b9b50991044c7a1ea6/contents/iYS854.xml"
-        file_path = project._copyUrlFile(file_url, dir_path=TEMP_DIR)
-        self.assertTrue(os.path.isfile(file_path))
+        def test(url):
+            file_path = project._copyUrlFile(url, dir_path=TEMP_DIR)
+            self.assertTrue(os.path.isfile(file_path))
+        #
+        urls = [
+                "https://storage.googleapis.com/files.biosimulations.org/simulations/621d90b9b50991044c7a1ea6/contents/iYS854.xml",
+                "https://storage.googleapis.com/files.biosimulations.org/simulations/621d42c187550e369891bbdb/contents/screenshot4.png"
+        ]
+        for url in urls:
+            test(url)
         self.rmdir(dir_path)
     
     def testGetUrlFileList(self):
@@ -107,7 +114,8 @@ class TestProject(unittest.TestCase):
     def testInitialize(self):
         if IGNORE_TEST:
             return
-        self.project.initialize(context_file=SAVED_CONTEXT_FILE)
+        pjt.Project.PROJECT_DF = None
+        self.project.initialize()
         for key in cn.CONTEXT_KEYS:
             self.assertIsNotNone(self.project.__getattribute__(key))
     
@@ -118,7 +126,50 @@ class TestProject(unittest.TestCase):
         self.assertGreater(len(ffiles), 0)
         self.assertTrue(isinstance(ffiles[0], str))
         for ffile in ffiles:
-            self.assertTrue(os.path.isfile(ffile))    
+            self.assertTrue(os.path.isfile(ffile))
+    
+    def testBuildContextBug(self):
+        if IGNORE_TEST:
+            return
+        return
+        if os.path.isfile(CONTEXT_FILE):
+            os.remove(CONTEXT_FILE)
+        df = pjt.Project.buildContext(out_path=CONTEXT_FILE, report_interval=1, first=19, last=None)
+        self.assertTrue(os.path.isfile(CONTEXT_FILE))
+        import pdb; pdb.set_trace()
+        os.remove(CONTEXT_FILE)
+
+    def testGenerateModelAndData(self):
+        if IGNORE_TEST:
+            return
+        return
+        # FIXME
+        result = self.project.generateSimulationData()
+        import pdb; pdb.set_trace()
+    
+    def testIterateProjects(self):
+        if IGNORE_TEST:
+            return
+        projects = [p for p in pjt.Project.iterateProjects()]
+        self.assertGreater(len(projects), 0)
+        self.assertTrue(isinstance(projects[0], pjt.Project))
+    
+    def testDownloadOutput(self):
+        if IGNORE_TEST:
+            return
+        path = self.project._downloadOutput()
+        self.assertTrue(os.path.isdir(path))
+        ffiles = os.listdir(path)
+        self.assertGreater(len(ffiles), 0)
+
+    def testGetH5FilePath(self):
+        if IGNORE_TEST:
+            return
+        path = self.project.getH5FilePath()
+        self.assertTrue(os.path.isfile(path))
+        splits = os.path.splitext(path)
+        self.assertEqual(splits[1], ".h5")
+    
 
 
 if __name__ == '__main__':
