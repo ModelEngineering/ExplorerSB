@@ -24,6 +24,7 @@ import src.ExplorerSB.constants as cn
 from src.ExplorerSB.summary_parser import SummaryParser
 from src.ExplorerSB import util
 
+import h5py
 import os
 import pandas as pd
 import requests
@@ -260,6 +261,68 @@ class Project(object):
                     time.sleep(sleep_sec)
         #
         return df
+
+    def getH5Data(self, is_write:bool=True):
+        """
+        Recursively searches a Biosimulations HDF5 file for datasets.
+
+        Args:
+            is_write: write CSV files for the data 
+        
+        Returns:
+            DataFrame properties
+            name (str): name of the dataset
+            columns (list-str): variables
+        """
+        def findDataframes(item, group_names, dfs):
+            """
+            Recursively searches groups for datasets with sedmlDataSetIds.
+            
+            Args:
+                item: Group/Dataset
+                group_names: list-str
+                dfs: list-DataFrame
+            Returns:
+                list-DataFrame
+            """
+            names = list(group_names)
+            if "Dataset" in str(type(item)):
+                # Encountered a leaf in the container graph
+                if "sedmlDataSetIds" in item.attrs.keys():
+                    index = list(item.attrs["sedmlDataSetIds"])
+                    if len(item.shape) != 2:
+                        print("** Ignored item with strange shape %s" % str(item.shape))
+                        return []
+                    df = pd.DataFrame(item[:,:], index=index)
+                    df = df.T
+                    df.name = cn.NAME_SEPARATOR.join(names)
+                    #import pdb; pdb.set_trace()
+                    dfs.append(df)
+                    return dfs
+            else:
+                new_dfs = []
+                for key in item.keys():
+                    new_names = list(names)
+                    new_names.append(key)
+                    #import pdb; pdb.set_trace()
+                    this_dfs = findDataframes(item[key], new_names, [])
+                    new_dfs.extend(this_dfs)
+                result_dfs = list(dfs)
+                result_dfs.extend(new_dfs)
+                return result_dfs
+        #
+        h5_path = self.getH5FilePath()
+        cache_path = self.getCacheDirectory()
+        with h5py.File(h5_path, 'r') as fd:
+            dfs = findDataframes(fd, [], [])
+        if is_write:
+            for df in dfs:
+                splits = df.name.split(cn.NAME_SEPARATOR)
+                filename = splits[-1] + ".csv"
+                path = os.path.join(cache_path, filename)
+                df.to_csv(path, index=False)
+        return dfs
+
 
     ######################## 
     # Context access methods

@@ -2,6 +2,7 @@ import src.ExplorerSB.constants as cn
 import src.ExplorerSB.project as pjt
 
 import os
+import pandas as pd
 import shutil
 import unittest
 import urllib3
@@ -24,6 +25,8 @@ if not os.path.isfile(SAVED_CONTEXT_FILE):
 class TestProject(unittest.TestCase):
 
     def setUp(self):
+        if IGNORE_TEST:
+           return
         self.project = self.getInitializedProject()
 
     def mkdir(self, project):
@@ -169,7 +172,17 @@ class TestProject(unittest.TestCase):
         self.assertTrue(os.path.isfile(path))
         splits = os.path.splitext(path)
         self.assertEqual(splits[1], ".h5")
-    
+
+    def testGetH5Data(self):
+        if IGNORE_TEST:
+            return
+        project = self.getInitializedProject()
+        dfs = project.getH5Data()
+        self.assertGreater(len(dfs), 0)
+        self.assertTrue(isinstance(dfs[0], pd.DataFrame))
+        path = project.getCacheDirectory()
+        csv_files = [p for p in os.listdir(path) if ".csv" in p]
+        self.assertEqual(len(dfs), len(csv_files))
 
 
 if __name__ == '__main__':
