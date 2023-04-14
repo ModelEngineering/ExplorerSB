@@ -80,6 +80,47 @@ class Project(object):
     def getOutputsDirectory(self)->str:
         cache_path = self.getCacheDirectory()
         return os.path.join(cache_path, "outputs")
+    
+    @classmethod 
+    def iterateProjects(cls, ignored_project_ids:typing.List[str]=None,
+                        first:int=0, last:int=None, report_interval:int=None):
+        """
+        Iterates across all projects.
+
+        Args:
+            ignored_project_ids: project_ids that are ignored
+            first: index of first project
+            last: index of last project
+            report_interval: how often to print progress
+
+        Yields:
+            Iterator[Project]: initialized project.
+        """
+        if cls.PROJECT_IDS is None:
+            cls.initializeClass()
+        if last is None:
+            last = len(cls.PROJECT_IDS) + 1
+        if report_interval is None:
+            report_interval = len(cls.PROJECT_IDS) + 1
+        if ignored_project_ids is None:
+            ignored_project_ids = []
+        excluded_project_ids = list(ignored_project_ids)
+        #
+        for count, project_id in enumerate(cls.PROJECT_IDS):
+            if project_id in excluded_project_ids:
+                continue
+            if count < first:
+                continue
+            if count > last:
+                continue
+            project = Project(project_id)
+            project.initialize()
+            excluded_project_ids.append(project_id)
+            # Check if reporting
+            total = count + 1
+            if count % report_interval == 0:
+                print("***Processed %s (%d)." % (project.project_id, total))
+            yield project
 
     ######################## 
     # Context building methods
@@ -234,14 +275,9 @@ class Project(object):
             context_df = pd.DataFrame()
         #
         dct = {k: [] for k in cn.CONTEXT_KEYS}
-        for count, project_id in enumerate(cls.PROJECT_IDS):
-            if project_id in completed_project_ids:
-                continue
-            if count < first:
-                continue
-            if count > last:
-                continue
-            project = Project(project_id)
+        generator = cls.iterateProjects(ignored_project_ids=completed_project_ids,
+                                         first=first, last=last, report_interval=report_interval)
+        for project in generator:
             project.buildProject()
             for key in cn.CONTEXT_KEYS:
                 dct[key].append(project.__getattribute__(key))
@@ -253,10 +289,6 @@ class Project(object):
             _ = project._copyUrlFiles()
             project._downloadOutput()  # Download the output files
             project.makeReadableModel()
-            total = count + 1
-            if count % report_interval == 0:
-                print("** Processed %d projects" % total)
-            completed_project_ids.append(project_id)
             if sleep_sec > 0:
                 if cn.CHATGPT_HEADER in project.abstract:
                     time.sleep(sleep_sec)
@@ -394,21 +426,6 @@ class Project(object):
                 fd.writelines(model_str)
         #
         return model_str
-
-    @classmethod 
-    def iterateProjects(cls):
-        """
-        Iterates across all projects.
-
-        Yields:
-            Iterator[Project]: initialized project.
-        """
-        if cls.PROJECT_IDS is None:
-            cls.initializeClass()
-        for project_id in cls.PROJECT_IDS:
-            project = Project(project_id)
-            project.initialize()
-            yield project
 
     def getH5FilePath(self)->str:
         """

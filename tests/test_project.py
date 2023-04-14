@@ -162,9 +162,22 @@ class TestProject(unittest.TestCase):
     def testIterateProjects(self):
         if IGNORE_TEST:
             return
+        def test(projects, expected_length):
+            self.assertEqual(len(projects), expected_length)
+            if len(projects) > 0:
+                self.assertTrue(isinstance(projects[0], pjt.Project))
+        #
         projects = [p for p in pjt.Project.iterateProjects()]
-        self.assertGreater(len(projects), 0)
-        self.assertTrue(isinstance(projects[0], pjt.Project))
+        test(projects, len(pjt.Project.PROJECT_IDS))
+        #
+        projects = [p for p in pjt.Project.iterateProjects(first=2, last=2)]
+        test(projects, 1)
+        #
+        ignored_project_ids = pjt.Project.PROJECT_IDS
+        projects = [p for p in 
+                    pjt.Project.iterateProjects(ignored_project_ids=ignored_project_ids)]
+        test(projects, 0)
+
     
     def testDownloadOutput(self):
         if IGNORE_TEST:

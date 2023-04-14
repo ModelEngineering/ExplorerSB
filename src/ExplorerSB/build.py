@@ -31,7 +31,7 @@ if False:
             _ = project.getH5Data()
 
 # Build readable model files (part of buildContext)
-generator = Project.iterateProjects()
+generator = Project.iterateProjects(report_interval=1)
 for project in generator:
     project.makeReadableModel()
 
