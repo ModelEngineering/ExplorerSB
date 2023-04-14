@@ -14,15 +14,26 @@ import pandas as pd
 if False:
     context_df = Project.buildContext(report_interval=1, sleep_sec=2.0)
 
-# Get the output files
+    generator = Project.iterateProjects()
+    for project in generator:
+        print("** Processing %s" % project.project_id)
+        try:
+            path = project._downloadOutput()
+        except:
+            print('*** Could not download project %s' % project.project_id)
+
+    # Create CSV files for h5 files
+    generator = Project.iterateProjects()
+    for project in generator:
+        print("** Creating CSV files for %s" % project.project_id)
+        path = project.getH5FilePath()
+        if path is not None:
+            _ = project.getH5Data()
+
+# Build readable model files (part of buildContext)
 generator = Project.iterateProjects()
 for project in generator:
-    print("** Processing %s" % project.project_id)
-    try:
-        path = project._downloadOutput()
-    except:
-        print('*** Could not download project %s' % project.project_id)
-
+    project.makeReadableModel()
 
 if False:
     # Build the whoosh

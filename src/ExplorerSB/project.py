@@ -252,6 +252,7 @@ class Project(object):
             df.to_csv(out_path, index=True)
             _ = project._copyUrlFiles()
             project._downloadOutput()  # Download the output files
+            project.makeReadableModel()
             total = count + 1
             if count % report_interval == 0:
                 print("** Processed %d projects" % total)
@@ -352,17 +353,16 @@ class Project(object):
                 ffiles.append(file_path)
         return ffiles
     
-    def generateModelAndData(self, is_write=True)->pd.DataFrame:
+    def makeReadableModel(self, is_write=True)->str:
         """
-        Runs a simulation if there is an SBML file. Puts the antimony file
-        and the simulation results in the cache: model.ant, simulation_data.csv
+        Converts a model to human readable text, if possible. Currently only
+        supports conversion to Antimony. 
 
         Args:
             is_write: write the model and data to the cache
 
         Returns:
             str: antimony model
-            pd.DataFrame: index is time, columns are species
         """
         # See if there is an SBML file
         paths = self.getFilePaths()
@@ -377,27 +377,23 @@ class Project(object):
                     continue
                 sbml_path = path
                 break
-        #
-        df = None
-        antimony_str = None
+        # Construct the model string
+        model_str = None
         if sbml_path is not None:
-            print("*** Simulating file %s" % path)
             try:
-                rr = te.loadSBMLModel(model)
-                antimony_str = rr.getAntimony()
-                import pdb; pdb.set_trace()
-                data = rr.simulate()
-                df = pd.DataFrame(data, columns=data.colnames)
-                df = df.set_index(df["time"])
-                dir_path = self.getCacheDirectory()
-                data_path = os.path.join(dir_path, "simulation_data.csv")
-                antimony_path = os.path.join(dir_path, "model.ant")
-                df.to_csv(data_path, index=True)
-                with open(antimony_path, "w") as fd:
-                    fd.writelines(antimony_str)
+                rr = te.loadSBMLModel(sbml_path)
+                model_str = rr.getAntimony()
             except:
-                print("*** Could not simulate file %s" % path)
-        return antimony_str, df
+                pass
+        # Write the file
+        if is_write and (model_str is not None):
+            path = self.getCacheDirectory()
+            filename = "%s.ant" % self.project_id
+            path = os.path.join(path, filename)
+            with open(path, 'w') as fd:
+                fd.writelines(model_str)
+        #
+        return model_str
 
     @classmethod 
     def iterateProjects(cls):
@@ -419,7 +415,19 @@ class Project(object):
         Provide the path to the HDF5 output file.
 
         Returns:
-            path to file
+            path to file (or None)
         """
-        output_dir = self.getOutputsDirectory()
-        return os.path.join(output_dir, "reports.h5")
+        outdir = self.getOutputsDirectory()
+        ffiles = [f for f in os.listdir(outdir) if ".h5" in f]
+        if len(ffiles) == 0:
+            print("*** No output directory for project %" % self.project_id)
+            ffile = None
+        elif len(ffiles) > 1:
+            print ("*** Multile h5 files. Using the first.")
+            ffile = ffiles[0]
+        else:
+            ffile = ffiles[0]
+        if ffile is not None:
+            return os.path.join(outdir, ffile)
+        else:
+            return None

@@ -39,10 +39,13 @@ class TestProject(unittest.TestCase):
     def rmdir(self, dir_path):
         shutil.rmtree(dir_path)
 
-    def getInitializedProject(self):
-        project = pjt.Project(PROJECT_ID)
-        project.initializeClass()
-        project.runid = project._getRunid()
+    def getInitializedProject(self, project_id=PROJECT_ID):
+        if "project" in dir(self):
+            project = self.project
+        else:
+            project = pjt.Project(project_id)
+            project.initializeClass()
+            project.runid = project._getRunid()
         return project
 
     def testConstructor(self):
@@ -142,13 +145,19 @@ class TestProject(unittest.TestCase):
         import pdb; pdb.set_trace()
         os.remove(CONTEXT_FILE)
 
-    def testGenerateModelAndData(self):
+    def testMakeReadableModel(self):
         if IGNORE_TEST:
             return
-        return
-        # FIXME
-        result = self.project.generateSimulationData()
-        import pdb; pdb.set_trace()
+        project = self.getInitializedProject()
+        model_str = project.makeReadableModel(is_write=True)
+        cache_path = project.getCacheDirectory()
+        # Initial tests
+        self.assertIsNotNone(model_str)
+        self.assertGreater(len(model_str), 0)
+        # See if the file was written
+        ffiles = os.listdir(cache_path)
+        is_good = any([f for f in ffiles if ".ant" in f])
+        self.assertTrue(is_good)
     
     def testIterateProjects(self):
         if IGNORE_TEST:
@@ -160,7 +169,8 @@ class TestProject(unittest.TestCase):
     def testDownloadOutput(self):
         if IGNORE_TEST:
             return
-        path = self.project._downloadOutput()
+        project = self.getInitializedProject()
+        path = project._downloadOutput()
         self.assertTrue(os.path.isdir(path))
         ffiles = os.listdir(path)
         self.assertGreater(len(ffiles), 0)
@@ -168,7 +178,8 @@ class TestProject(unittest.TestCase):
     def testGetH5FilePath(self):
         if IGNORE_TEST:
             return
-        path = self.project.getH5FilePath()
+        project = self.getInitializedProject()
+        path = project.getH5FilePath()
         self.assertTrue(os.path.isfile(path))
         splits = os.path.splitext(path)
         self.assertEqual(splits[1], ".h5")
