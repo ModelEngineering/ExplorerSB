@@ -119,7 +119,7 @@ class Project(object):
             # Check if reporting
             total = count + 1
             if count % report_interval == 0:
-                print("***Processed %s (%d)." % (project.project_id, total))
+                print("***Processed project id=%s, runid=%s (%d)." % (project.project_id, project.runid, total))
             yield project
 
     ######################## 
@@ -202,7 +202,6 @@ class Project(object):
         try:
             response, _, _ = util.readBiosimulations(url, allow_redirects=True)
         except Exception as exp:
-            import pdb; pdb.set_trace()
             print("\n**Could not access %s" % url)
             return
         # Unzip the file
@@ -329,7 +328,6 @@ class Project(object):
                     df = pd.DataFrame(item[:,:], index=index)
                     df = df.T
                     df.name = cn.NAME_SEPARATOR.join(names)
-                    #import pdb; pdb.set_trace()
                     dfs.append(df)
                     return dfs
             else:
@@ -337,7 +335,6 @@ class Project(object):
                 for key in item.keys():
                     new_names = list(names)
                     new_names.append(key)
-                    #import pdb; pdb.set_trace()
                     this_dfs = findDataframes(item[key], new_names, [])
                     new_dfs.extend(this_dfs)
                 result_dfs = list(dfs)
@@ -385,45 +382,55 @@ class Project(object):
                 ffiles.append(file_path)
         return ffiles
     
-    def makeReadableModel(self, is_write=True)->str:
+    def makeReadableModel(self, is_write:bool=True, is_replace:bool=False)->str:
         """
         Converts a model to human readable text, if possible. Currently only
         supports conversion to Antimony. 
 
         Args:
             is_write: write the model and data to the cache
+            is_replace: replace the file if it exiss
 
         Returns:
             str: antimony model
         """
-        # See if there is an SBML file
-        paths = self.getFilePaths()
-        sbml_path = None
-        for path in paths:
-            splits = os.path.splitext(path)
-            if splits[1] == ".xml":
-                with open(path, "r") as fd:
-                    lines = fd.readlines()
-                model = "\n".join(lines)
-                if not "sbml" in model:
-                    continue
-                sbml_path = path
-                break
-        # Construct the model string
-        model_str = None
-        if sbml_path is not None:
-            try:
-                rr = te.loadSBMLModel(sbml_path)
-                model_str = rr.getAntimony()
-            except:
-                pass
-        # Write the file
-        if is_write and (model_str is not None):
-            path = self.getCacheDirectory()
-            filename = "%s.ant" % self.project_id
-            path = os.path.join(path, filename)
-            with open(path, 'w') as fd:
-                fd.writelines(model_str)
+        # Get path to the antimony file
+        ant_path = self.getCacheDirectory()
+        filename = "%s.ant" % self.project_id
+        ant_path = os.path.join(ant_path, filename)
+        # Handle existing Antimony file
+        if (not is_replace) and (os.path.isfile(ant_path)):
+            with open(ant_path, "r") as fd:
+                lines = fd.readlines()
+            model_str = "".join(lines)
+        # No existing Antimony file
+        else:
+            # See if there is an SBML file
+            paths = self.getFilePaths()
+            sbml_path = None
+            for path in paths:
+                splits = os.path.splitext(path)
+                if (splits[1] == ".xml") and ("manifest" not in path):
+                    with open(path, "r") as fd:
+                        lines = fd.readlines()
+                    model = "\n".join(lines)
+                    if not "sbml" in model:
+                        continue
+                    sbml_path = path
+                    break
+            # Construct the model string
+            model_str = None
+            if sbml_path is not None:
+                try:
+                    rr = te.loadSBMLModel(sbml_path)
+                    model_str = rr.getAntimony()
+                except:
+                    pass
+            # Write the file
+            if is_write and (model_str is not None):
+                
+                with open(ant_path, 'w') as fd:
+                    fd.writelines(model_str)
         #
         return model_str
 

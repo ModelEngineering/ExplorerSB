@@ -48,6 +48,8 @@ class TestSearcher(unittest.TestCase):
     def testGetApikey(self):
         if IGNORE_TEST:
             return
+        if cn.IS_GITHUB:
+            return
         apikey = self.searcher._getApikey()
         self.assertTrue(isinstance(apikey, str))
         self.assertGreater(len(apikey), 20)

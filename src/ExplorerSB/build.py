@@ -9,6 +9,7 @@ import pandas as pd
 from whoosh.index import create_in
 from whoosh.fields import *
 import pandas as pd
+import zipfile
 
 # Get the project context
 if False:
@@ -30,10 +31,25 @@ if False:
         if path is not None:
             _ = project.getH5Data()
 
+    # Get the omex files and unzip them
+    generator = Project.iterateProjects(report_interval=1, first=0)
+    url_pat = "https://api.biosimulations.org/runs/%s/download"
+    for project in generator:
+        url = url_pat % project.runid
+        cache_path = project.getCacheDirectory()
+        project._copyUrlFile(url, cache_path)
+        file_path = os.path.join(cache_path, "download")
+        new_file_path = os.path.join(cache_path, "download.zip")
+        os.rename(file_path, new_file_path)
+        with zipfile.ZipFile(new_file_path, 'r') as zip_ref:
+            zip_ref.extractall(cache_path)
+
 # Build readable model files (part of buildContext)
-generator = Project.iterateProjects(report_interval=1)
+generator = Project.iterateProjects(report_interval=1, first=34)
 for project in generator:
-    project.makeReadableModel()
+    project.makeReadableModel(is_replace=True)
+
+    
 
 if False:
     # Build the whoosh
