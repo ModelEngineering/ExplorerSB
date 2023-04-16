@@ -144,26 +144,24 @@ class Project(object):
         self.doi = summary_parser.doi
         self.paper_url = summary_parser.paper_url
         self.runid = self._getRunid()
-        #
-        self._copyUrlFiles
 
-    def _copyUrlFiles(self, dir_path:str=cn.CACHE_DIR)->typing.List[str]:
+    def _copyUrlFiles(self, cache_dir:str=cn.CACHE_DIR)->typing.List[str]:
         """
         Copies the files to the Cache
 
         Args:
-            dir_path: path to the parent directory destination directory
+            cache_dir: path to the parent directory destination directory
 
         Returns:
             list of paths copied
         """
         copied_paths = []
-        dir_path = self.getCacheDirectory()
-        if not os.path.isdir(dir_path):
-            os.mkdir(dir_path)
+        cache_dir = self.getCacheDirectory()
+        if not os.path.isdir(cache_dir):
+            os.mkdir(cache_dir)
         file_urls = self._getUrlFileList()
         for file_url in file_urls:
-            path = self._copyUrlFile(file_url, dir_path=dir_path)
+            path = self._copyUrlFile(file_url, cache_dir)
             if path is not None:
                 copied_paths.append(path)
         return copied_paths
@@ -248,12 +246,14 @@ class Project(object):
         return output_path
 
     @classmethod
-    def buildContext(cls, out_path=cn.CONTEXT_FILE, report_interval:int=5, first:int=0, last:int=None, sleep_sec:float=0):
+    def buildContext(cls, context_file_path:str=cn.CONTEXT_FILE, cache_dir:str=cn.CACHE_DIR, report_interval:int=5,
+                     first:int=0, last:int=None, sleep_sec:float=0):
         """
         Builds context for all projects. Writes the result to the context file
 
         Args:
-            out_path: path for the output csv file
+            context_file_path: path for the output csv file
+            cache_path: path to where local files are cached
             report_interval: projects processed between prints
             first: first project to process
             last: last project to proces
@@ -266,8 +266,8 @@ class Project(object):
         if last is None:
             last = 1e6
         # Check for an existing file
-        if os.path.isfile(out_path):
-            context_df = pd.read_csv(out_path, index_col=0)
+        if os.path.isfile(context_file_path):
+            context_df = pd.read_csv(context_file_path, index_col=0)
             completed_project_ids = list(context_df.index)
         else:
             completed_project_ids = []
@@ -284,7 +284,7 @@ class Project(object):
             df = pd.DataFrame(dct)
             df = df.set_index(cn.PROJECT_ID)
             df = pd.concat([context_df, df])
-            df.to_csv(out_path, index=True)
+            df.to_csv(context_file_path, index=True)
             _ = project._copyUrlFiles()
             project._downloadOutput()  # Download the output files
             project.makeReadableModel()

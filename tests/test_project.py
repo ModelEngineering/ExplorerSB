@@ -12,11 +12,13 @@ IGNORE_TEST = False
 IS_PLOT = False
 PROJECT_ID = "iYS854"
 PROJECT_ID = "Yeast-cell-cycle-Irons-J-Theor-Biol-2009"
-TEMP_DIR = os.path.dirname(os.path.abspath(__file__))
-CONTEXT_FILE = os.path.join(TEMP_DIR, "context.csv")
-SAVED_CONTEXT_FILE = os.path.join(TEMP_DIR, "saved_context.csv")
-if not os.path.isfile(SAVED_CONTEXT_FILE):
-    _ = pjt.Project.buildContext(out_path=SAVED_CONTEXT_FILE, first=0, last=2)
+CACHE_DIR = os.path.dirname(os.path.abspath(__file__))
+CACHE_DIR = os.path.join(CACHE_DIR, "test_cache")
+#if os.path.isdir(CACHE_DIR):
+#    shutil.rmtree(CACHE_DIR)
+#os.mkdir(CACHE_DIRself.cache_dir)
+CONTEXT_FILE = os.path.join(CACHE_DIR, "context.csv")
+SAVED_CONTEXT_FILE = os.path.join(CACHE_DIR, "saved_context.csv")
 
 
 #############################
@@ -24,13 +26,32 @@ if not os.path.isfile(SAVED_CONTEXT_FILE):
 #############################
 class TestProject(unittest.TestCase):
 
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.cache_dir = CACHE_DIR
+        if os.path.isdir(cls.cache_dir):
+            shutil.rmtree(cls.cache_dir)
+        os.mkdir(cls.cache_dir)
+        #
+        if not os.path.isfile(SAVED_CONTEXT_FILE):
+            _ = pjt.Project.buildContext(context_file_path=SAVED_CONTEXT_FILE, cache_dir=CACHE_DIR, first=0, last=2)
+        #
+        return super().setUpClass() 
+
+    
+    @classmethod
+    def tearDownClass(cls):
+        if os.path.isdir(cls.cache_dir):
+            shutil.rmtree(cls.cache_dir)
+        return super().tearDownClass() 
+
     def setUp(self):
         if IGNORE_TEST:
            return
         self.project = self.getInitializedProject()
 
     def mkdir(self, project):
-        dir_path = os.path.join(TEMP_DIR, project.runid)
+        dir_path = os.path.join(self.cache_dir, project.runid)
         if os.path.isdir(dir_path):
             shutil.rmtree(dir_path)
         os.mkdir(dir_path)
@@ -66,7 +87,7 @@ class TestProject(unittest.TestCase):
         project = self.getInitializedProject()
         dir_path = self.mkdir(project)
         def test(url):
-            file_path = project._copyUrlFile(url, dir_path=TEMP_DIR)
+            file_path = project._copyUrlFile(url, self.cache_dir)
             self.assertTrue(os.path.isfile(file_path))
         #
         urls = [
@@ -94,11 +115,11 @@ class TestProject(unittest.TestCase):
         if IGNORE_TEST:
            return
         project = self.getInitializedProject()
-        dir_path = self.mkdir(project)
-        ffiles = project._copyUrlFiles(dir_path=dir_path)
+        cache_dir = self.mkdir(project)
+        ffiles = project._copyUrlFiles(cache_dir=cache_dir)
         for ffile in ffiles:
             self.assertTrue(os.path.isfile(ffile))
-        self.rmdir(dir_path)
+        self.rmdir(cache_dir)
 
     def testBuildProject(self):
         if IGNORE_TEST:
@@ -113,7 +134,7 @@ class TestProject(unittest.TestCase):
             return
         if os.path.isfile(CONTEXT_FILE):
             os.remove(CONTEXT_FILE)
-        df = pjt.Project.buildContext(out_path=CONTEXT_FILE, report_interval=1, first=0, last=2)
+        df = pjt.Project.buildContext(context_file_path=CONTEXT_FILE, report_interval=1, first=0, last=2)
         self.assertTrue(os.path.isfile(CONTEXT_FILE))
         os.remove(CONTEXT_FILE)
 
@@ -140,7 +161,7 @@ class TestProject(unittest.TestCase):
         return
         if os.path.isfile(CONTEXT_FILE):
             os.remove(CONTEXT_FILE)
-        df = pjt.Project.buildContext(out_path=CONTEXT_FILE, report_interval=1, first=19, last=None)
+        df = pjt.Project.buildContext(context_file_path=CONTEXT_FILE, report_interval=1, first=19, last=None)
         self.assertTrue(os.path.isfile(CONTEXT_FILE))
         import pdb; pdb.set_trace()
         os.remove(CONTEXT_FILE)
