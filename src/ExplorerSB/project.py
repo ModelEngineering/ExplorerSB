@@ -77,9 +77,10 @@ class Project(object):
         """
         return os.path.join(cn.CACHE_DIR, self.runid)
     
-    def getOutputsDirectory(self)->str:
-        cache_path = self.getCacheDirectory()
-        return os.path.join(cache_path, "outputs")
+    def getOutputsDirectory(self, cache_dir:str=None)->str:
+        if cache_dir is None:
+            cache_dir = self.getCacheDirectory()
+        return os.path.join(cache_dir, "outputs")
     
     @classmethod 
     def iterateProjects(cls, ignored_project_ids:typing.List[str]=None,
@@ -189,9 +190,12 @@ class Project(object):
         file_urls = [x["url"] for x in response_lst]
         return file_urls
     
-    def _downloadOutput(self)->str:
+    def _downloadOutput(self, cache_dir:str=None)->str:
         """
         Downloads the output file and unzips it.
+
+        Args:
+            cache_dir: path to cache directory
 
         Returns:
             path to the directory
@@ -203,15 +207,16 @@ class Project(object):
             print("\n**Could not access %s" % url)
             return
         # Unzip the file
-        cache_path = self.getCacheDirectory()
-        output_path = self.getOutputsDirectory()
-        if os.path.isdir(output_path):
-            shutil.rmtree(output_path)
-        zip_path = os.path.join(cache_path, "output.zip")
+        if cache_dir is None:
+            cache_dir = self.getCacheDirectory()
+        output_dir = self.getOutputsDirectory(cache_dir=cache_dir)
+        if os.path.isdir(output_dir):
+            shutil.rmtree(output_dir)
+        zip_path = os.path.join(cache_dir, "output.zip")
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-            zip_ref.extractall(cache_path)
+            zip_ref.extractall(cache_dir)
         #
-        return output_path
+        return output_dir
 
     @classmethod
     def initializeClass(cls):
