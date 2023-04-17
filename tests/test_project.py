@@ -10,13 +10,10 @@ import urllib3
 
 IGNORE_TEST = False
 IS_PLOT = False
-PROJECT_ID = "iYS854"
 PROJECT_ID = "Yeast-cell-cycle-Irons-J-Theor-Biol-2009"
+PROJECT_RUNID = "61fea483f499ccf25faafc4d"
 CACHE_DIR = os.path.dirname(os.path.abspath(__file__))
 CACHE_DIR = os.path.join(CACHE_DIR, "test_cache")
-#if os.path.isdir(CACHE_DIR):
-#    shutil.rmtree(CACHE_DIR)
-#os.mkdir(CACHE_DIRself.cache_dir)
 CONTEXT_FILE = os.path.join(CACHE_DIR, "context.csv")
 SAVED_CONTEXT_FILE = os.path.join(CACHE_DIR, "saved_context.csv")
 
@@ -32,6 +29,8 @@ class TestProject(unittest.TestCase):
         if os.path.isdir(cls.cache_dir):
             shutil.rmtree(cls.cache_dir)
         os.mkdir(cls.cache_dir)
+        project_cache_dir = os.path.join(cls.cache_dir, PROJECT_RUNID)
+        os.mkdir(project_cache_dir)
         #
         if not os.path.isfile(SAVED_CONTEXT_FILE):
             _ = pjt.Project.buildContext(context_file_path=SAVED_CONTEXT_FILE, cache_dir=CACHE_DIR, first=0, last=2)
@@ -171,7 +170,7 @@ class TestProject(unittest.TestCase):
             return
         project = self.getInitializedProject()
         model_str = project.makeReadableModel(is_write=True)
-        cache_path = project.getCacheDirectory()
+        cache_path = project.getProjectCacheDirectory()
         # Initial tests
         self.assertIsNotNone(model_str)
         self.assertGreater(len(model_str), 0)
@@ -225,7 +224,7 @@ class TestProject(unittest.TestCase):
         dfs = project.getH5Data()
         self.assertGreater(len(dfs), 0)
         self.assertTrue(isinstance(dfs[0], pd.DataFrame))
-        path = project.getCacheDirectory()
+        path = project.getProjectCacheDirectory()
         csv_files = [p for p in os.listdir(path) if ".csv" in p]
         self.assertEqual(len(dfs), len(csv_files))
 

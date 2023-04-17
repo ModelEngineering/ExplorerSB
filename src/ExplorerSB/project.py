@@ -8,15 +8,9 @@ Project context:
     PROJECT_ID (key)
     RUNID
     TITLE
+    PAPER_URL
 
 Also writes project files to CACHE_DIR under the RUNID.
-"""
-
-"""
-TO DO
-1. How incorporate building the whoosh index?
-2. Tests.
-
 """
 
 
@@ -60,27 +54,35 @@ class Project(object):
         self.abstract = None
         self.citation = None
         self.doi = None
-        self.paper_url = None
         self.project_id = project_id
+        self.paper_url = None
         self.runid = None
         self.title = None
 
     ######################## 
     # Common Methods
     ######################## 
-    def getCacheDirectory(self)->str:
+    def getProjectCacheDirectory(self, cache_dir:str=None, is_create:bool=False)->str:
         """
         Finds the path to the file cache for this project.
+
+        Args:
+            cache_dir: directory for caching files
+            is_create: create the directory if it does not exist
 
         Returns:
             file path
         """
-        return os.path.join(cn.CACHE_DIR, self.runid)
+        if cache_dir is None:
+            cache_dir = cn.CACHE_DIR
+        project_cache_dir = os.path.join(cache_dir, self.runid)
+        if (not os.path.isdir(project_cache_dir)) and (is_create):
+            os.mkdir(project_cache_dir)
+        return project_cache_dir
     
     def getOutputsDirectory(self, cache_dir:str=None)->str:
-        if cache_dir is None:
-            cache_dir = self.getCacheDirectory()
-        return os.path.join(cache_dir, "outputs")
+        project_cache_dir = self.getProjectCacheDirectory(cache_dir=cache_dir)
+        return os.path.join(project_cache_dir, "outputs")
     
     @classmethod 
     def iterateProjects(cls, ignored_project_ids:typing.List[str]=None,
@@ -120,7 +122,8 @@ class Project(object):
             # Check if reporting
             total = count + 1
             if count % report_interval == 0:
-                print("***Processed project id=%s, runid=%s (%d)." % (project.project_id, project.runid, total))
+                print("***Processed project id=%s, runid=%s (%d)."
+                       % (project.project_id, project.runid, total))
             yield project
 
     ######################## 
@@ -157,12 +160,12 @@ class Project(object):
             list of paths copied
         """
         copied_paths = []
-        cache_dir = self.getCacheDirectory()
-        if not os.path.isdir(cache_dir):
+        project_cache_dir = self.getProjectCacheDirectory()
+        if not os.path.isdir(project_cache_dir):
             os.mkdir(cache_dir)
         file_urls = self._getUrlFileList()
         for file_url in file_urls:
-            path = self._copyUrlFile(file_url, cache_dir)
+            path = self._copyUrlFile(file_url, project_cache_dir)
             if path is not None:
                 copied_paths.append(path)
         return copied_paths
@@ -200,21 +203,17 @@ class Project(object):
         Returns:
             path to the directory
         """
+        LOCAL_FILENAME = "output.zip"
         url = "%s/results/%s/download" % (cn.API_URL, self.runid)
-        try:
-            response, _, _ = util.readBiosimulations(url, allow_redirects=True)
-        except Exception as exp:
-            print("\n**Could not access %s" % url)
-            return
+        project_cache_dir = self.getProjectCacheDirectory(cache_dir=cache_dir)
+        _ = self._copyUrlFile(url, project_cache_dir, local_filename=LOCAL_FILENAME)
+        zip_path = os.path.join(project_cache_dir, LOCAL_FILENAME)
         # Unzip the file
-        if cache_dir is None:
-            cache_dir = self.getCacheDirectory()
         output_dir = self.getOutputsDirectory(cache_dir=cache_dir)
         if os.path.isdir(output_dir):
             shutil.rmtree(output_dir)
-        zip_path = os.path.join(cache_dir, "output.zip")
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-            zip_ref.extractall(cache_dir)
+            zip_ref.extractall(project_cache_dir)
         #
         return output_dir
 
@@ -228,7 +227,7 @@ class Project(object):
         cls.PROJECT_DCT = {d["id"]: d for d in project_descs}
         cls.PROJECT_IDS = list(cls.PROJECT_DCT.keys())
 
-    def _copyUrlFile(self, file_url:str, dir_path:str)->str:
+    def _copyUrlFile(self, file_url:str, dir_path:str, local_filename:str=None)->str:
         """
         Copies the file in the URL to the specified directory for the runid.
 
@@ -244,10 +243,15 @@ class Project(object):
         except:
             print("\n**Could not access %s" % file_url)
             return
-        filename = util.getFilenameFromUrl(file_url)
-        output_path = os.path.join(dir_path, filename)
-        with open(output_path, 'wb') as fd:
-            fd.write(response.content)
+        if local_filename is None:
+            local_filename = util.getFilenameFromUrl(file_url)
+        output_path = os.path.join(dir_path, local_filename)
+        try:
+            with open(output_path, 'wb') as fd:
+                fd.write(response.content)
+        except Exception as exp:
+            import pdb; pdb.set_trace()
+            pass
         return output_path
 
     @classmethod
@@ -286,13 +290,16 @@ class Project(object):
             for key in cn.CONTEXT_KEYS:
                 dct[key].append(project.__getattribute__(key))
             #
+            project_cache_dir = project.getProjectCacheDirectory(cache_dir=cache_dir)
+            if not os.path.isdir(project_cache_dir):
+                os.mkdir(project_cache_dir)
             df = pd.DataFrame(dct)
             df = df.set_index(cn.PROJECT_ID)
             df = pd.concat([context_df, df])
             df.to_csv(context_file_path, index=True)
             _ = project._copyUrlFiles()
-            project._downloadOutput()  # Download the output files
-            project.makeReadableModel()
+            project._downloadOutput(cache_dir=cache_dir)  # Download the output files
+            project.makeReadableModel(cache_dir=cache_dir)
             if sleep_sec > 0:
                 if cn.CHATGPT_HEADER in project.abstract:
                     time.sleep(sleep_sec)
@@ -347,7 +354,7 @@ class Project(object):
                 return result_dfs
         #
         h5_path = self.getH5FilePath()
-        cache_path = self.getCacheDirectory()
+        cache_path = self.getProjectCacheDirectory()
         with h5py.File(h5_path, 'r') as fd:
             dfs = findDataframes(fd, [], [])
         if is_write:
@@ -379,7 +386,7 @@ class Project(object):
         """
         Lists all locally stored files for the project
         """
-        path_dir = self.getCacheDirectory()
+        path_dir = self.getProjectCacheDirectory()
         ffiles = []
         for ffile in os.listdir(path_dir):
             file_path = os.path.join(path_dir, ffile)
@@ -387,7 +394,7 @@ class Project(object):
                 ffiles.append(file_path)
         return ffiles
     
-    def makeReadableModel(self, is_write:bool=True, is_replace:bool=False)->str:
+    def makeReadableModel(self, is_write:bool=True, cache_dir:str=None, is_replace:bool=False)->str:
         """
         Converts a model to human readable text, if possible. Currently only
         supports conversion to Antimony. 
@@ -395,14 +402,15 @@ class Project(object):
         Args:
             is_write: write the model and data to the cache
             is_replace: replace the file if it exiss
+            cache_dir: where cached files are
 
         Returns:
             str: antimony model
         """
         # Get path to the antimony file
-        ant_path = self.getCacheDirectory()
+        project_cache_dir = self.getProjectCacheDirectory(cache_dir=cache_dir)
         filename = "%s.ant" % self.project_id
-        ant_path = os.path.join(ant_path, filename)
+        ant_path = os.path.join(project_cache_dir, filename)
         # Handle existing Antimony file
         if (not is_replace) and (os.path.isfile(ant_path)):
             with open(ant_path, "r") as fd:
