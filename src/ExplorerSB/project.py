@@ -162,7 +162,7 @@ class Project(object):
         copied_paths = []
         project_cache_dir = self.getProjectCacheDirectory()
         if not os.path.isdir(project_cache_dir):
-            os.mkdir(cache_dir)
+            os.mkdir(project_cache_dir)
         file_urls = self._getUrlFileList()
         for file_url in file_urls:
             path = self._copyUrlFile(file_url, project_cache_dir)
