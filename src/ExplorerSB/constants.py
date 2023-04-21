@@ -15,13 +15,14 @@ else:
 # Directories
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.dirname(PROJECT_DIR)
-TEST_DIR = os.path.join(PROJECT_DIR, "tests")
 LOCAL_DIR = os.path.join(PROJECT_DIR, "local")
-INDEX_DIR = os.path.join(LOCAL_DIR, "indexdir")
+TEST_DIR = os.path.join(PROJECT_DIR, "tests")
+DATA_DIR = os.path.join(PROJECT_DIR, "data")
+INDEX_DIR = os.path.join(DATA_DIR, "indexdir")
 ABSTRACT_FILE = os.path.join(INDEX_DIR, "abstracts.csv")
 APIKEY_FILE = os.path.join(LOCAL_DIR, "apikey.txt")
-CACHE_DIR = os.path.join(LOCAL_DIR, "cache")
-CONTEXT_FILE = os.path.join(LOCAL_DIR, "context.csv")
+CACHE_DIR = os.path.join(DATA_DIR, "cache")
+CONTEXT_FILE = os.path.join(DATA_DIR, "context.csv")
 
 # URLs
 API_URL = "https://api.biosimulations.org"

@@ -19,3 +19,6 @@ The off-line application builds local files with information from Biosimulations
 is used in the on-line application. This information includes: information about the published article (e.g., title, full citation, abstract),
 the quantiative model (e.g., SBML), and data produced from the model (as CSV files).
 The on-line application uses this information to allow users to find articles, view models, and explore model predictions.
+
+# Data
+Data created by the off-line application are in the ``data`` folder. The zip files have the directory structure ``local/cache/<runid>``.

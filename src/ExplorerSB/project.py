@@ -38,9 +38,10 @@ class Project(object):
     #         project.initialize()
     #
     # Class data
-    PROJECT_DCT = None # Used to build context
     PROJECT_IDS = None # Used to build context
     PROJECT_DF = None  # Used to exploit existing context
+    # Only instantiated on project build
+    PROJECT_DCT = None
 
     def __init__(self, project_id: str):
         """
@@ -369,15 +370,19 @@ class Project(object):
     ######################## 
     # Context access methods
     ######################## 
+    @classmethod
+    def initializeClassVariables(cls):
+        if cls.PROJECT_DF is None:
+            cls.PROJECT_DF = pd.read_csv(cn.CONTEXT_FILE, index_col=0)
+        cls.PROJECT_IDS = list(cls.PROJECT_DF.index)
+
     def initialize(self, context_file=cn.CONTEXT_FILE)->None:
         """
         Initializes previously built context
         """
         cls = self.__class__
-        if cls.PROJECT_DF is None:
-            cls.PROJECT_DF = pd.read_csv(context_file, index_col=0)
+        cls.initializeClassVariables()
         #
-        cls.PROJECT_IDS = list(cls.PROJECT_DF.index)
         for idx, key in enumerate(cn.CONTEXT_KEYS):
             if key != cn.PROJECT_ID:
                 self.__setattr__(key, cls.PROJECT_DF.loc[self.project_id, key])

@@ -86,8 +86,8 @@ class Searcher(object):
         """
         if ABSTRACT_DF is None:
             raise ValueError("Must build %s before doing search" % cn.ABSTRACT_FILE)
-        schema = Schema(title=TEXT(stored=True), path=ID(stored=True),
-              content=TEXT(stored=True))
+        #schema = Schema(title=TEXT(stored=True), path=ID(stored=True),
+        #      content=TEXT(stored=True))
         indexer = index.open_dir(index_dir)
         this_searcher = indexer.searcher()
         parser = QueryParser("content", indexer.schema)
