@@ -29,10 +29,9 @@ from htmldom import htmldom
 from requests_html import HTMLSession
 
 # Initialize Project.PROJECT_ID, Project.PROJECT_DF
-Project.initializeClassVariables()
+Project.initializeFromContext()
 ######## Constants #######
 MAX_TITLE_LENGTH = 100
-CHILDREN = 'children'
 PROJECT_IDS = [p for p in Project.PROJECT_DF.index if isinstance(Project.PROJECT_DF.loc[p, cn.TITLE], str)]
 PROJECT_DF = Project.PROJECT_DF.loc[PROJECT_IDS]
 # Eliminate leading and trailing blanks
@@ -48,8 +47,12 @@ ID_RAD = "project ID"
 SEARCHER = Searcher()
 
 # Element identifiers
+EID_ARTICLE_COUNT = "article-count"
 EID_DATA = "data"
 EID_SEARCH = "search"
+
+# Properties
+PRP_CHILDREN = "children"
 
 # Initializations
 project_dropdowns = [dict(label=v, value=v) for v in PROJECT_TITLES]
@@ -64,8 +67,8 @@ def makeDropdown(options=project_dropdowns, value=PROJECT_TITLES[0]):
     return dcc.Dropdown(id='dropdown1', options=options, value=value)
 #
 dropdown_comp = makeDropdown()
-project_col = dbc.Col(dbc.Row([
-      html.H2("Select (%d)" % len(PROJECT_IDS), id='article_count'),
+title_col = dbc.Col(dbc.Row([
+      html.H2("Selected Titles (%d)" % len(PROJECT_IDS), id=EID_ARTICLE_COUNT),
       html.P(children=dropdown_comp, id='dropdown_loc'),
       # Used to handle callbacks without output
       html.P(id=PLACEHOLDER)
@@ -88,7 +91,7 @@ abstract_col = dbc.Col(dbc.Row([
       ])
 )
 model_summary_col = dbc.Col([
-      html.H2("Model Elements"),
+      html.H2("Model"),
       dcc.Markdown( 'Glu: [Glucose](https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:17234)',
             id = 'Model Summary',
             style={'whiteSpace': 'pre-line',
@@ -115,7 +118,7 @@ download_col = dbc.Col(
 
 app.layout = html.Div([
     dbc.Row([
-          html.H1("ExplorerSB"),
+          html.H1("ExplorerSB - Exploring Models in Systems Biology"),
           html.Br(),
         ],
         justify="center", align="center"
@@ -127,7 +130,7 @@ app.layout = html.Div([
           ]
     ),
     dbc.Row([
-          project_col,
+          title_col,
           abstract_col,
           html.Div(style={"margin-left": "25px"}),
           ],
@@ -151,9 +154,8 @@ def calculateAbstractText(project_id, search_result):
     if project_id is None:
         return ""
     #
-    abstract = PROJECT_DF.loc[project_id, cn.ABSTRACT]
-    citation = PROJECT_DF.loc[project_id, cn.CITATION]
-    paper_url = PROJECT_DF.loc[project_id, cn.PAPER_URL]
+    project = Project(project_id)
+    project.initialize()
     # Augment the abstract if there is a search result
     if search_result is not None:
         highlights = search_result.highlights("content")
@@ -161,15 +163,15 @@ def calculateAbstractText(project_id, search_result):
         splits = highlights.split("...")
         for split in splits:
             bold_split = "**" + split + "**"
-            abstract = abstract.replace(split, bold_split)
+            abstract = project.abstract.replace(split, bold_split)
     # Construct result
-    result = "*%s*\n\n%s\n\n%s" % (citation, abstract, paper_url)
+    result = "*%s*\n\n%s\n\n%s" % (project.citation, abstract, project.paper_url)
     return result
 
 #-------- CALLBACKS -----------#
-@app.callback([Output(component_id='Abstract', component_property= CHILDREN),
-              Output(component_id='dropdown_loc', component_property= 'children'),
-              Output(component_id='article_count', component_property= 'children'),
+@app.callback([Output(component_id='Abstract', component_property= PRP_CHILDREN),
+              Output(component_id='dropdown_loc', component_property= PRP_CHILDREN),
+              Output(component_id=EID_ARTICLE_COUNT, component_property= PRP_CHILDREN),
               ],
               [Input(component_id='dropdown1', component_property= 'value'),
               Input(component_id='search', component_property= 'value'),
@@ -187,7 +189,10 @@ def updateAbstractAndDropdown(selected_title, search_text):
     for pid, title in TITLE_DROPDOWN_DCT.items():
         if title[:MAX_TITLE_LENGTH] == selected_title[:MAX_TITLE_LENGTH]:
             dropdown_pids.append(pid)
-    selected_pid = dropdown_pids[0]
+    if len(dropdown_pids) > 0:
+        selected_pid = dropdown_pids[0]
+    else:
+        selected_pid = None
     # Calculate the subset of project_ids based on search_text
     search_results = None
     search_result = None
@@ -224,7 +229,7 @@ def updateAbstractAndDropdown(selected_title, search_text):
     # Calculate the final values
     abstract = calculateAbstractText(new_selected_pid, search_result)
     dropdown_comp = makeDropdown(options=dropdown_options, value=new_selected_option)
-    article_count = "Select (%d)" % len(permitted_ids)
+    article_count = "Selected Titles (%d)" % len(permitted_ids)
     return abstract, dropdown_comp, article_count
 
 

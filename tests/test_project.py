@@ -8,7 +8,7 @@ import unittest
 import urllib3
 
 
-IGNORE_TEST = False
+IGNORE_TEST = True
 IS_PLOT = False
 PROJECT_ID = "Yeast-cell-cycle-Irons-J-Theor-Biol-2009"
 PROJECT_RUNID = "61fea483f499ccf25faafc4d"
@@ -16,6 +16,7 @@ CACHE_DIR = os.path.dirname(os.path.abspath(__file__))
 CACHE_DIR = os.path.join(CACHE_DIR, "test_cache")
 CONTEXT_FILE = os.path.join(CACHE_DIR, "context.csv")
 SAVED_CONTEXT_FILE = os.path.join(CACHE_DIR, "saved_context.csv")
+CLS = pjt.Project
 
 
 #############################
@@ -25,6 +26,8 @@ class TestProject(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
+        if IGNORE_TEST:
+           return
         cls.cache_dir = CACHE_DIR
         if os.path.isdir(cls.cache_dir):
             shutil.rmtree(cls.cache_dir)
@@ -37,9 +40,10 @@ class TestProject(unittest.TestCase):
         #
         return super().setUpClass() 
 
-    
     @classmethod
     def tearDownClass(cls):
+        if IGNORE_TEST:
+           return
         if os.path.isdir(cls.cache_dir):
             shutil.rmtree(cls.cache_dir)
         return super().tearDownClass() 
@@ -78,7 +82,7 @@ class TestProject(unittest.TestCase):
             return
         project = pjt.Project(PROJECT_ID)
         project.initializeClass()
-        self.assertIsNotNone(project.PROJECT_DCT)
+        self.assertIsNotNone(project._PROJECT_DCT)
 
     def testCopyUrlFile(self):
         if IGNORE_TEST:
@@ -227,6 +231,39 @@ class TestProject(unittest.TestCase):
         path = project.getProjectCacheDirectory()
         csv_files = [p for p in os.listdir(path) if ".csv" in p]
         self.assertEqual(len(dfs), len(csv_files))
+
+    def testInitializeFromContext(self):
+        if IGNORE_TEST:
+            return
+        class_attrs = ["PROJECT_IDS", "PROJECT_DF", "INV_TITLE_DCT", "INV_SHORT_TITLE_DCT", "_PROJECT_DCT"]
+        def test(prefix=None):
+            for attr in class_attrs:
+                value = CLS.__dict__[attr]
+                if (attr[0] == prefix) or (prefix is None):
+                    self.assertIsNone(value)
+                else:
+                    self.assertIsNotNone(value)
+        CLS.resetClassAttributes()
+        test()
+        CLS.initializeFromContext()
+        test(prefix="_")
+        self.assertEqual(len(CLS.PROJECT_DF), len(CLS.INV_SHORT_TITLE_DCT))
+        self.assertEqual(len(CLS.PROJECT_DF), len(CLS.INV_TITLE_DCT))
+        CLS.resetClassAttributes()
+        test()
+
+    
+    def testFindProjectByShortTitle(self):
+        #if IGNORE_TEST:
+        #    return
+        CLS.initializeFromContext()
+        short_title = "Dynamics of killer T cell inflation in viral infections..."
+        pid = CLS.findProjectByShortTitle("Dynamics of killer T cell inflation in viral infections...")
+        project = pjt.Project(pid)
+        import pdb; pdb.set_trace()
+        project.initialize()
+        self.assertEqual(project.short_title, short_title)
+        import pdb; pdb.set_trace()
 
 
 if __name__ == '__main__':
