@@ -29,7 +29,7 @@ from htmldom import htmldom
 from requests_html import HTMLSession
 
 # Initialize Project.PROJECT_ID, Project.PROJECT_DF
-Project.initializeFromContext()
+Project.initializeClass()
 ######## Constants #######
 MAX_TITLE_LENGTH = 100
 PROJECT_IDS = [p for p in Project.PROJECT_DF.index if isinstance(Project.PROJECT_DF.loc[p, cn.TITLE], str)]
@@ -156,6 +156,7 @@ def calculateAbstractText(project_id, search_result):
     #
     project = Project(project_id)
     project.initialize()
+    abstract = project.abstract
     # Augment the abstract if there is a search result
     if search_result is not None:
         highlights = search_result.highlights("content")

@@ -30,7 +30,9 @@ class Project(ProjectBase):
         #PROJECT_DF 
         #PROJECT_ID 
         #RUNID 
-        #TITLE 
+        #TITLE
+    INV_TITLE_DCT = None
+    INV_SHORT_TITLE_DCT = None
 
     def __init__(self, project_id: str, data_dir:str=cn.DATA_DIR):
         """
@@ -43,7 +45,15 @@ class Project(ProjectBase):
         super().__init__(project_id, data_dir=data_dir)
 
     @classmethod
-    def initializeFromContext(cls):
+    def resetClassAttributes(cls):
+        cls.PROJECT_IDS = None
+        cls.PROJECT_DF = None
+        cls.INV_TITLE_DCT = None
+        cls.INV_SHORT_TITLE_DCT = None
+
+
+    @classmethod
+    def initializeClass(cls):
         if cls.PROJECT_DF is not None:
             return
         # Get the project dataframe for projects with titles
@@ -56,8 +66,8 @@ class Project(ProjectBase):
             pids = [p for p, t in zip(cls.PROJECT_DF.index, cls.PROJECT_DF[cn.TITLE]) if t == row[cn.TITLE]]
             if len(pids) > 1:
                 for count, pid in enumerate(pids):
-                    suffix = "__%d" % (count + 1)
-                    cls.PROJECT_DF.loc[pid, cn.TITLE] = cls.PROJECT_DF.loc[pid, cn.TITLE] + suffix
+                    prefix = "(%d) " % (count + 1)
+                    cls.PROJECT_DF.loc[pid, cn.TITLE] = prefix + cls.PROJECT_DF.loc[pid, cn.TITLE]
         # Create short titles
         projects = [Project(p) for p in cls.PROJECT_DF.index]
         [p.initialize() for p in projects]
@@ -67,21 +77,25 @@ class Project(ProjectBase):
 
     def initialize(self, context_file=cn.CONTEXT_FILE)->None:
         """
-        Initializes previously built context
+        Initializes project once the class is initialized.
         """
         cls = self.__class__
-        cls.initializeFromContext()
+        cls.initializeClass()
         #
         for idx, key in enumerate(cn.CONTEXT_KEYS):
             if key != cn.PROJECT_ID:
-                self.__setattr__(key, cls.PROJECT_DF.loc[self.project_id, key])
+                try:
+                    self.__setattr__(key, cls.PROJECT_DF.loc[self.project_id, key])
+                except Exception as exp:
+                    import pdb; pdb.set_trace()
+                    pass
 
     @classmethod 
     def findProjectByShortTitle(cls, short_title):
         """
         Finds the project with the provided short title.
         """
-        cls.initializeFromContext()
+        cls.initializeClass()
         #
         if short_title in cls.INV_SHORT_TITLE_DCT.keys():
             return cls.INV_SHORT_TITLE_DCT[short_title]
