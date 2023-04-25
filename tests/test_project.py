@@ -7,7 +7,7 @@ import os
 import unittest
 
 
-IGNORE_TEST = True
+IGNORE_TEST = False
 IS_PLOT = False
 PROJECT_ID = "Yeast-cell-cycle-Irons-J-Theor-Biol-2009"
 PROJECT_RUNID = "61fea483f499ccf25faafc4d"
@@ -100,21 +100,28 @@ class TestProject(unittest.TestCase):
         project.initialize()
         self.assertEqual(project.short_title, short_title)
     
-    def testGetCSVFilenames(self):
+    def testGetFilenames(self):
         if IGNORE_TEST:
             return
-        filenames = self.project.getCSVFilenames()
-        self.assertGreater(len(filenames), 0)
-        some_trues = ["Cl" in n for n in filenames]
+        ffiles = self.project.getFilenames(cn.CSV)
+        self.assertGreater(len(ffiles), 0)
+        some_trues = ["Cl" in n for n in ffiles]
         self.assertTrue(any(some_trues))
 
     def testGetCSVData(self):
-        #if IGNORE_TEST:
-        #    return
-        filenames = self.project.getCSVFilenames()
+        if IGNORE_TEST:
+            return
+        filenames = self.project.getFilenames(cn.CSV)
         df = self.project.getCSVData(filenames[0])
         self.assertTrue(isinstance(df, pd.DataFrame))
         self.assertGreater(len(df), 0)
+
+    def testGetFileContents(self):
+        if IGNORE_TEST:
+            return
+        filenames = self.project.getFilenames(cn.ANT)
+        contents = self.project.getFileContents(filenames[0])
+        self.assertTrue("comp1" in contents)
 
 
 if __name__ == '__main__':

@@ -23,7 +23,8 @@ ABSTRACT_FILE = os.path.join(INDEX_DIR, "abstracts.csv")
 APIKEY_FILE = os.path.join(LOCAL_DIR, "apikey.txt")
 CACHE_DIR = os.path.join(DATA_DIR, "cache")
 CONTEXT_FILE = os.path.join(DATA_DIR, "context.csv")
-# File types
+# File extensions
+ANT = "ant"
 CELLML = "cellml"
 CSV = "csv"
 SEDML = "sedml"
@@ -34,7 +35,12 @@ CELLML_ZIP = os.path.join(DATA_DIR, "cellml.zip")
 CSV_ZIP = os.path.join(DATA_DIR, "csv.zip")
 SEDML_ZIP = os.path.join(DATA_DIR, "sedml.zip")
 XML_ZIP = os.path.join(DATA_DIR, "xml.zip")
-
+ZIP_DCT = {CSV: CSV_ZIP,
+        XML: XML_ZIP,
+        ANT: ANT_ZIP,
+        SEDML: SEDML_ZIP,
+        CELLML: CELLML_ZIP,
+}
 # URLs
 API_URL = "https://api.biosimulations.org"
 PROJECT_URL = "%s/projects" % API_URL

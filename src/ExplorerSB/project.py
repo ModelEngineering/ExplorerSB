@@ -67,19 +67,26 @@ class Project(ProjectBase):
         result = os.path.join("local", "cache")
         return os.path.join(result, self.runid)
 
-    def _getZipFilePath(self, filename, extension):
+    def _getZipFilePath(self, filename:str)->str:
+        """
+        Returns full path
+        """
         dir_path = self._getZipDirPath()
-        ffile = "%s.%s" % (filename, extension)
+        ffile = "%s" % (filename)
         return os.path.join(dir_path, ffile)
 
-    def getCSVFilenames(self)->typing.List[str]:
+    def getFilenames(self, extension:str)->typing.List[str]:
         """
         Obtains of the names of CSV files in the zip archives.
 
+        Args:
+            extension: file extension
+
         Returns:
-            filenames
+            filenames with extension
         """
-        with zipfile.ZipFile(cn.CSV_ZIP,'r') as zip:
+        zip_file = cn.ZIP_DCT[extension]
+        with zipfile.ZipFile(zip_file,'r') as zip:
             ffiles = zip.namelist()
         #
         dir_path = self._getZipDirPath()
@@ -89,26 +96,42 @@ class Project(ProjectBase):
                 paths.append(ffile)
         #
         results = [os.path.basename(r) for r in paths]
-        results = [r.split(".")[0] for r in results]
         return results
     
+    def getFileContents(self, filename:str)->str:
+        """
+        Obtains the contents of a file in the cache for this project.
+
+        Args:
+            filename with extension
+
+        Returns:
+            str
+        """
+        path = self._getZipFilePath(filename)
+        splits = filename.split(".")
+        extension = splits[1]
+        if not extension in cn.ZIP_DCT.keys():
+            raise RuntimeError("Invalid extension: %s" % extension)
+        zip_file = cn.ZIP_DCT[extension]
+        with zipfile.ZipFile(zip_file,'r') as zip:
+            csv_bytes = zip.read(path)
+        #
+        return csv_bytes.decode()
+   
     def getCSVData(self, filename:str)->pd.DataFrame:
         """
         Obtains the data for the CSV file.
 
         Args:
-            filename: basename of the CSV file (w/o extension)
+            filename with extension
 
         Returns:
             pd.DataFrame
         """
-        path = self._getZipFilePath(filename, cn.CSV)
-        with zipfile.ZipFile(cn.CSV_ZIP,'r') as zip:
-            csvBytes = zip.read(path)
-        #
-        csvString = csvBytes.decode()
-        csvStringIO = StringIO(csvString)
-        df = pd.read_csv(csvStringIO, sep=",")
+        csv_str = self.getFileContents(filename)
+        csv_sio = StringIO(csv_str)
+        df = pd.read_csv(csv_sio, sep=",")
         return df
 
 
