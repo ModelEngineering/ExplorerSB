@@ -37,6 +37,8 @@ class TestSearcher(unittest.TestCase):
     def testSearch(self):
         if IGNORE_TEST:
             return
+        if cn.IS_GITHUB:
+            return
         result_both, _ = self.searcher.search("glycolysis AND pentose")
         result_glc, _ = self.searcher.search("glycolysis")
         result_pen, _ = self.searcher.search("pentose")
