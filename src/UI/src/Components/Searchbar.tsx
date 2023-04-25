@@ -1,10 +1,9 @@
 function Searchbar() {
   return (
-    <div>
-      <h1>Searchbar</h1>
+    <div id="searchbar">
+      <h2>Searchbar</h2>
     </div>
   )
 }
-
 
 export default Searchbar;

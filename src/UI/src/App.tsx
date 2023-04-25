@@ -1,25 +1,30 @@
 import "./App.css";
+import Title from "./Components/Title"
+import Footer from "./Components/Footer";
+import Graph from "./Components/Graph";
+import Model from "./Components/Model";
 import Searchbar from "./Components/Searchbar";
+import Summary from "./Components/Summary";
 
 function App() {
   return (
-    <div className="App">
+    <div id="App">
       <div id="header" className="flex-row" >
         <h1>ExplorerSB</h1>
-        <Searchbar/>
+        <Searchbar />
       </div>
-      <div id="container-1" className="flex-row">
-        <div id="summary">
-          <h1>Summary</h1>
-        </div>
-        <div id="model">
-          <h1>Model</h1>
-        </div>
+      <div className="flex-row container">
+        <Title />
       </div>
-      <div id="container-2" className="flex-row">
-        <div id="graph">
-          <h1>Graph</h1>
-        </div>
+      <div className="flex-row container">
+        <Summary />
+        <Model />
+      </div>
+      <div className="flex-row container">
+        <Graph />
+      </div>
+      <div id="footer" className="flex-row">
+        <Footer />
       </div>
     </div>
   );
