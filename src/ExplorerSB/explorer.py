@@ -68,7 +68,8 @@ def makeDropdown(options=project_dropdowns, value=PROJECT_TITLES[0]):
 #
 dropdown_comp = makeDropdown()
 title_col = dbc.Col(dbc.Row([
-      html.H2("Selected Titles (%d)" % len(PROJECT_IDS), id=EID_ARTICLE_COUNT),
+      html.H2("Selected Titles (%d)" % len(PROJECT_IDS), id=EID_ARTICLE_COUNT,
+              style={"padding": "10px 30px"}),
       html.P(children=dropdown_comp, id='dropdown_loc'),
       # Used to handle callbacks without output
       html.P(id=PLACEHOLDER)
@@ -80,7 +81,7 @@ space_col = dbc.Col(dbc.Row([
 )
 search_col = dbc.Col(dbc.Row([
       dbc.Input(id=EID_SEARCH, placeholder="Enter search terms ...", type="text",
-            style={'textalign': 'center'},
+            style={"width": "2000px", "padding": "10px 100px"},
       ),
       ])
 )
@@ -91,7 +92,7 @@ abstract_col = dbc.Col(dbc.Row([
       ])
 )
 model_summary_col = dbc.Col([
-      html.H2("Model"),
+      html.H2("Model", style={"padding": "10px 30px"}),
       dcc.Markdown( 'Glu: [Glucose](https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:17234)',
             id = 'Model Summary',
             style={'whiteSpace': 'pre-line',
@@ -99,13 +100,13 @@ model_summary_col = dbc.Col([
       )
 ])
 data_col = dbc.Col([
-      html.H2("Data"),
+      html.H2("Data", style={"padding": "10px 20px"}),
       dcc.Markdown( 'A Graph',
             id = EID_DATA,
       ) ],
-      style={'whiteSpace': 'pre-line',
-            'padding-left': '40px', 'padding-right': '20px',
-            'textAlign': 'center'},
+      #style={'whiteSpace': 'pre-line',
+      #      'padding-left': '40px', 'padding-right': '20px',
+      #      'textAlign': 'center'},
 )
 download_col = dbc.Col(
       [html.Button('Download', id='download')],
@@ -118,16 +119,18 @@ download_col = dbc.Col(
 
 app.layout = html.Div([
     dbc.Row([
-          html.H1("ExplorerSB - Exploring Models in Systems Biology"),
+          html.H1("ExplorerSB - Exploring Models in Systems Biology",
+                  style={"text-align": "center"}),
           html.Br(),
         ],
-        justify="center", align="center"
+        #justify="center", align="center"
     ),
     dbc.Row([
-          space_col,
-          search_col, html.Div(style={"margin-left": "25px"}),
-          space_col,
-          ]
+          #space_col,
+          search_col, html.Div(style={
+            "width": "250px", "padding": "20px"}),
+          ],
+        justify="center", align="center"
     ),
     dbc.Row([
           title_col,
@@ -230,7 +233,7 @@ def updateAbstractAndDropdown(selected_title, search_text):
     # Calculate the final values
     abstract = calculateAbstractText(new_selected_pid, search_result)
     dropdown_comp = makeDropdown(options=dropdown_options, value=new_selected_option)
-    article_count = "Selected Titles (%d)" % len(permitted_ids)
+    article_count = "%d Titles" % len(permitted_ids)
     return abstract, dropdown_comp, article_count
 
 

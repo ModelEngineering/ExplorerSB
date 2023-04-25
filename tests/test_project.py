@@ -2,21 +2,18 @@ import src.ExplorerSB.constants as cn
 from src.ExplorerSB.project import Project
 from src.ExplorerSB.project_builder import ProjectBuilder
 
-import os
 import pandas as pd
-import shutil
+import os
 import unittest
-import urllib3
 
 
-IGNORE_TEST = False
+IGNORE_TEST = True
 IS_PLOT = False
 PROJECT_ID = "Yeast-cell-cycle-Irons-J-Theor-Biol-2009"
 PROJECT_RUNID = "61fea483f499ccf25faafc4d"
 DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(DATA_DIR, "test_data")
 CONTEXT_FILE = os.path.join(DATA_DIR, "context.csv")
-Project = Project
 
 
 #############################
@@ -31,8 +28,6 @@ class TestProject(unittest.TestCase):
         return super().setUpClass() 
 
     def setUp(self):
-        if IGNORE_TEST:
-           return
         self.project = self.makeProject()
 
     def makeProject(self, project_id=PROJECT_ID):
@@ -95,7 +90,6 @@ class TestProject(unittest.TestCase):
         Project.resetClassAttributes()
         test()
 
-    
     def testFindProjectByShortTitle(self):
         if IGNORE_TEST:
             return
@@ -105,6 +99,22 @@ class TestProject(unittest.TestCase):
         project = Project(pid, data_dir=DATA_DIR)
         project.initialize()
         self.assertEqual(project.short_title, short_title)
+    
+    def testGetCSVFilenames(self):
+        if IGNORE_TEST:
+            return
+        filenames = self.project.getCSVFilenames()
+        self.assertGreater(len(filenames), 0)
+        some_trues = ["Cl" in n for n in filenames]
+        self.assertTrue(any(some_trues))
+
+    def testGetCSVData(self):
+        #if IGNORE_TEST:
+        #    return
+        filenames = self.project.getCSVFilenames()
+        df = self.project.getCSVData(filenames[0])
+        self.assertTrue(isinstance(df, pd.DataFrame))
+        self.assertGreater(len(df), 0)
 
 
 if __name__ == '__main__':

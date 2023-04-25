@@ -10,17 +10,18 @@ Conventions:
 import src.ExplorerSB.constants as cn
 from src.ExplorerSB.project_base import ProjectBase
 
+from io import StringIO
 import os
 import pandas as pd
-import requests
-import shutil
 import tellurium as te
-import time
 import typing
+import zipfile
 
 
 class Project(ProjectBase):
-
+    ############################################################################
+    # CLASS ATTRIBUTES
+    ############################################################################
     PROJECT_IDS = None
     PROJECT_DF = None  # Dataframe describing projects. Columns are:
         #ABSTRACT 
@@ -44,37 +45,9 @@ class Project(ProjectBase):
         """
         super().__init__(project_id, data_dir=data_dir)
 
-    @classmethod
-    def resetClassAttributes(cls):
-        cls.PROJECT_IDS = None
-        cls.PROJECT_DF = None
-        cls.INV_TITLE_DCT = None
-        cls.INV_SHORT_TITLE_DCT = None
-
-
-    @classmethod
-    def initializeClass(cls):
-        if cls.PROJECT_DF is not None:
-            return
-        # Get the project dataframe for projects with titles
-        cls.PROJECT_DF = pd.read_csv(cn.CONTEXT_FILE, index_col=0)
-        sel_with_title = [isinstance(t, str) for t in cls.PROJECT_DF[cn.TITLE]]
-        cls.PROJECT_DF = cls.PROJECT_DF[sel_with_title]
-        cls.PROJECT_DF[cn.TITLE] = [t.strip() for t in cls.PROJECT_DF[cn.TITLE]]
-        # Adjust for duplicate titles
-        for idx, row in cls.PROJECT_DF.iterrows():
-            pids = [p for p, t in zip(cls.PROJECT_DF.index, cls.PROJECT_DF[cn.TITLE]) if t == row[cn.TITLE]]
-            if len(pids) > 1:
-                for count, pid in enumerate(pids):
-                    prefix = "(%d) " % (count + 1)
-                    cls.PROJECT_DF.loc[pid, cn.TITLE] = prefix + cls.PROJECT_DF.loc[pid, cn.TITLE]
-        # Create short titles
-        projects = [Project(p) for p in cls.PROJECT_DF.index]
-        [p.initialize() for p in projects]
-        cls.INV_TITLE_DCT = {p.title: p.project_id for p in projects}
-        cls.INV_SHORT_TITLE_DCT = {p.short_title: p.project_id for p in projects}
-        cls.PROJECT_IDS = list(cls.PROJECT_DF.index)
-
+    ############################################################################
+    # INSTANCE METHODS
+    ############################################################################
     def initialize(self, context_file=cn.CONTEXT_FILE)->None:
         """
         Initializes project once the class is initialized.
@@ -89,6 +62,65 @@ class Project(ProjectBase):
                 except Exception as exp:
                     import pdb; pdb.set_trace()
                     pass
+
+    def _getZipDirPath(self):
+        result = os.path.join("local", "cache")
+        return os.path.join(result, self.runid)
+
+    def _getZipFilePath(self, filename, extension):
+        dir_path = self._getZipDirPath()
+        ffile = "%s.%s" % (filename, extension)
+        return os.path.join(dir_path, ffile)
+
+    def getCSVFilenames(self)->typing.List[str]:
+        """
+        Obtains of the names of CSV files in the zip archives.
+
+        Returns:
+            filenames
+        """
+        with zipfile.ZipFile(cn.CSV_ZIP,'r') as zip:
+            ffiles = zip.namelist()
+        #
+        dir_path = self._getZipDirPath()
+        paths = []
+        for ffile in ffiles:
+            if ffile.startswith(dir_path):
+                paths.append(ffile)
+        #
+        results = [os.path.basename(r) for r in paths]
+        results = [r.split(".")[0] for r in results]
+        return results
+    
+    def getCSVData(self, filename:str)->pd.DataFrame:
+        """
+        Obtains the data for the CSV file.
+
+        Args:
+            filename: basename of the CSV file (w/o extension)
+
+        Returns:
+            pd.DataFrame
+        """
+        path = self._getZipFilePath(filename, cn.CSV)
+        with zipfile.ZipFile(cn.CSV_ZIP,'r') as zip:
+            csvBytes = zip.read(path)
+        #
+        csvString = csvBytes.decode()
+        csvStringIO = StringIO(csvString)
+        df = pd.read_csv(csvStringIO, sep=",")
+        return df
+
+
+    ############################################################################
+    # CLASS METHODS
+    ############################################################################
+    @classmethod
+    def resetClassAttributes(cls):
+        cls.PROJECT_IDS = None
+        cls.PROJECT_DF = None
+        cls.INV_TITLE_DCT = None
+        cls.INV_SHORT_TITLE_DCT = None
 
     @classmethod 
     def findProjectByShortTitle(cls, short_title):
@@ -141,3 +173,26 @@ class Project(ProjectBase):
                 print("***Processed project id=%s, runid=%s (%d)."
                        % (project.project_id, project.runid, total))
             yield project
+    
+    @classmethod
+    def initializeClass(cls):
+        if cls.PROJECT_DF is not None:
+            return
+        # Get the project dataframe for projects with titles
+        cls.PROJECT_DF = pd.read_csv(cn.CONTEXT_FILE, index_col=0)
+        sel_with_title = [isinstance(t, str) for t in cls.PROJECT_DF[cn.TITLE]]
+        cls.PROJECT_DF = cls.PROJECT_DF[sel_with_title]
+        cls.PROJECT_DF[cn.TITLE] = [t.strip() for t in cls.PROJECT_DF[cn.TITLE]]
+        # Adjust for duplicate titles
+        for idx, row in cls.PROJECT_DF.iterrows():
+            pids = [p for p, t in zip(cls.PROJECT_DF.index, cls.PROJECT_DF[cn.TITLE]) if t == row[cn.TITLE]]
+            if len(pids) > 1:
+                for count, pid in enumerate(pids):
+                    prefix = "(%d) " % (count + 1)
+                    cls.PROJECT_DF.loc[pid, cn.TITLE] = prefix + cls.PROJECT_DF.loc[pid, cn.TITLE]
+        # Create short titles
+        projects = [Project(p) for p in cls.PROJECT_DF.index]
+        [p.initialize() for p in projects]
+        cls.INV_TITLE_DCT = {p.title: p.project_id for p in projects}
+        cls.INV_SHORT_TITLE_DCT = {p.short_title: p.project_id for p in projects}
+        cls.PROJECT_IDS = list(cls.PROJECT_DF.index)
