@@ -120,6 +120,28 @@ class Project(ProjectBase):
             csv_bytes = zip.read(path)
         #
         return csv_bytes.decode()
+    
+    def getDefaultFilename(self, extension:str)->str:
+        """
+        Gets the default filename for the extension
+
+        Args:
+            extension (str): file extension
+
+        Returns:
+            str: filename
+        """
+        filename = None
+        filenames = self.getFilenames(cn.CSV)
+        if len(filenames) > 0:
+            for name in filenames:
+                if (extension == cn.CSV):
+                    if "objective" in name:
+                        continue
+                filename = name
+                break
+            #
+        return filename
    
     def getCSVData(self, filename:str=None)->pd.DataFrame:
         """
@@ -132,11 +154,9 @@ class Project(ProjectBase):
             pd.DataFrame
         """
         if filename is None:
-            filenames = self.getFilenames(cn.CSV)
-            if len(filenames) > 0:
-                filename = self.getFilenames(cn.CSV)[0]
-            else:
-                return pd.DataFrame()
+            filename = self.getDefaultFilename(cn.CSV)
+        if filename is None:
+            return pd.DataFrame()
         csv_str = self.getFileContents(filename)
         csv_sio = StringIO(csv_str)
         df = pd.read_csv(csv_sio, sep=",")
@@ -168,7 +188,7 @@ class Project(ProjectBase):
         title = ""
         if len(traces) == 1:
             columns = [c for c in df.columns if c != time_col]
-            if len(columns) > 1:
+            if len(columns) == 1:
                 title = columns[0]
         layout = go.Layout(title=title, xaxis=dict(title='time'), yaxis=dict(title=title))
         # create a figure
