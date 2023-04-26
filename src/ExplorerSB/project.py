@@ -132,7 +132,11 @@ class Project(ProjectBase):
             pd.DataFrame
         """
         if filename is None:
-            filename = self.getFilenames(cn.CSV)[0]
+            filenames = self.getFilenames(cn.CSV)
+            if len(filenames) > 0:
+                filename = self.getFilenames(cn.CSV)[0]
+            else:
+                return pd.DataFrame()
         csv_str = self.getFileContents(filename)
         csv_sio = StringIO(csv_str)
         df = pd.read_csv(csv_sio, sep=",")

@@ -46,6 +46,8 @@ TITLE_DROPDOWN_DCT = {p: t if len(t) <= MAX_TITLE_LENGTH
       else "%s..." % t[:MAX_TITLE_LENGTH] for p, t in dct.items()}
 PLACEHOLDER = "placeholder"  # Used if there is no output in a callback
 ID_RAD = "project ID"
+MAX_CHARACTERS_IN_MODEL = 2000
+
 SEARCHER = Searcher()
 
 # Element identifiers
@@ -89,7 +91,7 @@ space_col = dbc.Col(dbc.Row([
 )
 search_col = dbc.Col(dbc.Row([
       dbc.Input(id=EID_SEARCH, placeholder="Enter search terms ...", type="text",
-            style={"width": "2000px", "padding": "10px 100px"},
+            style={"width": "90%", "padding": "10px 100px"},
       ),
       ])
 )
@@ -100,18 +102,23 @@ abstract_col = dbc.Col(dbc.Row([
       ])
 )
 model_col = dbc.Col([
-      #html.H2("Model", style={"padding": "10px 30px"}),
+      html.H2("Model Fragment", style={"padding": "10px 30px"}),
       html.H2(" ", style={"padding": "10px 30px"}),
       dcc.Markdown(
             id = EID_MODEL,
             style={'whiteSpace': 'pre-line',
-                  'padding-left': '40px', 'padding-right': '20px', 'background-color': 'Gainsboro', 'margin-right': "1500 px"},
+                  'padding-left': '40px', 'padding-right': '20px',
+                   "height": "500px", "overflow": "scroll", "width": "800px",
+            },
       )
 ])
 data_col = dbc.Col([
-      #html.H2("Data", style={"padding": "10px 20px"}),
+      html.H2("Data", style={"padding": "10px 20px"}),
       html.H2(" ", style={"padding": "10px 20px"}),
-      dcc.Graph(id=EID_DATA),
+      dcc.Graph(id=EID_DATA, style={
+           'padding-right': '20px',
+                   "height": "500px", "overflow": "scroll", "width": "800px", 
+      }),
       #dcc.Markdown( 
       #      id = EID_DATA,
       #      style={'whiteSpace': 'pre-line',
@@ -246,6 +253,12 @@ def updateAbstractAndDropdown(selected_title, search_text):
     # Construct the dropdown options
     dropdown_options = [t for p, t in TITLE_DROPDOWN_DCT.items() if p in permitted_ids]
     # Construct the selected options
+    model_str = ""
+    data_str = ""
+    new_selected_option = ""
+    fig = go.Figure()
+    if project is not None:
+        fig = project.makePlotFigure()
     if project is not None:
         new_selected_option = TITLE_DROPDOWN_DCT[new_selected_pid]
         # Get the model
@@ -255,15 +268,10 @@ def updateAbstractAndDropdown(selected_title, search_text):
         model_filenames.extend(project.getFilenames(cn.SEDML))
         if len(model_filenames) > 0:
             model_filename = model_filenames[0]
-            model_str = "``" + project.getFileContents(model_filename) + "``"
-            data_str = project.getCSVData().to_markdown()
-        else:
-            model_filename = None
-            model_str = ""
-            data_str = ""
-    else:
-        new_selected_option = ""
-        model_str = ""
+            model_str = project.getFileContents(model_filename)
+            if len(model_str) > MAX_CHARACTERS_IN_MODEL:
+                model_str = model_str[:MAX_CHARACTERS_IN_MODEL]
+            #data_str = project.getCSVData().to_markdown()
     # Find the search result for the selected project
     if (new_selected_pid is not None) and (search_result_dct is not None):
         for result in search_results:
@@ -273,11 +281,6 @@ def updateAbstractAndDropdown(selected_title, search_text):
     # Calculate the final values
     abstract = calculateAbstractText(new_selected_pid, search_result)
     dropdown_comp = makeDropdown(options=dropdown_options, value=new_selected_option)
-    #fig = go.Figure(data=[go.Scatter(x=[1, 2, 3], y=[4, 1, 2])])
-    if project is not None:
-        fig = project.makePlotFigure()
-    else:
-        fig = go.Figure()
     article_count = "%d Titles" % len(permitted_ids)
     return abstract, dropdown_comp, article_count, model_str, fig
 
