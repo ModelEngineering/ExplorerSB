@@ -88,8 +88,6 @@ class Project(ProjectBase):
             filenames with extension
         """
         zip_file = cn.ZIP_DCT[extension]
-        # FIXME
-        print(zip_file)
         with zipfile.ZipFile(zip_file,'r') as zip:
             ffiles = zip.namelist()
         #
@@ -163,7 +161,12 @@ class Project(ProjectBase):
             if col != time_col:
                 traces.append(go.Scatter(x=times, y=df[col], mode='lines', name=col))
         # create a layout
-        layout = go.Layout(title=title, xaxis=dict(title='time'), yaxis=dict(title='floating species'))
+        title = ""
+        if len(traces) == 1:
+            columns = [c for c in df.columns if c != time_col]
+            if len(columns) > 1:
+                title = columns[0]
+        layout = go.Layout(title=title, xaxis=dict(title='time'), yaxis=dict(title=title))
         # create a figure
         fig = go.Figure(data=traces, layout=layout)
         return fig

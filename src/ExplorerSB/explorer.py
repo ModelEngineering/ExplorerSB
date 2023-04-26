@@ -21,6 +21,7 @@ import plotly.express as px
 from dash.dependencies import Input, Output
 import json
 import pandas as pd
+import plotly.graph_objs as go
 import requests
 import yaml
 import whoosh.index as index
@@ -99,7 +100,8 @@ abstract_col = dbc.Col(dbc.Row([
       ])
 )
 model_col = dbc.Col([
-      html.H2("Model", style={"padding": "10px 30px"}),
+      #html.H2("Model", style={"padding": "10px 30px"}),
+      html.H2(" ", style={"padding": "10px 30px"}),
       dcc.Markdown(
             id = EID_MODEL,
             style={'whiteSpace': 'pre-line',
@@ -107,7 +109,8 @@ model_col = dbc.Col([
       )
 ])
 data_col = dbc.Col([
-      html.H2("Data", style={"padding": "10px 20px"}),
+      #html.H2("Data", style={"padding": "10px 20px"}),
+      html.H2(" ", style={"padding": "10px 20px"}),
       dcc.Graph(id=EID_DATA),
       #dcc.Markdown( 
       #      id = EID_DATA,
@@ -149,8 +152,8 @@ app.layout = html.Div([
           ],
     ),
     dbc.Row([
-          model_col,
           data_col,
+          model_col,
           html.Div(style={"margin-left": "25px"}),
           ],
     ),
@@ -270,7 +273,11 @@ def updateAbstractAndDropdown(selected_title, search_text):
     # Calculate the final values
     abstract = calculateAbstractText(new_selected_pid, search_result)
     dropdown_comp = makeDropdown(options=dropdown_options, value=new_selected_option)
-    fig = go.Figure(data=[go.Scatter(x=[1, 2, 3], y=[4, 1, 2])])
+    #fig = go.Figure(data=[go.Scatter(x=[1, 2, 3], y=[4, 1, 2])])
+    if project is not None:
+        fig = project.makePlotFigure()
+    else:
+        fig = go.Figure()
     article_count = "%d Titles" % len(permitted_ids)
     return abstract, dropdown_comp, article_count, model_str, fig
 
