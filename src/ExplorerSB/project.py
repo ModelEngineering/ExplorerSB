@@ -133,6 +133,22 @@ class Project(ProjectBase):
         csv_sio = StringIO(csv_str)
         df = pd.read_csv(csv_sio, sep=",")
         return df
+    
+    def getDefaultCSVData(self)->pd.DataFrame:
+        """
+        Obtains the data for the CSV file.
+
+        Args:
+            filename with extension
+
+        Returns:
+            pd.DataFrame
+        """
+        filename = self.getFilenames(cn.CSV)[0]
+        csv_str = self.getFileContents(filename)
+        csv_sio = StringIO(csv_str)
+        df = pd.read_csv(csv_sio, sep=",")
+        return df
 
 
     ############################################################################
