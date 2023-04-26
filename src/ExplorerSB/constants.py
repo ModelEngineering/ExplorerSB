@@ -61,3 +61,4 @@ Abstract not found in PubMed. The following is obtained from ChatGPT.
 
 """
 NAME_SEPARATOR = "--"
+TIME = "time"

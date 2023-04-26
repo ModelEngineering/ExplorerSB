@@ -13,6 +13,8 @@ from src.ExplorerSB.project_base import ProjectBase
 from io import StringIO
 import os
 import pandas as pd
+import plotly
+import plotly.graph_objs as go
 import tellurium as te
 import typing
 import zipfile
@@ -86,6 +88,8 @@ class Project(ProjectBase):
             filenames with extension
         """
         zip_file = cn.ZIP_DCT[extension]
+        # FIXME
+        print(zip_file)
         with zipfile.ZipFile(zip_file,'r') as zip:
             ffiles = zip.namelist()
         #
@@ -119,7 +123,7 @@ class Project(ProjectBase):
         #
         return csv_bytes.decode()
    
-    def getCSVData(self, filename:str)->pd.DataFrame:
+    def getCSVData(self, filename:str=None)->pd.DataFrame:
         """
         Obtains the data for the CSV file.
 
@@ -129,27 +133,40 @@ class Project(ProjectBase):
         Returns:
             pd.DataFrame
         """
+        if filename is None:
+            filename = self.getFilenames(cn.CSV)[0]
         csv_str = self.getFileContents(filename)
         csv_sio = StringIO(csv_str)
         df = pd.read_csv(csv_sio, sep=",")
         return df
     
-    def getDefaultCSVData(self)->pd.DataFrame:
+    def makePlotFigure(self, filename:str=None, title=""):
         """
-        Obtains the data for the CSV file.
+        Calculates a plotly figure.
 
         Args:
-            filename with extension
-
+            filename (str, optional)
         Returns:
-            pd.DataFrame
+            fig (plotly.graph_objs._figure.Figure:)
         """
-        filename = self.getFilenames(cn.CSV)[0]
-        csv_str = self.getFileContents(filename)
-        csv_sio = StringIO(csv_str)
-        df = pd.read_csv(csv_sio, sep=",")
-        return df
-
+        df = self.getCSVData(filename=filename)
+        # Find the time column, if it exiss
+        time_cols = [c for c in df.columns if cn.TIME in c]
+        if len(time_cols) == 0:
+            return go.Figure()
+        else:
+            time_col = time_cols[0]
+        times = df[time_col]
+        # create a list of traces for each column in the dataframe
+        traces = []
+        for col in df.columns:
+            if col != time_col:
+                traces.append(go.Scatter(x=times, y=df[col], mode='lines', name=col))
+        # create a layout
+        layout = go.Layout(title=title, xaxis=dict(title='time'), yaxis=dict(title='floating species'))
+        # create a figure
+        fig = go.Figure(data=traces, layout=layout)
+        return fig
 
     ############################################################################
     # CLASS METHODS

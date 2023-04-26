@@ -253,7 +253,7 @@ def updateAbstractAndDropdown(selected_title, search_text):
         if len(model_filenames) > 0:
             model_filename = model_filenames[0]
             model_str = "``" + project.getFileContents(model_filename) + "``"
-            data_str = project.getDefaultCSVData().to_markdown()
+            data_str = project.getCSVData().to_markdown()
         else:
             model_filename = None
             model_str = ""

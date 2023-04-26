@@ -122,6 +122,13 @@ class TestProject(unittest.TestCase):
         filenames = self.project.getFilenames(cn.ANT)
         contents = self.project.getFileContents(filenames[0])
         self.assertTrue("comp1" in contents)
+    
+    def testMakePlotFigure(self):
+        if IGNORE_TEST:
+            return
+        fig = self.project.makePlotFigure()
+        if IS_PLOT:
+            fig.show()
 
 
 if __name__ == '__main__':
