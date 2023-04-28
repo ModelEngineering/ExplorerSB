@@ -161,7 +161,7 @@ class Project(ProjectBase):
         csv_sio = StringIO(csv_str)
         df = pd.read_csv(csv_sio, sep=",")
         return df
-    
+
     def makePlotFigure(self, filename:str=None, title=""):
         """
         Calculates a plotly figure.

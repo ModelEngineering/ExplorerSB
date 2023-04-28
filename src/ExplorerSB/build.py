@@ -1,8 +1,13 @@
 """Builds the index for search simulation abstracts"""
 
+'''
+The build is done in sections so that builds can be done selectively.
+'''
+
 import src.ExplorerSB.constants as cn
 from src.ExplorerSB.project import Project
 from src.ExplorerSB import util
+from src.ExplorerSB.json_converter import convertCSVToJSON
 
 import os
 import pandas as pd
@@ -11,10 +16,12 @@ from whoosh.fields import *
 import pandas as pd
 import zipfile
 
-# Get the project context
-if False:
-    context_df = Project.buildContext(report_interval=1, sleep_sec=2.0)
+# Construct the project contex
+context_df = Project.buildContext(report_interval=1, sleep_sec=2.0)
+convertCSVToJSON(cn.CONTEXT_FILE, cn.CONTEXT_JSON_FILE)
 
+# Download the output files
+if True:
     generator = Project.iterateProjects()
     for project in generator:
         print("** Processing %s" % project.project_id)
@@ -23,7 +30,8 @@ if False:
         except:
             print('*** Could not download project %s' % project.project_id)
 
-    # Create CSV files for h5 files
+# Create CSV files for h5 files
+if True:
     generator = Project.iterateProjects()
     for project in generator:
         print("** Creating CSV files for %s" % project.project_id)
@@ -31,7 +39,8 @@ if False:
         if path is not None:
             _ = project.getH5Data()
 
-    # Get the omex files and unzip them
+# Get the omex files and unzip them
+if True:
     generator = Project.iterateProjects(report_interval=1, first=0)
     url_pat = "https://api.biosimulations.org/runs/%s/download"
     for project in generator:
@@ -45,19 +54,17 @@ if False:
             zip_ref.extractall(cache_path)
 
 # Build readable model files (part of buildContext)
-generator = Project.iterateProjects(report_interval=1, first=71)
-for project in generator:
-    project.makeReadableModel(is_replace=True)
+if True:
+    generator = Project.iterateProjects(report_interval=1, first=71)
+    for project in generator:
+        project.makeReadableModel(is_replace=True)
 
-    
-
-if False:
-    # Build the whoosh
+# Construct the whoosh schema
+if True:
     schema = Schema(title=TEXT(stored=True), path=ID(stored=True),
         content=TEXT(stored=True))
     ix = create_in(cn.INDEX_DIR, schema)
     writer = ix.writer()
-
     # Iterate over project abstracts
     for project_id, row in context_df.iterrows():
         abstract = row[cn.ABSTRACT]

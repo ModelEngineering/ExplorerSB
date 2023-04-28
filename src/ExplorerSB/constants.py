@@ -23,6 +23,7 @@ ABSTRACT_FILE = os.path.join(INDEX_DIR, "abstracts.csv")
 APIKEY_FILE = os.path.join(LOCAL_DIR, "apikey.txt")
 CACHE_DIR = os.path.join(DATA_DIR, "cache")
 CONTEXT_FILE = os.path.join(DATA_DIR, "context.csv")
+CONTEXT_FILE_JSON = os.path.join(DATA_DIR, "context.json")
 # File extensions
 ANT = "ant"
 CELLML = "cellml"
