@@ -8,6 +8,7 @@ Conventions:
 
 
 import src.ExplorerSB.constants as cn
+import src.ExplorerSB.util as util
 from src.ExplorerSB.project_base import ProjectBase
 
 from io import StringIO
@@ -16,6 +17,8 @@ import pandas as pd
 import plotly
 import plotly.graph_objs as go
 import tellurium as te
+import tempdir
+import tempfile
 import typing
 import zipfile
 
@@ -76,10 +79,35 @@ class Project(ProjectBase):
         dir_path = self._getZipDirPath()
         ffile = "%s" % (filename)
         return os.path.join(dir_path, ffile)
+    
+    def getModelFiles(self)->str:
+        """
+        Creates a temporary directory with the model files. To obtain the model files from Biosimulations
+          1. Get the specification information
+          2. Get the model IDs and source from the specification information
+          3. Get the experiment location
+          4. /specifications{runid}/{experimentLocation}/models/{modelId}
+        Returns:
+            path to temporary directory with a file for each simulation (modelId.type)
+        """
+        # Get the specification inforimation
+        url = "%s/specifications/%s" % (cn.API_URL, self.runid)
+        _, __, response_nested = util.readBiosimulations(url)
+        results = util.indexNested(response_nested, [0, "models"])
+
+        import pdb; pdb.set_trace()
+        # Create a temporary directory
+        temp_dir = tempfile.TemporaryDirectory()
+        # Copy the files to the temporary directory
+        for filename in self.getFilenames(cn.MODEL):
+            contents = self.getFileContents(filename)
+            path = os.path.join(temp_dir.name, filename)
+            with open(path, "w") as fd:
+                fd.write(contents)
 
     def getFilenames(self, extension:str)->typing.List[str]:
         """
-        Obtains of the names of CSV files in the zip archives.
+        Obtains of the names of files in the zip archives.
 
         Args:
             extension: file extension

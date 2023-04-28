@@ -7,7 +7,7 @@ import os
 import unittest
 
 
-IGNORE_TEST = False
+IGNORE_TEST = True
 IS_PLOT = False
 PROJECT_ID = "Yeast-cell-cycle-Irons-J-Theor-Biol-2009"
 PROJECT_RUNID = "61fea483f499ccf25faafc4d"
@@ -129,7 +129,12 @@ class TestProject(unittest.TestCase):
         fig = self.project.makePlotFigure()
         if IS_PLOT:
             fig.show()
-
+      
+    def testGetModelFiles(self):
+        #if IGNORE_TEST:
+        #    return
+        result = self.project.getModelFiles()
+        import pdb; pdb.set_trace()
 
 if __name__ == '__main__':
     unittest.main()

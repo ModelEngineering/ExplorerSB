@@ -1,5 +1,8 @@
 '''Converts a CSV file to JSON format'''
 
+# TODO
+#  1. Do for all directories and augment existing zip files
+
 import pandas as pd
 import argparse
 
