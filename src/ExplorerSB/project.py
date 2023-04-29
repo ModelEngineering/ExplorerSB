@@ -90,11 +90,12 @@ class Project(ProjectBase):
         Returns:
             path to temporary directory with a file for each simulation (modelId.type)
         """
+        # FIXME
+        return
         # Get the specification inforimation
         url = "%s/specifications/%s" % (cn.API_URL, self.runid)
         _, __, response_nested = util.readBiosimulations(url)
         results = util.indexNested(response_nested, [0, "models"])
-
         import pdb; pdb.set_trace()
         # Create a temporary directory
         temp_dir = tempfile.TemporaryDirectory()

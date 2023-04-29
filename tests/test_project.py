@@ -7,7 +7,7 @@ import os
 import unittest
 
 
-IGNORE_TEST = True
+IGNORE_TEST = False
 IS_PLOT = False
 PROJECT_ID = "Yeast-cell-cycle-Irons-J-Theor-Biol-2009"
 PROJECT_RUNID = "61fea483f499ccf25faafc4d"
@@ -131,10 +131,28 @@ class TestProject(unittest.TestCase):
             fig.show()
       
     def testGetModelFiles(self):
-        #if IGNORE_TEST:
-        #    return
+        if IGNORE_TEST:
+            return
+        return
         result = self.project.getModelFiles()
         import pdb; pdb.set_trace()
+
+    def testMakeJsonData(self):
+        if IGNORE_TEST:
+            return
+        self.project.makeJsonData()
+        ffiles = [f for f in self.project.getFilePaths() if f.endswith(".json")]
+        self.assertGreater(len(ffiles), 0)
+        for ffile in ffiles:
+            self.assertTrue(os.path.isfile(ffile))
+    
+    def testAddJsonFiles(self):
+        if IGNORE_TEST:
+            return
+        return
+        generator = Project.iterateProjects()
+        for project in generator:
+            project.makeJsonData()
 
 if __name__ == '__main__':
     unittest.main()

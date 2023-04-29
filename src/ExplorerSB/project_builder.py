@@ -13,6 +13,9 @@ Project context:
 Conventions:
     In general, the key for a dictionary is the project_id.
     Dictionaries with an "inv" prefix, have a value of project_id.
+
+Notes
+  1. Does not keep any .json file
 """
 
 
@@ -102,6 +105,8 @@ class ProjectBuilder(ProjectBase):
         file_urls = self._getUrlFileList()
         for file_url in file_urls:
             path = self._copyUrlFile(file_url, project_cache_dir)
+            if path.endswith(cn.JSON):
+                continue
             if path is not None:
                 copied_paths.append(path)
         return copied_paths
@@ -147,8 +152,21 @@ class ProjectBuilder(ProjectBase):
             shutil.rmtree(output_dir)
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
             zip_ref.extractall(project_cache_dir)
+        self._removeJsonFiles(output_dir)
         #
         return output_dir
+
+    @staticmethod 
+    def _removeJsonFiles(directory:str):
+        """
+        Removes JSON files from the directory
+
+        Args:
+            directory: directory to clean
+        """
+        ffiles = [f for f in os.listdir(directory) if f.endswith(cn.JSON)]
+        for ffile in ffiles:
+            os.remove(os.path.join(directory, ffile))
 
     def _copyUrlFile(self, file_url:str, dir_path:str, local_filename:str=None)->str:
         """
@@ -178,14 +196,14 @@ class ProjectBuilder(ProjectBase):
         return output_path
 
     @classmethod
-    def buildContext(cls, context_file_path:str=cn.CONTEXT_FILE, data_dir:str=cn.CACHE_DIR, report_interval:int=5,
+    def buildContext(cls, context_file_path:str=cn.CONTEXT_FILE, data_dir:str=cn.DATA_DIR, report_interval:int=5,
                      first:int=0, last:int=None, sleep_sec:float=2):
         """
         Builds context for all projects. Writes the result to the context file
 
         Args:
             context_file_path: path for the output csv file
-            cache_path: path to where local files are cached
+            data_dir: path to where local files are cached
             report_interval: projects processed between prints
             first: first project to process
             last: last project to proces

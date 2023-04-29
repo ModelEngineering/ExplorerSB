@@ -81,3 +81,18 @@ class ProjectBase(object):
             if os.path.isfile(file_path):
                 ffiles.append(file_path)
         return ffiles
+    
+    def makeJsonData(self):
+        """
+        Creates JSON files from the CSV files.
+        """
+        paths = self.getFilePaths()
+        for path in paths:
+            if path.endswith(cn.CSV):
+                try:
+                    df = pd.read_csv(path)
+                except Exception as exp:
+                    print("** Could not process file as CSV: %s" % path)
+                    continue
+                path = path.replace(cn.CSV, cn.JSON)
+                df.to_json(path, orient="records")

@@ -154,8 +154,8 @@ class TestProjectBuilder(unittest.TestCase):
             self.assertTrue(os.path.isfile(ffile))
 
     def testMakeReadableModel(self):
-        #if IGNORE_TEST:
-        #    return
+        if IGNORE_TEST:
+            return
         builder = self.makeBuilder()
         _ = builder._copyUrlFiles() 
         model_str = builder.makeReadableModel(is_write=True)
