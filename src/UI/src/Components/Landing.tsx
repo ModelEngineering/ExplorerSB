@@ -1,11 +1,11 @@
 
 import Searchbar from "./Searchbar";
 
-function Landing() {
+const Landing = ({setResult}: {setResult(value:string): void}) => {
   return (
     <div id="landing" className="flex-col">
       <h1>ExplorerSB</h1>
-      <Searchbar />
+      <Searchbar setResult={setResult}/>
     </div>
   )
 }

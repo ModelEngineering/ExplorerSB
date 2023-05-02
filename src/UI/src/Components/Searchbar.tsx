@@ -2,7 +2,6 @@ import { useState } from "react"
 import { useLunr } from 'react-lunr'
 import json from '../Assets/context.json'
 import lunr from "lunr"
-import { Formik, Form, Field } from "formik";
 import { BiSearchAlt as SearchIcon } from "react-icons/bi"
 
 const data = json;
@@ -35,10 +34,11 @@ const index = lunr(function () {
     };
   }
 });
-const Searchbar = () => {
+
+const Searchbar = ({setResult}: {setResult(value:string): void}) => {
   const [query, setQuery] = useState("");
-  const results = useLunr(query, index, store);
-  console.log(index.search(query))
+  const results = useLunr(query, index, store) as SearchResult[];
+  
   return (
     <div id="searchbar" className="flex-col">
       <div id="searchbar-input-container" className="flex-row small-searchbar" >
@@ -48,10 +48,14 @@ const Searchbar = () => {
       {results.length != 0 ?
         (<div id="search-result-container">
           {results.map((result, index) => (
-            <div className="search-result" key={result.id} 
-              style={index === results.length - 1 ? {borderBottom: "0px"} : {}}>
+            <button 
+              className="search-result" 
+              key={result.id}
+              style={index === results.length - 1 ? {borderBottom: "0px"} : {}}
+              onClick={() => setResult(result.runid)}
+            >
               <p>{result.title}</p>
-            </div>
+            </button>
           ))}
         </div>) : (<></>)
       }

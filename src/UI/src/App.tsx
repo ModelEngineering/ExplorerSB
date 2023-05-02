@@ -6,16 +6,20 @@ import Model from "./Components/Model";
 import Searchbar from "./Components/Searchbar";
 import Summary from "./Components/Summary";
 
-import {useState} from "react";
+import { useState } from "react";
 import Landing from "./Components/Landing";
 
 function App() {
-  const [selected, setSelected] = useState();
-  return selected == null ? (
+  const [selected, setSelected] = useState<string>();
+  const onResultSelected = (value:string) => {
+    setSelected(value)
+    console.log(value)
+  }
+  return selected != null ? (
     <div id="App">
       <div id="header" className="flex-row" >
         <h1>ExplorerSB</h1>
-        <Searchbar />
+        <Searchbar setResult={onResultSelected}/>
       </div>
       <div className="flex-row container">
         <Title />
@@ -30,7 +34,7 @@ function App() {
       <div id="footer" className="flex-row">
         <Footer />
       </div>
-    </div>) : <Landing />
+    </div>) : <Landing setResult={onResultSelected}/>
   ;
 }
 
