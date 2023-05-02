@@ -6,8 +6,12 @@ import Model from "./Components/Model";
 import Searchbar from "./Components/Searchbar";
 import Summary from "./Components/Summary";
 
+import {useState} from "react";
+import Landing from "./Components/Landing";
+
 function App() {
-  return (
+  const [selected, setSelected] = useState();
+  return selected == null ? (
     <div id="App">
       <div id="header" className="flex-row" >
         <h1>ExplorerSB</h1>
@@ -26,8 +30,8 @@ function App() {
       <div id="footer" className="flex-row">
         <Footer />
       </div>
-    </div>
-  );
+    </div>) : <Landing />
+  ;
 }
 
 export default App;
