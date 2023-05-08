@@ -1,6 +1,6 @@
 /* Global styling */
 * {
-  font-family: 'Chivo Mono', monospace;
+  font-family: 'Rubik', sans-serif;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -58,14 +58,18 @@ body {
   height: 75px;
 }
 
+#logo {
+  padding: 0 .25rem;
+  font-weight: bold;
+}
+
 .container {
   justify-content: space-around;
   padding: 0 1rem;
 }
 
 .box-style {
-  background: #B2B2B2;
-  box-shadow: 0 8px 32px 0 rgba(112, 112, 112, 0.37);
+  background-image: linear-gradient(180deg, rgba(230, 250, 255, 0.75) 0%, rgba(203, 245, 255, 0.25) 25%, rgba(203, 245, 255, 0.2) 100%);
   backdrop-filter: blur( 4px );
   -webkit-backdrop-filter: blur( 4px );
   border-radius: 10px;
@@ -76,7 +80,7 @@ body {
 #title {
   z-index: 1;
   width: 100%;
-  padding: .5rem;
+  padding: 1rem;
   background: #B2B2B2;
   backdrop-filter: blur( 4px );
   -webkit-backdrop-filter: blur( 4px );
@@ -96,7 +100,7 @@ body {
 
 #summary-container {
   z-index: 1;
-  padding: .5rem;
+  padding: 1rem;
   overflow-y: hidden;
   flex: 1 1 calc(50% - .5rem); 
 }
@@ -113,12 +117,12 @@ body {
 }
 
 #model {
-  padding: .5rem;
+  padding: 1rem;
   flex: 1 1 calc(50% - .5rem); 
 }
 
 #graph-container {
-  padding: .5rem;
+  padding: 1rem;
   width: 100%;
   max-height: 500px;
   border-radius: 10px;
@@ -194,6 +198,11 @@ body {
 }
 
 .search-result:hover {
+  background-color: #d3d3d3;
+  border-bottom: 2px solid #505050;
+}
+
+.search-result:focus {
   background-color: #d3d3d3;
   border-bottom: 2px solid #505050;
 }

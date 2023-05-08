@@ -5,12 +5,7 @@ import lunr from "lunr"
 import { BiSearchAlt as SearchIcon } from "react-icons/bi"
 
 const data = json;
-interface SearchResult {
-  title: string | null,
-  abstract: string,
-  runid: string,
-  id: number
-}
+
 const store : Record<string, SearchResult> = {};
 const index = lunr(function () {
   this.field("title");
@@ -28,14 +23,17 @@ const index = lunr(function () {
     store[entry] = {
       title: data[entry].title,
       abstract: data[entry].abstract,
-      // project_id: data[entry].project_id,
+      project_id: data[entry].project_id,
       runid: data[entry].runid,
       id: entry
     };
   }
 });
+interface SearchbarProps {
+  setResult(value : SearchResult): void
+}
 
-const Searchbar = ({setResult}: {setResult(value:string): void}) => {
+const Searchbar = ({setResult} : SearchbarProps) => {
   const [query, setQuery] = useState("");
   const results = useLunr(query, index, store) as SearchResult[];
   
@@ -52,7 +50,7 @@ const Searchbar = ({setResult}: {setResult(value:string): void}) => {
               className="search-result" 
               key={result.id}
               style={index === results.length - 1 ? {borderBottom: "0px"} : {}}
-              onClick={() => setResult(result.runid)}
+              onClick={() => setResult(result)}
             >
               <p>{result.title}</p>
             </button>

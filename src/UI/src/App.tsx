@@ -10,22 +10,22 @@ import { useState } from "react";
 import Landing from "./Components/Landing";
 
 function App() {
-  const [selected, setSelected] = useState<string>();
-  const onResultSelected = (value:string) => {
+  const [selected, setSelected] = useState<SearchResult>();
+  const onResultSelected = (value:SearchResult) => {
     setSelected(value)
     console.log(value)
   }
   return selected != null ? (
     <div id="App">
       <div id="header" className="flex-row" >
-        <h1>ExplorerSB</h1>
+        <h1 id="logo">ExplorerSB</h1>
         <Searchbar setResult={onResultSelected}/>
       </div>
       <div className="flex-row container">
-        <Title />
+        <Title title={selected.title} proj_id={selected.project_id}/>
       </div>
       <div className="flex-row container">
-        <Summary />
+        <Summary summary={selected.abstract}/>
         <Model />
       </div>
       <div className="flex-row container">
