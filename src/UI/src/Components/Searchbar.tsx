@@ -45,17 +45,17 @@ const Searchbar = ({setResult} : SearchbarProps) => {
   
   return (
     <div id="searchbar" className="flex-col">
-      <div id="searchbar-input-container" className="flex-row small-searchbar" >
+      <div id="searchbar-input-container" className="flex-row small-searchbar glassmorphism" >
         <SearchIcon id="search-icon" />
         <input id="searchbar-input" className="small-searchbar" placeholder="Search..." onChange={(event) => setQuery(event.target.value)}/>
       </div>
       {results.length != 0 ?
-        (<div id="search-result-container">
+        (<div id="search-result-container" className="glassmorphism">
           {results.map((result, index) => (
             <button 
               className="search-result" 
               key={result.id}
-              style={index === results.length - 1 ? {borderBottom: "0px"} : {}}
+              style={index === 0 ? {borderTop: "0px"} : {}}
               onClick={() => setResult(result)}
             >
               <p>{result.title}</p>

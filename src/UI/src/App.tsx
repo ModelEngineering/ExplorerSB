@@ -1,7 +1,7 @@
 import "./App.css";
 import Title from "./Components/Title"
 import Footer from "./Components/Footer";
-import Graph from "./Components/Graph";
+import Visualization from "./Components/Visualization";
 import Model from "./Components/Model";
 import Searchbar from "./Components/Searchbar";
 import Summary from "./Components/Summary";
@@ -18,7 +18,7 @@ function App() {
   return selected != null ? (
     <div id="App">
       <div id="header" className="flex-row" >
-        <h1 id="logo">ExplorerSB</h1>
+        <h1 id="logo" onClick={() => setSelected(undefined)}>ExplorerSB</h1>
         <Searchbar setResult={onResultSelected}/>
       </div>
       <div className="flex-row container">
@@ -29,7 +29,7 @@ function App() {
         <Model />
       </div>
       <div className="flex-row container">
-        <Graph runid={selected.runid}/>
+        <Visualization runid={selected.runid}/>
       </div>
       <div id="footer" className="flex-row">
         <Footer />
