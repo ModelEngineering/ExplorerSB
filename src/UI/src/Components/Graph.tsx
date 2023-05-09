@@ -17,8 +17,8 @@ const Graph = ({runid} : {runid: string}) => {
     <div id="graph-container" className="box-style">
       <h2>Graph</h2>
       <VictoryChart containerComponent={
-    <VictoryZoomContainer zoomDimension="x"/>
-  }>
+        <VictoryZoomContainer zoomDimension="x"/>
+      }>
         <VictoryLine
           data={data}
           x="data_set_T"
