@@ -29,7 +29,7 @@ function App() {
         <Model />
       </div>
       <div className="flex-row container">
-        <Graph />
+        <Graph runid={selected.runid}/>
       </div>
       <div id="footer" className="flex-row">
         <Footer />

@@ -19,7 +19,11 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    "typeRoots": ["./node_modules/@types", "./src/typings"]
+    "typeRoots": ["./node_modules/@types", "./src/typings"],
+    "baseUrl": ".",
+    "paths" : {
+      "@/*": ["src/*"],
+    }
   },
   "include": ["src", "./src/Types/index.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]

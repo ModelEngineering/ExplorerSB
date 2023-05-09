@@ -6,7 +6,10 @@ import { BiSearchAlt as SearchIcon } from "react-icons/bi"
 
 const data = json;
 
+// allows us to store the data fields we want the search to return
 const store : Record<string, SearchResult> = {};
+
+// the lunr index, which indexes the data and allows us to search through it
 const index = lunr(function () {
   this.field("title");
   this.field("abstract");
@@ -29,6 +32,9 @@ const index = lunr(function () {
     };
   }
 });
+// the props being passed to Searchbar
+// setresult() 
+// - the function that sets the result of the search in the parent component
 interface SearchbarProps {
   setResult(value : SearchResult): void
 }
