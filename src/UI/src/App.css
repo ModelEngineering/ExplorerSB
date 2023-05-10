@@ -144,8 +144,10 @@ body {
 }
 
 #searchbar {
-  height: 300px;
-  width: 500px;
+  min-height: 400px;
+  max-height: 800px;
+  width: 800px;
+  max-height: 80vh;
   z-index: 10;
   gap: 5px;
   justify-content: flex-start;
@@ -201,6 +203,12 @@ body {
   border: 0px;
   border-radius: 0px;
   border-top: 2px solid #50505050;
+}
+
+.search-result > p {
+  text-overflow: ellipsis; 
+  overflow: hidden; 
+  white-space: nowrap;
 }
 
 .search-result:hover {

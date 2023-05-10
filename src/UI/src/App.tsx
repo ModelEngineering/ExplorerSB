@@ -11,15 +11,11 @@ import Landing from "./Components/Landing";
 
 function App() {
   const [selected, setSelected] = useState<SearchResult>();
-  const onResultSelected = (value:SearchResult) => {
-    setSelected(value)
-    console.log(value)
-  }
   return selected != null ? (
     <div id="App">
       <div id="header" className="flex-row" >
         <h1 id="logo" onClick={() => setSelected(undefined)}>ExplorerSB</h1>
-        <Searchbar setResult={onResultSelected}/>
+        <Searchbar setSelected={setSelected}/>
       </div>
       <div className="flex-row container">
         <Title title={selected.title} proj_id={selected.project_id}/>
@@ -34,7 +30,7 @@ function App() {
       <div id="footer" className="flex-row">
         <Footer />
       </div>
-    </div>) : <Landing setResult={onResultSelected}/>
+    </div>) : <Landing setSelected={setSelected}/>
   ;
 }
 
