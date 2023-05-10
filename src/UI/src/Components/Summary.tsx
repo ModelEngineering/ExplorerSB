@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 const Summary = ({summary}: {summary: string}) => {
   let split = summary.split("\n\n");
   return (

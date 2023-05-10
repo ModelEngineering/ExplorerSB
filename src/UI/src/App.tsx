@@ -1,16 +1,16 @@
 import "./App.css";
+import { useState } from "react";
+
 import Title from "./Components/Title"
 import Footer from "./Components/Footer";
 import Visualization from "./Components/Visualization";
 import Model from "./Components/Model";
 import Searchbar from "./Components/Searchbar";
 import Summary from "./Components/Summary";
-
-import { useState } from "react";
 import Landing from "./Components/Landing";
 
 function App() {
-  const [selected, setSelected] = useState<SearchResult>();
+  const [selected, setSelected] = useState<Context>();
   return selected != null ? (
     <div id="App">
       <div id="header" className="flex-row" >

@@ -8,8 +8,8 @@ const data = contextJson;
 
 
 const Searchbar = ({setSelected} : {setSelected : Function}) => {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState<SearchResult[]>([]);
+  const [query, setQuery] = useState<string>("");
+  const [results, setResults] = useState<Context[]>([]);
   
   return (
     <div id="searchbar" className="flex-col">
