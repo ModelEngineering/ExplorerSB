@@ -24,7 +24,8 @@ const SearchDisplay = ({
             }
           }}
         >
-          <p>{result.title}</p>
+          <p>Title: {result.title !== null ? result.title : "<Title Missing>"}</p>
+          <p>Snippet: </p>
         </button>
       ))}
     </div>

@@ -9,7 +9,7 @@ const data = contextJson;
 
 const Searchbar = ({ setSelected }: { setSelected: Function }) => {
   const [query, setQuery] = useState<string>("");
-  const [results, setResults] = useState<Context[]>([]);
+  const [results, setResults] = useState<ContextWithSnippets[]>([]);
   const [displayResults, setDisplayResults] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
   useSearchFocus(ref, setDisplayResults);

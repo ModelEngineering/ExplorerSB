@@ -8,7 +8,7 @@ const Header = ({
   return (
     <div id="header" className="flex-row">
       <h1 id="logo" onClick={() => setSelected(undefined)}>
-        ExplorerSB
+        Reproducibility Portal
       </h1>
       <Searchbar setSelected={setSelected} />
     </div>

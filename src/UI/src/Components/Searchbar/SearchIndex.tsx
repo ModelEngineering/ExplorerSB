@@ -35,7 +35,11 @@ const SearchIndex = ({
     }
     let results = index.search(query);
 
-    setResult(results.map((result) => store[result.ref]));
+    setResult(results.map((result) => {
+      let contextWithSnippets = store[result.ref] as ContextWithSnippets
+      contextWithSnippets.snippets = Object.values(result.matchData.metadata)[0]
+      return contextWithSnippets
+    }));
   }, [query]);
 
   return <></>;
