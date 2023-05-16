@@ -55,18 +55,18 @@ body {
   z-index: 10;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 1rem 1rem 0 1rem;
-  height: 75px;
+  margin-top: 1rem;
+  height: 55px;
 }
 
 #logo {
+  margin: 0 1rem;
   padding: 0 .25rem;
   font-weight: bold;
 }
 
 .container {
   justify-content: space-around;
-  padding: 0 1rem;
 }
 
 .glassmorphism {
@@ -84,8 +84,9 @@ body {
 
 #title {
   z-index: 1;
-  width: 100%;
+  width: auto;
   padding: 1rem;
+  margin: 0 1rem;
 }
 
 #title-text {
@@ -98,6 +99,11 @@ body {
   font-style: italic;
 }
 
+#summary-model-container {
+  width: auto;
+  margin: 0 1rem;
+
+}
 #summary-container {
   z-index: 1;
   padding: 1rem;
@@ -107,7 +113,7 @@ body {
 
 #summary-content {
   flex: 1 1 auto; 
-  overflow-y: scroll;
+  overflow-y: auto;
   scrollbar-color: #707070 #B2B2B2;
   scrollbar-width: thin;
 }
@@ -121,14 +127,29 @@ body {
   flex: 1 1 calc(50% - .5rem); 
 }
 
-#viz-container {
+#data-frame-container {
+  margin: 0 1rem;
   padding: 1rem;
-  width: 100%;
-  max-height: 500px;
+  width: auto;
+  height: 700px;
   border-radius: 10px;
 }
 
+/* might not be necessary */
+#viz-container {
+  z-index: 1;
+  height: 100%;
+  width: auto;
+}
+
+#viz-settings-container {
+  width: 50%;
+  height: 100%;
+  justify-content: flex-start;
+}
+
 #graph-container {
+  background-color: #50505023;
   padding: 1rem;
   width: 50%;
   height: 100%;
@@ -145,12 +166,15 @@ body {
 
 #searchbar {
   min-height: 400px;
-  max-height: 800px;
+  max-height: calc(min(800px, 50vh));
   width: 800px;
-  max-height: 80vh;
+  min-width: 20%;
+  max-width: 80%;
+  margin: 0 1rem;
   z-index: 10;
   gap: 5px;
   justify-content: flex-start;
+  flex-shrink: 2;
 }
 
 #searchbar-input-container {
@@ -158,8 +182,9 @@ body {
   border: 0px;
   border-radius: 10px;
   color: black;
+  justify-content: flex-start;
   align-items: center;
-  padding-left: 1rem;
+  padding: 0 1rem;
   width: 100%;
 }
 
@@ -173,13 +198,21 @@ body {
 }
 
 #searchbar-input {
+  flex-grow: 1;
   background: transparent;
   border: 0px;
   padding: .5rem;
   height: 100%;
   border-radius: 10px;
   color: black;
-  width: 100%;
+  width: 90%;
+}
+
+#clear-icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #505050;
+  justify-self: flex-end;
 }
 
 #searchbar-input:focus {
@@ -219,4 +252,20 @@ body {
 .search-result:focus {
   background: rgba(162, 220, 230, 0.55);
   border-top: 2px solid #50505050;
+}
+
+/* multiselect-react-dropdown */
+.multiSelectContainer { 
+  width: 100%;
+  background-color: white;
+}
+
+#search_input {
+  width: fit-content;
+  color: black;
+}
+
+.optionContainer {
+  scrollbar-color: #707070 #B2B2B2;
+  scrollbar-width: thin;
 }

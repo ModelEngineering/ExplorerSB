@@ -1,4 +1,4 @@
-const Summary = ({summary}: {summary: string}) => {
+const Summary = ({ summary }: { summary: string }) => {
   let split = summary.split("\n\n");
   return (
     <div id="summary-container" className="box-style glassmorphism flex-col">
@@ -10,6 +10,6 @@ const Summary = ({summary}: {summary: string}) => {
       </div>
     </div>
   );
-}
+};
 
 export default Summary;

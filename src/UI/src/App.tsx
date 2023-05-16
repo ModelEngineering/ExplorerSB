@@ -5,7 +5,7 @@ import Title from "./Components/Title"
 import Footer from "./Components/Footer";
 import Visualization from "./Components/Visualization";
 import Model from "./Components/Model";
-import Searchbar from "./Components/Searchbar";
+import Header from "./Components/Header";
 import Summary from "./Components/Summary";
 import Landing from "./Components/Landing";
 
@@ -13,20 +13,13 @@ function App() {
   const [selected, setSelected] = useState<Context>();
   return selected != null ? (
     <div id="App">
-      <div id="header" className="flex-row" >
-        <h1 id="logo" onClick={() => setSelected(undefined)}>ExplorerSB</h1>
-        <Searchbar setSelected={setSelected}/>
-      </div>
-      <div className="flex-row container">
-        <Title title={selected.title} proj_id={selected.project_id}/>
-      </div>
-      <div className="flex-row container">
+      <Header setSelected={setSelected} / >
+      <Title title={selected.title} proj_id={selected.project_id}/>
+      <div id="summary-model-container" className="flex-row container">
         <Summary summary={selected.abstract}/>
         <Model />
       </div>
-      <div className="flex-row container">
-        <Visualization runid={selected.runid}/>
-      </div>
+      <Visualization runid={selected.runid}/>
       <div id="footer" className="flex-row">
         <Footer />
       </div>
