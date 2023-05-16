@@ -9,6 +9,7 @@ const timeData = [
   "data_set_value_component_environment_variable_time",
 ];
 
+// TODO: Refactor this component 
 const Visualization = ({ runid }: { runid: string }) => {
   const [data, setData] = useState([]);
   const [xVariable, setXVariable] = useState<string>();

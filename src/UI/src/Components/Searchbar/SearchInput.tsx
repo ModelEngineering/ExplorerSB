@@ -5,13 +5,9 @@ import {
 
 const SearchInput = ({
   setQuery,
-  onFocus,
-  onBlur,
   query,
 }: {
   setQuery: Function;
-  onFocus: Function;
-  onBlur: Function;
   query: string;
 }) => {
   return (
@@ -26,9 +22,7 @@ const SearchInput = ({
         placeholder="Search..."
         value={query}
         onChange={(event) => setQuery(event.target.value)}
-        onClick={() => onFocus()}
-        onFocus={() => onFocus()}
-        onBlur={() => onBlur()}
+        onFocus={() => setQuery(query)}
       />
       <ClearIcon
         id="clear-icon"

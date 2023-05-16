@@ -1,5 +1,5 @@
 const Table = () => {
-  return <></>
+  return <p>Table placeholder</p>
 }
 
 export default Table;

@@ -18,6 +18,11 @@ const SearchDisplay = ({
           key={result.runid}
           style={index === 0 ? { borderTop: "0px" } : {}}
           onClick={() => setSelected(result)}
+          onKeyDown={(e) => {
+            if (["Enter"].includes(e.code)) {
+              setSelected(result);
+            }
+          }}
         >
           <p>{result.title}</p>
         </button>
