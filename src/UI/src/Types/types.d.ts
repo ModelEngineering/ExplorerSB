@@ -10,7 +10,7 @@ declare global {
   }
 
   interface Position {
-    array: number[][]
+    position: number[][]
   }
 
   interface Snippet {
@@ -19,7 +19,7 @@ declare global {
   }
 
   interface ContextWithSnippets extends Context {
-    snippets: Snippet[],
+    snippet: string,
   }
 }
 

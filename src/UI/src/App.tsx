@@ -16,7 +16,7 @@ function App() {
       <Header setSelected={setSelected} / >
       <Title title={selected.title} proj_id={selected.project_id}/>
       <div id="summary-model-container" className="flex-row container">
-        <Summary summary={selected.abstract}/>
+        <Summary context={selected}/>
         <Model />
       </div>
       <Visualization runid={selected.runid}/>

@@ -1,52 +1,32 @@
-import { useEffect, useState } from "react";
-import Multiselect from "multiselect-react-dropdown";
+import { useState, useCallback } from "react";
 import Graph from "./Visualization/Graph";
 import Table from "./Visualization/Table";
+import VizDataLoader from "./Visualization/VizDataLoader";
+import VizSettings from "./Visualization/VizSettings";
+import { useCurrentPng } from "recharts-to-png";
+import FileSaver from "file-saver";
+import VizSidebar from "./Visualization/VizSidebar";
 
-const timeData = [
-  "data_set_time",
-  "data_set_T",
-  "data_set_value_component_environment_variable_time",
-];
-
-// TODO: Refactor this component 
+// TODO: Refactor this component
 const Visualization = ({ runid }: { runid: string }) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Object[]>([]);
   const [xVariable, setXVariable] = useState<string>();
   const [allVariables, setAllVariables] = useState<Object[]>([]);
   const [displayedVariables, setDisplayedVariables] = useState<Object[]>([]);
-  const modules = import.meta.glob("../**/report.json");
-  useEffect(() => {
-    for (const path in modules) {
-      if (path.indexOf(runid) === -1) continue;
-      modules[path]().then((mod) => {
-        const keys = Object.keys(mod.default[0]);
-        setData(mod.default);
-        timeData.some((name) => {
-          let index = keys.indexOf(name);
-          if (index !== -1) {
-            setXVariable(name);
-            keys.splice(index, 1);
-            return true;
-          }
-        });
-        setAllVariables(
-          keys.map((key) => {
-            return { name: key };
-          })
-        );
-        setDisplayedVariables(
-          keys.slice(0, 10).map((key) => {
-            return { name: key };
-          })
-        );
-      });
-    }
-  }, [runid]);
 
-  const onChange = (selectedList: any): void => {
+  const [getPng, { ref }] = useCurrentPng();
+
+  const onChange = (selectedList: Object[]): void => {
     setDisplayedVariables(selectedList);
   };
+
+  const handleDownload = useCallback(async () => {
+    const png = await getPng();
+
+    if (png) {
+      FileSaver.saveAs(png, "Chart.png");
+    }
+  }, [getPng]);
 
   return (
     <div
@@ -54,31 +34,34 @@ const Visualization = ({ runid }: { runid: string }) => {
       className="box-style glassmorphism flex-col container"
     >
       <h2>Data</h2>
+      <VizDataLoader
+        runid={runid}
+        setData={setData}
+        setXVariable={setXVariable}
+        setAllVariables={setAllVariables}
+        setDisplayedVariables={setDisplayedVariables}
+      />
+
       <div id="viz-container" className="flex-row">
-        {/* if we found a matching time series X variable, we can display a graph, otherwise we display a table */}
-        {xVariable !== undefined ? (
-          <Graph
-            data={data}
-            xVariable={xVariable}
-            variables={displayedVariables}
-          />
-        ) : (
-          <Table />
-        )}
-        <div id="viz-settings-container" className="flex-col">
-          <h3>Settings</h3>
-          <Multiselect
-            style={{ backgroundColor: "white" }}
-            options={allVariables} // Options to display in the dropdown
-            selectedValues={displayedVariables} // Preselected value to persist in dropdown
-            displayValue="name"
-            onSelect={onChange}
-            onRemove={onChange}
-            selectionLimit={10}
-            placeholder="Select up to 10 variables"
-            showCheckbox
-          />
+        <div id="viz-frame" className="flex-row">
+          {/* if we found a matching time series X variable, we can display a graph, otherwise we display a table */}
+          {xVariable !== undefined ? (
+            <Graph
+              data={data}
+              ref={ref}
+              xVariable={xVariable}
+              variables={displayedVariables}
+            />
+          ) : (
+            <Table data={data} />
+          )}
+          <VizSidebar handleDownload={handleDownload} />
         </div>
+        <VizSettings
+          onChange={onChange}
+          displayedVariables={displayedVariables}
+          allVariables={allVariables}
+        />
       </div>
     </div>
   );

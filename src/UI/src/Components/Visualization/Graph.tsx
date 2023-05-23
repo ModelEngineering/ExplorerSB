@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, forwardRef } from "react";
 import {
   LineChart,
   Line,
@@ -24,15 +24,10 @@ const ChromaticScale = [
   "#bab0ab",
 ];
 
-const Graph = ({
-  data,
-  xVariable,
-  variables,
-}: {
-  data: Object[];
-  xVariable: string;
-  variables: Object[];
-}) => {
+const Graph = forwardRef(function Graph(
+  { data, xVariable, variables }: { data: Object[]; xVariable: string; variables: Object[] },
+  ref: any
+  ) {
   const [localVariables, setLocalVariables] = useState<string[]>([]);
   useEffect(() => {
     const updateVariables = setTimeout(() => {
@@ -48,6 +43,7 @@ const Graph = ({
           width={500}
           height={300}
           data={data}
+          ref={ref}
           margin={{
             top: 30,
             right: 30,
@@ -92,5 +88,5 @@ const Graph = ({
       </ResponsiveContainer>
     </div>
   );
-};
+});
 export default Graph;

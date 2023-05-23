@@ -7,7 +7,7 @@ import SearchDisplay from "./Searchbar/SearchDisplay";
 import useSearchFocus from "./Searchbar/useSearchFocus";
 const data = contextJson;
 
-const Searchbar = ({ setSelected }: { setSelected: Function }) => {
+const Searchbar = ({ setSelected, landing }: { setSelected: Function, landing?: boolean}) => {
   const [query, setQuery] = useState<string>("");
   const [results, setResults] = useState<ContextWithSnippets[]>([]);
   const [displayResults, setDisplayResults] = useState<boolean>(false);
@@ -23,12 +23,12 @@ const Searchbar = ({ setSelected }: { setSelected: Function }) => {
     setSelected(result);
     setDisplayResults(false);
   }
-
+  
   return (
     <div
       ref={ref}
       id="searchbar"
-      className="flex-col"
+      className={landing ? "flex-col landing-search" : "flex-col"}
     >
       <SearchInput setQuery={onQueryUpdate} query={query} />
       <SearchIndex data={data} query={query} setResult={setResults} />
