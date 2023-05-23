@@ -7,7 +7,7 @@ const Table = ({data, variables, displayMode}: {data: Object[], variables: Objec
     <table>
       {variables.map((variable: any) => (
         <tr>
-            <th >{variable.name}</th>
+            <th>{variable.name}</th>
             {data.map((data: any) => {
               return <td>{data[variable.name]} </td>
             })}
