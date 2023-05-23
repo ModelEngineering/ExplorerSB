@@ -19,7 +19,7 @@ const SearchInput = ({
       <input
         id="searchbar-input"
         className="small-searchbar"
-        placeholder="Search..."
+        placeholder="Type in keyword to search models (e.g. 'glucose', 'glycolysis', 'MAPK pathway')..."
         value={query}
         onChange={(event) => setQuery(event.target.value)}
         onFocus={() => setQuery(query)}

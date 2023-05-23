@@ -55,12 +55,12 @@ body {
   z-index: 10;
   justify-content: space-between;
   align-items: flex-start;
-  margin-top: 1rem;
+  margin: 1rem 1rem 0 1rem;
+  width: calc(100% - 3rem);
   height: 55px;
 }
 
 #logo {
-  margin: 0 1rem;
   padding: 0 .25rem;
   font-weight: bold;
 }
@@ -84,7 +84,7 @@ body {
 
 #title {
   z-index: 1;
-  width: auto;
+  width: calc(100% - 3rem);
   padding: 1rem;
   margin: 0 1rem;
 }
@@ -100,7 +100,7 @@ body {
 }
 
 #summary-model-container {
-  width: auto;
+  width: calc(100% - 3rem);
   margin: 0 1rem;
 
 }
@@ -148,7 +148,7 @@ body {
 #data-frame-container {
   margin: 0 1rem;
   padding: 1rem;
-  width: auto;
+  width: calc(100% - 3rem);
   height: 700px;
   border-radius: 10px;
 }
@@ -163,6 +163,7 @@ body {
 
 #viz-frame {
   width: 50%;
+  height: 100%;
   gap: 0px;
 }
 
@@ -218,16 +219,17 @@ body {
 
 #table-container {
   background-color: rgb(255, 255, 255);
-  flex-grow: 1;
   height: 100%;
-  width: 100%;
+  width: 95%;
   overflow-x: auto;
   scrollbar-color: #707070 #B2B2B2;
   scrollbar-width: thin;
 }
 
 #table-container table {
-  margin: 1rem;
+  padding: 1rem;
+  height: 100%;
+  width: 100%;
   border-collapse: separate;
 }
 
@@ -238,9 +240,10 @@ body {
 
 #table-container th, td {
   background-color: white;
-  padding: 1rem;
+  padding: .7rem;
   border: 2px solid;
 }
+
 #table-container th {
   position: sticky;
   left: 0;
@@ -263,7 +266,6 @@ body {
   width: 800px;
   min-width: 20%;
   max-width: 80%;
-  margin: 0 1rem;
   z-index: 10;
   gap: 5px;
   justify-content: flex-start;
