@@ -23,7 +23,7 @@ const VizDataLoader = ({
   useEffect(() => {
     for (const path in modules) {
       if (path.indexOf(runid) === -1) continue;
-      modules[path]().then((mod) => {
+      modules[path]().then((mod: any) => {
         const keys = Object.keys(mod.default[0]);
         setData(mod.default);
         timeData.some((name) => {
