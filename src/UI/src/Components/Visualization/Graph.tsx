@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
   Brush,
 } from "recharts";
+import { DisplayMode } from "../Visualization";
 
 const ChromaticScale = [
   "#4e79a7",
@@ -25,7 +26,7 @@ const ChromaticScale = [
 ];
 
 const Graph = forwardRef(function Graph(
-  { data, xVariable, variables }: { data: Object[]; xVariable: string; variables: Object[] },
+  { data, xVariable, variables, displayMode}: { data: Object[]; xVariable: string | undefined; variables: Object[]; displayMode: DisplayMode},
   ref: any
   ) {
   const [localVariables, setLocalVariables] = useState<string[]>([]);
@@ -37,7 +38,8 @@ const Graph = forwardRef(function Graph(
     return () => clearTimeout(updateVariables);
   }, [variables]);
   return (
-    <div id="graph-container">
+    <div id="graph-container" className={displayMode === DisplayMode.Graph ? "" : "hidden"}>
+      {xVariable === undefined ? <p>Graph not Available</p> :
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           width={500}
@@ -46,7 +48,7 @@ const Graph = forwardRef(function Graph(
           ref={ref}
           margin={{
             top: 30,
-            right: 30,
+            right: 50,
             left: 20,
             bottom: 40,
           }}
@@ -57,12 +59,14 @@ const Graph = forwardRef(function Graph(
             height={70}
             dataKey={xVariable}
             label={{ offset: 20, value: "Time", position: "insideBottom" }}
+            interval={"preserveStart"}
+            domain={['auto', 'auto']}
           />
           <YAxis label={{ value: "Value", angle: "-90", position: "left" }} />
           <Tooltip
             isAnimationActive={false}
             position={{ y: 0 }}
-            contentStyle={{ background: "#d4d4d486" }}
+            contentStyle={{ background: "#FFFFFF" }}
             wrapperStyle={{ zIndex: 1000 }}
           />
           <Legend
@@ -86,6 +90,7 @@ const Graph = forwardRef(function Graph(
           <Brush dataKey={xVariable}/>
         </LineChart>
       </ResponsiveContainer>
+      }
     </div>
   );
 });

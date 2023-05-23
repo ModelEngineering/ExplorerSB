@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Graph from "./Visualization/Graph";
 import Table from "./Visualization/Table";
 import VizDataLoader from "./Visualization/VizDataLoader";
@@ -6,15 +6,34 @@ import VizSettings from "./Visualization/VizSettings";
 import { useCurrentPng } from "recharts-to-png";
 import FileSaver from "file-saver";
 import VizSidebar from "./Visualization/VizSidebar";
+import DataNotFound from "./Visualization/DataNotFound";
 
+export enum DisplayMode {
+  Graph,
+  Table,
+  None
+}
 // TODO: Refactor this component
 const Visualization = ({ runid }: { runid: string }) => {
+  const [displayMode, setDisplayMode] = useState<DisplayMode>(
+    DisplayMode.Graph
+  );
   const [data, setData] = useState<Object[]>([]);
   const [xVariable, setXVariable] = useState<string>();
   const [allVariables, setAllVariables] = useState<Object[]>([]);
   const [displayedVariables, setDisplayedVariables] = useState<Object[]>([]);
 
   const [getPng, { ref }] = useCurrentPng();
+
+  useEffect(() => {
+    if (xVariable !== undefined) {
+      setDisplayMode(DisplayMode.Graph);
+    } else if (data.length !== 0) {
+      setDisplayMode(DisplayMode.Table);
+    } else {
+      setDisplayMode(DisplayMode.None)
+    }
+  }, [xVariable]);
 
   const onChange = (selectedList: Object[]): void => {
     setDisplayedVariables(selectedList);
@@ -45,17 +64,23 @@ const Visualization = ({ runid }: { runid: string }) => {
       <div id="viz-container" className="flex-row">
         <div id="viz-frame" className="flex-row">
           {/* if we found a matching time series X variable, we can display a graph, otherwise we display a table */}
-          {xVariable !== undefined ? (
-            <Graph
-              data={data}
-              ref={ref}
-              xVariable={xVariable}
-              variables={displayedVariables}
-            />
-          ) : (
-            <Table data={data} />
-          )}
-          <VizSidebar handleDownload={handleDownload} />
+          <Graph
+            data={data}
+            ref={ref}
+            xVariable={xVariable}
+            variables={displayedVariables}
+            displayMode={displayMode}
+          />
+          <Table data={data} variables={displayedVariables} 
+          displayMode={displayMode}/>
+          <DataNotFound displayMode={displayMode}/>
+          <VizSidebar
+            handleDownload={handleDownload}
+            graphDisabled={xVariable === undefined}
+            tableDisabled={data.length === 0}
+            displayMode={displayMode}
+            setDisplayMode={setDisplayMode}
+          />
         </div>
         <VizSettings
           onChange={onChange}
