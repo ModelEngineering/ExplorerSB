@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfModels>
+    <model id="model" name="Model" language="urn:sedml:language:xpp" source="LampreyNMDAosc.ode">
+      <listOfChanges>
+        <changeAttribute target="C" newValue="0.0"/>
+        <changeAttribute target="V" newValue="-70.0"/>
+        <changeAttribute target="eca" newValue="150.0"/>
+        <changeAttribute target="ek" newValue="-80.0"/>
+        <changeAttribute target="eleak" newValue="-70.0"/>
+        <changeAttribute target="enmda" newValue="0.0"/>
+        <changeAttribute target="gcav" newValue="0.005"/>
+        <changeAttribute target="gk" newValue="8.0"/>
+        <changeAttribute target="gkca" newValue="20.0"/>
+        <changeAttribute target="gleak" newValue="0.001"/>
+        <changeAttribute target="gnmda" newValue="0.005"/>
+        <changeAttribute target="ibias" newValue="0.0"/>
+        <changeAttribute target="icav" newValue="0.3"/>
+        <changeAttribute target="inmda" newValue="0.2"/>
+        <changeAttribute target="sca" newValue="-5.0"/>
+        <changeAttribute target="sk" newValue="-7.0"/>
+        <changeAttribute target="sm" newValue="0.3"/>
+        <changeAttribute target="tau" newValue="1.0"/>
+        <changeAttribute target="tc" newValue="0.02"/>
+        <changeAttribute target="v(0)" newValue="-70.0"/>
+        <changeAttribute target="vcahalf" newValue="-45.0"/>
+        <changeAttribute target="vkhalf" newValue="-1.0"/>
+        <changeAttribute target="vmhalf" newValue="-60.0"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" name="Simulation" initialTime="0" outputStartTime="0" outputEndTime="30" numberOfPoints="1000">
+      <algorithm kisaoID="KISAO:0000019">
+        <listOfAlgorithmParameters>
+          <algorithmParameter kisaoID="KISAO:0000211" value="1e-6"/>
+          <algorithmParameter kisaoID="KISAO:0000209" value="1e-6"/>
+        </listOfAlgorithmParameters>
+      </algorithm>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" name="Task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_T" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T" name="T" symbol="urn:sedml:symbol:time" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_ACT" name="ACT">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_ACT </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_ACT" name="ACT" target="ACT" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C" name="C">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C" name="C" target="C" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_V" name="V">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_V </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_V" name="V" target="V" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report" name="Report">
+      <listOfDataSets>
+        <dataSet id="data_set_T" name="T" label="T" dataReference="data_generator_T"/>
+        <dataSet id="data_set_ACT" name="ACT" label="ACT" dataReference="data_generator_ACT"/>
+        <dataSet id="data_set_C" name="C" label="C" dataReference="data_generator_C"/>
+        <dataSet id="data_set_V" name="V" label="V" dataReference="data_generator_V"/>
+      </listOfDataSets>
+    </report>
+    <plot2D id="plot">
+      <listOfCurves>
+        <curve id="curve_1" name="V vs T" logX="false" xDataReference="data_generator_T" logY="false" yDataReference="data_generator_V"/>
+      </listOfCurves>
+    </plot2D>
+  </listOfOutputs>
+</sedML>

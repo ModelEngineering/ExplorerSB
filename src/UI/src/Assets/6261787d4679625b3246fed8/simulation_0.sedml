@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" xmlns:cellml="http://www.cellml.org/cellml/1.0#" level="1" version="3">
+  <listOfModels>
+    <model id="model" language="urn:sedml:language:cellml" source="tran_smith_loiselle_crampin_2009.cellml">
+      <listOfChanges>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;k_p1&apos;]/@initial_value" newValue="25900"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;k_p2&apos;]/@initial_value" newValue="2540"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;k_p3&apos;]/@initial_value" newValue="20.5"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;k_m1&apos;]/@initial_value" newValue="16"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;k_m2&apos;]/@initial_value" newValue="67200"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;k_m3&apos;]/@initial_value" newValue="149"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;kdcai&apos;]/@initial_value" newValue="0.9"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;kdcasr&apos;]/@initial_value" newValue="2.24"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;kdh1&apos;]/@initial_value" newValue="1.09e-5"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;kdhi&apos;]/@initial_value" newValue="3.54e-3"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;kdhsr&apos;]/@initial_value" newValue="1.05e-8"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;kdh&apos;]/@initial_value" newValue="7.24e-5"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;n&apos;]/@initial_value" newValue="2"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;Ca_i&apos;]/@initial_value" newValue="150e-6"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;Ca_sr&apos;]/@initial_value" newValue="0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;H_i&apos;]/@initial_value" newValue="1e-4"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;ATP&apos;]/@initial_value" newValue="5"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;ADP&apos;]/@initial_value" newValue="36.3e-3"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;P_i&apos;]/@initial_value" newValue="1"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" initialTime="0" outputStartTime="0" outputEndTime="1" numberOfPoints="10">
+      <algorithm kisaoID="KISAO:0000019"/>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_value_component_environment_variable_time" name="Value of variable &quot;time&quot; of component &quot;environment&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_environment_variable_time </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_environment_variable_time" name="Value of variable &quot;time&quot; of component &quot;environment&quot;" target="/cellml:model/cellml:component[@name=&apos;environment&apos;]/cellml:variable[@name=&apos;time&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_k_p1" name="Value of variable &quot;k_p1&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_k_p1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_k_p1" name="Value of variable &quot;k_p1&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;k_p1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_k_p2" name="Value of variable &quot;k_p2&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_k_p2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_k_p2" name="Value of variable &quot;k_p2&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;k_p2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_k_p3" name="Value of variable &quot;k_p3&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_k_p3 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_k_p3" name="Value of variable &quot;k_p3&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;k_p3&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_k_m1" name="Value of variable &quot;k_m1&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_k_m1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_k_m1" name="Value of variable &quot;k_m1&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;k_m1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_k_m2" name="Value of variable &quot;k_m2&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_k_m2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_k_m2" name="Value of variable &quot;k_m2&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;k_m2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_k_m3" name="Value of variable &quot;k_m3&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_k_m3 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_k_m3" name="Value of variable &quot;k_m3&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;k_m3&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_kdcai" name="Value of variable &quot;kdcai&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_kdcai </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_kdcai" name="Value of variable &quot;kdcai&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;kdcai&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_kdcasr" name="Value of variable &quot;kdcasr&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_kdcasr </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_kdcasr" name="Value of variable &quot;kdcasr&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;kdcasr&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_kdh1" name="Value of variable &quot;kdh1&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_kdh1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_kdh1" name="Value of variable &quot;kdh1&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;kdh1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_kdhi" name="Value of variable &quot;kdhi&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_kdhi </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_kdhi" name="Value of variable &quot;kdhi&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;kdhi&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_kdhsr" name="Value of variable &quot;kdhsr&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_kdhsr </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_kdhsr" name="Value of variable &quot;kdhsr&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;kdhsr&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_kdh" name="Value of variable &quot;kdh&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_kdh </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_kdh" name="Value of variable &quot;kdh&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;kdh&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_n" name="Value of variable &quot;n&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_n </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_n" name="Value of variable &quot;n&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;n&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_Ca_i" name="Value of variable &quot;Ca_i&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_Ca_i </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_Ca_i" name="Value of variable &quot;Ca_i&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;Ca_i&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_Ca_sr" name="Value of variable &quot;Ca_sr&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_Ca_sr </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_Ca_sr" name="Value of variable &quot;Ca_sr&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;Ca_sr&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_H_i" name="Value of variable &quot;H_i&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_H_i </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_H_i" name="Value of variable &quot;H_i&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;H_i&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_ATP" name="Value of variable &quot;ATP&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_ATP </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_ATP" name="Value of variable &quot;ATP&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;ATP&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_ADP" name="Value of variable &quot;ADP&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_ADP </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_ADP" name="Value of variable &quot;ADP&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;ADP&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_P_i" name="Value of variable &quot;P_i&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_P_i </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_P_i" name="Value of variable &quot;P_i&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;P_i&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_T_Cai" name="Value of variable &quot;T_Cai&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_T_Cai </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_T_Cai" name="Value of variable &quot;T_Cai&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;T_Cai&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_T_Casr" name="Value of variable &quot;T_Casr&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_T_Casr </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_T_Casr" name="Value of variable &quot;T_Casr&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;T_Casr&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_T_H1" name="Value of variable &quot;T_H1&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_T_H1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_T_H1" name="Value of variable &quot;T_H1&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;T_H1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_T_Hi" name="Value of variable &quot;T_Hi&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_T_Hi </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_T_Hi" name="Value of variable &quot;T_Hi&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;T_Hi&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_T_Hsr" name="Value of variable &quot;T_Hsr&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_T_Hsr </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_T_Hsr" name="Value of variable &quot;T_Hsr&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;T_Hsr&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_T_H" name="Value of variable &quot;T_H&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_T_H </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_T_H" name="Value of variable &quot;T_H&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;T_H&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_a_p1" name="Value of variable &quot;a_p1&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_a_p1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_a_p1" name="Value of variable &quot;a_p1&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;a_p1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_a_p2" name="Value of variable &quot;a_p2&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_a_p2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_a_p2" name="Value of variable &quot;a_p2&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;a_p2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_a_p3" name="Value of variable &quot;a_p3&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_a_p3 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_a_p3" name="Value of variable &quot;a_p3&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;a_p3&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_a_m1" name="Value of variable &quot;a_m1&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_a_m1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_a_m1" name="Value of variable &quot;a_m1&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;a_m1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_a_m2" name="Value of variable &quot;a_m2&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_a_m2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_a_m2" name="Value of variable &quot;a_m2&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;a_m2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_a_m3" name="Value of variable &quot;a_m3&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_a_m3 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_a_m3" name="Value of variable &quot;a_m3&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;a_m3&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_s1" name="Value of variable &quot;s1&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_s1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_s1" name="Value of variable &quot;s1&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;s1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_s2" name="Value of variable &quot;s2&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_s2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_s2" name="Value of variable &quot;s2&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;s2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_s3" name="Value of variable &quot;s3&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_s3 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_s3" name="Value of variable &quot;s3&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;s3&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_SERCA_variable_v_cycle" name="Value of variable &quot;v_cycle&quot; of component &quot;SERCA&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_SERCA_variable_v_cycle </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_SERCA_variable_v_cycle" name="Value of variable &quot;v_cycle&quot; of component &quot;SERCA&quot;" target="/cellml:model/cellml:component[@name=&apos;SERCA&apos;]/cellml:variable[@name=&apos;v_cycle&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report">
+      <listOfDataSets>
+        <dataSet id="data_set_value_component_environment_variable_time" name="Value of variable &quot;time&quot; of component &quot;environment&quot;" label="value_component_environment_variable_time" dataReference="data_generator_value_component_environment_variable_time"/>
+        <dataSet id="data_set_value_component_SERCA_variable_k_p1" name="Value of variable &quot;k_p1&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_k_p1" dataReference="data_generator_value_component_SERCA_variable_k_p1"/>
+        <dataSet id="data_set_value_component_SERCA_variable_k_p2" name="Value of variable &quot;k_p2&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_k_p2" dataReference="data_generator_value_component_SERCA_variable_k_p2"/>
+        <dataSet id="data_set_value_component_SERCA_variable_k_p3" name="Value of variable &quot;k_p3&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_k_p3" dataReference="data_generator_value_component_SERCA_variable_k_p3"/>
+        <dataSet id="data_set_value_component_SERCA_variable_k_m1" name="Value of variable &quot;k_m1&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_k_m1" dataReference="data_generator_value_component_SERCA_variable_k_m1"/>
+        <dataSet id="data_set_value_component_SERCA_variable_k_m2" name="Value of variable &quot;k_m2&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_k_m2" dataReference="data_generator_value_component_SERCA_variable_k_m2"/>
+        <dataSet id="data_set_value_component_SERCA_variable_k_m3" name="Value of variable &quot;k_m3&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_k_m3" dataReference="data_generator_value_component_SERCA_variable_k_m3"/>
+        <dataSet id="data_set_value_component_SERCA_variable_kdcai" name="Value of variable &quot;kdcai&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_kdcai" dataReference="data_generator_value_component_SERCA_variable_kdcai"/>
+        <dataSet id="data_set_value_component_SERCA_variable_kdcasr" name="Value of variable &quot;kdcasr&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_kdcasr" dataReference="data_generator_value_component_SERCA_variable_kdcasr"/>
+        <dataSet id="data_set_value_component_SERCA_variable_kdh1" name="Value of variable &quot;kdh1&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_kdh1" dataReference="data_generator_value_component_SERCA_variable_kdh1"/>
+        <dataSet id="data_set_value_component_SERCA_variable_kdhi" name="Value of variable &quot;kdhi&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_kdhi" dataReference="data_generator_value_component_SERCA_variable_kdhi"/>
+        <dataSet id="data_set_value_component_SERCA_variable_kdhsr" name="Value of variable &quot;kdhsr&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_kdhsr" dataReference="data_generator_value_component_SERCA_variable_kdhsr"/>
+        <dataSet id="data_set_value_component_SERCA_variable_kdh" name="Value of variable &quot;kdh&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_kdh" dataReference="data_generator_value_component_SERCA_variable_kdh"/>
+        <dataSet id="data_set_value_component_SERCA_variable_n" name="Value of variable &quot;n&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_n" dataReference="data_generator_value_component_SERCA_variable_n"/>
+        <dataSet id="data_set_value_component_SERCA_variable_Ca_i" name="Value of variable &quot;Ca_i&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_Ca_i" dataReference="data_generator_value_component_SERCA_variable_Ca_i"/>
+        <dataSet id="data_set_value_component_SERCA_variable_Ca_sr" name="Value of variable &quot;Ca_sr&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_Ca_sr" dataReference="data_generator_value_component_SERCA_variable_Ca_sr"/>
+        <dataSet id="data_set_value_component_SERCA_variable_H_i" name="Value of variable &quot;H_i&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_H_i" dataReference="data_generator_value_component_SERCA_variable_H_i"/>
+        <dataSet id="data_set_value_component_SERCA_variable_ATP" name="Value of variable &quot;ATP&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_ATP" dataReference="data_generator_value_component_SERCA_variable_ATP"/>
+        <dataSet id="data_set_value_component_SERCA_variable_ADP" name="Value of variable &quot;ADP&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_ADP" dataReference="data_generator_value_component_SERCA_variable_ADP"/>
+        <dataSet id="data_set_value_component_SERCA_variable_P_i" name="Value of variable &quot;P_i&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_P_i" dataReference="data_generator_value_component_SERCA_variable_P_i"/>
+        <dataSet id="data_set_value_component_SERCA_variable_T_Cai" name="Value of variable &quot;T_Cai&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_T_Cai" dataReference="data_generator_value_component_SERCA_variable_T_Cai"/>
+        <dataSet id="data_set_value_component_SERCA_variable_T_Casr" name="Value of variable &quot;T_Casr&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_T_Casr" dataReference="data_generator_value_component_SERCA_variable_T_Casr"/>
+        <dataSet id="data_set_value_component_SERCA_variable_T_H1" name="Value of variable &quot;T_H1&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_T_H1" dataReference="data_generator_value_component_SERCA_variable_T_H1"/>
+        <dataSet id="data_set_value_component_SERCA_variable_T_Hi" name="Value of variable &quot;T_Hi&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_T_Hi" dataReference="data_generator_value_component_SERCA_variable_T_Hi"/>
+        <dataSet id="data_set_value_component_SERCA_variable_T_Hsr" name="Value of variable &quot;T_Hsr&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_T_Hsr" dataReference="data_generator_value_component_SERCA_variable_T_Hsr"/>
+        <dataSet id="data_set_value_component_SERCA_variable_T_H" name="Value of variable &quot;T_H&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_T_H" dataReference="data_generator_value_component_SERCA_variable_T_H"/>
+        <dataSet id="data_set_value_component_SERCA_variable_a_p1" name="Value of variable &quot;a_p1&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_a_p1" dataReference="data_generator_value_component_SERCA_variable_a_p1"/>
+        <dataSet id="data_set_value_component_SERCA_variable_a_p2" name="Value of variable &quot;a_p2&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_a_p2" dataReference="data_generator_value_component_SERCA_variable_a_p2"/>
+        <dataSet id="data_set_value_component_SERCA_variable_a_p3" name="Value of variable &quot;a_p3&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_a_p3" dataReference="data_generator_value_component_SERCA_variable_a_p3"/>
+        <dataSet id="data_set_value_component_SERCA_variable_a_m1" name="Value of variable &quot;a_m1&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_a_m1" dataReference="data_generator_value_component_SERCA_variable_a_m1"/>
+        <dataSet id="data_set_value_component_SERCA_variable_a_m2" name="Value of variable &quot;a_m2&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_a_m2" dataReference="data_generator_value_component_SERCA_variable_a_m2"/>
+        <dataSet id="data_set_value_component_SERCA_variable_a_m3" name="Value of variable &quot;a_m3&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_a_m3" dataReference="data_generator_value_component_SERCA_variable_a_m3"/>
+        <dataSet id="data_set_value_component_SERCA_variable_s1" name="Value of variable &quot;s1&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_s1" dataReference="data_generator_value_component_SERCA_variable_s1"/>
+        <dataSet id="data_set_value_component_SERCA_variable_s2" name="Value of variable &quot;s2&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_s2" dataReference="data_generator_value_component_SERCA_variable_s2"/>
+        <dataSet id="data_set_value_component_SERCA_variable_s3" name="Value of variable &quot;s3&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_s3" dataReference="data_generator_value_component_SERCA_variable_s3"/>
+        <dataSet id="data_set_value_component_SERCA_variable_v_cycle" name="Value of variable &quot;v_cycle&quot; of component &quot;SERCA&quot;" label="value_component_SERCA_variable_v_cycle" dataReference="data_generator_value_component_SERCA_variable_v_cycle"/>
+      </listOfDataSets>
+    </report>
+  </listOfOutputs>
+</sedML>

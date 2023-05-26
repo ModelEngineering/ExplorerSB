@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="IKv" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="units.cellml">
+        <units name="mM" units_ref="mM"/>
+        <units name="ms" units_ref="ms"/>
+        <units name="pA" units_ref="pA"/>
+        <units name="mV" units_ref="mV"/>
+        <units name="nS" units_ref="nS"/>
+    </import>
+    <import xlink:href="Ionic_currents.cellml">
+        <component component_ref="Ionic_currents" name="Ionic_currents"/>
+    </import>
+    <import xlink:href="E_Nernst.cellml">
+        <component component_ref="E_K" name="E_K"/>
+    </import>
+    <import xlink:href="gating_kinetics.cellml">
+        <component component_ref="gating_kinetics" name="x_gate"/>
+    </import>
+    <import xlink:href="gating_kinetics.cellml">
+        <component component_ref="gating_kinetics" name="y_gate"/>
+    </import>
+    <import xlink:href="IKv_gating_inf.cellml">
+        <component component_ref="x_inf" name="x_inf"/>
+        <component component_ref="y_inf" name="y_inf"/>
+    </import>
+    <component name="IKv">
+        <variable name="time" private_interface="out" public_interface="in" units="ms"/>
+        <variable name="I_Kv" private_interface="in" public_interface="out" units="pA"/>
+        <variable name="V" private_interface="out" public_interface="in" units="mV"/>
+        <variable name="g_Kv" private_interface="out" public_interface="in" units="nS"/>
+        <variable name="T" private_interface="out" public_interface="in" units="kelvin"/>
+        <variable name="T0K" private_interface="out" public_interface="in" units="kelvin"/>
+        <variable name="Q10K" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="Ko" private_interface="out" public_interface="in" units="mM"/>
+        <variable name="Ki" private_interface="out" public_interface="in" units="mM"/>
+        <variable name="x_Kv_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="x_Kv" private_interface="in" public_interface="out" units="dimensionless"/>
+        <variable name="y_Kv_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="y_Kv" private_interface="in" public_interface="out" units="dimensionless"/>
+        <variable name="tau_xKv" private_interface="out" public_interface="in" units="ms"/>
+        <variable name="tau_yKv" private_interface="out" public_interface="in" units="ms"/>
+        <variable name="P_Kv" private_interface="out" public_interface="out" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>P_Kv</ci>
+                <apply>
+                    <times/>
+                    <ci>x_Kv</ci>
+                    <ci>y_Kv</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <group>
+        <relationship_ref relationship="encapsulation"/>
+        <component_ref component="IKv">
+            <component_ref component="Ionic_currents"/>
+            <component_ref component="E_K"/>
+            <component_ref component="x_gate"/>
+            <component_ref component="y_gate"/>
+            <component_ref component="x_inf"/>
+            <component_ref component="y_inf"/>
+        </component_ref>
+    </group>
+    <connection>
+        <map_components component_1="IKv" component_2="x_inf"/>
+        <map_variables variable_1="V" variable_2="V"/>
+    </connection>
+    <connection>
+        <map_components component_1="IKv" component_2="y_inf"/>
+        <map_variables variable_1="V" variable_2="V"/>
+    </connection>
+    <connection>
+        <map_components component_1="IKv" component_2="x_gate"/>
+        <map_variables variable_1="time" variable_2="time"/>
+        <map_variables variable_1="T" variable_2="T"/>
+        <map_variables variable_1="Q10K" variable_2="Q10"/>
+        <map_variables variable_1="T0K" variable_2="T0"/>
+        <map_variables variable_1="x_Kv_init" variable_2="X_initial"/>
+        <map_variables variable_1="x_Kv" variable_2="X"/>
+        <map_variables variable_1="tau_xKv" variable_2="tau_X"/>
+    </connection>
+    <connection>
+        <map_components component_1="IKv" component_2="y_gate"/>
+        <map_variables variable_1="time" variable_2="time"/>
+        <map_variables variable_1="T" variable_2="T"/>
+        <map_variables variable_1="Q10K" variable_2="Q10"/>
+        <map_variables variable_1="T0K" variable_2="T0"/>
+        <map_variables variable_1="y_Kv_init" variable_2="X_initial"/>
+        <map_variables variable_1="y_Kv" variable_2="X"/>
+        <map_variables variable_1="tau_yKv" variable_2="tau_X"/>
+    </connection>
+    <connection>
+        <map_components component_1="x_inf" component_2="x_gate"/>
+        <map_variables variable_1="X_inf" variable_2="X_inf"/>
+    </connection>
+    <connection>
+        <map_components component_1="y_inf" component_2="y_gate"/>
+        <map_variables variable_1="X_inf" variable_2="X_inf"/>
+    </connection>
+    <connection>
+        <map_components component_1="IKv" component_2="Ionic_currents"/>
+        <map_variables variable_1="I_Kv" variable_2="I"/>
+        <map_variables variable_1="V" variable_2="V"/>
+        <map_variables variable_1="g_Kv" variable_2="g_max"/>
+        <map_variables variable_1="P_Kv" variable_2="PO"/>
+    </connection>
+    <connection>
+        <map_components component_1="IKv" component_2="E_K"/>
+        <map_variables variable_1="T" variable_2="T"/>
+        <map_variables variable_1="Ki" variable_2="Ki"/>
+        <map_variables variable_1="Ko" variable_2="Ko"/>
+    </connection>
+    <connection>
+        <map_components component_1="E_K" component_2="Ionic_currents"/>
+        <map_variables variable_1="E_K" variable_2="E"/>
+    </connection>
+</model>

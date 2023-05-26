@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfModels>
+    <model id="model" name="Model" language="urn:sedml:language:xpp" source="IERG_Mar.ode">
+      <listOfChanges>
+        <changeAttribute target="C1" newValue="0.0"/>
+        <changeAttribute target="C2" newValue="0.0"/>
+        <changeAttribute target="C3" newValue="1.0"/>
+        <changeAttribute target="I" newValue="0.0"/>
+        <changeAttribute target="O" newValue="0.06"/>
+        <changeAttribute target="ki" newValue="140.0"/>
+        <changeAttribute target="ko" newValue="5.4"/>
+        <changeAttribute target="toff" newValue="300.0"/>
+        <changeAttribute target="ton" newValue="50.0"/>
+        <changeAttribute target="vhold" newValue="-40.0"/>
+        <changeAttribute target="vtest" newValue="0.0"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" name="Simulation" initialTime="0" outputStartTime="0" outputEndTime="800" numberOfPoints="1000">
+      <algorithm kisaoID="KISAO:0000030">
+        <listOfAlgorithmParameters>
+          <algorithmParameter kisaoID="KISAO:0000483" value="0.1"/>
+        </listOfAlgorithmParameters>
+      </algorithm>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" name="Task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_T" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T" name="T" symbol="urn:sedml:symbol:time" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C1" name="C1">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C1" name="C1" target="C1" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C2" name="C2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C2" name="C2" target="C2" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C3" name="C3">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C3 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C3" name="C3" target="C3" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_I" name="I">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_I </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_I" name="I" target="I" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_IK" name="IK">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_IK </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_IK" name="IK" target="IK" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_O" name="O">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_O </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_O" name="O" target="O" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report" name="Report">
+      <listOfDataSets>
+        <dataSet id="data_set_T" name="T" label="T" dataReference="data_generator_T"/>
+        <dataSet id="data_set_C1" name="C1" label="C1" dataReference="data_generator_C1"/>
+        <dataSet id="data_set_C2" name="C2" label="C2" dataReference="data_generator_C2"/>
+        <dataSet id="data_set_C3" name="C3" label="C3" dataReference="data_generator_C3"/>
+        <dataSet id="data_set_I" name="I" label="I" dataReference="data_generator_I"/>
+        <dataSet id="data_set_IK" name="IK" label="IK" dataReference="data_generator_IK"/>
+        <dataSet id="data_set_O" name="O" label="O" dataReference="data_generator_O"/>
+      </listOfDataSets>
+    </report>
+    <plot2D id="plot">
+      <listOfCurves>
+        <curve id="curve_1" name="IK vs T" logX="false" xDataReference="data_generator_T" logY="false" yDataReference="data_generator_IK"/>
+      </listOfCurves>
+    </plot2D>
+  </listOfOutputs>
+</sedML>

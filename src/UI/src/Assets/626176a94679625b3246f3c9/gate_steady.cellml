@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="gate_steady" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Compute steady state values of a gate-->
+    <import xlink:href="units.cellml">
+        <units name="per_ms" units_ref="per_ms"/>
+        <units name="ms" units_ref="ms"/>
+    </import>
+    <component name="gate_steady">
+        <variable name="X_s" public_interface="out" units="dimensionless"/>
+        <variable name="alpha_X" public_interface="in" units="per_ms"/>
+        <variable name="beta_X" public_interface="in" units="per_ms"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>X_s</ci>
+                <apply>
+                    <divide/>
+                    <ci>alpha_X</ci>
+                    <apply>
+                        <plus/>
+                        <ci>alpha_X</ci>
+                        <ci>beta_X</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <component name="time_const">
+        <variable name="tau_X" public_interface="out" units="ms"/>
+        <variable name="alpha_X" public_interface="in" units="per_ms"/>
+        <variable name="beta_X" public_interface="in" units="per_ms"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>tau_X</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="dimensionless">1</cn>
+                    <apply>
+                        <plus/>
+                        <ci>alpha_X</ci>
+                        <ci>beta_X</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

@@ -1,0 +1,3812 @@
+<?xml version='1.0'?>
+<model name="Feto_maternal_O2_transfer" xmlns="http://www.cellml.org/cellml/1.0#" xmlns:cellml="http://www.cellml.org/cellml/1.0#">
+    <units name="mmHg">
+        <unit multiplier="133.32" units="pascal"/>
+    </units>
+    <units name="ml">
+        <unit prefix="milli" units="liter"/>
+    </units>
+    <units name="ml_per_min">
+        <unit units="ml"/>
+        <unit exponent="-1" multiplier="60" units="second"/>
+    </units>
+    <units name="ml_per_ml">
+        <unit units="ml"/>
+        <unit exponent="-1" units="ml"/>
+    </units>
+    <units name="ml_per_ml_min_mmHg">
+        <unit units="ml"/>
+        <unit exponent="-1" units="ml"/>
+        <unit exponent="-1" multiplier="60" units="second"/>
+        <unit exponent="-1" units="mmHg"/>
+    </units>
+    <component name="gas_exchange">
+        <variable initial_value="1.4452" name="k1_m" units="dimensionless"/>
+        <variable initial_value="1.4452" name="k1_81m" units="dimensionless"/>
+        <variable initial_value="0.456" name="k2_m" units="dimensionless"/>
+        <variable initial_value="0.3711" name="k3_m" units="dimensionless"/>
+        <variable initial_value="0.3711" name="K3_81m" units="dimensionless"/>
+        <variable initial_value="7.8322e+03" name="k4_m" units="dimensionless"/>
+        <variable initial_value="7.4" name="pH_m" units="dimensionless"/>
+        <variable initial_value="1.302" name="k1_f" units="dimensionless"/>
+        <variable initial_value="0.464" name="k2_f" units="dimensionless"/>
+        <variable initial_value="0.395" name="k3_f" units="dimensionless"/>
+        <variable initial_value="2.2643e+03" name="k4_f" units="dimensionless"/>
+        <variable initial_value="7.35" name="pH_f" units="dimensionless"/>
+        <variable initial_value="33" name="Pin_m" units="mmHg"/>
+        <variable initial_value="15" name="Pin_f" units="mmHg"/>
+        <variable name="x_m" units="dimensionless"/>
+        <variable name="x_m1" units="dimensionless"/>
+        <variable name="x_f" units="dimensionless"/>
+        <variable name="x_f1" units="dimensionless"/>
+        <variable name="S_m" units="dimensionless"/>
+        <variable name="S_f" units="dimensionless"/>
+        <variable initial_value="0" name="t" units="second"/>
+        <variable name="O2_m" units="ml_per_ml"/>
+        <variable name="O2_f" units="ml_per_ml"/>
+        <variable initial_value="12.5" name="Hb_m" units="dimensionless"/>
+        <variable initial_value="15.5" name="Hb_f" units="dimensionless"/>
+        <variable initial_value="3.0263e-05" name="a" units="dimensionless"/>
+        <variable initial_value="164" name="ks_m" units="dimensionless"/>
+        <variable initial_value="164" name="ks_f" units="dimensionless"/>
+        <variable initial_value="164" name="kh" units="dimensionless"/>
+        <variable initial_value="1" name="B" units="dimensionless"/>
+        <variable initial_value="4.89e-7" name="V_m" units="ml"/>
+        <variable initial_value="4.89e-7" name="V_f" units="ml"/>
+        <variable initial_value="1.2014e-04" name="Q_m" units="ml_per_min"/>
+        <variable initial_value="1.2014e-04" name="Q_f" units="ml_per_min"/>
+        <variable initial_value="6.21" name="Dm" units="ml_per_ml_min_mmHg"/>
+        <variable initial_value="3.287" name="c1" units="dimensionless"/>
+        <variable initial_value="0.1117" name="c2" units="dimensionless"/>
+        <variable initial_value="7.05e-3" name="c3" units="dimensionless"/>
+        <variable initial_value="0.8142" name="c4" units="dimensionless"/>
+        <variable name="theta_m" units="dimensionless"/>
+        <variable name="theta_f" units="dimensionless"/>
+        <variable name="x1_m" units="dimensionless"/>
+        <variable name="x1_f" units="dimensionless"/>
+        <variable name="R_m" units="dimensionless"/>
+        <variable name="R_f" units="dimensionless"/>
+        <variable name="R_p" units="dimensionless"/>
+        <variable name="R_t" units="dimensionless"/>
+        <variable name="Dp" units="dimensionless"/>
+        <variable name="dodt_m" units="dimensionless"/>
+        <variable name="dodt_f" units="dimensionless"/>
+        <variable name="O2_mnew" units="ml_per_ml"/>
+        <variable name="O2_fnew" units="ml_per_ml"/>
+        <variable name="f_m" units="dimensionless"/>
+        <variable name="f_f" units="dimensionless"/>
+        <variable name="upper_m" units="dimensionless"/>
+        <variable name="lower_m" units="dimensionless"/>
+        <variable name="upper_f" units="dimensionless"/>
+        <variable name="lower_f" units="dimensionless"/>
+        <variable name="dfdP_f" units="dimensionless"/>
+        <variable name="dfdP_m" units="dimensionless"/>
+        <variable name="tt" units="second"/>
+        <variable name="dt" units="second"/>
+        <variable name="Pend1_m" units="mmHg"/>
+        <variable name="Pend1_f" units="mmHg"/>
+        <variable name="theta_96_m" units="dimensionless"/>
+        <variable name="theta_96_f" units="dimensionless"/>
+        <variable name="x_m_sec" units="dimensionless"/>
+        <variable name="x_m1_sec" units="dimensionless"/>
+        <variable name="S_m_sec" units="dimensionless"/>
+        <variable name="x_f_sec" units="dimensionless"/>
+        <variable name="x_f1_sec" units="dimensionless"/>
+        <variable name="S_f_sec" units="dimensionless"/>
+        <variable name="theta_96_m_sec" units="dimensionless"/>
+        <variable name="theta_96_f_sec" units="dimensionless"/>
+        <variable name="x1_m_sec" units="dimensionless"/>
+        <variable name="theta_m_sec" units="dimensionless"/>
+        <variable name="x1_f_sec" units="dimensionless"/>
+        <variable name="theta_f_sec" units="dimensionless"/>
+        <variable name="R_m_sec" units="dimensionless"/>
+        <variable name="R_f_sec" units="dimensionless"/>
+        <variable name="R_p_sec" units="dimensionless"/>
+        <variable name="R_t_sec" units="dimensionless"/>
+        <variable name="Dp_sec" units="dimensionless"/>
+        <variable name="dodt_m_sec" units="dimensionless"/>
+        <variable name="dodt_f_sec" units="dimensionless"/>
+        <variable name="O2_mnew_sec" units="ml_per_ml"/>
+        <variable name="O2_fnew_sec" units="ml_per_ml"/>
+        <variable name="f_m_sec" units="dimensionless"/>
+        <variable name="f_f_sec" units="dimensionless"/>
+        <variable name="upper_m_sec" units="dimensionless"/>
+        <variable name="lower_m_sec" units="dimensionless"/>
+        <variable name="dfdP_m_sec" units="dimensionless"/>
+        <variable name="upper_f_sec" units="dimensionless"/>
+        <variable name="lower_f_sec" units="dimensionless"/>
+        <variable name="dfdP_f_sec" units="dimensionless"/>
+        <variable name="Pend2_m" units="mmHg"/>
+        <variable name="Pend2_f" units="mmHg"/>
+        <variable name="x_m_trd" units="dimensionless"/>
+        <variable name="x_m1_trd" units="dimensionless"/>
+        <variable name="S_m_trd" units="dimensionless"/>
+        <variable name="x_f_trd" units="dimensionless"/>
+        <variable name="x_f1_trd" units="dimensionless"/>
+        <variable name="S_f_trd" units="dimensionless"/>
+        <variable name="theta_96_m_trd" units="dimensionless"/>
+        <variable name="theta_96_f_trd" units="dimensionless"/>
+        <variable name="x1_m_trd" units="dimensionless"/>
+        <variable name="theta_m_trd" units="dimensionless"/>
+        <variable name="x1_f_trd" units="dimensionless"/>
+        <variable name="theta_f_trd" units="dimensionless"/>
+        <variable name="R_m_trd" units="dimensionless"/>
+        <variable name="R_f_trd" units="dimensionless"/>
+        <variable name="R_p_trd" units="dimensionless"/>
+        <variable name="R_t_trd" units="dimensionless"/>
+        <variable name="Dp_trd" units="dimensionless"/>
+        <variable name="dodt_m_trd" units="dimensionless"/>
+        <variable name="dodt_f_trd" units="dimensionless"/>
+        <variable name="O2_mnew_trd" units="ml_per_ml"/>
+        <variable name="O2_fnew_trd" units="ml_per_ml"/>
+        <variable name="f_m_trd" units="dimensionless"/>
+        <variable name="f_f_trd" units="dimensionless"/>
+        <variable name="upper_m_trd" units="dimensionless"/>
+        <variable name="lower_m_trd" units="dimensionless"/>
+        <variable name="dfdP_m_trd" units="dimensionless"/>
+        <variable name="upper_f_trd" units="dimensionless"/>
+        <variable name="lower_f_trd" units="dimensionless"/>
+        <variable name="dfdP_f_trd" units="dimensionless"/>
+        <variable name="Pend3_m" units="mmHg"/>
+        <variable name="Pend3_f" units="mmHg"/>
+        <variable name="x_m_for" units="dimensionless"/>
+        <variable name="x_m1_for" units="dimensionless"/>
+        <variable name="S_m_for" units="dimensionless"/>
+        <variable name="x_f_for" units="dimensionless"/>
+        <variable name="x_f1_for" units="dimensionless"/>
+        <variable name="S_f_for" units="dimensionless"/>
+        <variable name="theta_96_m_for" units="dimensionless"/>
+        <variable name="theta_96_f_for" units="dimensionless"/>
+        <variable name="x1_m_for" units="dimensionless"/>
+        <variable name="theta_m_for" units="dimensionless"/>
+        <variable name="x1_f_for" units="dimensionless"/>
+        <variable name="theta_f_for" units="dimensionless"/>
+        <variable name="R_m_for" units="dimensionless"/>
+        <variable name="R_f_for" units="dimensionless"/>
+        <variable name="R_p_for" units="dimensionless"/>
+        <variable name="R_t_for" units="dimensionless"/>
+        <variable name="Dp_for" units="dimensionless"/>
+        <variable name="dodt_m_for" units="dimensionless"/>
+        <variable name="dodt_f_for" units="dimensionless"/>
+        <variable name="O2_mnew_final" units="ml_per_ml"/>
+        <variable name="O2_fnew_final" units="ml_per_ml"/>
+        <variable name="f_m_final" units="dimensionless"/>
+        <variable name="f_f_final" units="dimensionless"/>
+        <variable name="upper_m_final" units="dimensionless"/>
+        <variable name="lower_m_final" units="dimensionless"/>
+        <variable name="dfdP_m_final" units="dimensionless"/>
+        <variable name="upper_f_final" units="dimensionless"/>
+        <variable name="lower_f_final" units="dimensionless"/>
+        <variable name="dfdP_f_final" units="dimensionless"/>
+        <variable name="Pfinal_m" units="mmHg"/>
+        <variable name="Pfinal_f" units="mmHg"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>x_m</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <log/>
+                                <ci>Pin_m</ci>
+                            </apply>
+                            <ci>k1_m</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>k2_m</ci>
+                            <apply>
+                                <minus/>
+                                <ci>pH_m</ci>
+                                <cn cellml:units="dimensionless">7.4</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>k3_m</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x_m1</ci>
+                <apply>
+                    <power/>
+                    <cn cellml:units="dimensionless">10</cn>
+                    <ci>x_m</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>S_m</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">100</cn>
+                        <ci>x_m1</ci>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">1</cn>
+                        <ci>x_m1</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x_f</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <log/>
+                                <ci>Pin_f</ci>
+                            </apply>
+                            <ci>k1_f</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>k2_f</ci>
+                            <apply>
+                                <minus/>
+                                <ci>pH_f</ci>
+                                <cn cellml:units="dimensionless">7.4</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>k3_f</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x_f1</ci>
+                <apply>
+                    <power/>
+                    <cn cellml:units="dimensionless">10</cn>
+                    <ci>x_f</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>S_f</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">100</cn>
+                        <ci>x_f1</ci>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">1</cn>
+                        <ci>x_f1</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>O2_m</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <cn cellml:units="dimensionless">1.34</cn>
+                                <ci>Hb_m</ci>
+                            </apply>
+                            <cn cellml:units="dimensionless">100</cn>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k4_m</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>Pin_m</ci>
+                                    <apply>
+                                        <divide/>
+                                        <apply>
+                                            <minus/>
+                                            <cn cellml:units="dimensionless">1</cn>
+                                        </apply>
+                                        <ci>k3_m</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>a</ci>
+                        <ci>Pin_m</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>O2_f</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <cn cellml:units="dimensionless">1.34</cn>
+                                <ci>Hb_f</ci>
+                            </apply>
+                            <cn cellml:units="dimensionless">100</cn>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k4_f</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>Pin_f</ci>
+                                    <apply>
+                                        <divide/>
+                                        <apply>
+                                            <minus/>
+                                            <cn cellml:units="dimensionless">1</cn>
+                                        </apply>
+                                        <ci>k3_f</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>a</ci>
+                        <ci>Pin_f</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x1_m</ci>
+                <piecewise>
+                    <piece>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>c2</ci>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                    <cn cellml:units="dimensionless">96</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <gt/>
+                            <ci>S_m</ci>
+                            <cn cellml:units="dimensionless">96</cn>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>c2</ci>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                    <ci>S_m</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </otherwise>
+                </piecewise>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>theta_96_m</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <apply>
+                                            <minus/>
+                                            <apply>
+                                                <plus/>
+                                                <apply>
+                                                    <times/>
+                                                    <ci>c1</ci>
+                                                    <apply>
+                                                        <minus/>
+                                                        <cn cellml:units="dimensionless">1</cn>
+                                                        <ci>x1_m</ci>
+                                                    </apply>
+                                                </apply>
+                                                <apply>
+                                                    <times/>
+                                                    <ci>c3</ci>
+                                                    <ci>S_m</ci>
+                                                </apply>
+                                            </apply>
+                                            <ci>c4</ci>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">1.34</cn>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                </apply>
+                                <ci>Hb_m</ci>
+                            </apply>
+                            <cn cellml:units="dimensionless">0.2</cn>
+                        </apply>
+                        <ci>ks_m</ci>
+                    </apply>
+                    <ci>kh</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>theta_m</ci>
+                <piecewise>
+                    <piece>
+                        <apply>
+                            <minus/>
+                            <ci>theta_96_m</ci>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <ci>theta_96_m</ci>
+                                    <apply>
+                                        <minus/>
+                                        <cn cellml:units="dimensionless">96</cn>
+                                        <ci>S_m</ci>
+                                    </apply>
+                                </apply>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">4</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <gt/>
+                            <ci>S_m</ci>
+                            <cn cellml:units="dimensionless">96</cn>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <apply>
+                                            <divide/>
+                                            <apply>
+                                                <times/>
+                                                <apply>
+                                                    <minus/>
+                                                    <apply>
+                                                        <plus/>
+                                                        <apply>
+                                                            <times/>
+                                                            <ci>c1</ci>
+                                                            <apply>
+                                                                <minus/>
+                                                                <cn cellml:units="dimensionless">1</cn>
+                                                                <ci>x1_m</ci>
+                                                            </apply>
+                                                        </apply>
+                                                        <apply>
+                                                            <times/>
+                                                            <ci>c3</ci>
+                                                            <ci>S_m</ci>
+                                                        </apply>
+                                                    </apply>
+                                                    <ci>c4</ci>
+                                                </apply>
+                                                <cn cellml:units="dimensionless">1.34</cn>
+                                            </apply>
+                                            <cn cellml:units="dimensionless">100</cn>
+                                        </apply>
+                                        <ci>Hb_m</ci>
+                                    </apply>
+                                    <cn cellml:units="dimensiionless">0.2</cn>
+                                </apply>
+                                <ci>ks_m</ci>
+                            </apply>
+                            <ci>kh</ci>
+                        </apply>
+                    </otherwise>
+                </piecewise>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x1_f</ci>
+                <piecewise>
+                    <piece>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>c2</ci>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                    <cn cellml:units="dimensionless">96</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <gt/>
+                            <ci>S_f</ci>
+                            <cn cellml:units="dimensionless">96</cn>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>c2</ci>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                    <ci>S_f</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </otherwise>
+                </piecewise>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>theta_96_f</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <apply>
+                                            <minus/>
+                                            <apply>
+                                                <plus/>
+                                                <apply>
+                                                    <times/>
+                                                    <ci>c1</ci>
+                                                    <apply>
+                                                        <minus/>
+                                                        <cn cellml:units="dimensionless">1</cn>
+                                                        <ci>x1_f</ci>
+                                                    </apply>
+                                                </apply>
+                                                <apply>
+                                                    <times/>
+                                                    <ci>c3</ci>
+                                                    <ci>S_f</ci>
+                                                </apply>
+                                            </apply>
+                                            <ci>c4</ci>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">1.34</cn>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                </apply>
+                                <ci>Hb_f</ci>
+                            </apply>
+                            <cn cellml:units="dimensionless">0.2</cn>
+                        </apply>
+                        <ci>ks_f</ci>
+                    </apply>
+                    <ci>kh</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>theta_f</ci>
+                <piecewise>
+                    <piece>
+                        <apply>
+                            <minus/>
+                            <ci>theta_96_f</ci>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <ci>theta_96_f</ci>
+                                    <apply>
+                                        <minus/>
+                                        <cn cellml:units="dimensionless">96</cn>
+                                        <ci>S_f</ci>
+                                    </apply>
+                                </apply>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">4</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <gt/>
+                            <ci>S_f</ci>
+                            <cn cellml:units="dimensionless">96</cn>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <apply>
+                                            <divide/>
+                                            <apply>
+                                                <times/>
+                                                <apply>
+                                                    <minus/>
+                                                    <apply>
+                                                        <plus/>
+                                                        <apply>
+                                                            <times/>
+                                                            <ci>c1</ci>
+                                                            <apply>
+                                                                <minus/>
+                                                                <cn cellml:units="dimensionless">1</cn>
+                                                                <ci>x1_f</ci>
+                                                            </apply>
+                                                        </apply>
+                                                        <apply>
+                                                            <times/>
+                                                            <ci>c3</ci>
+                                                            <ci>S_f</ci>
+                                                        </apply>
+                                                    </apply>
+                                                    <ci>c4</ci>
+                                                </apply>
+                                                <cn cellml:units="dimensionless">1.34</cn>
+                                            </apply>
+                                            <cn cellml:units="dimensionless">100</cn>
+                                        </apply>
+                                        <ci>Hb_f</ci>
+                                    </apply>
+                                    <cn cellml:units="dimensiionless">0.2</cn>
+                                </apply>
+                                <ci>ks_f</ci>
+                            </apply>
+                            <ci>kh</ci>
+                        </apply>
+                    </otherwise>
+                </piecewise>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_m</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="dimensionless">1</cn>
+                    <apply>
+                        <times/>
+                        <ci>theta_m</ci>
+                        <ci>V_m</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_f</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="dimensionless">1</cn>
+                    <apply>
+                        <times/>
+                        <ci>theta_f</ci>
+                        <ci>V_f</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_p</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="dimensionless">1</cn>
+                    <ci>Dm</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_t</ci>
+                <apply>
+                    <plus/>
+                    <ci>R_m</ci>
+                    <ci>R_f</ci>
+                    <ci>R_p</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Dp</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <divide/>
+                        <cn cellml:units="dimensionless">1</cn>
+                        <ci>R_t</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">60</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>dodt_m</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>B</ci>
+                        <apply>
+                            <minus/>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <ci>Dp</ci>
+                        <apply>
+                            <minus/>
+                            <ci>Pin_m</ci>
+                            <ci>Pin_f</ci>
+                        </apply>
+                    </apply>
+                    <ci>V_m</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>dodt_f</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>B</ci>
+                            </apply>
+                            <ci>V_m</ci>
+                        </apply>
+                        <ci>V_f</ci>
+                    </apply>
+                    <ci>dodt_m</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>tt</ci>
+                <apply>
+                    <divide/>
+                    <ci>V_f</ci>
+                    <apply>
+                        <divide/>
+                        <ci>Q_f</ci>
+                        <cn cellml:units="dimensionless">60</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>dt</ci>
+                <apply>
+                    <divide/>
+                    <ci>tt</ci>
+                    <cn cellml:units="dimenstionless">100</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>O2_mnew</ci>
+                <apply>
+                    <plus/>
+                    <ci>O2_m</ci>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>dodt_m</ci>
+                            <ci>dt</ci>
+                        </apply>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>O2_fnew</ci>
+                <apply>
+                    <plus/>
+                    <ci>O2_f</ci>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>dodt_f</ci>
+                            <ci>dt</ci>
+                        </apply>
+                        <cn cellml:units="dimensionlsee">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>f_m</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <cn cellml:units="dimensionless">1.34</cn>
+                                    <ci>Hb_m</ci>
+                                </apply>
+                                <cn cellml:units="dimensionless">100</cn>
+                            </apply>
+                            <apply>
+                                <plus/>
+                                <apply>
+                                    <times/>
+                                    <ci>k4_m</ci>
+                                    <apply>
+                                        <power/>
+                                        <ci>Pin_m</ci>
+                                        <apply>
+                                            <divide/>
+                                            <apply>
+                                                <minus/>
+                                                <cn cellml:units="dimensionless">1</cn>
+                                            </apply>
+                                            <ci>k3_m</ci>
+                                        </apply>
+                                    </apply>
+                                </apply>
+                                <cn cellml:units="dimensionless">1</cn>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <ci>Pin_m</ci>
+                        </apply>
+                    </apply>
+                    <ci>O2_mnew</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>f_f</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <cn cellml:units="dimensionless">1.34</cn>
+                                    <ci>Hb_f</ci>
+                                </apply>
+                                <cn cellml:units="dimensionless">100</cn>
+                            </apply>
+                            <apply>
+                                <plus/>
+                                <apply>
+                                    <times/>
+                                    <ci>k4_f</ci>
+                                    <apply>
+                                        <power/>
+                                        <ci>Pin_f</ci>
+                                        <apply>
+                                            <divide/>
+                                            <apply>
+                                                <minus/>
+                                                <cn cellml:units="dimensionless">1</cn>
+                                            </apply>
+                                            <ci>k3_f</ci>
+                                        </apply>
+                                    </apply>
+                                </apply>
+                                <cn cellml:units="dimensionless">1</cn>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <ci>Pin_f</ci>
+                        </apply>
+                    </apply>
+                    <ci>O2_fnew</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>upper_m</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">1.34</cn>
+                    <ci>Hb_m</ci>
+                    <ci>k4_m</ci>
+                    <apply>
+                        <power/>
+                        <ci>Pin_m</ci>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>k3_m</ci>
+                            </apply>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>lower_m</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">100</cn>
+                    <ci>k3_m</ci>
+                    <apply>
+                        <power/>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k4_m</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>Pin_m</ci>
+                                    <apply>
+                                        <divide/>
+                                        <apply>
+                                            <minus/>
+                                            <cn cellml:units="dimensionless">1</cn>
+                                        </apply>
+                                        <ci>k3_m</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>dfdP_m</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <ci>upper_m</ci>
+                        <ci>lower_m</ci>
+                    </apply>
+                    <ci>a</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>upper_f</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">1.34</cn>
+                    <ci>Hb_f</ci>
+                    <ci>k4_f</ci>
+                    <apply>
+                        <power/>
+                        <ci>Pin_f</ci>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>k3_f</ci>
+                            </apply>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>lower_f</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">100</cn>
+                    <ci>k3_f</ci>
+                    <apply>
+                        <power/>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k4_f</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>Pin_f</ci>
+                                    <apply>
+                                        <divide/>
+                                        <apply>
+                                            <minus/>
+                                            <cn cellml:units="dimensionless">1</cn>
+                                        </apply>
+                                        <ci>k3_f</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>dfdP_f</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <ci>upper_f</ci>
+                        <ci>lower_f</ci>
+                    </apply>
+                    <ci>a</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Pend1_m</ci>
+                <apply>
+                    <minus/>
+                    <ci>Pin_m</ci>
+                    <apply>
+                        <divide/>
+                        <ci>f_m</ci>
+                        <ci>dfdP_m</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Pend1_f</ci>
+                <apply>
+                    <minus/>
+                    <ci>Pin_f</ci>
+                    <apply>
+                        <divide/>
+                        <ci>f_f</ci>
+                        <ci>dfdP_f</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x_m_sec</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <log/>
+                                <ci>Pend1_m</ci>
+                            </apply>
+                            <ci>k1_m</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>k2_m</ci>
+                            <apply>
+                                <minus/>
+                                <ci>pH_m</ci>
+                                <cn cellml:units="dimensionless">7.4</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>k3_m</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x_m1_sec</ci>
+                <apply>
+                    <power/>
+                    <cn cellml:units="dimensionless">10</cn>
+                    <ci>x_m_sec</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>S_m_sec</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">100</cn>
+                        <ci>x_m1_sec</ci>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">1</cn>
+                        <ci>x_m1_sec</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x_f_sec</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <log/>
+                                <ci>Pend1_f</ci>
+                            </apply>
+                            <ci>k1_f</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>k2_f</ci>
+                            <apply>
+                                <minus/>
+                                <ci>pH_f</ci>
+                                <cn cellml:units="dimensionless">7.4</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>k3_f</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x_f1_sec</ci>
+                <apply>
+                    <power/>
+                    <cn cellml:units="dimensionless">10</cn>
+                    <ci>x_f_sec</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>S_f_sec</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">100</cn>
+                        <ci>x_f1_sec</ci>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">1</cn>
+                        <ci>x_f1_sec</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x1_m_sec</ci>
+                <piecewise>
+                    <piece>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>c2</ci>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                    <cn cellml:units="dimensionless">96</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <gt/>
+                            <ci>S_m_sec</ci>
+                            <cn cellml:units="dimensionless">96</cn>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>c2</ci>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                    <ci>S_m_sec</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </otherwise>
+                </piecewise>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>theta_96_m_sec</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <apply>
+                                            <minus/>
+                                            <apply>
+                                                <plus/>
+                                                <apply>
+                                                    <times/>
+                                                    <ci>c1</ci>
+                                                    <apply>
+                                                        <minus/>
+                                                        <cn cellml:units="dimensionless">1</cn>
+                                                        <ci>x1_m_sec</ci>
+                                                    </apply>
+                                                </apply>
+                                                <apply>
+                                                    <times/>
+                                                    <ci>c3</ci>
+                                                    <ci>S_m_sec</ci>
+                                                </apply>
+                                            </apply>
+                                            <ci>c4</ci>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">1.34</cn>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                </apply>
+                                <ci>Hb_m</ci>
+                            </apply>
+                            <cn cellml:units="dimensionless">0.2</cn>
+                        </apply>
+                        <ci>ks_m</ci>
+                    </apply>
+                    <ci>kh</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>theta_m_sec</ci>
+                <piecewise>
+                    <piece>
+                        <apply>
+                            <minus/>
+                            <ci>theta_96_m_sec</ci>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <ci>theta_96_m_sec</ci>
+                                    <apply>
+                                        <minus/>
+                                        <cn cellml:units="dimensionless">96</cn>
+                                        <ci>S_m_sec</ci>
+                                    </apply>
+                                </apply>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">4</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <gt/>
+                            <ci>S_m_sec</ci>
+                            <cn cellml:units="dimensionless">96</cn>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <apply>
+                                            <divide/>
+                                            <apply>
+                                                <times/>
+                                                <apply>
+                                                    <minus/>
+                                                    <apply>
+                                                        <plus/>
+                                                        <apply>
+                                                            <times/>
+                                                            <ci>c1</ci>
+                                                            <apply>
+                                                                <minus/>
+                                                                <cn cellml:units="dimensionless">1</cn>
+                                                                <ci>x1_m_sec</ci>
+                                                            </apply>
+                                                        </apply>
+                                                        <apply>
+                                                            <times/>
+                                                            <ci>c3</ci>
+                                                            <ci>S_m_sec</ci>
+                                                        </apply>
+                                                    </apply>
+                                                    <ci>c4</ci>
+                                                </apply>
+                                                <cn cellml:units="dimensionless">1.34</cn>
+                                            </apply>
+                                            <cn cellml:units="dimensionless">100</cn>
+                                        </apply>
+                                        <ci>Hb_m</ci>
+                                    </apply>
+                                    <cn cellml:units="dimensiionless">0.2</cn>
+                                </apply>
+                                <ci>ks_m</ci>
+                            </apply>
+                            <ci>kh</ci>
+                        </apply>
+                    </otherwise>
+                </piecewise>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x1_f_sec</ci>
+                <piecewise>
+                    <piece>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>c2</ci>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                    <cn cellml:units="dimensionless">96</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <gt/>
+                            <ci>S_f_sec</ci>
+                            <cn cellml:units="dimensionless">96</cn>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>c2</ci>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                    <ci>S_f_sec</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </otherwise>
+                </piecewise>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>theta_96_f_sec</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <apply>
+                                            <minus/>
+                                            <apply>
+                                                <plus/>
+                                                <apply>
+                                                    <times/>
+                                                    <ci>c1</ci>
+                                                    <apply>
+                                                        <minus/>
+                                                        <cn cellml:units="dimensionless">1</cn>
+                                                        <ci>x1_f_sec</ci>
+                                                    </apply>
+                                                </apply>
+                                                <apply>
+                                                    <times/>
+                                                    <ci>c3</ci>
+                                                    <ci>S_f_sec</ci>
+                                                </apply>
+                                            </apply>
+                                            <ci>c4</ci>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">1.34</cn>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                </apply>
+                                <ci>Hb_f</ci>
+                            </apply>
+                            <cn cellml:units="dimensionless">0.2</cn>
+                        </apply>
+                        <ci>ks_f</ci>
+                    </apply>
+                    <ci>kh</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>theta_f_sec</ci>
+                <piecewise>
+                    <piece>
+                        <apply>
+                            <minus/>
+                            <ci>theta_96_f_sec</ci>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <ci>theta_96_f_sec</ci>
+                                    <apply>
+                                        <minus/>
+                                        <cn cellml:units="dimensionless">96</cn>
+                                        <ci>S_f_sec</ci>
+                                    </apply>
+                                </apply>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">4</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <gt/>
+                            <ci>S_f_sec</ci>
+                            <cn cellml:units="dimensionless">96</cn>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <apply>
+                                            <divide/>
+                                            <apply>
+                                                <times/>
+                                                <apply>
+                                                    <minus/>
+                                                    <apply>
+                                                        <plus/>
+                                                        <apply>
+                                                            <times/>
+                                                            <ci>c1</ci>
+                                                            <apply>
+                                                                <minus/>
+                                                                <cn cellml:units="dimensionless">1</cn>
+                                                                <ci>x1_f_sec</ci>
+                                                            </apply>
+                                                        </apply>
+                                                        <apply>
+                                                            <times/>
+                                                            <ci>c3</ci>
+                                                            <ci>S_f_sec</ci>
+                                                        </apply>
+                                                    </apply>
+                                                    <ci>c4</ci>
+                                                </apply>
+                                                <cn cellml:units="dimensionless">1.34</cn>
+                                            </apply>
+                                            <cn cellml:units="dimensionless">100</cn>
+                                        </apply>
+                                        <ci>Hb_f</ci>
+                                    </apply>
+                                    <cn cellml:units="dimensiionless">0.2</cn>
+                                </apply>
+                                <ci>ks_f</ci>
+                            </apply>
+                            <ci>kh</ci>
+                        </apply>
+                    </otherwise>
+                </piecewise>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_m_sec</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="dimensionless">1</cn>
+                    <apply>
+                        <times/>
+                        <ci>theta_m_sec</ci>
+                        <ci>V_m</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_f_sec</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="dimensionless">1</cn>
+                    <apply>
+                        <times/>
+                        <ci>theta_f_sec</ci>
+                        <ci>V_f</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_p_sec</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="dimensionless">1</cn>
+                    <ci>Dm</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_t_sec</ci>
+                <apply>
+                    <plus/>
+                    <ci>R_m_sec</ci>
+                    <ci>R_f_sec</ci>
+                    <ci>R_p_sec</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Dp_sec</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <divide/>
+                        <cn cellml:units="dimensionless">1</cn>
+                        <ci>R_t_sec</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">60</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>dodt_m_sec</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>B</ci>
+                        <apply>
+                            <minus/>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <ci>Dp_sec</ci>
+                        <apply>
+                            <minus/>
+                            <ci>Pend1_m</ci>
+                            <ci>Pend1_f</ci>
+                        </apply>
+                    </apply>
+                    <ci>V_m</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>dodt_f_sec</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>B</ci>
+                            </apply>
+                            <ci>V_m</ci>
+                        </apply>
+                        <ci>V_f</ci>
+                    </apply>
+                    <ci>dodt_m_sec</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>O2_mnew_sec</ci>
+                <apply>
+                    <plus/>
+                    <ci>O2_m</ci>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>dodt_m_sec</ci>
+                            <ci>dt</ci>
+                        </apply>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>O2_fnew_sec</ci>
+                <apply>
+                    <plus/>
+                    <ci>O2_f</ci>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>dodt_f_sec</ci>
+                            <ci>dt</ci>
+                        </apply>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>f_m_sec</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <cn cellml:units="dimensionless">1.34</cn>
+                                    <ci>Hb_m</ci>
+                                </apply>
+                                <cn cellml:units="dimensionless">100</cn>
+                            </apply>
+                            <apply>
+                                <plus/>
+                                <apply>
+                                    <times/>
+                                    <ci>k4_m</ci>
+                                    <apply>
+                                        <power/>
+                                        <ci>Pend1_m</ci>
+                                        <apply>
+                                            <divide/>
+                                            <apply>
+                                                <minus/>
+                                                <cn cellml:units="dimensionless">1</cn>
+                                            </apply>
+                                            <ci>k3_m</ci>
+                                        </apply>
+                                    </apply>
+                                </apply>
+                                <cn cellml:units="dimensionless">1</cn>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <ci>Pend1_m</ci>
+                        </apply>
+                    </apply>
+                    <ci>O2_mnew_sec</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>f_f_sec</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <cn cellml:units="dimensionless">1.34</cn>
+                                    <ci>Hb_f</ci>
+                                </apply>
+                                <cn cellml:units="dimensionless">100</cn>
+                            </apply>
+                            <apply>
+                                <plus/>
+                                <apply>
+                                    <times/>
+                                    <ci>k4_f</ci>
+                                    <apply>
+                                        <power/>
+                                        <ci>Pend1_f</ci>
+                                        <apply>
+                                            <divide/>
+                                            <apply>
+                                                <minus/>
+                                                <cn cellml:units="dimensionless">1</cn>
+                                            </apply>
+                                            <ci>k3_f</ci>
+                                        </apply>
+                                    </apply>
+                                </apply>
+                                <cn cellml:units="dimensionless">1</cn>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <ci>Pend1_f</ci>
+                        </apply>
+                    </apply>
+                    <ci>O2_fnew_sec</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>upper_m_sec</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">1.34</cn>
+                    <ci>Hb_m</ci>
+                    <ci>k4_m</ci>
+                    <apply>
+                        <power/>
+                        <ci>Pend1_m</ci>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>k3_m</ci>
+                            </apply>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>lower_m_sec</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">100</cn>
+                    <ci>k3_m</ci>
+                    <apply>
+                        <power/>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k4_m</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>Pend1_m</ci>
+                                    <apply>
+                                        <divide/>
+                                        <apply>
+                                            <minus/>
+                                            <cn cellml:units="dimensionless">1</cn>
+                                        </apply>
+                                        <ci>k3_m</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>dfdP_m_sec</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <ci>upper_m_sec</ci>
+                        <ci>lower_m_sec</ci>
+                    </apply>
+                    <ci>a</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>upper_f_sec</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">1.34</cn>
+                    <ci>Hb_f</ci>
+                    <ci>k4_f</ci>
+                    <apply>
+                        <power/>
+                        <ci>Pend1_f</ci>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>k3_f</ci>
+                            </apply>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>lower_f_sec</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">100</cn>
+                    <ci>k3_f</ci>
+                    <apply>
+                        <power/>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k4_f</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>Pend1_f</ci>
+                                    <apply>
+                                        <divide/>
+                                        <apply>
+                                            <minus/>
+                                            <cn cellml:units="dimensionless">1</cn>
+                                        </apply>
+                                        <ci>k3_f</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>dfdP_f_sec</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <ci>upper_f_sec</ci>
+                        <ci>lower_f_sec</ci>
+                    </apply>
+                    <ci>a</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Pend2_m</ci>
+                <apply>
+                    <minus/>
+                    <ci>Pend1_m</ci>
+                    <apply>
+                        <divide/>
+                        <ci>f_m_sec</ci>
+                        <ci>dfdP_m_sec</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Pend2_f</ci>
+                <apply>
+                    <minus/>
+                    <ci>Pend1_f</ci>
+                    <apply>
+                        <divide/>
+                        <ci>f_f_sec</ci>
+                        <ci>dfdP_f_sec</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x_m_trd</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <log/>
+                                <ci>Pend2_m</ci>
+                            </apply>
+                            <ci>k1_m</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>k2_m</ci>
+                            <apply>
+                                <minus/>
+                                <ci>pH_m</ci>
+                                <cn cellml:units="dimensionless">7.4</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>k3_m</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x_m1_trd</ci>
+                <apply>
+                    <power/>
+                    <cn cellml:units="dimensionless">10</cn>
+                    <ci>x_m_trd</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>S_m_trd</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">100</cn>
+                        <ci>x_m1_trd</ci>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">1</cn>
+                        <ci>x_m1_trd</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x_f_trd</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <log/>
+                                <ci>Pend2_f</ci>
+                            </apply>
+                            <ci>k1_f</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>k2_f</ci>
+                            <apply>
+                                <minus/>
+                                <ci>pH_f</ci>
+                                <cn cellml:units="dimensionless">7.4</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>k3_f</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x_f1_trd</ci>
+                <apply>
+                    <power/>
+                    <cn cellml:units="dimensionless">10</cn>
+                    <ci>x_f_trd</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>S_f_trd</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">100</cn>
+                        <ci>x_f1_trd</ci>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">1</cn>
+                        <ci>x_f1_trd</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x1_m_trd</ci>
+                <piecewise>
+                    <piece>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>c2</ci>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                    <cn cellml:units="dimensionless">96</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <gt/>
+                            <ci>S_m_trd</ci>
+                            <cn cellml:units="dimensionless">96</cn>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>c2</ci>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                    <ci>S_m_trd</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </otherwise>
+                </piecewise>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>theta_96_m_trd</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <apply>
+                                            <minus/>
+                                            <apply>
+                                                <plus/>
+                                                <apply>
+                                                    <times/>
+                                                    <ci>c1</ci>
+                                                    <apply>
+                                                        <minus/>
+                                                        <cn cellml:units="dimensionless">1</cn>
+                                                        <ci>x1_m_trd</ci>
+                                                    </apply>
+                                                </apply>
+                                                <apply>
+                                                    <times/>
+                                                    <ci>c3</ci>
+                                                    <ci>S_m_trd</ci>
+                                                </apply>
+                                            </apply>
+                                            <ci>c4</ci>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">1.34</cn>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                </apply>
+                                <ci>Hb_m</ci>
+                            </apply>
+                            <cn cellml:units="dimensionless">0.2</cn>
+                        </apply>
+                        <ci>ks_m</ci>
+                    </apply>
+                    <ci>kh</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>theta_m_trd</ci>
+                <piecewise>
+                    <piece>
+                        <apply>
+                            <minus/>
+                            <ci>theta_96_m_trd</ci>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <ci>theta_96_m_trd</ci>
+                                    <apply>
+                                        <minus/>
+                                        <cn cellml:units="dimensionless">96</cn>
+                                        <ci>S_m_trd</ci>
+                                    </apply>
+                                </apply>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">4</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <gt/>
+                            <ci>S_m_trd</ci>
+                            <cn cellml:units="dimensionless">96</cn>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <apply>
+                                            <divide/>
+                                            <apply>
+                                                <times/>
+                                                <apply>
+                                                    <minus/>
+                                                    <apply>
+                                                        <plus/>
+                                                        <apply>
+                                                            <times/>
+                                                            <ci>c1</ci>
+                                                            <apply>
+                                                                <minus/>
+                                                                <cn cellml:units="dimensionless">1</cn>
+                                                                <ci>x1_m_trd</ci>
+                                                            </apply>
+                                                        </apply>
+                                                        <apply>
+                                                            <times/>
+                                                            <ci>c3</ci>
+                                                            <ci>S_m_trd</ci>
+                                                        </apply>
+                                                    </apply>
+                                                    <ci>c4</ci>
+                                                </apply>
+                                                <cn cellml:units="dimensionless">1.34</cn>
+                                            </apply>
+                                            <cn cellml:units="dimensionless">100</cn>
+                                        </apply>
+                                        <ci>Hb_m</ci>
+                                    </apply>
+                                    <cn cellml:units="dimensiionless">0.2</cn>
+                                </apply>
+                                <ci>ks_m</ci>
+                            </apply>
+                            <ci>kh</ci>
+                        </apply>
+                    </otherwise>
+                </piecewise>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x1_f_trd</ci>
+                <piecewise>
+                    <piece>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>c2</ci>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                    <cn cellml:units="dimensionless">96</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <gt/>
+                            <ci>S_f_trd</ci>
+                            <cn cellml:units="dimensionless">96</cn>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>c2</ci>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                    <ci>S_f_trd</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </otherwise>
+                </piecewise>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>theta_96_f_trd</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <apply>
+                                            <minus/>
+                                            <apply>
+                                                <plus/>
+                                                <apply>
+                                                    <times/>
+                                                    <ci>c1</ci>
+                                                    <apply>
+                                                        <minus/>
+                                                        <cn cellml:units="dimensionless">1</cn>
+                                                        <ci>x1_f_trd</ci>
+                                                    </apply>
+                                                </apply>
+                                                <apply>
+                                                    <times/>
+                                                    <ci>c3</ci>
+                                                    <ci>S_f_trd</ci>
+                                                </apply>
+                                            </apply>
+                                            <ci>c4</ci>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">1.34</cn>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                </apply>
+                                <ci>Hb_f</ci>
+                            </apply>
+                            <cn cellml:units="dimensionless">0.2</cn>
+                        </apply>
+                        <ci>ks_f</ci>
+                    </apply>
+                    <ci>kh</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>theta_f_trd</ci>
+                <piecewise>
+                    <piece>
+                        <apply>
+                            <minus/>
+                            <ci>theta_96_f_trd</ci>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <ci>theta_96_f_trd</ci>
+                                    <apply>
+                                        <minus/>
+                                        <cn cellml:units="dimensionless">96</cn>
+                                        <ci>S_f_trd</ci>
+                                    </apply>
+                                </apply>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">4</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <gt/>
+                            <ci>S_f_trd</ci>
+                            <cn cellml:units="dimensionless">96</cn>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <apply>
+                                            <divide/>
+                                            <apply>
+                                                <times/>
+                                                <apply>
+                                                    <minus/>
+                                                    <apply>
+                                                        <plus/>
+                                                        <apply>
+                                                            <times/>
+                                                            <ci>c1</ci>
+                                                            <apply>
+                                                                <minus/>
+                                                                <cn cellml:units="dimensionless">1</cn>
+                                                                <ci>x1_f_trd</ci>
+                                                            </apply>
+                                                        </apply>
+                                                        <apply>
+                                                            <times/>
+                                                            <ci>c3</ci>
+                                                            <ci>S_f_trd</ci>
+                                                        </apply>
+                                                    </apply>
+                                                    <ci>c4</ci>
+                                                </apply>
+                                                <cn cellml:units="dimensionless">1.34</cn>
+                                            </apply>
+                                            <cn cellml:units="dimensionless">100</cn>
+                                        </apply>
+                                        <ci>Hb_f</ci>
+                                    </apply>
+                                    <cn cellml:units="dimensiionless">0.2</cn>
+                                </apply>
+                                <ci>ks_f</ci>
+                            </apply>
+                            <ci>kh</ci>
+                        </apply>
+                    </otherwise>
+                </piecewise>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_m_trd</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="dimensionless">1</cn>
+                    <apply>
+                        <times/>
+                        <ci>theta_m_trd</ci>
+                        <ci>V_m</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_f_trd</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="dimensionless">1</cn>
+                    <apply>
+                        <times/>
+                        <ci>theta_f_trd</ci>
+                        <ci>V_f</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_p_trd</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="dimensionless">1</cn>
+                    <ci>Dm</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_t_trd</ci>
+                <apply>
+                    <plus/>
+                    <ci>R_m_trd</ci>
+                    <ci>R_f_trd</ci>
+                    <ci>R_p_trd</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Dp_trd</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <divide/>
+                        <cn cellml:units="dimensionless">1</cn>
+                        <ci>R_t_trd</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">60</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>dodt_m_trd</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>B</ci>
+                        <apply>
+                            <minus/>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <ci>Dp_trd</ci>
+                        <apply>
+                            <minus/>
+                            <ci>Pend2_m</ci>
+                            <ci>Pend2_f</ci>
+                        </apply>
+                    </apply>
+                    <ci>V_m</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>dodt_f_trd</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>B</ci>
+                            </apply>
+                            <ci>V_m</ci>
+                        </apply>
+                        <ci>V_f</ci>
+                    </apply>
+                    <ci>dodt_m_trd</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>O2_mnew_trd</ci>
+                <apply>
+                    <plus/>
+                    <ci>O2_m</ci>
+                    <apply>
+                        <times/>
+                        <ci>dodt_m_trd</ci>
+                        <ci>dt</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>O2_fnew_trd</ci>
+                <apply>
+                    <plus/>
+                    <ci>O2_f</ci>
+                    <apply>
+                        <times/>
+                        <ci>dodt_f_trd</ci>
+                        <ci>dt</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>f_m_trd</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <cn cellml:units="dimensionless">1.34</cn>
+                                    <ci>Hb_m</ci>
+                                </apply>
+                                <cn cellml:units="dimensionless">100</cn>
+                            </apply>
+                            <apply>
+                                <plus/>
+                                <apply>
+                                    <times/>
+                                    <ci>k4_m</ci>
+                                    <apply>
+                                        <power/>
+                                        <ci>Pend2_m</ci>
+                                        <apply>
+                                            <divide/>
+                                            <apply>
+                                                <minus/>
+                                                <cn cellml:units="dimensionless">1</cn>
+                                            </apply>
+                                            <ci>k3_m</ci>
+                                        </apply>
+                                    </apply>
+                                </apply>
+                                <cn cellml:units="dimensionless">1</cn>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <ci>Pend2_m</ci>
+                        </apply>
+                    </apply>
+                    <ci>O2_mnew_trd</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>f_f_trd</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <cn cellml:units="dimensionless">1.34</cn>
+                                    <ci>Hb_f</ci>
+                                </apply>
+                                <cn cellml:units="dimensionless">100</cn>
+                            </apply>
+                            <apply>
+                                <plus/>
+                                <apply>
+                                    <times/>
+                                    <ci>k4_f</ci>
+                                    <apply>
+                                        <power/>
+                                        <ci>Pend2_f</ci>
+                                        <apply>
+                                            <divide/>
+                                            <apply>
+                                                <minus/>
+                                                <cn cellml:units="dimensionless">1</cn>
+                                            </apply>
+                                            <ci>k3_f</ci>
+                                        </apply>
+                                    </apply>
+                                </apply>
+                                <cn cellml:units="dimensionless">1</cn>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <ci>Pend2_f</ci>
+                        </apply>
+                    </apply>
+                    <ci>O2_fnew_trd</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>upper_m_trd</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">1.34</cn>
+                    <ci>Hb_m</ci>
+                    <ci>k4_m</ci>
+                    <apply>
+                        <power/>
+                        <ci>Pend2_m</ci>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>k3_m</ci>
+                            </apply>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>lower_m_trd</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">100</cn>
+                    <ci>k3_m</ci>
+                    <apply>
+                        <power/>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k4_m</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>Pend2_m</ci>
+                                    <apply>
+                                        <divide/>
+                                        <apply>
+                                            <minus/>
+                                            <cn cellml:units="dimensionless">1</cn>
+                                        </apply>
+                                        <ci>k3_m</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>dfdP_m_trd</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <ci>upper_m_trd</ci>
+                        <ci>lower_m_trd</ci>
+                    </apply>
+                    <ci>a</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>upper_f_trd</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">1.34</cn>
+                    <ci>Hb_f</ci>
+                    <ci>k4_f</ci>
+                    <apply>
+                        <power/>
+                        <ci>Pend2_f</ci>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>k3_f</ci>
+                            </apply>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>lower_f_trd</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">100</cn>
+                    <ci>k3_f</ci>
+                    <apply>
+                        <power/>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k4_f</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>Pend2_f</ci>
+                                    <apply>
+                                        <divide/>
+                                        <apply>
+                                            <minus/>
+                                            <cn cellml:units="dimensionless">1</cn>
+                                        </apply>
+                                        <ci>k3_f</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>dfdP_f_trd</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <ci>upper_f_trd</ci>
+                        <ci>lower_f_trd</ci>
+                    </apply>
+                    <ci>a</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Pend3_m</ci>
+                <apply>
+                    <minus/>
+                    <ci>Pend2_m</ci>
+                    <apply>
+                        <divide/>
+                        <ci>f_m_trd</ci>
+                        <ci>dfdP_m_trd</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Pend3_f</ci>
+                <apply>
+                    <minus/>
+                    <ci>Pend2_f</ci>
+                    <apply>
+                        <divide/>
+                        <ci>f_f_trd</ci>
+                        <ci>dfdP_f_trd</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x_m_for</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <log/>
+                                <ci>Pend3_m</ci>
+                            </apply>
+                            <ci>k1_m</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>k2_m</ci>
+                            <apply>
+                                <minus/>
+                                <ci>pH_m</ci>
+                                <cn cellml:units="dimensionless">7.4</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>k3_m</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x_m1_for</ci>
+                <apply>
+                    <power/>
+                    <cn cellml:units="dimensionless">10</cn>
+                    <ci>x_m_for</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>S_m_for</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">100</cn>
+                        <ci>x_m1_for</ci>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">1</cn>
+                        <ci>x_m1_for</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x_f_for</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <log/>
+                                <ci>Pend3_f</ci>
+                            </apply>
+                            <ci>k1_f</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>k2_f</ci>
+                            <apply>
+                                <minus/>
+                                <ci>pH_f</ci>
+                                <cn cellml:units="dimensionless">7.4</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>k3_f</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x_f1_for</ci>
+                <apply>
+                    <power/>
+                    <cn cellml:units="dimensionless">10</cn>
+                    <ci>x_f_for</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>S_f_for</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">100</cn>
+                        <ci>x_f1_for</ci>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">1</cn>
+                        <ci>x_f1_for</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x1_m_for</ci>
+                <piecewise>
+                    <piece>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>c2</ci>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                    <cn cellml:units="dimensionless">96</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <gt/>
+                            <ci>S_m_for</ci>
+                            <cn cellml:units="dimensionless">96</cn>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>c2</ci>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                    <ci>S_m_for</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </otherwise>
+                </piecewise>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>theta_96_m_for</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <apply>
+                                            <minus/>
+                                            <apply>
+                                                <plus/>
+                                                <apply>
+                                                    <times/>
+                                                    <ci>c1</ci>
+                                                    <apply>
+                                                        <minus/>
+                                                        <cn cellml:units="dimensionless">1</cn>
+                                                        <ci>x1_m_for</ci>
+                                                    </apply>
+                                                </apply>
+                                                <apply>
+                                                    <times/>
+                                                    <ci>c3</ci>
+                                                    <ci>S_m_for</ci>
+                                                </apply>
+                                            </apply>
+                                            <ci>c4</ci>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">1.34</cn>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                </apply>
+                                <ci>Hb_m</ci>
+                            </apply>
+                            <cn cellml:units="dimensionless">0.2</cn>
+                        </apply>
+                        <ci>ks_m</ci>
+                    </apply>
+                    <ci>kh</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>theta_m_for</ci>
+                <piecewise>
+                    <piece>
+                        <apply>
+                            <minus/>
+                            <ci>theta_96_m_for</ci>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <ci>theta_96_m_for</ci>
+                                    <apply>
+                                        <minus/>
+                                        <cn cellml:units="dimensionless">96</cn>
+                                        <ci>S_m_for</ci>
+                                    </apply>
+                                </apply>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">4</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <gt/>
+                            <ci>S_m_for</ci>
+                            <cn cellml:units="dimensionless">96</cn>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <apply>
+                                            <divide/>
+                                            <apply>
+                                                <times/>
+                                                <apply>
+                                                    <minus/>
+                                                    <apply>
+                                                        <plus/>
+                                                        <apply>
+                                                            <times/>
+                                                            <ci>c1</ci>
+                                                            <apply>
+                                                                <minus/>
+                                                                <cn cellml:units="dimensionless">1</cn>
+                                                                <ci>x1_m_for</ci>
+                                                            </apply>
+                                                        </apply>
+                                                        <apply>
+                                                            <times/>
+                                                            <ci>c3</ci>
+                                                            <ci>S_m_for</ci>
+                                                        </apply>
+                                                    </apply>
+                                                    <ci>c4</ci>
+                                                </apply>
+                                                <cn cellml:units="dimensionless">1.34</cn>
+                                            </apply>
+                                            <cn cellml:units="dimensionless">100</cn>
+                                        </apply>
+                                        <ci>Hb_m</ci>
+                                    </apply>
+                                    <cn cellml:units="dimensiionless">0.2</cn>
+                                </apply>
+                                <ci>ks_m</ci>
+                            </apply>
+                            <ci>kh</ci>
+                        </apply>
+                    </otherwise>
+                </piecewise>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x1_f_for</ci>
+                <piecewise>
+                    <piece>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>c2</ci>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                    <cn cellml:units="dimensionless">96</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <gt/>
+                            <ci>S_f_for</ci>
+                            <cn cellml:units="dimensionless">96</cn>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>c2</ci>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                    <ci>S_f_for</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </otherwise>
+                </piecewise>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>theta_96_f_for</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <apply>
+                                            <minus/>
+                                            <apply>
+                                                <plus/>
+                                                <apply>
+                                                    <times/>
+                                                    <ci>c1</ci>
+                                                    <apply>
+                                                        <minus/>
+                                                        <cn cellml:units="dimensionless">1</cn>
+                                                        <ci>x1_f_for</ci>
+                                                    </apply>
+                                                </apply>
+                                                <apply>
+                                                    <times/>
+                                                    <ci>c3</ci>
+                                                    <ci>S_f_for</ci>
+                                                </apply>
+                                            </apply>
+                                            <ci>c4</ci>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">1.34</cn>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">100</cn>
+                                </apply>
+                                <ci>Hb_f</ci>
+                            </apply>
+                            <cn cellml:units="dimensionless">0.2</cn>
+                        </apply>
+                        <ci>ks_f</ci>
+                    </apply>
+                    <ci>kh</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>theta_f_for</ci>
+                <piecewise>
+                    <piece>
+                        <apply>
+                            <minus/>
+                            <ci>theta_96_f_for</ci>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <ci>theta_96_f_for</ci>
+                                    <apply>
+                                        <minus/>
+                                        <cn cellml:units="dimensionless">96</cn>
+                                        <ci>S_f_for</ci>
+                                    </apply>
+                                </apply>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">4</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <gt/>
+                            <ci>S_f_for</ci>
+                            <cn cellml:units="dimensionless">96</cn>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <apply>
+                                            <divide/>
+                                            <apply>
+                                                <times/>
+                                                <apply>
+                                                    <minus/>
+                                                    <apply>
+                                                        <plus/>
+                                                        <apply>
+                                                            <times/>
+                                                            <ci>c1</ci>
+                                                            <apply>
+                                                                <minus/>
+                                                                <cn cellml:units="dimensionless">1</cn>
+                                                                <ci>x1_f_for</ci>
+                                                            </apply>
+                                                        </apply>
+                                                        <apply>
+                                                            <times/>
+                                                            <ci>c3</ci>
+                                                            <ci>S_f_for</ci>
+                                                        </apply>
+                                                    </apply>
+                                                    <ci>c4</ci>
+                                                </apply>
+                                                <cn cellml:units="dimensionless">1.34</cn>
+                                            </apply>
+                                            <cn cellml:units="dimensionless">100</cn>
+                                        </apply>
+                                        <ci>Hb_f</ci>
+                                    </apply>
+                                    <cn cellml:units="dimensiionless">0.2</cn>
+                                </apply>
+                                <ci>ks_f</ci>
+                            </apply>
+                            <ci>kh</ci>
+                        </apply>
+                    </otherwise>
+                </piecewise>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_m_for</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="dimensionless">1</cn>
+                    <apply>
+                        <times/>
+                        <ci>theta_m_for</ci>
+                        <ci>V_m</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_f_for</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="dimensionless">1</cn>
+                    <apply>
+                        <times/>
+                        <ci>theta_f_for</ci>
+                        <ci>V_f</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_p_for</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="dimensionless">1</cn>
+                    <ci>Dm</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_t_for</ci>
+                <apply>
+                    <plus/>
+                    <ci>R_m_for</ci>
+                    <ci>R_f_for</ci>
+                    <ci>R_p_for</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Dp_for</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <divide/>
+                        <cn cellml:units="dimensionless">1</cn>
+                        <ci>R_t_for</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">60</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>dodt_m_for</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>B</ci>
+                        <apply>
+                            <minus/>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <ci>Dp_for</ci>
+                        <apply>
+                            <minus/>
+                            <ci>Pend3_m</ci>
+                            <ci>Pend3_f</ci>
+                        </apply>
+                    </apply>
+                    <ci>V_m</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>dodt_f_for</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>B</ci>
+                            </apply>
+                            <ci>V_m</ci>
+                        </apply>
+                        <ci>V_f</ci>
+                    </apply>
+                    <ci>dodt_m_for</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>O2_mnew_final</ci>
+                <apply>
+                    <plus/>
+                    <ci>O2_m</ci>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <cn cellml:units="dimensionless">6</cn>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <ci>dodt_m</ci>
+                            <apply>
+                                <times/>
+                                <cn cellml:units="dimensionless">2</cn>
+                                <ci>dodt_m_sec</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <cn cellml:units="dimensionless">2</cn>
+                                <ci>dodt_m_trd</ci>
+                            </apply>
+                            <ci>dodt_m_for</ci>
+                        </apply>
+                        <ci>dt</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>O2_fnew_final</ci>
+                <apply>
+                    <plus/>
+                    <ci>O2_f</ci>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <cn cellml:units="dimensionless">6</cn>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <ci>dodt_f</ci>
+                            <apply>
+                                <times/>
+                                <cn cellml:units="dimensionless">2</cn>
+                                <ci>dodt_f_sec</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <cn cellml:units="dimensionless">2</cn>
+                                <ci>dodt_f_trd</ci>
+                            </apply>
+                            <ci>dodt_f_for</ci>
+                        </apply>
+                        <ci>dt</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>f_m_final</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <cn cellml:units="dimensionless">1.34</cn>
+                                    <ci>Hb_m</ci>
+                                </apply>
+                                <cn cellml:units="dimensionless">100</cn>
+                            </apply>
+                            <apply>
+                                <plus/>
+                                <apply>
+                                    <times/>
+                                    <ci>k4_m</ci>
+                                    <apply>
+                                        <power/>
+                                        <ci>Pend3_m</ci>
+                                        <apply>
+                                            <divide/>
+                                            <apply>
+                                                <minus/>
+                                                <cn cellml:units="dimensionless">1</cn>
+                                            </apply>
+                                            <ci>k3_m</ci>
+                                        </apply>
+                                    </apply>
+                                </apply>
+                                <cn cellml:units="dimensionless">1</cn>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <ci>Pend3_m</ci>
+                        </apply>
+                    </apply>
+                    <ci>O2_mnew_final</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>f_f_final</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <cn cellml:units="dimensionless">1.34</cn>
+                                    <ci>Hb_f</ci>
+                                </apply>
+                                <cn cellml:units="dimensionless">100</cn>
+                            </apply>
+                            <apply>
+                                <plus/>
+                                <apply>
+                                    <times/>
+                                    <ci>k4_f</ci>
+                                    <apply>
+                                        <power/>
+                                        <ci>Pend3_f</ci>
+                                        <apply>
+                                            <divide/>
+                                            <apply>
+                                                <minus/>
+                                                <cn cellml:units="dimensionless">1</cn>
+                                            </apply>
+                                            <ci>k3_f</ci>
+                                        </apply>
+                                    </apply>
+                                </apply>
+                                <cn cellml:units="dimensionless">1</cn>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <ci>Pend3_f</ci>
+                        </apply>
+                    </apply>
+                    <ci>O2_fnew_final</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>upper_m_final</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">1.34</cn>
+                    <ci>Hb_m</ci>
+                    <ci>k4_m</ci>
+                    <apply>
+                        <power/>
+                        <ci>Pend3_m</ci>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>k3_m</ci>
+                            </apply>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>lower_m_final</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">100</cn>
+                    <ci>k3_m</ci>
+                    <apply>
+                        <power/>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k4_m</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>Pend3_m</ci>
+                                    <apply>
+                                        <divide/>
+                                        <apply>
+                                            <minus/>
+                                            <cn cellml:units="dimensionless">1</cn>
+                                        </apply>
+                                        <ci>k3_m</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>dfdP_m_final</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <ci>upper_m_final</ci>
+                        <ci>lower_m_final</ci>
+                    </apply>
+                    <ci>a</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>upper_f_final</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">1.34</cn>
+                    <ci>Hb_f</ci>
+                    <ci>k4_f</ci>
+                    <apply>
+                        <power/>
+                        <ci>Pend3_f</ci>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="dimensionless">1</cn>
+                                </apply>
+                                <ci>k3_f</ci>
+                            </apply>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>lower_f_final</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">100</cn>
+                    <ci>k3_f</ci>
+                    <apply>
+                        <power/>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k4_f</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>Pend3_f</ci>
+                                    <apply>
+                                        <divide/>
+                                        <apply>
+                                            <minus/>
+                                            <cn cellml:units="dimensionless">1</cn>
+                                        </apply>
+                                        <ci>k3_f</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>dfdP_f_final</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <ci>upper_f_final</ci>
+                        <ci>lower_f_final</ci>
+                    </apply>
+                    <ci>a</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Pfinal_m</ci>
+                <apply>
+                    <minus/>
+                    <ci>Pend3_m</ci>
+                    <apply>
+                        <divide/>
+                        <ci>f_m_final</ci>
+                        <ci>dfdP_m_final</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Pfinal_f</ci>
+                <apply>
+                    <minus/>
+                    <ci>Pend3_f</ci>
+                    <apply>
+                        <divide/>
+                        <ci>f_f_final</ci>
+                        <ci>dfdP_f_final</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>Pin_m</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>Pfinal_m</ci>
+                        <ci>Pin_m</ci>
+                    </apply>
+                    <ci>dt</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>Pin_f</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>Pfinal_f</ci>
+                        <ci>Pin_f</ci>
+                    </apply>
+                    <ci>dt</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

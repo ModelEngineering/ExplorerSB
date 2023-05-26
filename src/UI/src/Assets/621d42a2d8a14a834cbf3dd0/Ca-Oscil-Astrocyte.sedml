@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfModels>
+    <model id="model" name="Model" language="urn:sedml:language:xpp" source="Ca-Oscil-Astrocyte.ode">
+      <listOfChanges>
+        <changeAttribute target="X" newValue="0.1"/>
+        <changeAttribute target="Y" newValue="1.5"/>
+        <changeAttribute target="Z" newValue="0.1"/>
+        <changeAttribute target="k2" newValue="0.1"/>
+        <changeAttribute target="kcaa" newValue="0.15"/>
+        <changeAttribute target="kcat" newValue="0.15"/>
+        <changeAttribute target="kdeg" newValue="0.08"/>
+        <changeAttribute target="kf" newValue="0.5"/>
+        <changeAttribute target="kip3" newValue="0.1"/>
+        <changeAttribute target="kout" newValue="0.5"/>
+        <changeAttribute target="kp" newValue="0.3"/>
+        <changeAttribute target="m" newValue="2.2"/>
+        <changeAttribute target="n" newValue="2.02"/>
+        <changeAttribute target="vin" newValue="0.05"/>
+        <changeAttribute target="vm2" newValue="15.0"/>
+        <changeAttribute target="vm3" newValue="40.0"/>
+        <changeAttribute target="vp" newValue="0.05"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" name="Simulation" initialTime="0" outputStartTime="0" outputEndTime="600" numberOfPoints="1000">
+      <algorithm kisaoID="KISAO:0000030">
+        <listOfAlgorithmParameters>
+          <algorithmParameter kisaoID="KISAO:0000483" value="0.01"/>
+        </listOfAlgorithmParameters>
+      </algorithm>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" name="Task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_T" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T" name="T" symbol="urn:sedml:symbol:time" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_X" name="X">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_X </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_X" name="X" target="X" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_Y" name="Y">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_Y </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_Y" name="Y" target="Y" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_Z" name="Z">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_Z </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_Z" name="Z" target="Z" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report" name="Report">
+      <listOfDataSets>
+        <dataSet id="data_set_T" name="T" label="T" dataReference="data_generator_T"/>
+        <dataSet id="data_set_X" name="X" label="X" dataReference="data_generator_X"/>
+        <dataSet id="data_set_Y" name="Y" label="Y" dataReference="data_generator_Y"/>
+        <dataSet id="data_set_Z" name="Z" label="Z" dataReference="data_generator_Z"/>
+      </listOfDataSets>
+    </report>
+    <plot2D id="plot">
+      <listOfCurves>
+        <curve id="curve_1" name="X vs T" logX="false" xDataReference="data_generator_T" logY="false" yDataReference="data_generator_X"/>
+      </listOfCurves>
+    </plot2D>
+  </listOfOutputs>
+</sedML>

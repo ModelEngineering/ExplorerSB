@@ -1,0 +1,1112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" xmlns:cellml="http://www.cellml.org/cellml/1.0#" level="1" version="3">
+  <listOfModels>
+    <model id="model" language="urn:sedml:language:cellml" source="dokos_celler_lovell_1996.cellml">
+      <listOfChanges>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;constants&apos;]/cellml:variable[@name=&apos;R&apos;]/@initial_value" newValue="8314.472"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;constants&apos;]/cellml:variable[@name=&apos;T&apos;]/@initial_value" newValue="310"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;constants&apos;]/cellml:variable[@name=&apos;F&apos;]/@initial_value" newValue="96485.3415"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;membrane&apos;]/cellml:variable[@name=&apos;E&apos;]/@initial_value" newValue="-64.9"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;membrane&apos;]/cellml:variable[@name=&apos;C&apos;]/@initial_value" newValue="3.2e-5"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;L_type_calcium_current&apos;]/cellml:variable[@name=&apos;g_CaL&apos;]/@initial_value" newValue="0.4"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;L_type_calcium_current_d_gate&apos;]/cellml:variable[@name=&apos;dL&apos;]/@initial_value" newValue="0.0001"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;L_type_calcium_current_d_gate&apos;]/cellml:variable[@name=&apos;tau_dL&apos;]/@initial_value" newValue="0.002"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;L_type_calcium_current_f_gate&apos;]/cellml:variable[@name=&apos;fL&apos;]/@initial_value" newValue="0.1505"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;L_type_calcium_current_f2_gate&apos;]/cellml:variable[@name=&apos;fL2&apos;]/@initial_value" newValue="0.219"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;L_type_calcium_current_f2_gate&apos;]/cellml:variable[@name=&apos;alpha_fL2&apos;]/@initial_value" newValue="3"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;L_type_calcium_current_f2_gate&apos;]/cellml:variable[@name=&apos;beta_fL2&apos;]/@initial_value" newValue="40000"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;T_type_calcium_current&apos;]/cellml:variable[@name=&apos;g_CaT&apos;]/@initial_value" newValue="0.085"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;T_type_calcium_current_d_gate&apos;]/cellml:variable[@name=&apos;dT&apos;]/@initial_value" newValue="0.001"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;T_type_calcium_current_f_gate&apos;]/cellml:variable[@name=&apos;fT&apos;]/@initial_value" newValue="0.1328"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;fast_sodium_current&apos;]/cellml:variable[@name=&apos;g_Na&apos;]/@initial_value" newValue="0.25"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;fast_sodium_current_m_gate&apos;]/cellml:variable[@name=&apos;m&apos;]/@initial_value" newValue="0.0139"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;fast_sodium_current_h_gate&apos;]/cellml:variable[@name=&apos;h&apos;]/@initial_value" newValue="0.0087"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;delayed_rectifying_potassium_current&apos;]/cellml:variable[@name=&apos;Kk&apos;]/@initial_value" newValue="0.00026"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;delayed_rectifying_potassium_current&apos;]/cellml:variable[@name=&apos;P_KNa&apos;]/@initial_value" newValue="0.035"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;delayed_rectifying_potassium_current_x_gate&apos;]/cellml:variable[@name=&apos;x&apos;]/@initial_value" newValue="0.5682"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;hyperpolarising_activated_current&apos;]/cellml:variable[@name=&apos;Kmf&apos;]/@initial_value" newValue="10.3"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;hyperpolarising_activated_current&apos;]/cellml:variable[@name=&apos;g_fNa&apos;]/@initial_value" newValue="0.0081"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;hyperpolarising_activated_current&apos;]/cellml:variable[@name=&apos;g_fK&apos;]/@initial_value" newValue="0.0135"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;hyperpolarising_activated_current_y_gate&apos;]/cellml:variable[@name=&apos;y&apos;]/@initial_value" newValue="0.0287"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sodium_potassium_pump&apos;]/cellml:variable[@name=&apos;KmNa&apos;]/@initial_value" newValue="40"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sodium_potassium_pump&apos;]/cellml:variable[@name=&apos;KmK&apos;]/@initial_value" newValue="1"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sodium_potassium_pump&apos;]/cellml:variable[@name=&apos;i_pmax&apos;]/@initial_value" newValue="0.226"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;kNaCa&apos;]/@initial_value" newValue="4"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;Qci&apos;]/@initial_value" newValue="0.1369"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;Qn&apos;]/@initial_value" newValue="0.4315"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;Qco&apos;]/@initial_value" newValue="0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;K3ni&apos;]/@initial_value" newValue="26.44"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;Kci&apos;]/@initial_value" newValue="0.0207"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;K1ni&apos;]/@initial_value" newValue="395.3"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;K2ni&apos;]/@initial_value" newValue="2.289"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;Kcni&apos;]/@initial_value" newValue="26.44"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;K3no&apos;]/@initial_value" newValue="4.663"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;K1no&apos;]/@initial_value" newValue="1628"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;K2no&apos;]/@initial_value" newValue="561.4"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;Kco&apos;]/@initial_value" newValue="3.663"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;background_sodium_current&apos;]/cellml:variable[@name=&apos;g_Nab&apos;]/@initial_value" newValue="0.00024"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;background_potassium_current&apos;]/cellml:variable[@name=&apos;KbK&apos;]/@initial_value" newValue="0.00007"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sarcoplasmic_reticulum_kinetics&apos;]/cellml:variable[@name=&apos;i_up_max&apos;]/@initial_value" newValue="0.0212"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sarcoplasmic_reticulum_kinetics&apos;]/cellml:variable[@name=&apos;KmCaup&apos;]/@initial_value" newValue="0.0005"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sarcoplasmic_reticulum_kinetics&apos;]/cellml:variable[@name=&apos;KmCarel&apos;]/@initial_value" newValue="0.001"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sarcoplasmic_reticulum_kinetics&apos;]/cellml:variable[@name=&apos;tau_rel&apos;]/@initial_value" newValue="0.005"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;sarcoplasmic_reticulum_kinetics&apos;]/cellml:variable[@name=&apos;tau_tr&apos;]/@initial_value" newValue="0.4"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Cai&apos;]/@initial_value" newValue="0.000034"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Cao&apos;]/@initial_value" newValue="2.0004"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Caup&apos;]/@initial_value" newValue="0.5832"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Carel&apos;]/@initial_value" newValue="0.1101"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Nai&apos;]/@initial_value" newValue="7.4994"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Nao&apos;]/@initial_value" newValue="139.9929"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Ki&apos;]/@initial_value" newValue="140.0073"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Ko&apos;]/@initial_value" newValue="5.4243"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;V_i&apos;]/@initial_value" newValue="2.5e-6"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;tau_b&apos;]/@initial_value" newValue="0.1"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Nab&apos;]/@initial_value" newValue="140"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Cab&apos;]/@initial_value" newValue="2"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Kb&apos;]/@initial_value" newValue="5.4"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" initialTime="0" outputStartTime="0" outputEndTime="1" numberOfPoints="10">
+      <algorithm kisaoID="KISAO:0000019"/>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_value_component_environment_variable_time" name="Value of variable &quot;time&quot; of component &quot;environment&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_environment_variable_time </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_environment_variable_time" name="Value of variable &quot;time&quot; of component &quot;environment&quot;" target="/cellml:model/cellml:component[@name=&apos;environment&apos;]/cellml:variable[@name=&apos;time&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_constants_variable_R" name="Value of variable &quot;R&quot; of component &quot;constants&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_constants_variable_R </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_constants_variable_R" name="Value of variable &quot;R&quot; of component &quot;constants&quot;" target="/cellml:model/cellml:component[@name=&apos;constants&apos;]/cellml:variable[@name=&apos;R&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_constants_variable_T" name="Value of variable &quot;T&quot; of component &quot;constants&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_constants_variable_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_constants_variable_T" name="Value of variable &quot;T&quot; of component &quot;constants&quot;" target="/cellml:model/cellml:component[@name=&apos;constants&apos;]/cellml:variable[@name=&apos;T&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_constants_variable_F" name="Value of variable &quot;F&quot; of component &quot;constants&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_constants_variable_F </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_constants_variable_F" name="Value of variable &quot;F&quot; of component &quot;constants&quot;" target="/cellml:model/cellml:component[@name=&apos;constants&apos;]/cellml:variable[@name=&apos;F&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_membrane_variable_E" name="Value of variable &quot;E&quot; of component &quot;membrane&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_membrane_variable_E </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_membrane_variable_E" name="Value of variable &quot;E&quot; of component &quot;membrane&quot;" target="/cellml:model/cellml:component[@name=&apos;membrane&apos;]/cellml:variable[@name=&apos;E&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_membrane_variable_C" name="Value of variable &quot;C&quot; of component &quot;membrane&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_membrane_variable_C </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_membrane_variable_C" name="Value of variable &quot;C&quot; of component &quot;membrane&quot;" target="/cellml:model/cellml:component[@name=&apos;membrane&apos;]/cellml:variable[@name=&apos;C&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_membrane_variable_i_tot" name="Value of variable &quot;i_tot&quot; of component &quot;membrane&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_membrane_variable_i_tot </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_membrane_variable_i_tot" name="Value of variable &quot;i_tot&quot; of component &quot;membrane&quot;" target="/cellml:model/cellml:component[@name=&apos;membrane&apos;]/cellml:variable[@name=&apos;i_tot&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_reversal_potentials_variable_E_Ca" name="Value of variable &quot;E_Ca&quot; of component &quot;reversal_potentials&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_reversal_potentials_variable_E_Ca </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_reversal_potentials_variable_E_Ca" name="Value of variable &quot;E_Ca&quot; of component &quot;reversal_potentials&quot;" target="/cellml:model/cellml:component[@name=&apos;reversal_potentials&apos;]/cellml:variable[@name=&apos;E_Ca&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_reversal_potentials_variable_E_Na" name="Value of variable &quot;E_Na&quot; of component &quot;reversal_potentials&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_reversal_potentials_variable_E_Na </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_reversal_potentials_variable_E_Na" name="Value of variable &quot;E_Na&quot; of component &quot;reversal_potentials&quot;" target="/cellml:model/cellml:component[@name=&apos;reversal_potentials&apos;]/cellml:variable[@name=&apos;E_Na&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_reversal_potentials_variable_E_K" name="Value of variable &quot;E_K&quot; of component &quot;reversal_potentials&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_reversal_potentials_variable_E_K </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_reversal_potentials_variable_E_K" name="Value of variable &quot;E_K&quot; of component &quot;reversal_potentials&quot;" target="/cellml:model/cellml:component[@name=&apos;reversal_potentials&apos;]/cellml:variable[@name=&apos;E_K&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_L_type_calcium_current_variable_i_CaL" name="Value of variable &quot;i_CaL&quot; of component &quot;L_type_calcium_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_L_type_calcium_current_variable_i_CaL </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_L_type_calcium_current_variable_i_CaL" name="Value of variable &quot;i_CaL&quot; of component &quot;L_type_calcium_current&quot;" target="/cellml:model/cellml:component[@name=&apos;L_type_calcium_current&apos;]/cellml:variable[@name=&apos;i_CaL&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_L_type_calcium_current_variable_g_CaL" name="Value of variable &quot;g_CaL&quot; of component &quot;L_type_calcium_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_L_type_calcium_current_variable_g_CaL </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_L_type_calcium_current_variable_g_CaL" name="Value of variable &quot;g_CaL&quot; of component &quot;L_type_calcium_current&quot;" target="/cellml:model/cellml:component[@name=&apos;L_type_calcium_current&apos;]/cellml:variable[@name=&apos;g_CaL&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_L_type_calcium_current_d_gate_variable_dL" name="Value of variable &quot;dL&quot; of component &quot;L_type_calcium_current_d_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_L_type_calcium_current_d_gate_variable_dL </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_L_type_calcium_current_d_gate_variable_dL" name="Value of variable &quot;dL&quot; of component &quot;L_type_calcium_current_d_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;L_type_calcium_current_d_gate&apos;]/cellml:variable[@name=&apos;dL&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_L_type_calcium_current_d_gate_variable_dL_infinity" name="Value of variable &quot;dL_infinity&quot; of component &quot;L_type_calcium_current_d_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_L_type_calcium_current_d_gate_variable_dL_infinity </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_L_type_calcium_current_d_gate_variable_dL_infinity" name="Value of variable &quot;dL_infinity&quot; of component &quot;L_type_calcium_current_d_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;L_type_calcium_current_d_gate&apos;]/cellml:variable[@name=&apos;dL_infinity&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_L_type_calcium_current_d_gate_variable_tau_dL" name="Value of variable &quot;tau_dL&quot; of component &quot;L_type_calcium_current_d_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_L_type_calcium_current_d_gate_variable_tau_dL </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_L_type_calcium_current_d_gate_variable_tau_dL" name="Value of variable &quot;tau_dL&quot; of component &quot;L_type_calcium_current_d_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;L_type_calcium_current_d_gate&apos;]/cellml:variable[@name=&apos;tau_dL&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_L_type_calcium_current_f_gate_variable_fL" name="Value of variable &quot;fL&quot; of component &quot;L_type_calcium_current_f_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_L_type_calcium_current_f_gate_variable_fL </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_L_type_calcium_current_f_gate_variable_fL" name="Value of variable &quot;fL&quot; of component &quot;L_type_calcium_current_f_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;L_type_calcium_current_f_gate&apos;]/cellml:variable[@name=&apos;fL&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_L_type_calcium_current_f_gate_variable_fL_infinity" name="Value of variable &quot;fL_infinity&quot; of component &quot;L_type_calcium_current_f_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_L_type_calcium_current_f_gate_variable_fL_infinity </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_L_type_calcium_current_f_gate_variable_fL_infinity" name="Value of variable &quot;fL_infinity&quot; of component &quot;L_type_calcium_current_f_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;L_type_calcium_current_f_gate&apos;]/cellml:variable[@name=&apos;fL_infinity&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_L_type_calcium_current_f_gate_variable_tau_fL" name="Value of variable &quot;tau_fL&quot; of component &quot;L_type_calcium_current_f_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_L_type_calcium_current_f_gate_variable_tau_fL </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_L_type_calcium_current_f_gate_variable_tau_fL" name="Value of variable &quot;tau_fL&quot; of component &quot;L_type_calcium_current_f_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;L_type_calcium_current_f_gate&apos;]/cellml:variable[@name=&apos;tau_fL&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_L_type_calcium_current_f2_gate_variable_fL2" name="Value of variable &quot;fL2&quot; of component &quot;L_type_calcium_current_f2_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_L_type_calcium_current_f2_gate_variable_fL2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_L_type_calcium_current_f2_gate_variable_fL2" name="Value of variable &quot;fL2&quot; of component &quot;L_type_calcium_current_f2_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;L_type_calcium_current_f2_gate&apos;]/cellml:variable[@name=&apos;fL2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_L_type_calcium_current_f2_gate_variable_alpha_fL2" name="Value of variable &quot;alpha_fL2&quot; of component &quot;L_type_calcium_current_f2_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_L_type_calcium_current_f2_gate_variable_alpha_fL2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_L_type_calcium_current_f2_gate_variable_alpha_fL2" name="Value of variable &quot;alpha_fL2&quot; of component &quot;L_type_calcium_current_f2_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;L_type_calcium_current_f2_gate&apos;]/cellml:variable[@name=&apos;alpha_fL2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_L_type_calcium_current_f2_gate_variable_beta_fL2" name="Value of variable &quot;beta_fL2&quot; of component &quot;L_type_calcium_current_f2_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_L_type_calcium_current_f2_gate_variable_beta_fL2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_L_type_calcium_current_f2_gate_variable_beta_fL2" name="Value of variable &quot;beta_fL2&quot; of component &quot;L_type_calcium_current_f2_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;L_type_calcium_current_f2_gate&apos;]/cellml:variable[@name=&apos;beta_fL2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_T_type_calcium_current_variable_i_CaT" name="Value of variable &quot;i_CaT&quot; of component &quot;T_type_calcium_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_T_type_calcium_current_variable_i_CaT </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_T_type_calcium_current_variable_i_CaT" name="Value of variable &quot;i_CaT&quot; of component &quot;T_type_calcium_current&quot;" target="/cellml:model/cellml:component[@name=&apos;T_type_calcium_current&apos;]/cellml:variable[@name=&apos;i_CaT&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_T_type_calcium_current_variable_g_CaT" name="Value of variable &quot;g_CaT&quot; of component &quot;T_type_calcium_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_T_type_calcium_current_variable_g_CaT </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_T_type_calcium_current_variable_g_CaT" name="Value of variable &quot;g_CaT&quot; of component &quot;T_type_calcium_current&quot;" target="/cellml:model/cellml:component[@name=&apos;T_type_calcium_current&apos;]/cellml:variable[@name=&apos;g_CaT&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_T_type_calcium_current_d_gate_variable_dT" name="Value of variable &quot;dT&quot; of component &quot;T_type_calcium_current_d_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_T_type_calcium_current_d_gate_variable_dT </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_T_type_calcium_current_d_gate_variable_dT" name="Value of variable &quot;dT&quot; of component &quot;T_type_calcium_current_d_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;T_type_calcium_current_d_gate&apos;]/cellml:variable[@name=&apos;dT&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_T_type_calcium_current_d_gate_variable_dT_infinity" name="Value of variable &quot;dT_infinity&quot; of component &quot;T_type_calcium_current_d_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_T_type_calcium_current_d_gate_variable_dT_infinity </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_T_type_calcium_current_d_gate_variable_dT_infinity" name="Value of variable &quot;dT_infinity&quot; of component &quot;T_type_calcium_current_d_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;T_type_calcium_current_d_gate&apos;]/cellml:variable[@name=&apos;dT_infinity&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_T_type_calcium_current_d_gate_variable_tau_dT" name="Value of variable &quot;tau_dT&quot; of component &quot;T_type_calcium_current_d_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_T_type_calcium_current_d_gate_variable_tau_dT </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_T_type_calcium_current_d_gate_variable_tau_dT" name="Value of variable &quot;tau_dT&quot; of component &quot;T_type_calcium_current_d_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;T_type_calcium_current_d_gate&apos;]/cellml:variable[@name=&apos;tau_dT&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_T_type_calcium_current_f_gate_variable_fT" name="Value of variable &quot;fT&quot; of component &quot;T_type_calcium_current_f_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_T_type_calcium_current_f_gate_variable_fT </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_T_type_calcium_current_f_gate_variable_fT" name="Value of variable &quot;fT&quot; of component &quot;T_type_calcium_current_f_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;T_type_calcium_current_f_gate&apos;]/cellml:variable[@name=&apos;fT&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_T_type_calcium_current_f_gate_variable_fT_infinity" name="Value of variable &quot;fT_infinity&quot; of component &quot;T_type_calcium_current_f_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_T_type_calcium_current_f_gate_variable_fT_infinity </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_T_type_calcium_current_f_gate_variable_fT_infinity" name="Value of variable &quot;fT_infinity&quot; of component &quot;T_type_calcium_current_f_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;T_type_calcium_current_f_gate&apos;]/cellml:variable[@name=&apos;fT_infinity&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_T_type_calcium_current_f_gate_variable_tau_fT" name="Value of variable &quot;tau_fT&quot; of component &quot;T_type_calcium_current_f_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_T_type_calcium_current_f_gate_variable_tau_fT </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_T_type_calcium_current_f_gate_variable_tau_fT" name="Value of variable &quot;tau_fT&quot; of component &quot;T_type_calcium_current_f_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;T_type_calcium_current_f_gate&apos;]/cellml:variable[@name=&apos;tau_fT&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_fast_sodium_current_variable_i_Na" name="Value of variable &quot;i_Na&quot; of component &quot;fast_sodium_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_fast_sodium_current_variable_i_Na </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_fast_sodium_current_variable_i_Na" name="Value of variable &quot;i_Na&quot; of component &quot;fast_sodium_current&quot;" target="/cellml:model/cellml:component[@name=&apos;fast_sodium_current&apos;]/cellml:variable[@name=&apos;i_Na&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_fast_sodium_current_variable_g_Na" name="Value of variable &quot;g_Na&quot; of component &quot;fast_sodium_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_fast_sodium_current_variable_g_Na </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_fast_sodium_current_variable_g_Na" name="Value of variable &quot;g_Na&quot; of component &quot;fast_sodium_current&quot;" target="/cellml:model/cellml:component[@name=&apos;fast_sodium_current&apos;]/cellml:variable[@name=&apos;g_Na&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_fast_sodium_current_m_gate_variable_m" name="Value of variable &quot;m&quot; of component &quot;fast_sodium_current_m_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_fast_sodium_current_m_gate_variable_m </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_fast_sodium_current_m_gate_variable_m" name="Value of variable &quot;m&quot; of component &quot;fast_sodium_current_m_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;fast_sodium_current_m_gate&apos;]/cellml:variable[@name=&apos;m&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_fast_sodium_current_m_gate_variable_alpha_m" name="Value of variable &quot;alpha_m&quot; of component &quot;fast_sodium_current_m_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_fast_sodium_current_m_gate_variable_alpha_m </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_fast_sodium_current_m_gate_variable_alpha_m" name="Value of variable &quot;alpha_m&quot; of component &quot;fast_sodium_current_m_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;fast_sodium_current_m_gate&apos;]/cellml:variable[@name=&apos;alpha_m&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_fast_sodium_current_m_gate_variable_beta_m" name="Value of variable &quot;beta_m&quot; of component &quot;fast_sodium_current_m_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_fast_sodium_current_m_gate_variable_beta_m </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_fast_sodium_current_m_gate_variable_beta_m" name="Value of variable &quot;beta_m&quot; of component &quot;fast_sodium_current_m_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;fast_sodium_current_m_gate&apos;]/cellml:variable[@name=&apos;beta_m&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_fast_sodium_current_h_gate_variable_h" name="Value of variable &quot;h&quot; of component &quot;fast_sodium_current_h_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_fast_sodium_current_h_gate_variable_h </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_fast_sodium_current_h_gate_variable_h" name="Value of variable &quot;h&quot; of component &quot;fast_sodium_current_h_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;fast_sodium_current_h_gate&apos;]/cellml:variable[@name=&apos;h&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_fast_sodium_current_h_gate_variable_alpha_h" name="Value of variable &quot;alpha_h&quot; of component &quot;fast_sodium_current_h_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_fast_sodium_current_h_gate_variable_alpha_h </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_fast_sodium_current_h_gate_variable_alpha_h" name="Value of variable &quot;alpha_h&quot; of component &quot;fast_sodium_current_h_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;fast_sodium_current_h_gate&apos;]/cellml:variable[@name=&apos;alpha_h&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_fast_sodium_current_h_gate_variable_beta_h" name="Value of variable &quot;beta_h&quot; of component &quot;fast_sodium_current_h_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_fast_sodium_current_h_gate_variable_beta_h </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_fast_sodium_current_h_gate_variable_beta_h" name="Value of variable &quot;beta_h&quot; of component &quot;fast_sodium_current_h_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;fast_sodium_current_h_gate&apos;]/cellml:variable[@name=&apos;beta_h&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_delayed_rectifying_potassium_current_variable_i_K" name="Value of variable &quot;i_K&quot; of component &quot;delayed_rectifying_potassium_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_delayed_rectifying_potassium_current_variable_i_K </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_delayed_rectifying_potassium_current_variable_i_K" name="Value of variable &quot;i_K&quot; of component &quot;delayed_rectifying_potassium_current&quot;" target="/cellml:model/cellml:component[@name=&apos;delayed_rectifying_potassium_current&apos;]/cellml:variable[@name=&apos;i_K&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_delayed_rectifying_potassium_current_variable_i_KK" name="Value of variable &quot;i_KK&quot; of component &quot;delayed_rectifying_potassium_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_delayed_rectifying_potassium_current_variable_i_KK </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_delayed_rectifying_potassium_current_variable_i_KK" name="Value of variable &quot;i_KK&quot; of component &quot;delayed_rectifying_potassium_current&quot;" target="/cellml:model/cellml:component[@name=&apos;delayed_rectifying_potassium_current&apos;]/cellml:variable[@name=&apos;i_KK&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_delayed_rectifying_potassium_current_variable_i_KNa" name="Value of variable &quot;i_KNa&quot; of component &quot;delayed_rectifying_potassium_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_delayed_rectifying_potassium_current_variable_i_KNa </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_delayed_rectifying_potassium_current_variable_i_KNa" name="Value of variable &quot;i_KNa&quot; of component &quot;delayed_rectifying_potassium_current&quot;" target="/cellml:model/cellml:component[@name=&apos;delayed_rectifying_potassium_current&apos;]/cellml:variable[@name=&apos;i_KNa&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_delayed_rectifying_potassium_current_variable_Kk" name="Value of variable &quot;Kk&quot; of component &quot;delayed_rectifying_potassium_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_delayed_rectifying_potassium_current_variable_Kk </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_delayed_rectifying_potassium_current_variable_Kk" name="Value of variable &quot;Kk&quot; of component &quot;delayed_rectifying_potassium_current&quot;" target="/cellml:model/cellml:component[@name=&apos;delayed_rectifying_potassium_current&apos;]/cellml:variable[@name=&apos;Kk&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_delayed_rectifying_potassium_current_variable_P_KNa" name="Value of variable &quot;P_KNa&quot; of component &quot;delayed_rectifying_potassium_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_delayed_rectifying_potassium_current_variable_P_KNa </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_delayed_rectifying_potassium_current_variable_P_KNa" name="Value of variable &quot;P_KNa&quot; of component &quot;delayed_rectifying_potassium_current&quot;" target="/cellml:model/cellml:component[@name=&apos;delayed_rectifying_potassium_current&apos;]/cellml:variable[@name=&apos;P_KNa&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_delayed_rectifying_potassium_current_x_gate_variable_x" name="Value of variable &quot;x&quot; of component &quot;delayed_rectifying_potassium_current_x_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_delayed_rectifying_potassium_current_x_gate_variable_x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_delayed_rectifying_potassium_current_x_gate_variable_x" name="Value of variable &quot;x&quot; of component &quot;delayed_rectifying_potassium_current_x_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;delayed_rectifying_potassium_current_x_gate&apos;]/cellml:variable[@name=&apos;x&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_delayed_rectifying_potassium_current_x_gate_variable_x_infinity" name="Value of variable &quot;x_infinity&quot; of component &quot;delayed_rectifying_potassium_current_x_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_delayed_rectifying_potassium_current_x_gate_variable_x_infinity </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_delayed_rectifying_potassium_current_x_gate_variable_x_infinity" name="Value of variable &quot;x_infinity&quot; of component &quot;delayed_rectifying_potassium_current_x_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;delayed_rectifying_potassium_current_x_gate&apos;]/cellml:variable[@name=&apos;x_infinity&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_delayed_rectifying_potassium_current_x_gate_variable_tau_x" name="Value of variable &quot;tau_x&quot; of component &quot;delayed_rectifying_potassium_current_x_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_delayed_rectifying_potassium_current_x_gate_variable_tau_x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_delayed_rectifying_potassium_current_x_gate_variable_tau_x" name="Value of variable &quot;tau_x&quot; of component &quot;delayed_rectifying_potassium_current_x_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;delayed_rectifying_potassium_current_x_gate&apos;]/cellml:variable[@name=&apos;tau_x&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_hyperpolarising_activated_current_variable_i_f" name="Value of variable &quot;i_f&quot; of component &quot;hyperpolarising_activated_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_hyperpolarising_activated_current_variable_i_f </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_hyperpolarising_activated_current_variable_i_f" name="Value of variable &quot;i_f&quot; of component &quot;hyperpolarising_activated_current&quot;" target="/cellml:model/cellml:component[@name=&apos;hyperpolarising_activated_current&apos;]/cellml:variable[@name=&apos;i_f&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_hyperpolarising_activated_current_variable_i_fNa" name="Value of variable &quot;i_fNa&quot; of component &quot;hyperpolarising_activated_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_hyperpolarising_activated_current_variable_i_fNa </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_hyperpolarising_activated_current_variable_i_fNa" name="Value of variable &quot;i_fNa&quot; of component &quot;hyperpolarising_activated_current&quot;" target="/cellml:model/cellml:component[@name=&apos;hyperpolarising_activated_current&apos;]/cellml:variable[@name=&apos;i_fNa&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_hyperpolarising_activated_current_variable_i_fK" name="Value of variable &quot;i_fK&quot; of component &quot;hyperpolarising_activated_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_hyperpolarising_activated_current_variable_i_fK </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_hyperpolarising_activated_current_variable_i_fK" name="Value of variable &quot;i_fK&quot; of component &quot;hyperpolarising_activated_current&quot;" target="/cellml:model/cellml:component[@name=&apos;hyperpolarising_activated_current&apos;]/cellml:variable[@name=&apos;i_fK&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_hyperpolarising_activated_current_variable_Kmf" name="Value of variable &quot;Kmf&quot; of component &quot;hyperpolarising_activated_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_hyperpolarising_activated_current_variable_Kmf </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_hyperpolarising_activated_current_variable_Kmf" name="Value of variable &quot;Kmf&quot; of component &quot;hyperpolarising_activated_current&quot;" target="/cellml:model/cellml:component[@name=&apos;hyperpolarising_activated_current&apos;]/cellml:variable[@name=&apos;Kmf&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_hyperpolarising_activated_current_variable_g_fNa" name="Value of variable &quot;g_fNa&quot; of component &quot;hyperpolarising_activated_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_hyperpolarising_activated_current_variable_g_fNa </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_hyperpolarising_activated_current_variable_g_fNa" name="Value of variable &quot;g_fNa&quot; of component &quot;hyperpolarising_activated_current&quot;" target="/cellml:model/cellml:component[@name=&apos;hyperpolarising_activated_current&apos;]/cellml:variable[@name=&apos;g_fNa&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_hyperpolarising_activated_current_variable_g_fK" name="Value of variable &quot;g_fK&quot; of component &quot;hyperpolarising_activated_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_hyperpolarising_activated_current_variable_g_fK </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_hyperpolarising_activated_current_variable_g_fK" name="Value of variable &quot;g_fK&quot; of component &quot;hyperpolarising_activated_current&quot;" target="/cellml:model/cellml:component[@name=&apos;hyperpolarising_activated_current&apos;]/cellml:variable[@name=&apos;g_fK&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_hyperpolarising_activated_current_y_gate_variable_y" name="Value of variable &quot;y&quot; of component &quot;hyperpolarising_activated_current_y_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_hyperpolarising_activated_current_y_gate_variable_y </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_hyperpolarising_activated_current_y_gate_variable_y" name="Value of variable &quot;y&quot; of component &quot;hyperpolarising_activated_current_y_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;hyperpolarising_activated_current_y_gate&apos;]/cellml:variable[@name=&apos;y&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_hyperpolarising_activated_current_y_gate_variable_alpha_y" name="Value of variable &quot;alpha_y&quot; of component &quot;hyperpolarising_activated_current_y_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_hyperpolarising_activated_current_y_gate_variable_alpha_y </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_hyperpolarising_activated_current_y_gate_variable_alpha_y" name="Value of variable &quot;alpha_y&quot; of component &quot;hyperpolarising_activated_current_y_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;hyperpolarising_activated_current_y_gate&apos;]/cellml:variable[@name=&apos;alpha_y&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_hyperpolarising_activated_current_y_gate_variable_beta_y" name="Value of variable &quot;beta_y&quot; of component &quot;hyperpolarising_activated_current_y_gate&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_hyperpolarising_activated_current_y_gate_variable_beta_y </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_hyperpolarising_activated_current_y_gate_variable_beta_y" name="Value of variable &quot;beta_y&quot; of component &quot;hyperpolarising_activated_current_y_gate&quot;" target="/cellml:model/cellml:component[@name=&apos;hyperpolarising_activated_current_y_gate&apos;]/cellml:variable[@name=&apos;beta_y&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_potassium_pump_variable_i_p" name="Value of variable &quot;i_p&quot; of component &quot;sodium_potassium_pump&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_potassium_pump_variable_i_p </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_potassium_pump_variable_i_p" name="Value of variable &quot;i_p&quot; of component &quot;sodium_potassium_pump&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_potassium_pump&apos;]/cellml:variable[@name=&apos;i_p&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_potassium_pump_variable_KmNa" name="Value of variable &quot;KmNa&quot; of component &quot;sodium_potassium_pump&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_potassium_pump_variable_KmNa </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_potassium_pump_variable_KmNa" name="Value of variable &quot;KmNa&quot; of component &quot;sodium_potassium_pump&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_potassium_pump&apos;]/cellml:variable[@name=&apos;KmNa&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_potassium_pump_variable_KmK" name="Value of variable &quot;KmK&quot; of component &quot;sodium_potassium_pump&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_potassium_pump_variable_KmK </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_potassium_pump_variable_KmK" name="Value of variable &quot;KmK&quot; of component &quot;sodium_potassium_pump&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_potassium_pump&apos;]/cellml:variable[@name=&apos;KmK&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_potassium_pump_variable_i_pmax" name="Value of variable &quot;i_pmax&quot; of component &quot;sodium_potassium_pump&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_potassium_pump_variable_i_pmax </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_potassium_pump_variable_i_pmax" name="Value of variable &quot;i_pmax&quot; of component &quot;sodium_potassium_pump&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_potassium_pump&apos;]/cellml:variable[@name=&apos;i_pmax&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_i_NaCa" name="Value of variable &quot;i_NaCa&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_i_NaCa </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_i_NaCa" name="Value of variable &quot;i_NaCa&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;i_NaCa&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_kNaCa" name="Value of variable &quot;kNaCa&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_kNaCa </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_kNaCa" name="Value of variable &quot;kNaCa&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;kNaCa&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_x1" name="Value of variable &quot;x1&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_x1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_x1" name="Value of variable &quot;x1&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;x1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_x2" name="Value of variable &quot;x2&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_x2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_x2" name="Value of variable &quot;x2&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;x2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_x3" name="Value of variable &quot;x3&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_x3 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_x3" name="Value of variable &quot;x3&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;x3&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_x4" name="Value of variable &quot;x4&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_x4 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_x4" name="Value of variable &quot;x4&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;x4&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_k41" name="Value of variable &quot;k41&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_k41 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_k41" name="Value of variable &quot;k41&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;k41&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_k34" name="Value of variable &quot;k34&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_k34 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_k34" name="Value of variable &quot;k34&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;k34&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_k23" name="Value of variable &quot;k23&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_k23 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_k23" name="Value of variable &quot;k23&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;k23&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_k21" name="Value of variable &quot;k21&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_k21 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_k21" name="Value of variable &quot;k21&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;k21&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_k32" name="Value of variable &quot;k32&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_k32 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_k32" name="Value of variable &quot;k32&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;k32&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_k43" name="Value of variable &quot;k43&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_k43 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_k43" name="Value of variable &quot;k43&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;k43&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_k12" name="Value of variable &quot;k12&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_k12 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_k12" name="Value of variable &quot;k12&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;k12&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_k14" name="Value of variable &quot;k14&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_k14 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_k14" name="Value of variable &quot;k14&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;k14&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_Qci" name="Value of variable &quot;Qci&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_Qci </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_Qci" name="Value of variable &quot;Qci&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;Qci&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_Qn" name="Value of variable &quot;Qn&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_Qn </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_Qn" name="Value of variable &quot;Qn&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;Qn&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_Qco" name="Value of variable &quot;Qco&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_Qco </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_Qco" name="Value of variable &quot;Qco&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;Qco&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_K3ni" name="Value of variable &quot;K3ni&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_K3ni </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_K3ni" name="Value of variable &quot;K3ni&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;K3ni&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_Kci" name="Value of variable &quot;Kci&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_Kci </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_Kci" name="Value of variable &quot;Kci&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;Kci&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_K1ni" name="Value of variable &quot;K1ni&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_K1ni </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_K1ni" name="Value of variable &quot;K1ni&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;K1ni&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_K2ni" name="Value of variable &quot;K2ni&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_K2ni </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_K2ni" name="Value of variable &quot;K2ni&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;K2ni&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_Kcni" name="Value of variable &quot;Kcni&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_Kcni </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_Kcni" name="Value of variable &quot;Kcni&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;Kcni&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_K3no" name="Value of variable &quot;K3no&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_K3no </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_K3no" name="Value of variable &quot;K3no&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;K3no&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_K1no" name="Value of variable &quot;K1no&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_K1no </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_K1no" name="Value of variable &quot;K1no&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;K1no&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_K2no" name="Value of variable &quot;K2no&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_K2no </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_K2no" name="Value of variable &quot;K2no&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;K2no&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_Kco" name="Value of variable &quot;Kco&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_Kco </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_Kco" name="Value of variable &quot;Kco&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;Kco&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_do" name="Value of variable &quot;do&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_do </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_do" name="Value of variable &quot;do&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;do&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sodium_calcium_exchange_current_variable_di" name="Value of variable &quot;di&quot; of component &quot;sodium_calcium_exchange_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sodium_calcium_exchange_current_variable_di </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sodium_calcium_exchange_current_variable_di" name="Value of variable &quot;di&quot; of component &quot;sodium_calcium_exchange_current&quot;" target="/cellml:model/cellml:component[@name=&apos;sodium_calcium_exchange_current&apos;]/cellml:variable[@name=&apos;di&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_background_sodium_current_variable_i_bNa" name="Value of variable &quot;i_bNa&quot; of component &quot;background_sodium_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_background_sodium_current_variable_i_bNa </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_background_sodium_current_variable_i_bNa" name="Value of variable &quot;i_bNa&quot; of component &quot;background_sodium_current&quot;" target="/cellml:model/cellml:component[@name=&apos;background_sodium_current&apos;]/cellml:variable[@name=&apos;i_bNa&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_background_sodium_current_variable_g_Nab" name="Value of variable &quot;g_Nab&quot; of component &quot;background_sodium_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_background_sodium_current_variable_g_Nab </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_background_sodium_current_variable_g_Nab" name="Value of variable &quot;g_Nab&quot; of component &quot;background_sodium_current&quot;" target="/cellml:model/cellml:component[@name=&apos;background_sodium_current&apos;]/cellml:variable[@name=&apos;g_Nab&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_background_potassium_current_variable_i_bK" name="Value of variable &quot;i_bK&quot; of component &quot;background_potassium_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_background_potassium_current_variable_i_bK </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_background_potassium_current_variable_i_bK" name="Value of variable &quot;i_bK&quot; of component &quot;background_potassium_current&quot;" target="/cellml:model/cellml:component[@name=&apos;background_potassium_current&apos;]/cellml:variable[@name=&apos;i_bK&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_background_potassium_current_variable_KbK" name="Value of variable &quot;KbK&quot; of component &quot;background_potassium_current&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_background_potassium_current_variable_KbK </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_background_potassium_current_variable_KbK" name="Value of variable &quot;KbK&quot; of component &quot;background_potassium_current&quot;" target="/cellml:model/cellml:component[@name=&apos;background_potassium_current&apos;]/cellml:variable[@name=&apos;KbK&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_i_up" name="Value of variable &quot;i_up&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sarcoplasmic_reticulum_kinetics_variable_i_up </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sarcoplasmic_reticulum_kinetics_variable_i_up" name="Value of variable &quot;i_up&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" target="/cellml:model/cellml:component[@name=&apos;sarcoplasmic_reticulum_kinetics&apos;]/cellml:variable[@name=&apos;i_up&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_i_tr" name="Value of variable &quot;i_tr&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sarcoplasmic_reticulum_kinetics_variable_i_tr </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sarcoplasmic_reticulum_kinetics_variable_i_tr" name="Value of variable &quot;i_tr&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" target="/cellml:model/cellml:component[@name=&apos;sarcoplasmic_reticulum_kinetics&apos;]/cellml:variable[@name=&apos;i_tr&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_i_rel" name="Value of variable &quot;i_rel&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sarcoplasmic_reticulum_kinetics_variable_i_rel </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sarcoplasmic_reticulum_kinetics_variable_i_rel" name="Value of variable &quot;i_rel&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" target="/cellml:model/cellml:component[@name=&apos;sarcoplasmic_reticulum_kinetics&apos;]/cellml:variable[@name=&apos;i_rel&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_V_rel" name="Value of variable &quot;V_rel&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sarcoplasmic_reticulum_kinetics_variable_V_rel </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sarcoplasmic_reticulum_kinetics_variable_V_rel" name="Value of variable &quot;V_rel&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" target="/cellml:model/cellml:component[@name=&apos;sarcoplasmic_reticulum_kinetics&apos;]/cellml:variable[@name=&apos;V_rel&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_V_up" name="Value of variable &quot;V_up&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sarcoplasmic_reticulum_kinetics_variable_V_up </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sarcoplasmic_reticulum_kinetics_variable_V_up" name="Value of variable &quot;V_up&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" target="/cellml:model/cellml:component[@name=&apos;sarcoplasmic_reticulum_kinetics&apos;]/cellml:variable[@name=&apos;V_up&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_i_up_max" name="Value of variable &quot;i_up_max&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sarcoplasmic_reticulum_kinetics_variable_i_up_max </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sarcoplasmic_reticulum_kinetics_variable_i_up_max" name="Value of variable &quot;i_up_max&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" target="/cellml:model/cellml:component[@name=&apos;sarcoplasmic_reticulum_kinetics&apos;]/cellml:variable[@name=&apos;i_up_max&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_KmCaup" name="Value of variable &quot;KmCaup&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sarcoplasmic_reticulum_kinetics_variable_KmCaup </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sarcoplasmic_reticulum_kinetics_variable_KmCaup" name="Value of variable &quot;KmCaup&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" target="/cellml:model/cellml:component[@name=&apos;sarcoplasmic_reticulum_kinetics&apos;]/cellml:variable[@name=&apos;KmCaup&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_KmCarel" name="Value of variable &quot;KmCarel&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sarcoplasmic_reticulum_kinetics_variable_KmCarel </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sarcoplasmic_reticulum_kinetics_variable_KmCarel" name="Value of variable &quot;KmCarel&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" target="/cellml:model/cellml:component[@name=&apos;sarcoplasmic_reticulum_kinetics&apos;]/cellml:variable[@name=&apos;KmCarel&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_tau_rel" name="Value of variable &quot;tau_rel&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sarcoplasmic_reticulum_kinetics_variable_tau_rel </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sarcoplasmic_reticulum_kinetics_variable_tau_rel" name="Value of variable &quot;tau_rel&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" target="/cellml:model/cellml:component[@name=&apos;sarcoplasmic_reticulum_kinetics&apos;]/cellml:variable[@name=&apos;tau_rel&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_tau_tr" name="Value of variable &quot;tau_tr&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_sarcoplasmic_reticulum_kinetics_variable_tau_tr </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_sarcoplasmic_reticulum_kinetics_variable_tau_tr" name="Value of variable &quot;tau_tr&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" target="/cellml:model/cellml:component[@name=&apos;sarcoplasmic_reticulum_kinetics&apos;]/cellml:variable[@name=&apos;tau_tr&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_ion_concentrations_variable_Cai" name="Value of variable &quot;Cai&quot; of component &quot;ion_concentrations&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_ion_concentrations_variable_Cai </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_ion_concentrations_variable_Cai" name="Value of variable &quot;Cai&quot; of component &quot;ion_concentrations&quot;" target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Cai&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_ion_concentrations_variable_Cao" name="Value of variable &quot;Cao&quot; of component &quot;ion_concentrations&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_ion_concentrations_variable_Cao </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_ion_concentrations_variable_Cao" name="Value of variable &quot;Cao&quot; of component &quot;ion_concentrations&quot;" target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Cao&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_ion_concentrations_variable_Caup" name="Value of variable &quot;Caup&quot; of component &quot;ion_concentrations&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_ion_concentrations_variable_Caup </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_ion_concentrations_variable_Caup" name="Value of variable &quot;Caup&quot; of component &quot;ion_concentrations&quot;" target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Caup&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_ion_concentrations_variable_Carel" name="Value of variable &quot;Carel&quot; of component &quot;ion_concentrations&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_ion_concentrations_variable_Carel </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_ion_concentrations_variable_Carel" name="Value of variable &quot;Carel&quot; of component &quot;ion_concentrations&quot;" target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Carel&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_ion_concentrations_variable_Nai" name="Value of variable &quot;Nai&quot; of component &quot;ion_concentrations&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_ion_concentrations_variable_Nai </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_ion_concentrations_variable_Nai" name="Value of variable &quot;Nai&quot; of component &quot;ion_concentrations&quot;" target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Nai&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_ion_concentrations_variable_Nao" name="Value of variable &quot;Nao&quot; of component &quot;ion_concentrations&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_ion_concentrations_variable_Nao </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_ion_concentrations_variable_Nao" name="Value of variable &quot;Nao&quot; of component &quot;ion_concentrations&quot;" target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Nao&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_ion_concentrations_variable_Ki" name="Value of variable &quot;Ki&quot; of component &quot;ion_concentrations&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_ion_concentrations_variable_Ki </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_ion_concentrations_variable_Ki" name="Value of variable &quot;Ki&quot; of component &quot;ion_concentrations&quot;" target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Ki&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_ion_concentrations_variable_Ko" name="Value of variable &quot;Ko&quot; of component &quot;ion_concentrations&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_ion_concentrations_variable_Ko </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_ion_concentrations_variable_Ko" name="Value of variable &quot;Ko&quot; of component &quot;ion_concentrations&quot;" target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Ko&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_ion_concentrations_variable_V_i" name="Value of variable &quot;V_i&quot; of component &quot;ion_concentrations&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_ion_concentrations_variable_V_i </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_ion_concentrations_variable_V_i" name="Value of variable &quot;V_i&quot; of component &quot;ion_concentrations&quot;" target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;V_i&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_ion_concentrations_variable_V_e" name="Value of variable &quot;V_e&quot; of component &quot;ion_concentrations&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_ion_concentrations_variable_V_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_ion_concentrations_variable_V_e" name="Value of variable &quot;V_e&quot; of component &quot;ion_concentrations&quot;" target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;V_e&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_ion_concentrations_variable_tau_b" name="Value of variable &quot;tau_b&quot; of component &quot;ion_concentrations&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_ion_concentrations_variable_tau_b </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_ion_concentrations_variable_tau_b" name="Value of variable &quot;tau_b&quot; of component &quot;ion_concentrations&quot;" target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;tau_b&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_ion_concentrations_variable_Nab" name="Value of variable &quot;Nab&quot; of component &quot;ion_concentrations&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_ion_concentrations_variable_Nab </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_ion_concentrations_variable_Nab" name="Value of variable &quot;Nab&quot; of component &quot;ion_concentrations&quot;" target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Nab&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_ion_concentrations_variable_Cab" name="Value of variable &quot;Cab&quot; of component &quot;ion_concentrations&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_ion_concentrations_variable_Cab </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_ion_concentrations_variable_Cab" name="Value of variable &quot;Cab&quot; of component &quot;ion_concentrations&quot;" target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Cab&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_ion_concentrations_variable_Kb" name="Value of variable &quot;Kb&quot; of component &quot;ion_concentrations&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_ion_concentrations_variable_Kb </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_ion_concentrations_variable_Kb" name="Value of variable &quot;Kb&quot; of component &quot;ion_concentrations&quot;" target="/cellml:model/cellml:component[@name=&apos;ion_concentrations&apos;]/cellml:variable[@name=&apos;Kb&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report">
+      <listOfDataSets>
+        <dataSet id="data_set_value_component_environment_variable_time" name="Value of variable &quot;time&quot; of component &quot;environment&quot;" label="value_component_environment_variable_time" dataReference="data_generator_value_component_environment_variable_time"/>
+        <dataSet id="data_set_value_component_constants_variable_R" name="Value of variable &quot;R&quot; of component &quot;constants&quot;" label="value_component_constants_variable_R" dataReference="data_generator_value_component_constants_variable_R"/>
+        <dataSet id="data_set_value_component_constants_variable_T" name="Value of variable &quot;T&quot; of component &quot;constants&quot;" label="value_component_constants_variable_T" dataReference="data_generator_value_component_constants_variable_T"/>
+        <dataSet id="data_set_value_component_constants_variable_F" name="Value of variable &quot;F&quot; of component &quot;constants&quot;" label="value_component_constants_variable_F" dataReference="data_generator_value_component_constants_variable_F"/>
+        <dataSet id="data_set_value_component_membrane_variable_E" name="Value of variable &quot;E&quot; of component &quot;membrane&quot;" label="value_component_membrane_variable_E" dataReference="data_generator_value_component_membrane_variable_E"/>
+        <dataSet id="data_set_value_component_membrane_variable_C" name="Value of variable &quot;C&quot; of component &quot;membrane&quot;" label="value_component_membrane_variable_C" dataReference="data_generator_value_component_membrane_variable_C"/>
+        <dataSet id="data_set_value_component_membrane_variable_i_tot" name="Value of variable &quot;i_tot&quot; of component &quot;membrane&quot;" label="value_component_membrane_variable_i_tot" dataReference="data_generator_value_component_membrane_variable_i_tot"/>
+        <dataSet id="data_set_value_component_reversal_potentials_variable_E_Ca" name="Value of variable &quot;E_Ca&quot; of component &quot;reversal_potentials&quot;" label="value_component_reversal_potentials_variable_E_Ca" dataReference="data_generator_value_component_reversal_potentials_variable_E_Ca"/>
+        <dataSet id="data_set_value_component_reversal_potentials_variable_E_Na" name="Value of variable &quot;E_Na&quot; of component &quot;reversal_potentials&quot;" label="value_component_reversal_potentials_variable_E_Na" dataReference="data_generator_value_component_reversal_potentials_variable_E_Na"/>
+        <dataSet id="data_set_value_component_reversal_potentials_variable_E_K" name="Value of variable &quot;E_K&quot; of component &quot;reversal_potentials&quot;" label="value_component_reversal_potentials_variable_E_K" dataReference="data_generator_value_component_reversal_potentials_variable_E_K"/>
+        <dataSet id="data_set_value_component_L_type_calcium_current_variable_i_CaL" name="Value of variable &quot;i_CaL&quot; of component &quot;L_type_calcium_current&quot;" label="value_component_L_type_calcium_current_variable_i_CaL" dataReference="data_generator_value_component_L_type_calcium_current_variable_i_CaL"/>
+        <dataSet id="data_set_value_component_L_type_calcium_current_variable_g_CaL" name="Value of variable &quot;g_CaL&quot; of component &quot;L_type_calcium_current&quot;" label="value_component_L_type_calcium_current_variable_g_CaL" dataReference="data_generator_value_component_L_type_calcium_current_variable_g_CaL"/>
+        <dataSet id="data_set_value_component_L_type_calcium_current_d_gate_variable_dL" name="Value of variable &quot;dL&quot; of component &quot;L_type_calcium_current_d_gate&quot;" label="value_component_L_type_calcium_current_d_gate_variable_dL" dataReference="data_generator_value_component_L_type_calcium_current_d_gate_variable_dL"/>
+        <dataSet id="data_set_value_component_L_type_calcium_current_d_gate_variable_dL_infinity" name="Value of variable &quot;dL_infinity&quot; of component &quot;L_type_calcium_current_d_gate&quot;" label="value_component_L_type_calcium_current_d_gate_variable_dL_infinity" dataReference="data_generator_value_component_L_type_calcium_current_d_gate_variable_dL_infinity"/>
+        <dataSet id="data_set_value_component_L_type_calcium_current_d_gate_variable_tau_dL" name="Value of variable &quot;tau_dL&quot; of component &quot;L_type_calcium_current_d_gate&quot;" label="value_component_L_type_calcium_current_d_gate_variable_tau_dL" dataReference="data_generator_value_component_L_type_calcium_current_d_gate_variable_tau_dL"/>
+        <dataSet id="data_set_value_component_L_type_calcium_current_f_gate_variable_fL" name="Value of variable &quot;fL&quot; of component &quot;L_type_calcium_current_f_gate&quot;" label="value_component_L_type_calcium_current_f_gate_variable_fL" dataReference="data_generator_value_component_L_type_calcium_current_f_gate_variable_fL"/>
+        <dataSet id="data_set_value_component_L_type_calcium_current_f_gate_variable_fL_infinity" name="Value of variable &quot;fL_infinity&quot; of component &quot;L_type_calcium_current_f_gate&quot;" label="value_component_L_type_calcium_current_f_gate_variable_fL_infinity" dataReference="data_generator_value_component_L_type_calcium_current_f_gate_variable_fL_infinity"/>
+        <dataSet id="data_set_value_component_L_type_calcium_current_f_gate_variable_tau_fL" name="Value of variable &quot;tau_fL&quot; of component &quot;L_type_calcium_current_f_gate&quot;" label="value_component_L_type_calcium_current_f_gate_variable_tau_fL" dataReference="data_generator_value_component_L_type_calcium_current_f_gate_variable_tau_fL"/>
+        <dataSet id="data_set_value_component_L_type_calcium_current_f2_gate_variable_fL2" name="Value of variable &quot;fL2&quot; of component &quot;L_type_calcium_current_f2_gate&quot;" label="value_component_L_type_calcium_current_f2_gate_variable_fL2" dataReference="data_generator_value_component_L_type_calcium_current_f2_gate_variable_fL2"/>
+        <dataSet id="data_set_value_component_L_type_calcium_current_f2_gate_variable_alpha_fL2" name="Value of variable &quot;alpha_fL2&quot; of component &quot;L_type_calcium_current_f2_gate&quot;" label="value_component_L_type_calcium_current_f2_gate_variable_alpha_fL2" dataReference="data_generator_value_component_L_type_calcium_current_f2_gate_variable_alpha_fL2"/>
+        <dataSet id="data_set_value_component_L_type_calcium_current_f2_gate_variable_beta_fL2" name="Value of variable &quot;beta_fL2&quot; of component &quot;L_type_calcium_current_f2_gate&quot;" label="value_component_L_type_calcium_current_f2_gate_variable_beta_fL2" dataReference="data_generator_value_component_L_type_calcium_current_f2_gate_variable_beta_fL2"/>
+        <dataSet id="data_set_value_component_T_type_calcium_current_variable_i_CaT" name="Value of variable &quot;i_CaT&quot; of component &quot;T_type_calcium_current&quot;" label="value_component_T_type_calcium_current_variable_i_CaT" dataReference="data_generator_value_component_T_type_calcium_current_variable_i_CaT"/>
+        <dataSet id="data_set_value_component_T_type_calcium_current_variable_g_CaT" name="Value of variable &quot;g_CaT&quot; of component &quot;T_type_calcium_current&quot;" label="value_component_T_type_calcium_current_variable_g_CaT" dataReference="data_generator_value_component_T_type_calcium_current_variable_g_CaT"/>
+        <dataSet id="data_set_value_component_T_type_calcium_current_d_gate_variable_dT" name="Value of variable &quot;dT&quot; of component &quot;T_type_calcium_current_d_gate&quot;" label="value_component_T_type_calcium_current_d_gate_variable_dT" dataReference="data_generator_value_component_T_type_calcium_current_d_gate_variable_dT"/>
+        <dataSet id="data_set_value_component_T_type_calcium_current_d_gate_variable_dT_infinity" name="Value of variable &quot;dT_infinity&quot; of component &quot;T_type_calcium_current_d_gate&quot;" label="value_component_T_type_calcium_current_d_gate_variable_dT_infinity" dataReference="data_generator_value_component_T_type_calcium_current_d_gate_variable_dT_infinity"/>
+        <dataSet id="data_set_value_component_T_type_calcium_current_d_gate_variable_tau_dT" name="Value of variable &quot;tau_dT&quot; of component &quot;T_type_calcium_current_d_gate&quot;" label="value_component_T_type_calcium_current_d_gate_variable_tau_dT" dataReference="data_generator_value_component_T_type_calcium_current_d_gate_variable_tau_dT"/>
+        <dataSet id="data_set_value_component_T_type_calcium_current_f_gate_variable_fT" name="Value of variable &quot;fT&quot; of component &quot;T_type_calcium_current_f_gate&quot;" label="value_component_T_type_calcium_current_f_gate_variable_fT" dataReference="data_generator_value_component_T_type_calcium_current_f_gate_variable_fT"/>
+        <dataSet id="data_set_value_component_T_type_calcium_current_f_gate_variable_fT_infinity" name="Value of variable &quot;fT_infinity&quot; of component &quot;T_type_calcium_current_f_gate&quot;" label="value_component_T_type_calcium_current_f_gate_variable_fT_infinity" dataReference="data_generator_value_component_T_type_calcium_current_f_gate_variable_fT_infinity"/>
+        <dataSet id="data_set_value_component_T_type_calcium_current_f_gate_variable_tau_fT" name="Value of variable &quot;tau_fT&quot; of component &quot;T_type_calcium_current_f_gate&quot;" label="value_component_T_type_calcium_current_f_gate_variable_tau_fT" dataReference="data_generator_value_component_T_type_calcium_current_f_gate_variable_tau_fT"/>
+        <dataSet id="data_set_value_component_fast_sodium_current_variable_i_Na" name="Value of variable &quot;i_Na&quot; of component &quot;fast_sodium_current&quot;" label="value_component_fast_sodium_current_variable_i_Na" dataReference="data_generator_value_component_fast_sodium_current_variable_i_Na"/>
+        <dataSet id="data_set_value_component_fast_sodium_current_variable_g_Na" name="Value of variable &quot;g_Na&quot; of component &quot;fast_sodium_current&quot;" label="value_component_fast_sodium_current_variable_g_Na" dataReference="data_generator_value_component_fast_sodium_current_variable_g_Na"/>
+        <dataSet id="data_set_value_component_fast_sodium_current_m_gate_variable_m" name="Value of variable &quot;m&quot; of component &quot;fast_sodium_current_m_gate&quot;" label="value_component_fast_sodium_current_m_gate_variable_m" dataReference="data_generator_value_component_fast_sodium_current_m_gate_variable_m"/>
+        <dataSet id="data_set_value_component_fast_sodium_current_m_gate_variable_alpha_m" name="Value of variable &quot;alpha_m&quot; of component &quot;fast_sodium_current_m_gate&quot;" label="value_component_fast_sodium_current_m_gate_variable_alpha_m" dataReference="data_generator_value_component_fast_sodium_current_m_gate_variable_alpha_m"/>
+        <dataSet id="data_set_value_component_fast_sodium_current_m_gate_variable_beta_m" name="Value of variable &quot;beta_m&quot; of component &quot;fast_sodium_current_m_gate&quot;" label="value_component_fast_sodium_current_m_gate_variable_beta_m" dataReference="data_generator_value_component_fast_sodium_current_m_gate_variable_beta_m"/>
+        <dataSet id="data_set_value_component_fast_sodium_current_h_gate_variable_h" name="Value of variable &quot;h&quot; of component &quot;fast_sodium_current_h_gate&quot;" label="value_component_fast_sodium_current_h_gate_variable_h" dataReference="data_generator_value_component_fast_sodium_current_h_gate_variable_h"/>
+        <dataSet id="data_set_value_component_fast_sodium_current_h_gate_variable_alpha_h" name="Value of variable &quot;alpha_h&quot; of component &quot;fast_sodium_current_h_gate&quot;" label="value_component_fast_sodium_current_h_gate_variable_alpha_h" dataReference="data_generator_value_component_fast_sodium_current_h_gate_variable_alpha_h"/>
+        <dataSet id="data_set_value_component_fast_sodium_current_h_gate_variable_beta_h" name="Value of variable &quot;beta_h&quot; of component &quot;fast_sodium_current_h_gate&quot;" label="value_component_fast_sodium_current_h_gate_variable_beta_h" dataReference="data_generator_value_component_fast_sodium_current_h_gate_variable_beta_h"/>
+        <dataSet id="data_set_value_component_delayed_rectifying_potassium_current_variable_i_K" name="Value of variable &quot;i_K&quot; of component &quot;delayed_rectifying_potassium_current&quot;" label="value_component_delayed_rectifying_potassium_current_variable_i_K" dataReference="data_generator_value_component_delayed_rectifying_potassium_current_variable_i_K"/>
+        <dataSet id="data_set_value_component_delayed_rectifying_potassium_current_variable_i_KK" name="Value of variable &quot;i_KK&quot; of component &quot;delayed_rectifying_potassium_current&quot;" label="value_component_delayed_rectifying_potassium_current_variable_i_KK" dataReference="data_generator_value_component_delayed_rectifying_potassium_current_variable_i_KK"/>
+        <dataSet id="data_set_value_component_delayed_rectifying_potassium_current_variable_i_KNa" name="Value of variable &quot;i_KNa&quot; of component &quot;delayed_rectifying_potassium_current&quot;" label="value_component_delayed_rectifying_potassium_current_variable_i_KNa" dataReference="data_generator_value_component_delayed_rectifying_potassium_current_variable_i_KNa"/>
+        <dataSet id="data_set_value_component_delayed_rectifying_potassium_current_variable_Kk" name="Value of variable &quot;Kk&quot; of component &quot;delayed_rectifying_potassium_current&quot;" label="value_component_delayed_rectifying_potassium_current_variable_Kk" dataReference="data_generator_value_component_delayed_rectifying_potassium_current_variable_Kk"/>
+        <dataSet id="data_set_value_component_delayed_rectifying_potassium_current_variable_P_KNa" name="Value of variable &quot;P_KNa&quot; of component &quot;delayed_rectifying_potassium_current&quot;" label="value_component_delayed_rectifying_potassium_current_variable_P_KNa" dataReference="data_generator_value_component_delayed_rectifying_potassium_current_variable_P_KNa"/>
+        <dataSet id="data_set_value_component_delayed_rectifying_potassium_current_x_gate_variable_x" name="Value of variable &quot;x&quot; of component &quot;delayed_rectifying_potassium_current_x_gate&quot;" label="value_component_delayed_rectifying_potassium_current_x_gate_variable_x" dataReference="data_generator_value_component_delayed_rectifying_potassium_current_x_gate_variable_x"/>
+        <dataSet id="data_set_value_component_delayed_rectifying_potassium_current_x_gate_variable_x_infinity" name="Value of variable &quot;x_infinity&quot; of component &quot;delayed_rectifying_potassium_current_x_gate&quot;" label="value_component_delayed_rectifying_potassium_current_x_gate_variable_x_infinity" dataReference="data_generator_value_component_delayed_rectifying_potassium_current_x_gate_variable_x_infinity"/>
+        <dataSet id="data_set_value_component_delayed_rectifying_potassium_current_x_gate_variable_tau_x" name="Value of variable &quot;tau_x&quot; of component &quot;delayed_rectifying_potassium_current_x_gate&quot;" label="value_component_delayed_rectifying_potassium_current_x_gate_variable_tau_x" dataReference="data_generator_value_component_delayed_rectifying_potassium_current_x_gate_variable_tau_x"/>
+        <dataSet id="data_set_value_component_hyperpolarising_activated_current_variable_i_f" name="Value of variable &quot;i_f&quot; of component &quot;hyperpolarising_activated_current&quot;" label="value_component_hyperpolarising_activated_current_variable_i_f" dataReference="data_generator_value_component_hyperpolarising_activated_current_variable_i_f"/>
+        <dataSet id="data_set_value_component_hyperpolarising_activated_current_variable_i_fNa" name="Value of variable &quot;i_fNa&quot; of component &quot;hyperpolarising_activated_current&quot;" label="value_component_hyperpolarising_activated_current_variable_i_fNa" dataReference="data_generator_value_component_hyperpolarising_activated_current_variable_i_fNa"/>
+        <dataSet id="data_set_value_component_hyperpolarising_activated_current_variable_i_fK" name="Value of variable &quot;i_fK&quot; of component &quot;hyperpolarising_activated_current&quot;" label="value_component_hyperpolarising_activated_current_variable_i_fK" dataReference="data_generator_value_component_hyperpolarising_activated_current_variable_i_fK"/>
+        <dataSet id="data_set_value_component_hyperpolarising_activated_current_variable_Kmf" name="Value of variable &quot;Kmf&quot; of component &quot;hyperpolarising_activated_current&quot;" label="value_component_hyperpolarising_activated_current_variable_Kmf" dataReference="data_generator_value_component_hyperpolarising_activated_current_variable_Kmf"/>
+        <dataSet id="data_set_value_component_hyperpolarising_activated_current_variable_g_fNa" name="Value of variable &quot;g_fNa&quot; of component &quot;hyperpolarising_activated_current&quot;" label="value_component_hyperpolarising_activated_current_variable_g_fNa" dataReference="data_generator_value_component_hyperpolarising_activated_current_variable_g_fNa"/>
+        <dataSet id="data_set_value_component_hyperpolarising_activated_current_variable_g_fK" name="Value of variable &quot;g_fK&quot; of component &quot;hyperpolarising_activated_current&quot;" label="value_component_hyperpolarising_activated_current_variable_g_fK" dataReference="data_generator_value_component_hyperpolarising_activated_current_variable_g_fK"/>
+        <dataSet id="data_set_value_component_hyperpolarising_activated_current_y_gate_variable_y" name="Value of variable &quot;y&quot; of component &quot;hyperpolarising_activated_current_y_gate&quot;" label="value_component_hyperpolarising_activated_current_y_gate_variable_y" dataReference="data_generator_value_component_hyperpolarising_activated_current_y_gate_variable_y"/>
+        <dataSet id="data_set_value_component_hyperpolarising_activated_current_y_gate_variable_alpha_y" name="Value of variable &quot;alpha_y&quot; of component &quot;hyperpolarising_activated_current_y_gate&quot;" label="value_component_hyperpolarising_activated_current_y_gate_variable_alpha_y" dataReference="data_generator_value_component_hyperpolarising_activated_current_y_gate_variable_alpha_y"/>
+        <dataSet id="data_set_value_component_hyperpolarising_activated_current_y_gate_variable_beta_y" name="Value of variable &quot;beta_y&quot; of component &quot;hyperpolarising_activated_current_y_gate&quot;" label="value_component_hyperpolarising_activated_current_y_gate_variable_beta_y" dataReference="data_generator_value_component_hyperpolarising_activated_current_y_gate_variable_beta_y"/>
+        <dataSet id="data_set_value_component_sodium_potassium_pump_variable_i_p" name="Value of variable &quot;i_p&quot; of component &quot;sodium_potassium_pump&quot;" label="value_component_sodium_potassium_pump_variable_i_p" dataReference="data_generator_value_component_sodium_potassium_pump_variable_i_p"/>
+        <dataSet id="data_set_value_component_sodium_potassium_pump_variable_KmNa" name="Value of variable &quot;KmNa&quot; of component &quot;sodium_potassium_pump&quot;" label="value_component_sodium_potassium_pump_variable_KmNa" dataReference="data_generator_value_component_sodium_potassium_pump_variable_KmNa"/>
+        <dataSet id="data_set_value_component_sodium_potassium_pump_variable_KmK" name="Value of variable &quot;KmK&quot; of component &quot;sodium_potassium_pump&quot;" label="value_component_sodium_potassium_pump_variable_KmK" dataReference="data_generator_value_component_sodium_potassium_pump_variable_KmK"/>
+        <dataSet id="data_set_value_component_sodium_potassium_pump_variable_i_pmax" name="Value of variable &quot;i_pmax&quot; of component &quot;sodium_potassium_pump&quot;" label="value_component_sodium_potassium_pump_variable_i_pmax" dataReference="data_generator_value_component_sodium_potassium_pump_variable_i_pmax"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_i_NaCa" name="Value of variable &quot;i_NaCa&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_i_NaCa" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_i_NaCa"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_kNaCa" name="Value of variable &quot;kNaCa&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_kNaCa" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_kNaCa"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_x1" name="Value of variable &quot;x1&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_x1" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_x1"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_x2" name="Value of variable &quot;x2&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_x2" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_x2"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_x3" name="Value of variable &quot;x3&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_x3" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_x3"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_x4" name="Value of variable &quot;x4&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_x4" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_x4"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_k41" name="Value of variable &quot;k41&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_k41" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_k41"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_k34" name="Value of variable &quot;k34&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_k34" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_k34"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_k23" name="Value of variable &quot;k23&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_k23" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_k23"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_k21" name="Value of variable &quot;k21&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_k21" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_k21"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_k32" name="Value of variable &quot;k32&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_k32" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_k32"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_k43" name="Value of variable &quot;k43&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_k43" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_k43"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_k12" name="Value of variable &quot;k12&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_k12" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_k12"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_k14" name="Value of variable &quot;k14&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_k14" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_k14"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_Qci" name="Value of variable &quot;Qci&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_Qci" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_Qci"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_Qn" name="Value of variable &quot;Qn&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_Qn" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_Qn"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_Qco" name="Value of variable &quot;Qco&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_Qco" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_Qco"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_K3ni" name="Value of variable &quot;K3ni&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_K3ni" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_K3ni"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_Kci" name="Value of variable &quot;Kci&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_Kci" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_Kci"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_K1ni" name="Value of variable &quot;K1ni&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_K1ni" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_K1ni"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_K2ni" name="Value of variable &quot;K2ni&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_K2ni" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_K2ni"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_Kcni" name="Value of variable &quot;Kcni&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_Kcni" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_Kcni"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_K3no" name="Value of variable &quot;K3no&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_K3no" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_K3no"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_K1no" name="Value of variable &quot;K1no&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_K1no" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_K1no"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_K2no" name="Value of variable &quot;K2no&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_K2no" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_K2no"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_Kco" name="Value of variable &quot;Kco&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_Kco" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_Kco"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_do" name="Value of variable &quot;do&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_do" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_do"/>
+        <dataSet id="data_set_value_component_sodium_calcium_exchange_current_variable_di" name="Value of variable &quot;di&quot; of component &quot;sodium_calcium_exchange_current&quot;" label="value_component_sodium_calcium_exchange_current_variable_di" dataReference="data_generator_value_component_sodium_calcium_exchange_current_variable_di"/>
+        <dataSet id="data_set_value_component_background_sodium_current_variable_i_bNa" name="Value of variable &quot;i_bNa&quot; of component &quot;background_sodium_current&quot;" label="value_component_background_sodium_current_variable_i_bNa" dataReference="data_generator_value_component_background_sodium_current_variable_i_bNa"/>
+        <dataSet id="data_set_value_component_background_sodium_current_variable_g_Nab" name="Value of variable &quot;g_Nab&quot; of component &quot;background_sodium_current&quot;" label="value_component_background_sodium_current_variable_g_Nab" dataReference="data_generator_value_component_background_sodium_current_variable_g_Nab"/>
+        <dataSet id="data_set_value_component_background_potassium_current_variable_i_bK" name="Value of variable &quot;i_bK&quot; of component &quot;background_potassium_current&quot;" label="value_component_background_potassium_current_variable_i_bK" dataReference="data_generator_value_component_background_potassium_current_variable_i_bK"/>
+        <dataSet id="data_set_value_component_background_potassium_current_variable_KbK" name="Value of variable &quot;KbK&quot; of component &quot;background_potassium_current&quot;" label="value_component_background_potassium_current_variable_KbK" dataReference="data_generator_value_component_background_potassium_current_variable_KbK"/>
+        <dataSet id="data_set_value_component_sarcoplasmic_reticulum_kinetics_variable_i_up" name="Value of variable &quot;i_up&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" label="value_component_sarcoplasmic_reticulum_kinetics_variable_i_up" dataReference="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_i_up"/>
+        <dataSet id="data_set_value_component_sarcoplasmic_reticulum_kinetics_variable_i_tr" name="Value of variable &quot;i_tr&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" label="value_component_sarcoplasmic_reticulum_kinetics_variable_i_tr" dataReference="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_i_tr"/>
+        <dataSet id="data_set_value_component_sarcoplasmic_reticulum_kinetics_variable_i_rel" name="Value of variable &quot;i_rel&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" label="value_component_sarcoplasmic_reticulum_kinetics_variable_i_rel" dataReference="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_i_rel"/>
+        <dataSet id="data_set_value_component_sarcoplasmic_reticulum_kinetics_variable_V_rel" name="Value of variable &quot;V_rel&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" label="value_component_sarcoplasmic_reticulum_kinetics_variable_V_rel" dataReference="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_V_rel"/>
+        <dataSet id="data_set_value_component_sarcoplasmic_reticulum_kinetics_variable_V_up" name="Value of variable &quot;V_up&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" label="value_component_sarcoplasmic_reticulum_kinetics_variable_V_up" dataReference="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_V_up"/>
+        <dataSet id="data_set_value_component_sarcoplasmic_reticulum_kinetics_variable_i_up_max" name="Value of variable &quot;i_up_max&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" label="value_component_sarcoplasmic_reticulum_kinetics_variable_i_up_max" dataReference="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_i_up_max"/>
+        <dataSet id="data_set_value_component_sarcoplasmic_reticulum_kinetics_variable_KmCaup" name="Value of variable &quot;KmCaup&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" label="value_component_sarcoplasmic_reticulum_kinetics_variable_KmCaup" dataReference="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_KmCaup"/>
+        <dataSet id="data_set_value_component_sarcoplasmic_reticulum_kinetics_variable_KmCarel" name="Value of variable &quot;KmCarel&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" label="value_component_sarcoplasmic_reticulum_kinetics_variable_KmCarel" dataReference="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_KmCarel"/>
+        <dataSet id="data_set_value_component_sarcoplasmic_reticulum_kinetics_variable_tau_rel" name="Value of variable &quot;tau_rel&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" label="value_component_sarcoplasmic_reticulum_kinetics_variable_tau_rel" dataReference="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_tau_rel"/>
+        <dataSet id="data_set_value_component_sarcoplasmic_reticulum_kinetics_variable_tau_tr" name="Value of variable &quot;tau_tr&quot; of component &quot;sarcoplasmic_reticulum_kinetics&quot;" label="value_component_sarcoplasmic_reticulum_kinetics_variable_tau_tr" dataReference="data_generator_value_component_sarcoplasmic_reticulum_kinetics_variable_tau_tr"/>
+        <dataSet id="data_set_value_component_ion_concentrations_variable_Cai" name="Value of variable &quot;Cai&quot; of component &quot;ion_concentrations&quot;" label="value_component_ion_concentrations_variable_Cai" dataReference="data_generator_value_component_ion_concentrations_variable_Cai"/>
+        <dataSet id="data_set_value_component_ion_concentrations_variable_Cao" name="Value of variable &quot;Cao&quot; of component &quot;ion_concentrations&quot;" label="value_component_ion_concentrations_variable_Cao" dataReference="data_generator_value_component_ion_concentrations_variable_Cao"/>
+        <dataSet id="data_set_value_component_ion_concentrations_variable_Caup" name="Value of variable &quot;Caup&quot; of component &quot;ion_concentrations&quot;" label="value_component_ion_concentrations_variable_Caup" dataReference="data_generator_value_component_ion_concentrations_variable_Caup"/>
+        <dataSet id="data_set_value_component_ion_concentrations_variable_Carel" name="Value of variable &quot;Carel&quot; of component &quot;ion_concentrations&quot;" label="value_component_ion_concentrations_variable_Carel" dataReference="data_generator_value_component_ion_concentrations_variable_Carel"/>
+        <dataSet id="data_set_value_component_ion_concentrations_variable_Nai" name="Value of variable &quot;Nai&quot; of component &quot;ion_concentrations&quot;" label="value_component_ion_concentrations_variable_Nai" dataReference="data_generator_value_component_ion_concentrations_variable_Nai"/>
+        <dataSet id="data_set_value_component_ion_concentrations_variable_Nao" name="Value of variable &quot;Nao&quot; of component &quot;ion_concentrations&quot;" label="value_component_ion_concentrations_variable_Nao" dataReference="data_generator_value_component_ion_concentrations_variable_Nao"/>
+        <dataSet id="data_set_value_component_ion_concentrations_variable_Ki" name="Value of variable &quot;Ki&quot; of component &quot;ion_concentrations&quot;" label="value_component_ion_concentrations_variable_Ki" dataReference="data_generator_value_component_ion_concentrations_variable_Ki"/>
+        <dataSet id="data_set_value_component_ion_concentrations_variable_Ko" name="Value of variable &quot;Ko&quot; of component &quot;ion_concentrations&quot;" label="value_component_ion_concentrations_variable_Ko" dataReference="data_generator_value_component_ion_concentrations_variable_Ko"/>
+        <dataSet id="data_set_value_component_ion_concentrations_variable_V_i" name="Value of variable &quot;V_i&quot; of component &quot;ion_concentrations&quot;" label="value_component_ion_concentrations_variable_V_i" dataReference="data_generator_value_component_ion_concentrations_variable_V_i"/>
+        <dataSet id="data_set_value_component_ion_concentrations_variable_V_e" name="Value of variable &quot;V_e&quot; of component &quot;ion_concentrations&quot;" label="value_component_ion_concentrations_variable_V_e" dataReference="data_generator_value_component_ion_concentrations_variable_V_e"/>
+        <dataSet id="data_set_value_component_ion_concentrations_variable_tau_b" name="Value of variable &quot;tau_b&quot; of component &quot;ion_concentrations&quot;" label="value_component_ion_concentrations_variable_tau_b" dataReference="data_generator_value_component_ion_concentrations_variable_tau_b"/>
+        <dataSet id="data_set_value_component_ion_concentrations_variable_Nab" name="Value of variable &quot;Nab&quot; of component &quot;ion_concentrations&quot;" label="value_component_ion_concentrations_variable_Nab" dataReference="data_generator_value_component_ion_concentrations_variable_Nab"/>
+        <dataSet id="data_set_value_component_ion_concentrations_variable_Cab" name="Value of variable &quot;Cab&quot; of component &quot;ion_concentrations&quot;" label="value_component_ion_concentrations_variable_Cab" dataReference="data_generator_value_component_ion_concentrations_variable_Cab"/>
+        <dataSet id="data_set_value_component_ion_concentrations_variable_Kb" name="Value of variable &quot;Kb&quot; of component &quot;ion_concentrations&quot;" label="value_component_ion_concentrations_variable_Kb" dataReference="data_generator_value_component_ion_concentrations_variable_Kb"/>
+      </listOfDataSets>
+    </report>
+  </listOfOutputs>
+</sedML>

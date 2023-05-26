@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfModels>
+    <model id="model" name="Model" language="urn:sedml:language:xpp" source="NeuronKATP_Stoch.ode">
+      <listOfChanges>
+        <changeAttribute target="CAD" newValue="0.0"/>
+        <changeAttribute target="CD" newValue="0.0"/>
+        <changeAttribute target="Cm" newValue="3.0"/>
+        <changeAttribute target="HS" newValue="0.0"/>
+        <changeAttribute target="NS" newValue="0.0"/>
+        <changeAttribute target="QD" newValue="0.0"/>
+        <changeAttribute target="S" newValue="0.185"/>
+        <changeAttribute target="SD" newValue="0.0"/>
+        <changeAttribute target="VCa" newValue="80.0"/>
+        <changeAttribute target="VD" newValue="-60.0"/>
+        <changeAttribute target="VK" newValue="-75.0"/>
+        <changeAttribute target="VL" newValue="-60.0"/>
+        <changeAttribute target="VNa" newValue="60.0"/>
+        <changeAttribute target="VS" newValue="-60.0"/>
+        <changeAttribute target="Vsyn" newValue="0.0"/>
+        <changeAttribute target="alphac" newValue="2.0"/>
+        <changeAttribute target="alphas" newValue="1.0"/>
+        <changeAttribute target="betac" newValue="0.1"/>
+        <changeAttribute target="final_atp" newValue="0.5"/>
+        <changeAttribute target="gCa" newValue="9.0"/>
+        <changeAttribute target="gKC" newValue="15.0"/>
+        <changeAttribute target="gKahp" newValue="0.8"/>
+        <changeAttribute target="gKdr" newValue="15.0"/>
+        <changeAttribute target="gLd" newValue="0.1"/>
+        <changeAttribute target="gLs" newValue="0.1"/>
+        <changeAttribute target="gNa" newValue="30.0"/>
+        <changeAttribute target="gc" newValue="2.1"/>
+        <changeAttribute target="gkatp" newValue="0.0236"/>
+        <changeAttribute target="init_atp" newValue="0.1"/>
+        <changeAttribute target="ip0" newValue="0.75"/>
+        <changeAttribute target="n" newValue="500.0"/>
+        <changeAttribute target="natp" newValue="10.0"/>
+        <changeAttribute target="noise" newValue="1.0"/>
+        <changeAttribute target="pp" newValue="0.5"/>
+        <changeAttribute target="s0" newValue="0.2"/>
+        <changeAttribute target="taus" newValue="100.0"/>
+        <changeAttribute target="tstim" newValue="4000.0"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" name="Simulation" initialTime="0" outputStartTime="0" outputEndTime="10000" numberOfPoints="1000">
+      <algorithm kisaoID="KISAO:0000030">
+        <listOfAlgorithmParameters>
+          <algorithmParameter kisaoID="KISAO:0000483" value="0.05"/>
+        </listOfAlgorithmParameters>
+      </algorithm>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" name="Task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_T" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T" name="T" symbol="urn:sedml:symbol:time" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_CAD" name="CAD">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_CAD </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_CAD" name="CAD" target="CAD" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_CD" name="CD">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_CD </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_CD" name="CD" target="CD" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_GKC" name="GKC">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_GKC </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_GKC" name="GKC" target="GKC" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_GKQ" name="GKQ">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_GKQ </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_GKQ" name="GKQ" target="GKQ" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_HS" name="HS">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_HS </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_HS" name="HS" target="HS" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_IATP" name="IATP">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_IATP </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_IATP" name="IATP" target="IATP" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_ICA" name="ICA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_ICA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_ICA" name="ICA" target="ICA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_IKATP" name="IKATP">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_IKATP </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_IKATP" name="IKATP" target="IKATP" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_NS" name="NS">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_NS </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_NS" name="NS" target="NS" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_QD" name="QD">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_QD </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_QD" name="QD" target="QD" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_S" name="S">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_S </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_S" name="S" target="S" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_SD" name="SD">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_SD </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_SD" name="SD" target="SD" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_VD" name="VD">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_VD </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_VD" name="VD" target="VD" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_VS" name="VS">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_VS </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_VS" name="VS" target="VS" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report" name="Report">
+      <listOfDataSets>
+        <dataSet id="data_set_T" name="T" label="T" dataReference="data_generator_T"/>
+        <dataSet id="data_set_CAD" name="CAD" label="CAD" dataReference="data_generator_CAD"/>
+        <dataSet id="data_set_CD" name="CD" label="CD" dataReference="data_generator_CD"/>
+        <dataSet id="data_set_GKC" name="GKC" label="GKC" dataReference="data_generator_GKC"/>
+        <dataSet id="data_set_GKQ" name="GKQ" label="GKQ" dataReference="data_generator_GKQ"/>
+        <dataSet id="data_set_HS" name="HS" label="HS" dataReference="data_generator_HS"/>
+        <dataSet id="data_set_IATP" name="IATP" label="IATP" dataReference="data_generator_IATP"/>
+        <dataSet id="data_set_ICA" name="ICA" label="ICA" dataReference="data_generator_ICA"/>
+        <dataSet id="data_set_IKATP" name="IKATP" label="IKATP" dataReference="data_generator_IKATP"/>
+        <dataSet id="data_set_NS" name="NS" label="NS" dataReference="data_generator_NS"/>
+        <dataSet id="data_set_QD" name="QD" label="QD" dataReference="data_generator_QD"/>
+        <dataSet id="data_set_S" name="S" label="S" dataReference="data_generator_S"/>
+        <dataSet id="data_set_SD" name="SD" label="SD" dataReference="data_generator_SD"/>
+        <dataSet id="data_set_VD" name="VD" label="VD" dataReference="data_generator_VD"/>
+        <dataSet id="data_set_VS" name="VS" label="VS" dataReference="data_generator_VS"/>
+      </listOfDataSets>
+    </report>
+  </listOfOutputs>
+</sedML>

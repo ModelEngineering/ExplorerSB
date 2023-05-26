@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="ICaT" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="units.cellml">
+        <units name="mM" units_ref="mM"/>
+        <units name="ms" units_ref="ms"/>
+        <units name="pA" units_ref="pA"/>
+        <units name="mV" units_ref="mV"/>
+        <units name="nS" units_ref="nS"/>
+        <units name="J_per_K_mol" units_ref="J_per_K_mol"/>
+        <units name="C_per_mmol" units_ref="C_per_mmol"/>
+    </import>
+    <import xlink:href="Ionic_currents.cellml">
+        <component component_ref="Ionic_currents" name="Ionic_currents"/>
+    </import>
+    <import xlink:href="E_Nernst.cellml">
+        <component component_ref="E_Ca" name="E_Ca"/>
+    </import>
+    <import xlink:href="gating_kinetics.cellml">
+        <component component_ref="gating_kinetics" name="d_gate"/>
+    </import>
+    <import xlink:href="gating_kinetics.cellml">
+        <component component_ref="gating_kinetics" name="f_gate"/>
+    </import>
+    <import xlink:href="ICaT_gating_inf.cellml">
+        <component component_ref="d_inf" name="d_inf"/>
+        <component component_ref="f_inf" name="f_inf"/>
+    </import>
+    <import xlink:href="time_constant_f.cellml">
+        <component component_ref="tau_f" name="tau_f"/>
+    </import>
+    <component name="ICaT">
+        <variable name="time" private_interface="out" public_interface="in" units="ms"/>
+        <variable name="I_CaT" private_interface="in" public_interface="out" units="pA"/>
+        <variable name="V" private_interface="out" public_interface="in" units="mV"/>
+        <variable name="g_CaT" private_interface="out" public_interface="in" units="nS"/>
+        <variable name="T" private_interface="out" public_interface="in" units="kelvin"/>
+        <variable name="T0CaT" private_interface="out" public_interface="in" units="kelvin"/>
+        <variable name="Q10Ca" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="Cao" private_interface="out" public_interface="in" units="mM"/>
+        <variable name="Cai" private_interface="out" public_interface="in" units="mM"/>
+        <variable name="d_CaT_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="d_CaT" private_interface="in" public_interface="out" units="dimensionless"/>
+        <variable name="f_CaT_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="f_CaT" private_interface="in" public_interface="out" units="dimensionless"/>
+        <variable name="tau_dCaT" private_interface="out" public_interface="in" units="ms"/>
+        <variable name="P_CaT" private_interface="out" public_interface="out" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>P_CaT</ci>
+                <apply>
+                    <times/>
+                    <ci>d_CaT</ci>
+                    <ci>f_CaT</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <group>
+        <relationship_ref relationship="encapsulation"/>
+        <component_ref component="ICaT">
+            <component_ref component="Ionic_currents"/>
+            <component_ref component="E_Ca"/>
+            <component_ref component="d_gate"/>
+            <component_ref component="f_gate"/>
+            <component_ref component="d_inf"/>
+            <component_ref component="f_inf"/>
+            <component_ref component="tau_f"/>
+        </component_ref>
+    </group>
+    <connection>
+        <map_components component_1="ICaT" component_2="d_inf"/>
+        <map_variables variable_1="V" variable_2="V"/>
+    </connection>
+    <connection>
+        <map_components component_1="ICaT" component_2="f_inf"/>
+        <map_variables variable_1="V" variable_2="V"/>
+    </connection>
+    <connection>
+        <map_components component_1="ICaT" component_2="tau_f"/>
+        <map_variables variable_1="V" variable_2="V"/>
+    </connection>
+    <connection>
+        <map_components component_1="ICaT" component_2="d_gate"/>
+        <map_variables variable_1="time" variable_2="time"/>
+        <map_variables variable_1="T" variable_2="T"/>
+        <map_variables variable_1="Q10Ca" variable_2="Q10"/>
+        <map_variables variable_1="T0CaT" variable_2="T0"/>
+        <map_variables variable_1="d_CaT_init" variable_2="X_initial"/>
+        <map_variables variable_1="d_CaT" variable_2="X"/>
+        <map_variables variable_1="tau_dCaT" variable_2="tau_X"/>
+    </connection>
+    <connection>
+        <map_components component_1="ICaT" component_2="f_gate"/>
+        <map_variables variable_1="time" variable_2="time"/>
+        <map_variables variable_1="T" variable_2="T"/>
+        <map_variables variable_1="Q10Ca" variable_2="Q10"/>
+        <map_variables variable_1="T0CaT" variable_2="T0"/>
+        <map_variables variable_1="f_CaT_init" variable_2="X_initial"/>
+        <map_variables variable_1="f_CaT" variable_2="X"/>
+    </connection>
+    <connection>
+        <map_components component_1="d_inf" component_2="d_gate"/>
+        <map_variables variable_1="X_inf" variable_2="X_inf"/>
+    </connection>
+    <connection>
+        <map_components component_1="f_inf" component_2="f_gate"/>
+        <map_variables variable_1="X_inf" variable_2="X_inf"/>
+    </connection>
+    <connection>
+        <map_components component_1="tau_f" component_2="f_gate"/>
+        <map_variables variable_1="tau" variable_2="tau_X"/>
+    </connection>
+    <connection>
+        <map_components component_1="ICaT" component_2="Ionic_currents"/>
+        <map_variables variable_1="I_CaT" variable_2="I"/>
+        <map_variables variable_1="V" variable_2="V"/>
+        <map_variables variable_1="g_CaT" variable_2="g_max"/>
+        <map_variables variable_1="P_CaT" variable_2="PO"/>
+    </connection>
+    <connection>
+        <map_components component_1="ICaT" component_2="E_Ca"/>
+        <map_variables variable_1="T" variable_2="T"/>
+        <map_variables variable_1="Cai" variable_2="Cai"/>
+        <map_variables variable_1="Cao" variable_2="Cao"/>
+    </connection>
+    <connection>
+        <map_components component_1="E_Ca" component_2="Ionic_currents"/>
+        <map_variables variable_1="E_Ca" variable_2="E"/>
+    </connection>
+</model>

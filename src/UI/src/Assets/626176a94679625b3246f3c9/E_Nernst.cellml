@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="E_Nernst" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="units.cellml">
+        <units name="J_per_K_mol" units_ref="J_per_K_mol"/>
+        <units name="C_per_mmol" units_ref="C_per_mmol"/>
+        <units name="mM" units_ref="mM"/>
+        <units name="mV" units_ref="mV"/>
+    </import>
+    <import xlink:href="Nernst_potential.cellml">
+        <component component_ref="Nernst_potential" name="E_NaComp"/>
+    </import>
+    <import xlink:href="Nernst_potential.cellml">
+        <component component_ref="Nernst_potential" name="E_CaComp"/>
+    </import>
+    <import xlink:href="Nernst_potential.cellml">
+        <component component_ref="Nernst_potential" name="E_KComp"/>
+    </import>
+    <component name="E_Na">
+        <variable name="R" private_interface="out" public_interface="in" units="J_per_K_mol"/>
+        <variable name="F" private_interface="out" public_interface="in" units="C_per_mmol"/>
+        <variable name="T" private_interface="out" public_interface="in" units="kelvin"/>
+        <variable initial_value="1" name="z_Na" private_interface="out" units="dimensionless"/>
+        <variable name="Nai" private_interface="out" public_interface="in" units="mM"/>
+        <variable name="Nao" private_interface="out" public_interface="in" units="mM"/>
+        <variable name="E_Na" private_interface="in" public_interface="out" units="mV"/>
+    </component>
+    <component name="E_Ca">
+        <variable name="R" private_interface="out" public_interface="in" units="J_per_K_mol"/>
+        <variable name="F" private_interface="out" public_interface="in" units="C_per_mmol"/>
+        <variable name="T" private_interface="out" public_interface="in" units="kelvin"/>
+        <variable initial_value="2" name="z_Ca" private_interface="out" units="dimensionless"/>
+        <variable name="Cai" private_interface="out" public_interface="in" units="mM"/>
+        <variable name="Cao" private_interface="out" public_interface="in" units="mM"/>
+        <variable name="E_Ca" private_interface="in" public_interface="out" units="mV"/>
+    </component>
+    <component name="E_K">
+        <variable name="R" private_interface="out" public_interface="in" units="J_per_K_mol"/>
+        <variable name="F" private_interface="out" public_interface="in" units="C_per_mmol"/>
+        <variable name="T" private_interface="out" public_interface="in" units="kelvin"/>
+        <variable initial_value="1" name="z_K" private_interface="out" units="dimensionless"/>
+        <variable name="Ki" private_interface="out" public_interface="in" units="mM"/>
+        <variable name="Ko" private_interface="out" public_interface="in" units="mM"/>
+        <variable name="E_K" private_interface="in" public_interface="out" units="mV"/>
+    </component>
+    <group>
+        <relationship_ref relationship="encapsulation"/>
+        <component_ref component="E_Na">
+            <component_ref component="E_NaComp"/>
+        </component_ref>
+        <component_ref component="E_K">
+            <component_ref component="E_KComp"/>
+        </component_ref>
+        <component_ref component="E_Ca">
+            <component_ref component="E_CaComp"/>
+        </component_ref>
+    </group>
+    <connection>
+        <map_components component_1="E_Na" component_2="E_NaComp"/>
+        <map_variables variable_1="R" variable_2="R"/>
+        <map_variables variable_1="F" variable_2="F"/>
+        <map_variables variable_1="T" variable_2="T"/>
+        <map_variables variable_1="z_Na" variable_2="z"/>
+        <map_variables variable_1="Nai" variable_2="X_i"/>
+        <map_variables variable_1="Nao" variable_2="X_o"/>
+        <map_variables variable_1="E_Na" variable_2="E"/>
+    </connection>
+    <connection>
+        <map_components component_1="E_Ca" component_2="E_CaComp"/>
+        <map_variables variable_1="R" variable_2="R"/>
+        <map_variables variable_1="F" variable_2="F"/>
+        <map_variables variable_1="T" variable_2="T"/>
+        <map_variables variable_1="z_Ca" variable_2="z"/>
+        <map_variables variable_1="Cai" variable_2="X_i"/>
+        <map_variables variable_1="Cao" variable_2="X_o"/>
+        <map_variables variable_1="E_Ca" variable_2="E"/>
+    </connection>
+    <connection>
+        <map_components component_1="E_K" component_2="E_KComp"/>
+        <map_variables variable_1="R" variable_2="R"/>
+        <map_variables variable_1="F" variable_2="F"/>
+        <map_variables variable_1="T" variable_2="T"/>
+        <map_variables variable_1="z_K" variable_2="z"/>
+        <map_variables variable_1="Ki" variable_2="X_i"/>
+        <map_variables variable_1="Ko" variable_2="X_o"/>
+        <map_variables variable_1="E_K" variable_2="E"/>
+    </connection>
+</model>

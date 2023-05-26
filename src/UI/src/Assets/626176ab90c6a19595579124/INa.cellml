@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="INa" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="units.cellml">
+        <units name="mM" units_ref="mM"/>
+        <units name="ms" units_ref="ms"/>
+        <units name="pA" units_ref="pA"/>
+        <units name="mV" units_ref="mV"/>
+        <units name="nS" units_ref="nS"/>
+        <units name="J_per_K_mol" units_ref="J_per_K_mol"/>
+        <units name="C_per_mmol" units_ref="C_per_mmol"/>
+    </import>
+    <import xlink:href="Ionic_currents.cellml">
+        <component component_ref="Ionic_currents" name="Ionic_currents"/>
+    </import>
+    <import xlink:href="E_Nernst.cellml">
+        <component component_ref="E_Na" name="E_Na"/>
+    </import>
+    <import xlink:href="INa_channel_states.cellml">
+        <component component_ref="INa_channel_states" name="INa_channel_states"/>
+    </import>
+    <component name="INa">
+        <variable name="time" private_interface="out" public_interface="in" units="ms"/>
+        <variable name="P_Na" private_interface="in" public_interface="out" units="dimensionless"/>
+        <variable name="norm_Na" private_interface="in" public_interface="out" units="dimensionless"/>
+        <variable name="I_Na" private_interface="in" public_interface="out" units="pA"/>
+        <variable name="V" private_interface="out" public_interface="in" units="mV"/>
+        <variable name="g_Na" private_interface="out" public_interface="in" units="nS"/>
+        <variable name="T" private_interface="out" public_interface="in" units="kelvin"/>
+        <variable name="T0Na" private_interface="out" public_interface="in" units="kelvin"/>
+        <variable name="Q10Na" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="Nao" private_interface="out" public_interface="in" units="mM"/>
+        <variable name="Nai" private_interface="out" public_interface="in" units="mM"/>
+        <variable name="Na_C1_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="Na_C2_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="Na_C3_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="I1_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="I2_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="O_Na_init" private_interface="out" public_interface="in" units="dimensionless"/>
+    </component>
+    <group>
+        <relationship_ref relationship="encapsulation"/>
+        <component_ref component="INa">
+            <component_ref component="Ionic_currents"/>
+            <component_ref component="E_Na"/>
+            <component_ref component="INa_channel_states"/>
+        </component_ref>
+    </group>
+    <connection>
+        <map_components component_1="INa" component_2="Ionic_currents"/>
+        <map_variables variable_1="I_Na" variable_2="I"/>
+        <map_variables variable_1="V" variable_2="V"/>
+        <map_variables variable_1="g_Na" variable_2="g_max"/>
+    </connection>
+    <connection>
+        <map_components component_1="INa" component_2="E_Na"/>
+        <map_variables variable_1="T" variable_2="T"/>
+        <map_variables variable_1="Nai" variable_2="Nai"/>
+        <map_variables variable_1="Nao" variable_2="Nao"/>
+    </connection>
+    <connection>
+        <map_components component_1="E_Na" component_2="Ionic_currents"/>
+        <map_variables variable_1="E_Na" variable_2="E"/>
+    </connection>
+    <connection>
+        <map_components component_1="INa_channel_states" component_2="Ionic_currents"/>
+        <map_variables variable_1="O_Na" variable_2="PO"/>
+    </connection>
+    <connection>
+        <map_components component_1="INa" component_2="INa_channel_states"/>
+        <map_variables variable_1="time" variable_2="time"/>
+        <map_variables variable_1="P_Na" variable_2="O_Na"/>
+        <map_variables variable_1="norm_Na" variable_2="norm"/>
+        <map_variables variable_1="V" variable_2="V"/>
+        <map_variables variable_1="T" variable_2="T"/>
+        <map_variables variable_1="T0Na" variable_2="T0"/>
+        <map_variables variable_1="Q10Na" variable_2="Q10Na"/>
+        <map_variables variable_1="Na_C1_init" variable_2="Na_C1_init"/>
+        <map_variables variable_1="Na_C2_init" variable_2="Na_C2_init"/>
+        <map_variables variable_1="Na_C3_init" variable_2="Na_C3_init"/>
+        <map_variables variable_1="I1_init" variable_2="I1_init"/>
+        <map_variables variable_1="I2_init" variable_2="I2_init"/>
+        <map_variables variable_1="O_Na_init" variable_2="O_Na_init"/>
+    </connection>
+</model>

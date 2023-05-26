@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="temperature_factor" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#">
+    <!-- calculate temperature factor based on the Q10 temperature coefficient-->
+    <component name="temperature_factor">
+        <variable name="phi" public_interface="out" units="dimensionless"/>
+        <variable name="T0" public_interface="in" units="kelvin"/>
+        <variable name="T" public_interface="in" units="kelvin"/>
+        <variable name="Q10" public_interface="in" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>phi</ci>
+                <apply>
+                    <power/>
+                    <ci>Q10</ci>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <minus/>
+                            <ci>T</ci>
+                            <ci>T0</ci>
+                        </apply>
+                        <cn cellml:units="kelvin">10</cn>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

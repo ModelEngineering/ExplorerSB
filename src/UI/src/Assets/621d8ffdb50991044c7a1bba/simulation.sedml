@@ -1,0 +1,898 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" xmlns:sbml="http://www.sbml.org/sbml/level3/version1/core" xmlns:fbc="http://www.sbml.org/sbml/level3/version1/fbc/version2" level="1" version="3">
+  <listOfModels>
+    <model id="model" language="urn:sedml:language:sbml" source="e_coli_core.xml">
+      <listOfChanges>
+        <changeAttribute target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;cobra_default_lb&apos;]/@value" newValue="-1000"/>
+        <changeAttribute target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;cobra_default_ub&apos;]/@value" newValue="1000"/>
+        <changeAttribute target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;cobra_0_bound&apos;]/@value" newValue="0"/>
+        <changeAttribute target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;R_ATPM_lower_bound&apos;]/@value" newValue="8.39"/>
+        <changeAttribute target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;R_EX_glc__D_e_lower_bound&apos;]/@value" newValue="-10"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <steadyState id="simulation">
+      <algorithm kisaoID="KISAO:0000437"/>
+    </steadyState>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_obj">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_obj </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_obj" target="/sbml:sbml/sbml:model/fbc:listOfObjectives/fbc:objective[@fbc:id=&apos;obj&apos;]/@value" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_PFK">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_PFK </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_PFK" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_PFK&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_PFL">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_PFL </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_PFL" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_PFL&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_PGI">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_PGI </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_PGI" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_PGI&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_PGK">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_PGK </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_PGK" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_PGK&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_PGL">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_PGL </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_PGL" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_PGL&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_ACALD">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_ACALD </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_ACALD" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_ACALD&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_AKGt2r">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_AKGt2r </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_AKGt2r" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_AKGt2r&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_PGM">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_PGM </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_PGM" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_PGM&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_PIt2r">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_PIt2r </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_PIt2r" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_PIt2r&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_ALCD2x">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_ALCD2x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_ALCD2x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_ALCD2x&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_ACALDt">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_ACALDt </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_ACALDt" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_ACALDt&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_ACKr">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_ACKr </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_ACKr" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_ACKr&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_PPC">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_PPC </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_PPC" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_PPC&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_ACONTa">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_ACONTa </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_ACONTa" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_ACONTa&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_ACONTb">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_ACONTb </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_ACONTb" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_ACONTb&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_ATPM">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_ATPM </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_ATPM" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_ATPM&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_PPCK">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_PPCK </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_PPCK" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_PPCK&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_ACt2r">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_ACt2r </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_ACt2r" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_ACt2r&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_PPS">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_PPS </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_PPS" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_PPS&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_ADK1">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_ADK1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_ADK1" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_ADK1&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_AKGDH">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_AKGDH </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_AKGDH" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_AKGDH&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_ATPS4r">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_ATPS4r </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_ATPS4r" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_ATPS4r&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_PTAr">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_PTAr </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_PTAr" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_PTAr&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_PYK">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_PYK </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_PYK" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_PYK&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_BIOMASS_Ecoli_core_w_GAM">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_BIOMASS_Ecoli_core_w_GAM </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_BIOMASS_Ecoli_core_w_GAM" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_BIOMASS_Ecoli_core_w_GAM&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_PYRt2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_PYRt2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_PYRt2" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_PYRt2&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_CO2t">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_CO2t </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_CO2t" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_CO2t&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_RPE">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_RPE </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_RPE" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_RPE&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_CS">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_CS </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_CS" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_CS&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_RPI">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_RPI </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_RPI" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_RPI&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_SUCCt2_2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_SUCCt2_2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_SUCCt2_2" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_SUCCt2_2&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_CYTBD">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_CYTBD </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_CYTBD" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_CYTBD&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_D_LACt2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_D_LACt2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_D_LACt2" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_D_LACt2&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_ENO">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_ENO </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_ENO" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_ENO&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_SUCCt3">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_SUCCt3 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_SUCCt3" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_SUCCt3&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_ETOHt2r">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_ETOHt2r </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_ETOHt2r" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_ETOHt2r&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_SUCDi">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_SUCDi </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_SUCDi" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_SUCDi&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_SUCOAS">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_SUCOAS </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_SUCOAS" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_SUCOAS&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_TALA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_TALA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_TALA" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_TALA&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_THD2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_THD2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_THD2" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_THD2&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_TKT1">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_TKT1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_TKT1" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_TKT1&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_TKT2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_TKT2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_TKT2" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_TKT2&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_TPI">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_TPI </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_TPI" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_TPI&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_ac_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_ac_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_ac_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_ac_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_acald_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_acald_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_acald_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_acald_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_akg_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_akg_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_akg_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_akg_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_co2_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_co2_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_co2_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_co2_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_etoh_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_etoh_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_etoh_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_etoh_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_for_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_for_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_for_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_for_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_fru_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_fru_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_fru_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_fru_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_fum_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_fum_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_fum_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_fum_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_glc__D_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_glc__D_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_glc__D_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_glc__D_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_gln__L_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_gln__L_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_gln__L_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_gln__L_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_glu__L_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_glu__L_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_glu__L_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_glu__L_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_h_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_h_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_h_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_h_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_h2o_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_h2o_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_h2o_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_h2o_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_lac__D_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_lac__D_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_lac__D_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_lac__D_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_mal__L_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_mal__L_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_mal__L_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_mal__L_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_nh4_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_nh4_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_nh4_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_nh4_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_o2_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_o2_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_o2_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_o2_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_pi_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_pi_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_pi_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_pi_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_pyr_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_pyr_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_pyr_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_pyr_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_EX_succ_e">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_EX_succ_e </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_EX_succ_e" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_EX_succ_e&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_FBA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_FBA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_FBA" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_FBA&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_FBP">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_FBP </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_FBP" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_FBP&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_FORt2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_FORt2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_FORt2" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_FORt2&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_FORt">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_FORt </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_FORt" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_FORt&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_FRD7">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_FRD7 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_FRD7" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_FRD7&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_FRUpts2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_FRUpts2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_FRUpts2" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_FRUpts2&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_FUM">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_FUM </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_FUM" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_FUM&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_FUMt2_2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_FUMt2_2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_FUMt2_2" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_FUMt2_2&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_G6PDH2r">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_G6PDH2r </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_G6PDH2r" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_G6PDH2r&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_GAPD">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_GAPD </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_GAPD" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_GAPD&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_GLCpts">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_GLCpts </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_GLCpts" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_GLCpts&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_GLNS">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_GLNS </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_GLNS" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_GLNS&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_GLNabc">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_GLNabc </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_GLNabc" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_GLNabc&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_GLUDy">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_GLUDy </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_GLUDy" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_GLUDy&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_GLUN">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_GLUN </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_GLUN" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_GLUN&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_GLUSy">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_GLUSy </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_GLUSy" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_GLUSy&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_GLUt2r">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_GLUt2r </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_GLUt2r" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_GLUt2r&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_GND">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_GND </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_GND" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_GND&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_H2Ot">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_H2Ot </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_H2Ot" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_H2Ot&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_ICDHyr">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_ICDHyr </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_ICDHyr" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_ICDHyr&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_ICL">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_ICL </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_ICL" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_ICL&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_LDH_D">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_LDH_D </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_LDH_D" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_LDH_D&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_MALS">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_MALS </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_MALS" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_MALS&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_MALt2_2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_MALt2_2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_MALt2_2" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_MALt2_2&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_MDH">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_MDH </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_MDH" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_MDH&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_ME1">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_ME1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_ME1" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_ME1&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_ME2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_ME2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_ME2" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_ME2&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_NADH16">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_NADH16 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_NADH16" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_NADH16&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_NADTRHD">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_NADTRHD </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_NADTRHD" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_NADTRHD&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_NH4t">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_NH4t </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_NH4t" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_NH4t&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_O2t">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_O2t </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_O2t" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_O2t&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R_PDH">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R_PDH </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R_PDH" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;R_PDH&apos;]/@flux" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="objective" name="Objective">
+      <listOfDataSets>
+        <dataSet id="obj" label="obj" dataReference="data_generator_obj"/>
+      </listOfDataSets>
+    </report>
+    <report id="reaction_fluxes" name="Reaction fluxes">
+      <listOfDataSets>
+        <dataSet id="R_PFK" name="Phosphofructokinase" label="PFK" dataReference="data_generator_R_PFK"/>
+        <dataSet id="R_PFL" name="Pyruvate formate lyase" label="PFL" dataReference="data_generator_R_PFL"/>
+        <dataSet id="R_PGI" name="Glucose-6-phosphate isomerase" label="PGI" dataReference="data_generator_R_PGI"/>
+        <dataSet id="R_PGK" name="Phosphoglycerate kinase" label="PGK" dataReference="data_generator_R_PGK"/>
+        <dataSet id="R_PGL" name="6-phosphogluconolactonase" label="PGL" dataReference="data_generator_R_PGL"/>
+        <dataSet id="R_ACALD" name="Acetaldehyde dehydrogenase (acetylating)" label="ACALD" dataReference="data_generator_R_ACALD"/>
+        <dataSet id="R_AKGt2r" name="2 oxoglutarate reversible transport via symport" label="AKGt2r" dataReference="data_generator_R_AKGt2r"/>
+        <dataSet id="R_PGM" name="Phosphoglycerate mutase" label="PGM" dataReference="data_generator_R_PGM"/>
+        <dataSet id="R_PIt2r" name="Phosphate reversible transport via symport" label="PIt2r" dataReference="data_generator_R_PIt2r"/>
+        <dataSet id="R_ALCD2x" name="Alcohol dehydrogenase (ethanol)" label="ALCD2x" dataReference="data_generator_R_ALCD2x"/>
+        <dataSet id="R_ACALDt" name="Acetaldehyde reversible transport" label="ACALDt" dataReference="data_generator_R_ACALDt"/>
+        <dataSet id="R_ACKr" name="Acetate kinase" label="ACKr" dataReference="data_generator_R_ACKr"/>
+        <dataSet id="R_PPC" name="Phosphoenolpyruvate carboxylase" label="PPC" dataReference="data_generator_R_PPC"/>
+        <dataSet id="R_ACONTa" name="Aconitase (half-reaction A, Citrate hydro-lyase)" label="ACONTa" dataReference="data_generator_R_ACONTa"/>
+        <dataSet id="R_ACONTb" name="Aconitase (half-reaction B, Isocitrate hydro-lyase)" label="ACONTb" dataReference="data_generator_R_ACONTb"/>
+        <dataSet id="R_ATPM" name="ATP maintenance requirement" label="ATPM" dataReference="data_generator_R_ATPM"/>
+        <dataSet id="R_PPCK" name="Phosphoenolpyruvate carboxykinase" label="PPCK" dataReference="data_generator_R_PPCK"/>
+        <dataSet id="R_ACt2r" name="Acetate reversible transport via proton symport" label="ACt2r" dataReference="data_generator_R_ACt2r"/>
+        <dataSet id="R_PPS" name="Phosphoenolpyruvate synthase" label="PPS" dataReference="data_generator_R_PPS"/>
+        <dataSet id="R_ADK1" name="Adenylate kinase" label="ADK1" dataReference="data_generator_R_ADK1"/>
+        <dataSet id="R_AKGDH" name="2-Oxogluterate dehydrogenase" label="AKGDH" dataReference="data_generator_R_AKGDH"/>
+        <dataSet id="R_ATPS4r" name="ATP synthase (four protons for one ATP)" label="ATPS4r" dataReference="data_generator_R_ATPS4r"/>
+        <dataSet id="R_PTAr" name="Phosphotransacetylase" label="PTAr" dataReference="data_generator_R_PTAr"/>
+        <dataSet id="R_PYK" name="Pyruvate kinase" label="PYK" dataReference="data_generator_R_PYK"/>
+        <dataSet id="R_BIOMASS_Ecoli_core_w_GAM" name="Biomass Objective Function with GAM" label="BIOMASS_Ecoli_core_w_GAM" dataReference="data_generator_R_BIOMASS_Ecoli_core_w_GAM"/>
+        <dataSet id="R_PYRt2" name="Pyruvate transport in via proton symport" label="PYRt2" dataReference="data_generator_R_PYRt2"/>
+        <dataSet id="R_CO2t" name="CO2 transporter via diffusion" label="CO2t" dataReference="data_generator_R_CO2t"/>
+        <dataSet id="R_RPE" name="Ribulose 5-phosphate 3-epimerase" label="RPE" dataReference="data_generator_R_RPE"/>
+        <dataSet id="R_CS" name="Citrate synthase" label="CS" dataReference="data_generator_R_CS"/>
+        <dataSet id="R_RPI" name="Ribose-5-phosphate isomerase" label="RPI" dataReference="data_generator_R_RPI"/>
+        <dataSet id="R_SUCCt2_2" name="Succinate transport via proton symport (2 H)" label="SUCCt2_2" dataReference="data_generator_R_SUCCt2_2"/>
+        <dataSet id="R_CYTBD" name="Cytochrome oxidase bd (ubiquinol-8: 2 protons)" label="CYTBD" dataReference="data_generator_R_CYTBD"/>
+        <dataSet id="R_D_LACt2" name="D lactate transport via proton symport" label="D_LACt2" dataReference="data_generator_R_D_LACt2"/>
+        <dataSet id="R_ENO" name="Enolase" label="ENO" dataReference="data_generator_R_ENO"/>
+        <dataSet id="R_SUCCt3" name="Succinate transport out via proton antiport" label="SUCCt3" dataReference="data_generator_R_SUCCt3"/>
+        <dataSet id="R_ETOHt2r" name="Ethanol reversible transport via proton symport" label="ETOHt2r" dataReference="data_generator_R_ETOHt2r"/>
+        <dataSet id="R_SUCDi" name="Succinate dehydrogenase (irreversible)" label="SUCDi" dataReference="data_generator_R_SUCDi"/>
+        <dataSet id="R_SUCOAS" name="Succinyl-CoA synthetase (ADP-forming)" label="SUCOAS" dataReference="data_generator_R_SUCOAS"/>
+        <dataSet id="R_TALA" name="Transaldolase" label="TALA" dataReference="data_generator_R_TALA"/>
+        <dataSet id="R_THD2" name="NAD(P) transhydrogenase" label="THD2" dataReference="data_generator_R_THD2"/>
+        <dataSet id="R_TKT1" name="Transketolase" label="TKT1" dataReference="data_generator_R_TKT1"/>
+        <dataSet id="R_TKT2" name="Transketolase" label="TKT2" dataReference="data_generator_R_TKT2"/>
+        <dataSet id="R_TPI" name="Triose-phosphate isomerase" label="TPI" dataReference="data_generator_R_TPI"/>
+        <dataSet id="R_EX_ac_e" name="Acetate exchange" label="EX_ac_e" dataReference="data_generator_R_EX_ac_e"/>
+        <dataSet id="R_EX_acald_e" name="Acetaldehyde exchange" label="EX_acald_e" dataReference="data_generator_R_EX_acald_e"/>
+        <dataSet id="R_EX_akg_e" name="2-Oxoglutarate exchange" label="EX_akg_e" dataReference="data_generator_R_EX_akg_e"/>
+        <dataSet id="R_EX_co2_e" name="CO2 exchange" label="EX_co2_e" dataReference="data_generator_R_EX_co2_e"/>
+        <dataSet id="R_EX_etoh_e" name="Ethanol exchange" label="EX_etoh_e" dataReference="data_generator_R_EX_etoh_e"/>
+        <dataSet id="R_EX_for_e" name="Formate exchange" label="EX_for_e" dataReference="data_generator_R_EX_for_e"/>
+        <dataSet id="R_EX_fru_e" name="D-Fructose exchange" label="EX_fru_e" dataReference="data_generator_R_EX_fru_e"/>
+        <dataSet id="R_EX_fum_e" name="Fumarate exchange" label="EX_fum_e" dataReference="data_generator_R_EX_fum_e"/>
+        <dataSet id="R_EX_glc__D_e" name="D-Glucose exchange" label="EX_glc__D_e" dataReference="data_generator_R_EX_glc__D_e"/>
+        <dataSet id="R_EX_gln__L_e" name="L-Glutamine exchange" label="EX_gln__L_e" dataReference="data_generator_R_EX_gln__L_e"/>
+        <dataSet id="R_EX_glu__L_e" name="L-Glutamate exchange" label="EX_glu__L_e" dataReference="data_generator_R_EX_glu__L_e"/>
+        <dataSet id="R_EX_h_e" name="H+ exchange" label="EX_h_e" dataReference="data_generator_R_EX_h_e"/>
+        <dataSet id="R_EX_h2o_e" name="H2O exchange" label="EX_h2o_e" dataReference="data_generator_R_EX_h2o_e"/>
+        <dataSet id="R_EX_lac__D_e" name="D-lactate exchange" label="EX_lac__D_e" dataReference="data_generator_R_EX_lac__D_e"/>
+        <dataSet id="R_EX_mal__L_e" name="L-Malate exchange" label="EX_mal__L_e" dataReference="data_generator_R_EX_mal__L_e"/>
+        <dataSet id="R_EX_nh4_e" name="Ammonia exchange" label="EX_nh4_e" dataReference="data_generator_R_EX_nh4_e"/>
+        <dataSet id="R_EX_o2_e" name="O2 exchange" label="EX_o2_e" dataReference="data_generator_R_EX_o2_e"/>
+        <dataSet id="R_EX_pi_e" name="Phosphate exchange" label="EX_pi_e" dataReference="data_generator_R_EX_pi_e"/>
+        <dataSet id="R_EX_pyr_e" name="Pyruvate exchange" label="EX_pyr_e" dataReference="data_generator_R_EX_pyr_e"/>
+        <dataSet id="R_EX_succ_e" name="Succinate exchange" label="EX_succ_e" dataReference="data_generator_R_EX_succ_e"/>
+        <dataSet id="R_FBA" name="Fructose-bisphosphate aldolase" label="FBA" dataReference="data_generator_R_FBA"/>
+        <dataSet id="R_FBP" name="Fructose-bisphosphatase" label="FBP" dataReference="data_generator_R_FBP"/>
+        <dataSet id="R_FORt2" name="Formate transport in via proton symport" label="FORt2" dataReference="data_generator_R_FORt2"/>
+        <dataSet id="R_FORt" name="Formate transport via diffusion" label="FORt" dataReference="data_generator_R_FORt"/>
+        <dataSet id="R_FRD7" name="Fumarate reductase" label="FRD7" dataReference="data_generator_R_FRD7"/>
+        <dataSet id="R_FRUpts2" name="Fructose transport via PEP:Pyr PTS (f6p generating)" label="FRUpts2" dataReference="data_generator_R_FRUpts2"/>
+        <dataSet id="R_FUM" name="Fumarase" label="FUM" dataReference="data_generator_R_FUM"/>
+        <dataSet id="R_FUMt2_2" name="Fumarate transport via proton symport (2 H)" label="FUMt2_2" dataReference="data_generator_R_FUMt2_2"/>
+        <dataSet id="R_G6PDH2r" name="Glucose 6-phosphate dehydrogenase" label="G6PDH2r" dataReference="data_generator_R_G6PDH2r"/>
+        <dataSet id="R_GAPD" name="Glyceraldehyde-3-phosphate dehydrogenase" label="GAPD" dataReference="data_generator_R_GAPD"/>
+        <dataSet id="R_GLCpts" name="D-glucose transport via PEP:Pyr PTS" label="GLCpts" dataReference="data_generator_R_GLCpts"/>
+        <dataSet id="R_GLNS" name="Glutamine synthetase" label="GLNS" dataReference="data_generator_R_GLNS"/>
+        <dataSet id="R_GLNabc" name="L-glutamine transport via ABC system" label="GLNabc" dataReference="data_generator_R_GLNabc"/>
+        <dataSet id="R_GLUDy" name="Glutamate dehydrogenase (NADP)" label="GLUDy" dataReference="data_generator_R_GLUDy"/>
+        <dataSet id="R_GLUN" name="Glutaminase" label="GLUN" dataReference="data_generator_R_GLUN"/>
+        <dataSet id="R_GLUSy" name="Glutamate synthase (NADPH)" label="GLUSy" dataReference="data_generator_R_GLUSy"/>
+        <dataSet id="R_GLUt2r" name="L glutamate transport via proton symport  reversible" label="GLUt2r" dataReference="data_generator_R_GLUt2r"/>
+        <dataSet id="R_GND" name="Phosphogluconate dehydrogenase" label="GND" dataReference="data_generator_R_GND"/>
+        <dataSet id="R_H2Ot" name="H2O transport via diffusion" label="H2Ot" dataReference="data_generator_R_H2Ot"/>
+        <dataSet id="R_ICDHyr" name="Isocitrate dehydrogenase (NADP)" label="ICDHyr" dataReference="data_generator_R_ICDHyr"/>
+        <dataSet id="R_ICL" name="Isocitrate lyase" label="ICL" dataReference="data_generator_R_ICL"/>
+        <dataSet id="R_LDH_D" name="D-lactate dehydrogenase" label="LDH_D" dataReference="data_generator_R_LDH_D"/>
+        <dataSet id="R_MALS" name="Malate synthase" label="MALS" dataReference="data_generator_R_MALS"/>
+        <dataSet id="R_MALt2_2" name="Malate transport via proton symport (2 H)" label="MALt2_2" dataReference="data_generator_R_MALt2_2"/>
+        <dataSet id="R_MDH" name="Malate dehydrogenase" label="MDH" dataReference="data_generator_R_MDH"/>
+        <dataSet id="R_ME1" name="Malic enzyme (NAD)" label="ME1" dataReference="data_generator_R_ME1"/>
+        <dataSet id="R_ME2" name="Malic enzyme (NADP)" label="ME2" dataReference="data_generator_R_ME2"/>
+        <dataSet id="R_NADH16" name="NADH dehydrogenase (ubiquinone-8 &amp; 3 protons)" label="NADH16" dataReference="data_generator_R_NADH16"/>
+        <dataSet id="R_NADTRHD" name="NAD transhydrogenase" label="NADTRHD" dataReference="data_generator_R_NADTRHD"/>
+        <dataSet id="R_NH4t" name="Ammonia reversible transport" label="NH4t" dataReference="data_generator_R_NH4t"/>
+        <dataSet id="R_O2t" name="O2 transport  diffusion " label="O2t" dataReference="data_generator_R_O2t"/>
+        <dataSet id="R_PDH" name="Pyruvate dehydrogenase" label="PDH" dataReference="data_generator_R_PDH"/>
+      </listOfDataSets>
+    </report>
+  </listOfOutputs>
+</sedML>

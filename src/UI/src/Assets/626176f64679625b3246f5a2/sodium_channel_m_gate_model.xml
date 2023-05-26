@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<model xmlns="http://www.cellml.org/cellml/1.1#" name="sodium_channel_m_gate_model">
+  <component name="sodium_channel_m_gate">
+    <variable initial_value="m_initial" name="m" private_interface="out" public_interface="out" units="dimensionless"/>
+    <variable name="m_initial" public_interface="in" units="dimensionless"/>
+    <variable name="alpha_m" private_interface="out" public_interface="out" units="per_ms"/>
+    <variable name="beta_m" private_interface="out" public_interface="out" units="per_ms"/>
+    <variable name="V" private_interface="out" public_interface="in" units="mV"/>
+    <variable name="time" private_interface="out" public_interface="in" units="ms"/>
+    <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" cmeta:id="alpha_m_calculation_eq">
+      <apply id="alpha_m_calculation"><eq/>
+        <ci> alpha_m </ci>
+        <apply><divide/>
+          <apply><times/>
+            <cn xmlns:cellml="http://www.cellml.org/cellml/1.1#" cellml:units="per_mV_ms"> 0.1 </cn>
+            <apply><minus/>
+              <apply><minus/>
+                <ci> V </ci>
+              </apply>
+              <cn xmlns:cellml="http://www.cellml.org/cellml/1.1#" cellml:units="mV"> 48.0 </cn>
+            </apply>
+          </apply>
+          <apply><minus/>
+            <apply><exp/>
+              <apply><divide/>
+                <apply><minus/>
+                  <apply><minus/>
+                    <ci> V </ci>
+                  </apply>
+                  <cn xmlns:cellml="http://www.cellml.org/cellml/1.1#" cellml:units="mV"> 48.0 </cn>
+                </apply>
+                <cn xmlns:cellml="http://www.cellml.org/cellml/1.1#" cellml:units="mV"> 15.0 </cn>
+              </apply>
+            </apply>
+            <cn xmlns:cellml="http://www.cellml.org/cellml/1.1#" cellml:units="dimensionless"> 1.0 </cn>
+          </apply>
+        </apply>
+      </apply>
+    </math>
+    <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" cmeta:id="beta_m_calculation_eq">
+      <apply id="beta_m_calculation"><eq/>
+        <ci> beta_m </ci>
+        <apply><divide/>
+          <apply><times/>
+            <cn xmlns:cellml="http://www.cellml.org/cellml/1.1#" cellml:units="per_mV_ms"> 0.12 </cn>
+            <apply><plus/>
+              <ci> V </ci>
+              <cn xmlns:cellml="http://www.cellml.org/cellml/1.1#" cellml:units="mV"> 8.0 </cn>
+            </apply>
+          </apply>
+          <apply><minus/>
+            <apply><exp/>
+              <apply><divide/>
+                <apply><plus/>
+                  <ci> V </ci>
+                  <cn xmlns:cellml="http://www.cellml.org/cellml/1.1#" cellml:units="mV"> 8.0 </cn>
+                </apply>
+                <cn xmlns:cellml="http://www.cellml.org/cellml/1.1#" cellml:units="mV"> 5.0 </cn>
+              </apply>
+            </apply>
+            <cn xmlns:cellml="http://www.cellml.org/cellml/1.1#" cellml:units="dimensionless"> 1.0 </cn>
+          </apply>
+        </apply>
+      </apply>
+    </math>
+    <math xmlns="http://www.w3.org/1998/Math/MathML" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" cmeta:id="dm_dt_eq">
+      <apply id="dm_dt"><eq/>
+        <apply><diff/>
+          <bvar><ci> time </ci></bvar>
+          <ci> m </ci>
+        </apply>
+        <apply><minus/>
+          <apply><times/>
+            <ci> alpha_m </ci>
+            <apply><minus/>
+              <cn xmlns:cellml="http://www.cellml.org/cellml/1.1#" cellml:units="dimensionless"> 1.0 </cn>
+              <ci> m </ci>
+            </apply>
+          </apply>
+          <apply><times/>
+            <ci> beta_m </ci>
+            <ci> m </ci>
+          </apply>
+        </apply>
+      </apply>
+    </math>
+  </component>
+  <import xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="units_model.xml">
+    <units name="mm" units_ref="mm"/>
+    <units name="ng" units_ref="ng"/>
+    <units name="ms" units_ref="ms"/>
+    <units name="uA" units_ref="uA"/>
+    <units name="K" units_ref="K"/>
+    <units name="nmol" units_ref="nmol"/>
+    <units name="mmsq" units_ref="mmsq"/>
+    <units name="mmcu" units_ref="mmcu"/>
+    <units name="mssq" units_ref="mssq"/>
+    <units name="mscu" units_ref="mscu"/>
+    <units name="mV" units_ref="mV"/>
+    <units name="mVsq" units_ref="mVsq"/>
+    <units name="mV_per_ms" units_ref="mV_per_ms"/>
+    <units name="mS" units_ref="mS"/>
+    <units name="mS_per_mmsq" units_ref="mS_per_mmsq"/>
+    <units name="mS_per_mm" units_ref="mS_per_mm"/>
+    <units name="uA_per_mmsq" units_ref="uA_per_mmsq"/>
+    <units name="uA_per_mmcu" units_ref="uA_per_mmcu"/>
+    <units name="nC" units_ref="nC"/>
+    <units name="uF" units_ref="uF"/>
+    <units name="uF_per_mmsq" units_ref="uF_per_mmsq"/>
+    <units name="mM" units_ref="mM"/>
+    <units name="mM_per_ms" units_ref="mM_per_ms"/>
+    <units name="nN" units_ref="nN"/>
+    <units name="mPa" units_ref="mPa"/>
+    <units name="pJ" units_ref="pJ"/>
+    <units name="nW" units_ref="nW"/>
+    <units name="per_ms" units_ref="per_ms"/>
+    <units name="per_mm" units_ref="per_mm"/>
+    <units name="per_mV" units_ref="per_mV"/>
+    <units name="per_mV_per_ms" units_ref="per_mV_per_ms"/>
+    <units name="per_mM_per_ms" units_ref="per_mM_per_ms"/>
+    <units name="uA_per_mmsq_per_mM" units_ref="uA_per_mmsq_per_mM"/>
+    <units name="mm_per_ms" units_ref="mm_per_ms"/>
+    <units name="gas_constant" units_ref="gas_constant"/>
+    <units name="faradays_constant" units_ref="faradays_constant"/>
+    <units name="pA_per_pF" units_ref="pA_per_pF"/>
+    <units name="nS_per_pF" units_ref="nS_per_pF"/>
+    <units name="uF_per_cmsq" units_ref="uF_per_cmsq"/>
+    <units name="um" units_ref="um"/>
+    <units name="umsq" units_ref="umsq"/>
+    <units name="umcu" units_ref="umcu"/>
+    <units name="cmcu_per_uF_per_s" units_ref="cmcu_per_uF_per_s"/>
+    <units name="mM_per_s" units_ref="mM_per_s"/>
+    <units name="per_mV_ms" units_ref="per_mV_ms"/>
+    <units name="mS_per_mm2" units_ref="mS_per_mm2"/>
+    <units name="uF_per_mm2" units_ref="uF_per_mm2"/>
+    <units name="uA_per_mm2" units_ref="uA_per_mm2"/>
+  </import>
+</model>

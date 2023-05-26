@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="INS_Na" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="units.cellml">
+        <units name="mM" units_ref="mM"/>
+        <units name="pA" units_ref="pA"/>
+        <units name="mV" units_ref="mV"/>
+        <units name="nS" units_ref="nS"/>
+        <units name="J_per_K_mol" units_ref="J_per_K_mol"/>
+        <units name="C_per_mmol" units_ref="C_per_mmol"/>
+    </import>
+    <import xlink:href="Ionic_currents.cellml">
+        <component component_ref="Ionic_currents" name="Ionic_currents"/>
+    </import>
+    <import xlink:href="E_Nernst.cellml">
+        <component component_ref="E_Na" name="E_Na"/>
+    </import>
+    <component name="INS_Na">
+        <variable name="I_NsNa" private_interface="in" public_interface="out" units="pA"/>
+        <variable name="V" private_interface="out" public_interface="in" units="mV"/>
+        <variable name="g_NsNa" private_interface="out" public_interface="in" units="nS"/>
+        <variable name="T" private_interface="out" public_interface="in" units="kelvin"/>
+        <variable name="Nao" private_interface="out" public_interface="in" units="mM"/>
+        <variable name="Nai" private_interface="out" public_interface="in" units="mM"/>
+        <variable initial_value="1" name="PO" private_interface="out" units="dimensionless"/>
+    </component>
+    <group>
+        <relationship_ref relationship="encapsulation"/>
+        <component_ref component="INS_Na">
+            <component_ref component="Ionic_currents"/>
+            <component_ref component="E_Na"/>
+        </component_ref>
+    </group>
+    <connection>
+        <map_components component_1="INS_Na" component_2="Ionic_currents"/>
+        <map_variables variable_1="I_NsNa" variable_2="I"/>
+        <map_variables variable_1="V" variable_2="V"/>
+        <map_variables variable_1="g_NsNa" variable_2="g_max"/>
+        <map_variables variable_1="PO" variable_2="PO"/>
+    </connection>
+    <connection>
+        <map_components component_1="INS_Na" component_2="E_Na"/>
+        <map_variables variable_1="T" variable_2="T"/>
+        <map_variables variable_1="Nai" variable_2="Nai"/>
+        <map_variables variable_1="Nao" variable_2="Nao"/>
+    </connection>
+    <connection>
+        <map_components component_1="E_Na" component_2="Ionic_currents"/>
+        <map_variables variable_1="E_Na" variable_2="E"/>
+    </connection>
+</model>

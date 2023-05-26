@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" xmlns:cellml="http://www.cellml.org/cellml/1.0#" level="1" version="3">
+  <listOfModels>
+    <model id="model" language="urn:sedml:language:cellml" source="Land_et_al_2012.cellml">
+      <listOfChanges>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;crossbridges&apos;]/cellml:variable[@name=&apos;xb&apos;]/@initial_value" newValue="0.00046"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;crossbridges&apos;]/cellml:variable[@name=&apos;k_xb&apos;]/@initial_value" newValue="0.1"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;crossbridges&apos;]/cellml:variable[@name=&apos;nperm&apos;]/@initial_value" newValue="5"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;crossbridges&apos;]/cellml:variable[@name=&apos;perm50&apos;]/@initial_value" newValue="0.35"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;troponin&apos;]/cellml:variable[@name=&apos;TRPN&apos;]/@initial_value" newValue="0.0752"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;troponin&apos;]/cellml:variable[@name=&apos;Ca_50ref&apos;]/@initial_value" newValue="0.8"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;troponin&apos;]/cellml:variable[@name=&apos;beta_1&apos;]/@initial_value" newValue="-1.5"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;troponin&apos;]/cellml:variable[@name=&apos;k_off&apos;]/@initial_value" newValue="0.1"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;troponin&apos;]/cellml:variable[@name=&apos;n_TRPN&apos;]/@initial_value" newValue="2"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;filament_overlap&apos;]/cellml:variable[@name=&apos;beta_0&apos;]/@initial_value" newValue="1.65"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;isometric_tension&apos;]/cellml:variable[@name=&apos;T_ref&apos;]/@initial_value" newValue="120"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;dynamic_stiffness&apos;]/cellml:variable[@name=&apos;a&apos;]/@initial_value" newValue="0.35"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;dynamic_stiffness&apos;]/cellml:variable[@name=&apos;Q_1&apos;]/@initial_value" newValue="0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;dynamic_stiffness&apos;]/cellml:variable[@name=&apos;Q_2&apos;]/@initial_value" newValue="0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;dynamic_stiffness&apos;]/cellml:variable[@name=&apos;A_1&apos;]/@initial_value" newValue="-29"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;dynamic_stiffness&apos;]/cellml:variable[@name=&apos;A_2&apos;]/@initial_value" newValue="116"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;dynamic_stiffness&apos;]/cellml:variable[@name=&apos;alpha_1&apos;]/@initial_value" newValue="0.1"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;dynamic_stiffness&apos;]/cellml:variable[@name=&apos;alpha_2&apos;]/@initial_value" newValue="0.5"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" initialTime="0" outputStartTime="0" outputEndTime="1" numberOfPoints="10">
+      <algorithm kisaoID="KISAO:0000019"/>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_value_component_environment_variable_time" name="Value of variable &quot;time&quot; of component &quot;environment&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_environment_variable_time </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_environment_variable_time" name="Value of variable &quot;time&quot; of component &quot;environment&quot;" target="/cellml:model/cellml:component[@name=&apos;environment&apos;]/cellml:variable[@name=&apos;time&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_intracellular_ion_concentrations_variable_Ca_i" name="Value of variable &quot;Ca_i&quot; of component &quot;intracellular_ion_concentrations&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_intracellular_ion_concentrations_variable_Ca_i </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_intracellular_ion_concentrations_variable_Ca_i" name="Value of variable &quot;Ca_i&quot; of component &quot;intracellular_ion_concentrations&quot;" target="/cellml:model/cellml:component[@name=&apos;intracellular_ion_concentrations&apos;]/cellml:variable[@name=&apos;Ca_i&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_intracellular_ion_concentrations_variable_mtime" name="Value of variable &quot;mtime&quot; of component &quot;intracellular_ion_concentrations&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_intracellular_ion_concentrations_variable_mtime </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_intracellular_ion_concentrations_variable_mtime" name="Value of variable &quot;mtime&quot; of component &quot;intracellular_ion_concentrations&quot;" target="/cellml:model/cellml:component[@name=&apos;intracellular_ion_concentrations&apos;]/cellml:variable[@name=&apos;mtime&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_crossbridges_variable_xb" name="Value of variable &quot;xb&quot; of component &quot;crossbridges&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_crossbridges_variable_xb </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_crossbridges_variable_xb" name="Value of variable &quot;xb&quot; of component &quot;crossbridges&quot;" target="/cellml:model/cellml:component[@name=&apos;crossbridges&apos;]/cellml:variable[@name=&apos;xb&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_crossbridges_variable_k_xb" name="Value of variable &quot;k_xb&quot; of component &quot;crossbridges&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_crossbridges_variable_k_xb </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_crossbridges_variable_k_xb" name="Value of variable &quot;k_xb&quot; of component &quot;crossbridges&quot;" target="/cellml:model/cellml:component[@name=&apos;crossbridges&apos;]/cellml:variable[@name=&apos;k_xb&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_crossbridges_variable_nperm" name="Value of variable &quot;nperm&quot; of component &quot;crossbridges&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_crossbridges_variable_nperm </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_crossbridges_variable_nperm" name="Value of variable &quot;nperm&quot; of component &quot;crossbridges&quot;" target="/cellml:model/cellml:component[@name=&apos;crossbridges&apos;]/cellml:variable[@name=&apos;nperm&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_crossbridges_variable_perm50" name="Value of variable &quot;perm50&quot; of component &quot;crossbridges&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_crossbridges_variable_perm50 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_crossbridges_variable_perm50" name="Value of variable &quot;perm50&quot; of component &quot;crossbridges&quot;" target="/cellml:model/cellml:component[@name=&apos;crossbridges&apos;]/cellml:variable[@name=&apos;perm50&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_crossbridges_variable_permtot" name="Value of variable &quot;permtot&quot; of component &quot;crossbridges&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_crossbridges_variable_permtot </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_crossbridges_variable_permtot" name="Value of variable &quot;permtot&quot; of component &quot;crossbridges&quot;" target="/cellml:model/cellml:component[@name=&apos;crossbridges&apos;]/cellml:variable[@name=&apos;permtot&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_troponin_variable_TRPN" name="Value of variable &quot;TRPN&quot; of component &quot;troponin&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_troponin_variable_TRPN </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_troponin_variable_TRPN" name="Value of variable &quot;TRPN&quot; of component &quot;troponin&quot;" target="/cellml:model/cellml:component[@name=&apos;troponin&apos;]/cellml:variable[@name=&apos;TRPN&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_troponin_variable_Ca_50ref" name="Value of variable &quot;Ca_50ref&quot; of component &quot;troponin&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_troponin_variable_Ca_50ref </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_troponin_variable_Ca_50ref" name="Value of variable &quot;Ca_50ref&quot; of component &quot;troponin&quot;" target="/cellml:model/cellml:component[@name=&apos;troponin&apos;]/cellml:variable[@name=&apos;Ca_50ref&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_troponin_variable_beta_1" name="Value of variable &quot;beta_1&quot; of component &quot;troponin&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_troponin_variable_beta_1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_troponin_variable_beta_1" name="Value of variable &quot;beta_1&quot; of component &quot;troponin&quot;" target="/cellml:model/cellml:component[@name=&apos;troponin&apos;]/cellml:variable[@name=&apos;beta_1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_troponin_variable_k_off" name="Value of variable &quot;k_off&quot; of component &quot;troponin&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_troponin_variable_k_off </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_troponin_variable_k_off" name="Value of variable &quot;k_off&quot; of component &quot;troponin&quot;" target="/cellml:model/cellml:component[@name=&apos;troponin&apos;]/cellml:variable[@name=&apos;k_off&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_troponin_variable_n_TRPN" name="Value of variable &quot;n_TRPN&quot; of component &quot;troponin&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_troponin_variable_n_TRPN </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_troponin_variable_n_TRPN" name="Value of variable &quot;n_TRPN&quot; of component &quot;troponin&quot;" target="/cellml:model/cellml:component[@name=&apos;troponin&apos;]/cellml:variable[@name=&apos;n_TRPN&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_troponin_variable_Ca_50" name="Value of variable &quot;Ca_50&quot; of component &quot;troponin&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_troponin_variable_Ca_50 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_troponin_variable_Ca_50" name="Value of variable &quot;Ca_50&quot; of component &quot;troponin&quot;" target="/cellml:model/cellml:component[@name=&apos;troponin&apos;]/cellml:variable[@name=&apos;Ca_50&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_Myofilaments_variable_lambda" name="Value of variable &quot;lambda&quot; of component &quot;Myofilaments&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_Myofilaments_variable_lambda </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_Myofilaments_variable_lambda" name="Value of variable &quot;lambda&quot; of component &quot;Myofilaments&quot;" target="/cellml:model/cellml:component[@name=&apos;Myofilaments&apos;]/cellml:variable[@name=&apos;lambda&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_Myofilaments_variable_dlambdadt" name="Value of variable &quot;dlambdadt&quot; of component &quot;Myofilaments&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_Myofilaments_variable_dlambdadt </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_Myofilaments_variable_dlambdadt" name="Value of variable &quot;dlambdadt&quot; of component &quot;Myofilaments&quot;" target="/cellml:model/cellml:component[@name=&apos;Myofilaments&apos;]/cellml:variable[@name=&apos;dlambdadt&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_filament_overlap_variable_overlap" name="Value of variable &quot;overlap&quot; of component &quot;filament_overlap&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_filament_overlap_variable_overlap </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_filament_overlap_variable_overlap" name="Value of variable &quot;overlap&quot; of component &quot;filament_overlap&quot;" target="/cellml:model/cellml:component[@name=&apos;filament_overlap&apos;]/cellml:variable[@name=&apos;overlap&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_filament_overlap_variable_beta_0" name="Value of variable &quot;beta_0&quot; of component &quot;filament_overlap&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_filament_overlap_variable_beta_0 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_filament_overlap_variable_beta_0" name="Value of variable &quot;beta_0&quot; of component &quot;filament_overlap&quot;" target="/cellml:model/cellml:component[@name=&apos;filament_overlap&apos;]/cellml:variable[@name=&apos;beta_0&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_filament_overlap_variable_lambda_m" name="Value of variable &quot;lambda_m&quot; of component &quot;filament_overlap&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_filament_overlap_variable_lambda_m </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_filament_overlap_variable_lambda_m" name="Value of variable &quot;lambda_m&quot; of component &quot;filament_overlap&quot;" target="/cellml:model/cellml:component[@name=&apos;filament_overlap&apos;]/cellml:variable[@name=&apos;lambda_m&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_filament_overlap_variable_lambda_s" name="Value of variable &quot;lambda_s&quot; of component &quot;filament_overlap&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_filament_overlap_variable_lambda_s </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_filament_overlap_variable_lambda_s" name="Value of variable &quot;lambda_s&quot; of component &quot;filament_overlap&quot;" target="/cellml:model/cellml:component[@name=&apos;filament_overlap&apos;]/cellml:variable[@name=&apos;lambda_s&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_isometric_tension_variable_T_ref" name="Value of variable &quot;T_ref&quot; of component &quot;isometric_tension&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_isometric_tension_variable_T_ref </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_isometric_tension_variable_T_ref" name="Value of variable &quot;T_ref&quot; of component &quot;isometric_tension&quot;" target="/cellml:model/cellml:component[@name=&apos;isometric_tension&apos;]/cellml:variable[@name=&apos;T_ref&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_isometric_tension_variable_T_0" name="Value of variable &quot;T_0&quot; of component &quot;isometric_tension&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_isometric_tension_variable_T_0 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_isometric_tension_variable_T_0" name="Value of variable &quot;T_0&quot; of component &quot;isometric_tension&quot;" target="/cellml:model/cellml:component[@name=&apos;isometric_tension&apos;]/cellml:variable[@name=&apos;T_0&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_dynamic_stiffness_variable_Q" name="Value of variable &quot;Q&quot; of component &quot;dynamic_stiffness&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_dynamic_stiffness_variable_Q </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_dynamic_stiffness_variable_Q" name="Value of variable &quot;Q&quot; of component &quot;dynamic_stiffness&quot;" target="/cellml:model/cellml:component[@name=&apos;dynamic_stiffness&apos;]/cellml:variable[@name=&apos;Q&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_dynamic_stiffness_variable_a" name="Value of variable &quot;a&quot; of component &quot;dynamic_stiffness&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_dynamic_stiffness_variable_a </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_dynamic_stiffness_variable_a" name="Value of variable &quot;a&quot; of component &quot;dynamic_stiffness&quot;" target="/cellml:model/cellml:component[@name=&apos;dynamic_stiffness&apos;]/cellml:variable[@name=&apos;a&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_dynamic_stiffness_variable_Q_1" name="Value of variable &quot;Q_1&quot; of component &quot;dynamic_stiffness&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_dynamic_stiffness_variable_Q_1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_dynamic_stiffness_variable_Q_1" name="Value of variable &quot;Q_1&quot; of component &quot;dynamic_stiffness&quot;" target="/cellml:model/cellml:component[@name=&apos;dynamic_stiffness&apos;]/cellml:variable[@name=&apos;Q_1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_dynamic_stiffness_variable_Q_2" name="Value of variable &quot;Q_2&quot; of component &quot;dynamic_stiffness&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_dynamic_stiffness_variable_Q_2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_dynamic_stiffness_variable_Q_2" name="Value of variable &quot;Q_2&quot; of component &quot;dynamic_stiffness&quot;" target="/cellml:model/cellml:component[@name=&apos;dynamic_stiffness&apos;]/cellml:variable[@name=&apos;Q_2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_dynamic_stiffness_variable_A_1" name="Value of variable &quot;A_1&quot; of component &quot;dynamic_stiffness&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_dynamic_stiffness_variable_A_1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_dynamic_stiffness_variable_A_1" name="Value of variable &quot;A_1&quot; of component &quot;dynamic_stiffness&quot;" target="/cellml:model/cellml:component[@name=&apos;dynamic_stiffness&apos;]/cellml:variable[@name=&apos;A_1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_dynamic_stiffness_variable_A_2" name="Value of variable &quot;A_2&quot; of component &quot;dynamic_stiffness&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_dynamic_stiffness_variable_A_2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_dynamic_stiffness_variable_A_2" name="Value of variable &quot;A_2&quot; of component &quot;dynamic_stiffness&quot;" target="/cellml:model/cellml:component[@name=&apos;dynamic_stiffness&apos;]/cellml:variable[@name=&apos;A_2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_dynamic_stiffness_variable_alpha_1" name="Value of variable &quot;alpha_1&quot; of component &quot;dynamic_stiffness&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_dynamic_stiffness_variable_alpha_1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_dynamic_stiffness_variable_alpha_1" name="Value of variable &quot;alpha_1&quot; of component &quot;dynamic_stiffness&quot;" target="/cellml:model/cellml:component[@name=&apos;dynamic_stiffness&apos;]/cellml:variable[@name=&apos;alpha_1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_dynamic_stiffness_variable_alpha_2" name="Value of variable &quot;alpha_2&quot; of component &quot;dynamic_stiffness&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_dynamic_stiffness_variable_alpha_2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_dynamic_stiffness_variable_alpha_2" name="Value of variable &quot;alpha_2&quot; of component &quot;dynamic_stiffness&quot;" target="/cellml:model/cellml:component[@name=&apos;dynamic_stiffness&apos;]/cellml:variable[@name=&apos;alpha_2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_dynamic_stiffness_variable_Tension" name="Value of variable &quot;Tension&quot; of component &quot;dynamic_stiffness&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_dynamic_stiffness_variable_Tension </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_dynamic_stiffness_variable_Tension" name="Value of variable &quot;Tension&quot; of component &quot;dynamic_stiffness&quot;" target="/cellml:model/cellml:component[@name=&apos;dynamic_stiffness&apos;]/cellml:variable[@name=&apos;Tension&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report">
+      <listOfDataSets>
+        <dataSet id="data_set_value_component_environment_variable_time" name="Value of variable &quot;time&quot; of component &quot;environment&quot;" label="value_component_environment_variable_time" dataReference="data_generator_value_component_environment_variable_time"/>
+        <dataSet id="data_set_value_component_intracellular_ion_concentrations_variable_Ca_i" name="Value of variable &quot;Ca_i&quot; of component &quot;intracellular_ion_concentrations&quot;" label="value_component_intracellular_ion_concentrations_variable_Ca_i" dataReference="data_generator_value_component_intracellular_ion_concentrations_variable_Ca_i"/>
+        <dataSet id="data_set_value_component_intracellular_ion_concentrations_variable_mtime" name="Value of variable &quot;mtime&quot; of component &quot;intracellular_ion_concentrations&quot;" label="value_component_intracellular_ion_concentrations_variable_mtime" dataReference="data_generator_value_component_intracellular_ion_concentrations_variable_mtime"/>
+        <dataSet id="data_set_value_component_crossbridges_variable_xb" name="Value of variable &quot;xb&quot; of component &quot;crossbridges&quot;" label="value_component_crossbridges_variable_xb" dataReference="data_generator_value_component_crossbridges_variable_xb"/>
+        <dataSet id="data_set_value_component_crossbridges_variable_k_xb" name="Value of variable &quot;k_xb&quot; of component &quot;crossbridges&quot;" label="value_component_crossbridges_variable_k_xb" dataReference="data_generator_value_component_crossbridges_variable_k_xb"/>
+        <dataSet id="data_set_value_component_crossbridges_variable_nperm" name="Value of variable &quot;nperm&quot; of component &quot;crossbridges&quot;" label="value_component_crossbridges_variable_nperm" dataReference="data_generator_value_component_crossbridges_variable_nperm"/>
+        <dataSet id="data_set_value_component_crossbridges_variable_perm50" name="Value of variable &quot;perm50&quot; of component &quot;crossbridges&quot;" label="value_component_crossbridges_variable_perm50" dataReference="data_generator_value_component_crossbridges_variable_perm50"/>
+        <dataSet id="data_set_value_component_crossbridges_variable_permtot" name="Value of variable &quot;permtot&quot; of component &quot;crossbridges&quot;" label="value_component_crossbridges_variable_permtot" dataReference="data_generator_value_component_crossbridges_variable_permtot"/>
+        <dataSet id="data_set_value_component_troponin_variable_TRPN" name="Value of variable &quot;TRPN&quot; of component &quot;troponin&quot;" label="value_component_troponin_variable_TRPN" dataReference="data_generator_value_component_troponin_variable_TRPN"/>
+        <dataSet id="data_set_value_component_troponin_variable_Ca_50ref" name="Value of variable &quot;Ca_50ref&quot; of component &quot;troponin&quot;" label="value_component_troponin_variable_Ca_50ref" dataReference="data_generator_value_component_troponin_variable_Ca_50ref"/>
+        <dataSet id="data_set_value_component_troponin_variable_beta_1" name="Value of variable &quot;beta_1&quot; of component &quot;troponin&quot;" label="value_component_troponin_variable_beta_1" dataReference="data_generator_value_component_troponin_variable_beta_1"/>
+        <dataSet id="data_set_value_component_troponin_variable_k_off" name="Value of variable &quot;k_off&quot; of component &quot;troponin&quot;" label="value_component_troponin_variable_k_off" dataReference="data_generator_value_component_troponin_variable_k_off"/>
+        <dataSet id="data_set_value_component_troponin_variable_n_TRPN" name="Value of variable &quot;n_TRPN&quot; of component &quot;troponin&quot;" label="value_component_troponin_variable_n_TRPN" dataReference="data_generator_value_component_troponin_variable_n_TRPN"/>
+        <dataSet id="data_set_value_component_troponin_variable_Ca_50" name="Value of variable &quot;Ca_50&quot; of component &quot;troponin&quot;" label="value_component_troponin_variable_Ca_50" dataReference="data_generator_value_component_troponin_variable_Ca_50"/>
+        <dataSet id="data_set_value_component_Myofilaments_variable_lambda" name="Value of variable &quot;lambda&quot; of component &quot;Myofilaments&quot;" label="value_component_Myofilaments_variable_lambda" dataReference="data_generator_value_component_Myofilaments_variable_lambda"/>
+        <dataSet id="data_set_value_component_Myofilaments_variable_dlambdadt" name="Value of variable &quot;dlambdadt&quot; of component &quot;Myofilaments&quot;" label="value_component_Myofilaments_variable_dlambdadt" dataReference="data_generator_value_component_Myofilaments_variable_dlambdadt"/>
+        <dataSet id="data_set_value_component_filament_overlap_variable_overlap" name="Value of variable &quot;overlap&quot; of component &quot;filament_overlap&quot;" label="value_component_filament_overlap_variable_overlap" dataReference="data_generator_value_component_filament_overlap_variable_overlap"/>
+        <dataSet id="data_set_value_component_filament_overlap_variable_beta_0" name="Value of variable &quot;beta_0&quot; of component &quot;filament_overlap&quot;" label="value_component_filament_overlap_variable_beta_0" dataReference="data_generator_value_component_filament_overlap_variable_beta_0"/>
+        <dataSet id="data_set_value_component_filament_overlap_variable_lambda_m" name="Value of variable &quot;lambda_m&quot; of component &quot;filament_overlap&quot;" label="value_component_filament_overlap_variable_lambda_m" dataReference="data_generator_value_component_filament_overlap_variable_lambda_m"/>
+        <dataSet id="data_set_value_component_filament_overlap_variable_lambda_s" name="Value of variable &quot;lambda_s&quot; of component &quot;filament_overlap&quot;" label="value_component_filament_overlap_variable_lambda_s" dataReference="data_generator_value_component_filament_overlap_variable_lambda_s"/>
+        <dataSet id="data_set_value_component_isometric_tension_variable_T_ref" name="Value of variable &quot;T_ref&quot; of component &quot;isometric_tension&quot;" label="value_component_isometric_tension_variable_T_ref" dataReference="data_generator_value_component_isometric_tension_variable_T_ref"/>
+        <dataSet id="data_set_value_component_isometric_tension_variable_T_0" name="Value of variable &quot;T_0&quot; of component &quot;isometric_tension&quot;" label="value_component_isometric_tension_variable_T_0" dataReference="data_generator_value_component_isometric_tension_variable_T_0"/>
+        <dataSet id="data_set_value_component_dynamic_stiffness_variable_Q" name="Value of variable &quot;Q&quot; of component &quot;dynamic_stiffness&quot;" label="value_component_dynamic_stiffness_variable_Q" dataReference="data_generator_value_component_dynamic_stiffness_variable_Q"/>
+        <dataSet id="data_set_value_component_dynamic_stiffness_variable_a" name="Value of variable &quot;a&quot; of component &quot;dynamic_stiffness&quot;" label="value_component_dynamic_stiffness_variable_a" dataReference="data_generator_value_component_dynamic_stiffness_variable_a"/>
+        <dataSet id="data_set_value_component_dynamic_stiffness_variable_Q_1" name="Value of variable &quot;Q_1&quot; of component &quot;dynamic_stiffness&quot;" label="value_component_dynamic_stiffness_variable_Q_1" dataReference="data_generator_value_component_dynamic_stiffness_variable_Q_1"/>
+        <dataSet id="data_set_value_component_dynamic_stiffness_variable_Q_2" name="Value of variable &quot;Q_2&quot; of component &quot;dynamic_stiffness&quot;" label="value_component_dynamic_stiffness_variable_Q_2" dataReference="data_generator_value_component_dynamic_stiffness_variable_Q_2"/>
+        <dataSet id="data_set_value_component_dynamic_stiffness_variable_A_1" name="Value of variable &quot;A_1&quot; of component &quot;dynamic_stiffness&quot;" label="value_component_dynamic_stiffness_variable_A_1" dataReference="data_generator_value_component_dynamic_stiffness_variable_A_1"/>
+        <dataSet id="data_set_value_component_dynamic_stiffness_variable_A_2" name="Value of variable &quot;A_2&quot; of component &quot;dynamic_stiffness&quot;" label="value_component_dynamic_stiffness_variable_A_2" dataReference="data_generator_value_component_dynamic_stiffness_variable_A_2"/>
+        <dataSet id="data_set_value_component_dynamic_stiffness_variable_alpha_1" name="Value of variable &quot;alpha_1&quot; of component &quot;dynamic_stiffness&quot;" label="value_component_dynamic_stiffness_variable_alpha_1" dataReference="data_generator_value_component_dynamic_stiffness_variable_alpha_1"/>
+        <dataSet id="data_set_value_component_dynamic_stiffness_variable_alpha_2" name="Value of variable &quot;alpha_2&quot; of component &quot;dynamic_stiffness&quot;" label="value_component_dynamic_stiffness_variable_alpha_2" dataReference="data_generator_value_component_dynamic_stiffness_variable_alpha_2"/>
+        <dataSet id="data_set_value_component_dynamic_stiffness_variable_Tension" name="Value of variable &quot;Tension&quot; of component &quot;dynamic_stiffness&quot;" label="value_component_dynamic_stiffness_variable_Tension" dataReference="data_generator_value_component_dynamic_stiffness_variable_Tension"/>
+      </listOfDataSets>
+    </report>
+  </listOfOutputs>
+</sedML>

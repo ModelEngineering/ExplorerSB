@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="Vramp_experiment" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="../cellLib/Components/units.cellml">
+        <units name="mV" units_ref="mV"/>
+        <units name="mM" units_ref="mM"/>
+        <units name="mM_per_s" units_ref="mM_per_s"/>
+        <units name="mV_per_s" units_ref="mV_per_s"/>
+        <units name="per_s" units_ref="per_s"/>
+    </import>
+    <import xlink:href="../Components/Unit_uSMC.cellml">
+        <component component_ref="Unit_uSMC" name="Unit_uSMC"/>
+    </import>
+    <import xlink:href="../cellLib/Protocols/Voltage_ramp_protocol.cellml">
+        <component component_ref="vramp_protocol_s" name="vramp_protocol_s"/>
+    </import>
+    <import xlink:href="../cellLib/Components/time.cellml">
+        <component component_ref="time_s" name="time_s"/>
+    </import>
+    <import xlink:href="../Components/default_values.cellml">
+        <component component_ref="model_para" name="model_para"/>
+        <component component_ref="initials" name="initials"/>
+        <component component_ref="constants" name="constants"/>
+    </import>
+    <!-- Connect the time source variable to the model and stimulus protocol -->
+    <connection>
+        <map_components component_1="time_s" component_2="vramp_protocol_s"/>
+        <map_variables variable_1="time" variable_2="time"/>
+    </connection>
+    <connection>
+        <map_components component_1="time_s" component_2="Unit_uSMC"/>
+        <map_variables variable_1="time" variable_2="time"/>
+    </connection>
+    <!-- Connect the parameters to the protocol definition -->
+    <component name="Vstim_para">
+        <variable initial_value="-100" name="V_init" public_interface="out" units="mV"/>
+        <variable initial_value="1" name="V_rate" public_interface="out" units="mV_per_s"/>
+    </component>
+    <connection>
+        <map_components component_1="Vstim_para" component_2="vramp_protocol_s"/>
+        <map_variables variable_1="V_init" variable_2="V_init"/>
+        <map_variables variable_1="V_rate" variable_2="V_rate"/>
+    </connection>
+    <component name="control_para">
+        <variable initial_value="16.55" name="Nai" public_interface="out" units="mM"/>
+        <variable initial_value="0.0001" name="Cai" public_interface="out" units="mM"/>
+        <variable initial_value="1" name="inhPump" public_interface="out" units="dimensionless"/>
+        <variable initial_value="11" name="K_Cahalf" public_interface="out" units="mV"/>
+    </component>
+    <connection>
+        <map_components component_1="control_para" component_2="Unit_uSMC"/>
+        <map_variables variable_1="Nai" variable_2="Nai"/>
+        <map_variables variable_1="Cai" variable_2="Cai"/>
+        <map_variables variable_1="inhPump" variable_2="inhPump"/>
+        <map_variables variable_1="K_Cahalf" variable_2="K_Cahalf"/>
+    </connection>
+    <!-- and connect the actual stimulus current to the model -->
+    <connection>
+        <map_components component_1="vramp_protocol_s" component_2="Unit_uSMC"/>
+        <map_variables variable_1="V" variable_2="V"/>
+    </connection>
+    <!-- SED-ML (and CSim simulation description above) is only able to address variables at the top level of the model hierarchy, so we need to define the variables we want SED-ML to be able to address here. -->
+    <component name="outputs">
+        <variable name="time" public_interface="in" units="second"/>
+        <variable name="V" public_interface="in" units="mV"/>
+        <variable name="J_VOCC" public_interface="in" units="mM_per_s"/>
+        <variable name="J_CaPump" public_interface="in" units="mM_per_s"/>
+        <variable name="J_NaCa" public_interface="in" units="mM_per_s"/>
+        <variable name="rho_vCa" public_interface="in" units="dimensionless"/>
+        <variable name="K_1" public_interface="in" units="per_s"/>
+        <variable name="stress" public_interface="in" units="dimensionless"/>
+        <variable name="phosphorylation" public_interface="in" units="dimensionless"/>
+    </component>
+    <!-- and connect the output variable definitions to their actual source in the model -->
+    <connection>
+        <map_components component_1="Unit_uSMC" component_2="outputs"/>
+        <map_variables variable_1="J_VOCC" variable_2="J_VOCC"/>
+        <map_variables variable_1="J_CaPump" variable_2="J_CaPump"/>
+        <map_variables variable_1="J_NaCa" variable_2="J_NaCa"/>
+        <map_variables variable_1="rho_vCa" variable_2="rho_vCa"/>
+        <map_variables variable_1="K_1" variable_2="K_1"/>
+        <map_variables variable_1="stress" variable_2="stress"/>
+        <map_variables variable_1="phosphorylation" variable_2="phosphorylation"/>
+    </connection>
+    <connection>
+        <map_components component_1="outputs" component_2="time_s"/>
+        <map_variables variable_1="time" variable_2="time"/>
+    </connection>
+    <!-- and connect the time output to the source time variable -->
+    <connection>
+        <map_components component_1="vramp_protocol_s" component_2="outputs"/>
+        <map_variables variable_1="V" variable_2="V"/>
+    </connection>
+    <!-- We connect the default parameters through to the model-->
+    <connection>
+        <map_components component_1="model_para" component_2="Unit_uSMC"/>
+        <map_variables variable_1="T" variable_2="T"/>
+        <map_variables variable_1="Nao" variable_2="Nao"/>
+        <map_variables variable_1="Cao" variable_2="Cao"/>
+        <map_variables variable_1="V_cell" variable_2="V_cell"/>
+        <map_variables variable_1="V_Cahalf" variable_2="V_Cahalf"/>
+        <map_variables variable_1="g_mCa" variable_2="g_mCa"/>
+        <map_variables variable_1="V_pmax" variable_2="V_pmax"/>
+        <map_variables variable_1="n" variable_2="n"/>
+        <map_variables variable_1="K_ph" variable_2="K_ph"/>
+        <map_variables variable_1="K_NaCa" variable_2="K_NaCa"/>
+        <map_variables variable_1="G_NaCa" variable_2="G_NaCa"/>
+        <map_variables variable_1="n_M" variable_2="n_M"/>
+        <map_variables variable_1="Ca_halfMLCK" variable_2="Ca_halfMLCK"/>
+        <map_variables variable_1="K_7" variable_2="K_7"/>
+        <map_variables variable_1="K_2" variable_2="K_2"/>
+        <map_variables variable_1="K_3" variable_2="K_3"/>
+        <map_variables variable_1="K_4" variable_2="K_4"/>
+        <map_variables variable_1="K_5" variable_2="K_5"/>
+    </connection>
+    <connection>
+        <map_components component_1="constants" component_2="Unit_uSMC"/>
+        <map_variables variable_1="R" variable_2="R"/>
+        <map_variables variable_1="F" variable_2="F"/>
+    </connection>
+    <!-- We connect the initial conditions through to the model-->
+    <connection>
+        <map_components component_1="initials" component_2="Unit_uSMC"/>
+        <map_variables variable_1="M_init" variable_2="M_init"/>
+        <map_variables variable_1="Mp_init" variable_2="Mp_init"/>
+        <map_variables variable_1="AM_init" variable_2="AM_init"/>
+        <map_variables variable_1="AMp_init" variable_2="AMp_init"/>
+    </connection>
+</model>

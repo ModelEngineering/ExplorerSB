@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfModels>
+    <model id="model" name="Model" language="urn:sedml:language:xpp" source="3p.ode">
+      <listOfChanges>
+        <changeAttribute target="Ek" newValue="-85.0"/>
+        <changeAttribute target="El" newValue="-65.0"/>
+        <changeAttribute target="Ena" newValue="50.0"/>
+        <changeAttribute target="Esyn" newValue="-80.0"/>
+        <changeAttribute target="EsynE" newValue="0.0"/>
+        <changeAttribute target="H1" newValue="0.195"/>
+        <changeAttribute target="H2" newValue="0.199"/>
+        <changeAttribute target="H3" newValue="0.195"/>
+        <changeAttribute target="S1" newValue="0.925925"/>
+        <changeAttribute target="S1_P" newValue="0.925925"/>
+        <changeAttribute target="S2" newValue="0.0"/>
+        <changeAttribute target="S3" newValue="0.0"/>
+        <changeAttribute target="V1" newValue="-14.5"/>
+        <changeAttribute target="V2" newValue="-61.6"/>
+        <changeAttribute target="V3" newValue="-75.0"/>
+        <changeAttribute target="a_ie" newValue="0.11"/>
+        <changeAttribute target="a_pe" newValue="1.0"/>
+        <changeAttribute target="alpha" newValue="1.0"/>
+        <changeAttribute target="b_ei" newValue="0.0417"/>
+        <changeAttribute target="b_ep" newValue="0.0083"/>
+        <changeAttribute target="b_ie" newValue="0.0417"/>
+        <changeAttribute target="b_ip" newValue="0.0333"/>
+        <changeAttribute target="beta" newValue="0.08"/>
+        <changeAttribute target="beta_p" newValue="0.005"/>
+        <changeAttribute target="c" newValue="21.0"/>
+        <changeAttribute target="conc" newValue="0.0"/>
+        <changeAttribute target="delta_e" newValue="1.0"/>
+        <changeAttribute target="delta_i" newValue="0.5"/>
+        <changeAttribute target="delta_l" newValue="1.0"/>
+        <changeAttribute target="delta_p" newValue="1.0"/>
+        <changeAttribute target="dscale" newValue="0.0"/>
+        <changeAttribute target="epsilon_e" newValue="1000.0"/>
+        <changeAttribute target="epsilon_i" newValue="400.0"/>
+        <changeAttribute target="epsilon_p" newValue="1750.0"/>
+        <changeAttribute target="gks_e" newValue="0.3"/>
+        <changeAttribute target="gks_i" newValue="1.0"/>
+        <changeAttribute target="gks_p" newValue="0.15"/>
+        <changeAttribute target="gl" newValue="2.8"/>
+        <changeAttribute target="gl_e" newValue="2.0"/>
+        <changeAttribute target="gnap" newValue="10.0"/>
+        <changeAttribute target="gnap_e" newValue="5.0"/>
+        <changeAttribute target="gsyne" newValue="10.0"/>
+        <changeAttribute target="gsyni" newValue="60.0"/>
+        <changeAttribute target="kalth_e" newValue="1.0"/>
+        <changeAttribute target="kalth_i" newValue="0.35"/>
+        <changeAttribute target="kalth_p" newValue="0.5"/>
+        <changeAttribute target="ks" newValue="0.0"/>
+        <changeAttribute target="pd_e" newValue="0.11"/>
+        <changeAttribute target="pd_i" newValue="0.55"/>
+        <changeAttribute target="pd_p" newValue="0.0"/>
+        <changeAttribute target="pdscale" newValue="1.0"/>
+        <changeAttribute target="rtnd_e" newValue="0.09"/>
+        <changeAttribute target="rtnd_i" newValue="0.45"/>
+        <changeAttribute target="rtnd_p" newValue="0.0"/>
+        <changeAttribute target="rtndscale" newValue="1.0"/>
+        <changeAttribute target="sigmah" newValue="6.0"/>
+        <changeAttribute target="sigmam" newValue="-6.0"/>
+        <changeAttribute target="sigmasyn" newValue="-3.0"/>
+        <changeAttribute target="sigsyn_pe" newValue="-8.0"/>
+        <changeAttribute target="thetah_i/e" newValue="-50.0"/>
+        <changeAttribute target="thetah_p" newValue="-40.0"/>
+        <changeAttribute target="thetam" newValue="-37.0"/>
+        <changeAttribute target="thetasyn" newValue="-25.0"/>
+        <changeAttribute target="thetatau_e" newValue="-25.0"/>
+        <changeAttribute target="thetatau_i" newValue="-35.0"/>
+        <changeAttribute target="thetatau_p" newValue="-30.0"/>
+        <changeAttribute target="thetsyn_pe" newValue="-10.0"/>
+        <changeAttribute target="thr" newValue="10.0"/>
+        <changeAttribute target="vago" newValue="1.0"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" name="Simulation" initialTime="0" outputStartTime="0" outputEndTime="10000" numberOfPoints="1000">
+      <algorithm kisaoID="KISAO:0000672"/>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" name="Task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_T" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T" name="T" symbol="urn:sedml:symbol:time" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_H1" name="H1">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_H1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_H1" name="H1" target="H1" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_H2" name="H2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_H2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_H2" name="H2" target="H2" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_H3" name="H3">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_H3 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_H3" name="H3" target="H3" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_S1" name="S1">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_S1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_S1" name="S1" target="S1" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_S1_P" name="S1_P">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_S1_P </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_S1_P" name="S1_P" target="S1_P" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_S2" name="S2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_S2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_S2" name="S2" target="S2" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_S3" name="S3">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_S3 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_S3" name="S3" target="S3" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_V1" name="V1">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_V1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_V1" name="V1" target="V1" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_V2" name="V2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_V2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_V2" name="V2" target="V2" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_V3" name="V3">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_V3 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_V3" name="V3" target="V3" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report" name="Report">
+      <listOfDataSets>
+        <dataSet id="data_set_T" name="T" label="T" dataReference="data_generator_T"/>
+        <dataSet id="data_set_H1" name="H1" label="H1" dataReference="data_generator_H1"/>
+        <dataSet id="data_set_H2" name="H2" label="H2" dataReference="data_generator_H2"/>
+        <dataSet id="data_set_H3" name="H3" label="H3" dataReference="data_generator_H3"/>
+        <dataSet id="data_set_S1" name="S1" label="S1" dataReference="data_generator_S1"/>
+        <dataSet id="data_set_S1_P" name="S1_P" label="S1_P" dataReference="data_generator_S1_P"/>
+        <dataSet id="data_set_S2" name="S2" label="S2" dataReference="data_generator_S2"/>
+        <dataSet id="data_set_S3" name="S3" label="S3" dataReference="data_generator_S3"/>
+        <dataSet id="data_set_V1" name="V1" label="V1" dataReference="data_generator_V1"/>
+        <dataSet id="data_set_V2" name="V2" label="V2" dataReference="data_generator_V2"/>
+        <dataSet id="data_set_V3" name="V3" label="V3" dataReference="data_generator_V3"/>
+      </listOfDataSets>
+    </report>
+    <plot2D id="plot">
+      <listOfCurves>
+        <curve id="curve_1" name="V1 vs T" logX="false" xDataReference="data_generator_T" logY="false" yDataReference="data_generator_V1"/>
+      </listOfCurves>
+    </plot2D>
+  </listOfOutputs>
+</sedML>
