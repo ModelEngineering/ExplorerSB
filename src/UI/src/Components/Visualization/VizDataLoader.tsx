@@ -24,7 +24,7 @@ const VizDataLoader = ({
     const getDataset = async () => {
       const response = await fetch(`/${runid}/report.csv`)
         .then(response => response.text())
-        .then(v => Papa.parse(v, { delimiter: "," , newline: "\n", header: true, skipEmptyLines: true}))
+        .then(v => Papa.parse(v, { delimiter: "," , newline: "\n", header: true, skipEmptyLines: true, dynamicTyping: true}))
         .then(v => v.data)
         .catch(err => console.log(err))
         return response

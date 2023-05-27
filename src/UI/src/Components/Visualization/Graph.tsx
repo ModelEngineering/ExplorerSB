@@ -33,14 +33,14 @@ const Graph = forwardRef(function Graph(
   useEffect(() => {
     const updateVariables = setTimeout(() => {
       setLocalVariables(variables.map((variable: any) => variable.name));
-    }, 500);
+    }, 1000);
 
     return () => clearTimeout(updateVariables);
   }, [variables]);
   return (
     <div id="graph-container" className={displayMode === DisplayMode.Graph ? "" : "hidden"}>
       {xVariable === undefined ? <p>Graph not Available</p> :
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer minWidth="0" width="100%" height="100%">
         <LineChart
           width={500}
           height={300}
@@ -62,7 +62,7 @@ const Graph = forwardRef(function Graph(
             interval={"preserveStart"}
             domain={['auto', 'auto']}
           />
-          <YAxis label={{ value: "Value", angle: "-90", position: "left" }} />
+          <YAxis label={{ value: "Value", angle: "-90", position: "left" }} domain={['auto', 'auto']}/>
           <Tooltip
             isAnimationActive={false}
             position={{ y: 0 }}
