@@ -1,16 +1,15 @@
+import { Link } from "react-router-dom";
 import Searchbar from "./Searchbar";
 
-const Header = ({
-  setSelected,
-}: {
-  setSelected(value: Context | undefined): void;
-}) => {
+const Header = () => {
   return (
     <div id="header" className="flex-row">
-      <h1 id="logo" onClick={() => setSelected(undefined)}>
-        Reproducibility Portal
-      </h1>
-      <Searchbar setSelected={setSelected} />
+      <Link to="/" style={{ textDecoration: "inherit", color: "inherit" }}>
+        <h1 id="logo">
+          Reproducibility Portal
+        </h1>
+      </Link>
+      <Searchbar />
     </div>
   );
 };

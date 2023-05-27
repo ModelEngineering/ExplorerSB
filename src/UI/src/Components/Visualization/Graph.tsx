@@ -33,7 +33,7 @@ const Graph = forwardRef(function Graph(
   useEffect(() => {
     const updateVariables = setTimeout(() => {
       setLocalVariables(variables.map((variable: any) => variable.name));
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(updateVariables);
   }, [variables]);

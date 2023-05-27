@@ -1,30 +1,23 @@
 import "./App.css";
 import { useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import Title from "./Components/Title"
-import Footer from "./Components/Footer";
-import Visualization from "./Components/Visualization";
-import Model from "./Components/Model";
-import Header from "./Components/Header";
-import Summary from "./Components/Summary";
 import Landing from "./Components/Landing";
+import Results from "./Components/Results";
 
 function App() {
   const [selected, setSelected] = useState<Context>();
-  return selected != null ? (
-    <div id="App">
-      <Header setSelected={setSelected} / >
-      <Title title={selected.title} proj_id={selected.project_id}/>
-      <div id="summary-model-container" className="flex-row container">
-        <Summary context={selected}/>
-        <Model />
-      </div>
-      <Visualization runid={selected.runid}/>
-      <div id="footer" className="flex-row">
-        <Footer />
-      </div>
-    </div>) : <Landing setSelected={setSelected}/>
-  ;
+  return(
+  <div id="App">
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Landing />} />
+      <Route path="/model/:run_id" element={<Results />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+    </BrowserRouter>
+  </div>
+  );
 }
 
 export default App;
