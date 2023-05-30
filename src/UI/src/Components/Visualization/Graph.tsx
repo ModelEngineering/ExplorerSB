@@ -80,6 +80,7 @@ const Graph = forwardRef(function Graph(
                 key={variable}
                 type="monotone"
                 dataKey={variable}
+                strokeWidth={3}
                 stroke={ChromaticScale[index]}
                 activeDot={{ r: 1 }}
                 dot={false}
