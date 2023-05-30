@@ -20,8 +20,8 @@ const Visualization = ({ runid }: { runid: string }) => {
   );
   const [data, setData] = useState<Object[]>([]);
   const [xVariable, setXVariable] = useState<string>();
-  const [allVariables, setAllVariables] = useState<Object[]>([]);
-  const [displayedVariables, setDisplayedVariables] = useState<Object[]>([]);
+  const [allVariables, setAllVariables] = useState<{name: string}[]>([]);
+  const [displayedVariables, setDisplayedVariables] = useState<{name: string}[]>([]);
 
   const [getPng, { ref }] = useCurrentPng();
 
@@ -35,7 +35,7 @@ const Visualization = ({ runid }: { runid: string }) => {
     }
   }, [xVariable]);
 
-  const onChange = (selectedList: Object[]): void => {
+  const onChange = (selectedList: {name: string}[]): void => {
     setDisplayedVariables(selectedList);
   };
 
@@ -71,7 +71,9 @@ const Visualization = ({ runid }: { runid: string }) => {
             variables={displayedVariables}
             displayMode={displayMode}
           />
-          <Table data={data} variables={displayedVariables} 
+          <Table data={data} 
+          xVariable={xVariable}
+          variables={displayedVariables} 
           displayMode={displayMode}/>
           <DataNotFound displayMode={displayMode}/>
           <VizSidebar

@@ -26,7 +26,7 @@ const ChromaticScale = [
 ];
 
 const Graph = forwardRef(function Graph(
-  { data, xVariable, variables, displayMode}: { data: Object[]; xVariable: string | undefined; variables: Object[]; displayMode: DisplayMode},
+  { data, xVariable, variables, displayMode}: { data: Object[]; xVariable: string | undefined; variables: { name: string }[]; displayMode: DisplayMode},
   ref: any
   ) {
   const [localVariables, setLocalVariables] = useState<string[]>([]);
@@ -59,7 +59,7 @@ const Graph = forwardRef(function Graph(
             height={70}
             dataKey={xVariable}
             label={{ offset: 20, value: "Time", position: "insideBottom" }}
-            interval={"preserveStart"}
+            interval={"equidistantPreserveStart"}
             domain={['auto', 'auto']}
           />
           <YAxis label={{ value: "Value", angle: "-90", position: "left" }} domain={['auto', 'auto']}/>

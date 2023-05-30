@@ -36,7 +36,7 @@ const Results = () => {
       <Title title={selected.title} proj_id={selected.project_id}/>
       <div id="summary-model-container" className="flex-row container">
         <Summary context={selected}/>
-        <Model />
+        <Model runid={selected.runid}/>
       </div>
       <Visualization runid={selected.runid}/>
       <div id="footer" className="flex-row">

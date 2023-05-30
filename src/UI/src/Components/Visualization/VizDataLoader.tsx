@@ -17,8 +17,8 @@ const VizDataLoader = ({
   runid: string;
   setData: Dispatch<SetStateAction<Object[]>>;
   setXVariable: Dispatch<SetStateAction<string | undefined>>;
-  setAllVariables: Dispatch<SetStateAction<Object[]>>;
-  setDisplayedVariables: Dispatch<SetStateAction<Object[]>>;
+  setAllVariables: Dispatch<SetStateAction<{name: string}[]>>;
+  setDisplayedVariables: Dispatch<SetStateAction<{name: string}[]>>;
 }) => {
   useEffect(() => {
     const getDataset = async () => {
