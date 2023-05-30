@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfModels>
+    <model id="model" name="Model" language="urn:sedml:language:xpp" source="basenetpico3.ode"/>
+    <model id="model_without_pico_block_of_inhibition" name="Without PiCo and without block of inhibition" language="urn:sedml:language:xpp" source="#model">
+      <listOfChanges>
+        <changeAttribute target="C" newValue="20.0"/>
+        <changeAttribute target="Drive1" newValue="1.0"/>
+        <changeAttribute target="Drive2" newValue="1.0"/>
+        <changeAttribute target="Drive3" newValue="1.0"/>
+        <changeAttribute target="EK" newValue="-85.0"/>
+        <changeAttribute target="ELE" newValue="-65.0"/>
+        <changeAttribute target="ELI" newValue="-60.0"/>
+        <changeAttribute target="ENa" newValue="50.0"/>
+        <changeAttribute target="EsynE" newValue="0.0"/>
+        <changeAttribute target="EsynI" newValue="-75.0"/>
+        <changeAttribute target="H1" newValue="0.344848037132666"/>
+        <changeAttribute target="H2" newValue="0.2083623846905638"/>
+        <changeAttribute target="H3" newValue="0.4522269480122016"/>
+        <changeAttribute target="H4" newValue="0.4143615497844623"/>
+        <changeAttribute target="H5" newValue="0.7150382434491885"/>
+        <changeAttribute target="Iapp1" newValue="0.0"/>
+        <changeAttribute target="Iapp2" newValue="0.0"/>
+        <changeAttribute target="Iapp3" newValue="0.0"/>
+        <changeAttribute target="Iapp4" newValue="0.0"/>
+        <changeAttribute target="Iapp5" newValue="0.0"/>
+        <changeAttribute target="Kad2" newValue="0.8"/>
+        <changeAttribute target="Kad3" newValue="1.4"/>
+        <changeAttribute target="Kad4" newValue="0.8"/>
+        <changeAttribute target="Koutpute" newValue="-8.0"/>
+        <changeAttribute target="Koutputi" newValue="-4.0"/>
+        <changeAttribute target="Koutputp" newValue="-12.0"/>
+        <changeAttribute target="M2" newValue="0.2687545729226485"/>
+        <changeAttribute target="M3" newValue="0.1529385460014474"/>
+        <changeAttribute target="M4" newValue="0.04201480104286515"/>
+        <changeAttribute target="Tad2" newValue="2000.0"/>
+        <changeAttribute target="Tad3" newValue="1500.0"/>
+        <changeAttribute target="Tad4" newValue="2000.0"/>
+        <changeAttribute target="V1" newValue="-66.72047402539444"/>
+        <changeAttribute target="V2" newValue="-58.45301729085097"/>
+        <changeAttribute target="V3" newValue="-24.48108237102182"/>
+        <changeAttribute target="V4" newValue="-59.18111325030944"/>
+        <changeAttribute target="V5" newValue="-14.8335152673346"/>
+        <changeAttribute target="V12hp" newValue="-48.0"/>
+        <changeAttribute target="V12mp" newValue="-37.0"/>
+        <changeAttribute target="V12n" newValue="-29.0"/>
+        <changeAttribute target="V12outpute" newValue="-32.0"/>
+        <changeAttribute target="V12outputi" newValue="-30.0"/>
+        <changeAttribute target="V12outputp" newValue="-20.0"/>
+        <changeAttribute target="a12" newValue="0.6"/>
+        <changeAttribute target="a15" newValue="0.2"/>
+        <changeAttribute target="a53" newValue="0.1"/>
+        <changeAttribute target="b23" newValue="0.6"/>
+        <changeAttribute target="b24" newValue="0.3"/>
+        <changeAttribute target="b25" newValue="0.2"/>
+        <changeAttribute target="b31" newValue="0.125"/>
+        <changeAttribute target="b32" newValue="0.27"/>
+        <changeAttribute target="b34" newValue="0.45"/>
+        <changeAttribute target="b41" newValue="0.015"/>
+        <changeAttribute target="b42" newValue="0.3"/>
+        <changeAttribute target="b43" newValue="0.02"/>
+        <changeAttribute target="b45" newValue="0.3"/>
+        <changeAttribute target="c11" newValue="-0.03"/>
+        <changeAttribute target="c12" newValue="0.19"/>
+        <changeAttribute target="c13" newValue="0.58"/>
+        <changeAttribute target="c14" newValue="0.2"/>
+        <changeAttribute target="c15" newValue="0.045"/>
+        <changeAttribute target="c21" newValue="0.07"/>
+        <changeAttribute target="c22" newValue="0.3"/>
+        <changeAttribute target="c24" newValue="0.4"/>
+        <changeAttribute target="c25" newValue="0.0"/>
+        <changeAttribute target="c31" newValue="0.025"/>
+        <changeAttribute target="c35" newValue="0.0"/>
+        <changeAttribute target="edum" newValue="0.0"/>
+        <changeAttribute target="gAD" newValue="10.0"/>
+        <changeAttribute target="gKdr" newValue="1.0"/>
+        <changeAttribute target="gLE" newValue="3.0"/>
+        <changeAttribute target="gLI" newValue="3.25"/>
+        <changeAttribute target="gNaPe" newValue="4.5"/>
+        <changeAttribute target="gNaPi" newValue="0.25"/>
+        <changeAttribute target="gsynE" newValue="10.0"/>
+        <changeAttribute target="gsynI" newValue="60.0"/>
+        <changeAttribute target="khp" newValue="8.0"/>
+        <changeAttribute target="kmp" newValue="-6.0"/>
+        <changeAttribute target="kn" newValue="-4.0"/>
+        <changeAttribute target="nf" newValue="1.0"/>
+        <changeAttribute target="sdum1" newValue="0.0"/>
+        <changeAttribute target="sdum2" newValue="0.0"/>
+        <changeAttribute target="sdum3" newValue="0.0"/>
+        <changeAttribute target="sdum4" newValue="0.0"/>
+        <changeAttribute target="sdum5" newValue="0.0"/>
+        <changeAttribute target="tauhp" newValue="4000.0"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" name="Simulation" initialTime="0" outputStartTime="0" outputEndTime="10000" numberOfPoints="1000">
+      <algorithm kisaoID="KISAO:0000672">
+        <listOfAlgorithmParameters>
+          <algorithmParameter kisaoID="KISAO:0000485" value="1e-12"/>
+          <algorithmParameter kisaoID="KISAO:0000467" value="1"/>
+          <algorithmParameter kisaoID="KISAO:0000597" value="0.001"/>
+          <algorithmParameter kisaoID="KISAO:0000565" value="0.001"/>
+        </listOfAlgorithmParameters>
+      </algorithm>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task_without_pico_block_of_inhibition" name="Without PiCo and without block of inhibition" modelReference="model_without_pico_block_of_inhibition" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_T_without_pico_block_of_inhibition" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T_without_pico_block_of_inhibition" name="T" symbol="urn:sedml:symbol:time" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_EXC2_without_pico_block_of_inhibition" name="EXC2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_EXC2_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_EXC2_without_pico_block_of_inhibition" name="EXC2" target="EXC2" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_FV1_without_pico_block_of_inhibition" name="FV1">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_FV1_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_FV1_without_pico_block_of_inhibition" name="FV1" target="FV1" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_FV2_without_pico_block_of_inhibition" name="FV2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_FV2_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_FV2_without_pico_block_of_inhibition" name="FV2" target="FV2" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_FV3_without_pico_block_of_inhibition" name="FV3">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_FV3_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_FV3_without_pico_block_of_inhibition" name="FV3" target="FV3" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_FV4_without_pico_block_of_inhibition" name="FV4">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_FV4_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_FV4_without_pico_block_of_inhibition" name="FV4" target="FV4" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_FV5_without_pico_block_of_inhibition" name="FV5">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_FV5_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_FV5_without_pico_block_of_inhibition" name="FV5" target="FV5" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_H1_without_pico_block_of_inhibition" name="H1">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_H1_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_H1_without_pico_block_of_inhibition" name="H1" target="H1" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_H2_without_pico_block_of_inhibition" name="H2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_H2_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_H2_without_pico_block_of_inhibition" name="H2" target="H2" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_H3_without_pico_block_of_inhibition" name="H3">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_H3_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_H3_without_pico_block_of_inhibition" name="H3" target="H3" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_H4_without_pico_block_of_inhibition" name="H4">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_H4_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_H4_without_pico_block_of_inhibition" name="H4" target="H4" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_H5_without_pico_block_of_inhibition" name="H5">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_H5_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_H5_without_pico_block_of_inhibition" name="H5" target="H5" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_INH1_without_pico_block_of_inhibition" name="INH1">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_INH1_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_INH1_without_pico_block_of_inhibition" name="INH1" target="INH1" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_INH2_without_pico_block_of_inhibition" name="INH2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_INH2_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_INH2_without_pico_block_of_inhibition" name="INH2" target="INH2" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_INH3_without_pico_block_of_inhibition" name="INH3">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_INH3_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_INH3_without_pico_block_of_inhibition" name="INH3" target="INH3" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_INH4_without_pico_block_of_inhibition" name="INH4">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_INH4_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_INH4_without_pico_block_of_inhibition" name="INH4" target="INH4" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M2_without_pico_block_of_inhibition" name="M2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M2_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M2_without_pico_block_of_inhibition" name="M2" target="M2" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M3_without_pico_block_of_inhibition" name="M3">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M3_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M3_without_pico_block_of_inhibition" name="M3" target="M3" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M4_without_pico_block_of_inhibition" name="M4">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M4_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M4_without_pico_block_of_inhibition" name="M4" target="M4" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_V1_without_pico_block_of_inhibition" name="V1">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_V1_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_V1_without_pico_block_of_inhibition" name="V1" target="V1" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_V2_without_pico_block_of_inhibition" name="V2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_V2_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_V2_without_pico_block_of_inhibition" name="V2" target="V2" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_V3_without_pico_block_of_inhibition" name="V3">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_V3_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_V3_without_pico_block_of_inhibition" name="V3" target="V3" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_V4_without_pico_block_of_inhibition" name="V4">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_V4_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_V4_without_pico_block_of_inhibition" name="V4" target="V4" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_V5_without_pico_block_of_inhibition" name="V5">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_V5_without_pico_block_of_inhibition </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_V5_without_pico_block_of_inhibition" name="V5" target="V5" taskReference="task_without_pico_block_of_inhibition"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report_without_pico_block_of_inhibition" name="Without PiCo and without block of inhibition">
+      <listOfDataSets>
+        <dataSet id="data_set_T_without_pico_block_of_inhibition" name="T" label="T" dataReference="data_generator_T_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_EXC2_without_pico_block_of_inhibition" name="EXC2" label="EXC2" dataReference="data_generator_EXC2_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_FV1_without_pico_block_of_inhibition" name="FV1" label="FV1" dataReference="data_generator_FV1_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_FV2_without_pico_block_of_inhibition" name="FV2" label="FV2" dataReference="data_generator_FV2_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_FV3_without_pico_block_of_inhibition" name="FV3" label="FV3" dataReference="data_generator_FV3_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_FV4_without_pico_block_of_inhibition" name="FV4" label="FV4" dataReference="data_generator_FV4_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_FV5_without_pico_block_of_inhibition" name="FV5" label="FV5" dataReference="data_generator_FV5_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_H1_without_pico_block_of_inhibition" name="H1" label="H1" dataReference="data_generator_H1_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_H2_without_pico_block_of_inhibition" name="H2" label="H2" dataReference="data_generator_H2_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_H3_without_pico_block_of_inhibition" name="H3" label="H3" dataReference="data_generator_H3_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_H4_without_pico_block_of_inhibition" name="H4" label="H4" dataReference="data_generator_H4_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_H5_without_pico_block_of_inhibition" name="H5" label="H5" dataReference="data_generator_H5_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_INH1_without_pico_block_of_inhibition" name="INH1" label="INH1" dataReference="data_generator_INH1_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_INH2_without_pico_block_of_inhibition" name="INH2" label="INH2" dataReference="data_generator_INH2_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_INH3_without_pico_block_of_inhibition" name="INH3" label="INH3" dataReference="data_generator_INH3_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_INH4_without_pico_block_of_inhibition" name="INH4" label="INH4" dataReference="data_generator_INH4_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_M2_without_pico_block_of_inhibition" name="M2" label="M2" dataReference="data_generator_M2_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_M3_without_pico_block_of_inhibition" name="M3" label="M3" dataReference="data_generator_M3_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_M4_without_pico_block_of_inhibition" name="M4" label="M4" dataReference="data_generator_M4_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_V1_without_pico_block_of_inhibition" name="V1" label="V1" dataReference="data_generator_V1_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_V2_without_pico_block_of_inhibition" name="V2" label="V2" dataReference="data_generator_V2_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_V3_without_pico_block_of_inhibition" name="V3" label="V3" dataReference="data_generator_V3_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_V4_without_pico_block_of_inhibition" name="V4" label="V4" dataReference="data_generator_V4_without_pico_block_of_inhibition"/>
+        <dataSet id="data_set_V5_without_pico_block_of_inhibition" name="V5" label="V5" dataReference="data_generator_V5_without_pico_block_of_inhibition"/>
+      </listOfDataSets>
+    </report>
+    <plot2D id="plot_without_pico_block_of_inhibition" name="Without PiCo and without block of inhibition">
+      <listOfCurves>
+        <curve id="curve_1_without_pico_block_of_inhibition" name="V1 vs T" logX="false" xDataReference="data_generator_T_without_pico_block_of_inhibition" logY="false" yDataReference="data_generator_V1_without_pico_block_of_inhibition"/>
+      </listOfCurves>
+    </plot2D>
+  </listOfOutputs>
+</sedML>

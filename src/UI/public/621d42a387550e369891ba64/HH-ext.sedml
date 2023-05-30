@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfModels>
+    <model id="model" name="Model" language="urn:sedml:language:xpp" source="HH-ext.ode">
+      <listOfChanges>
+        <changeAttribute target="H" newValue="0.596"/>
+        <changeAttribute target="M" newValue="0.052"/>
+        <changeAttribute target="N" newValue="0.317"/>
+        <changeAttribute target="V" newValue="0.0"/>
+        <changeAttribute target="VK" newValue="-12.0"/>
+        <changeAttribute target="VL" newValue="10.599"/>
+        <changeAttribute target="VNa" newValue="115.0"/>
+        <changeAttribute target="Vext" newValue="8.0"/>
+        <changeAttribute target="cm" newValue="1.0"/>
+        <changeAttribute target="freq" newValue="0.3"/>
+        <changeAttribute target="gK" newValue="36.0"/>
+        <changeAttribute target="gL" newValue="0.3"/>
+        <changeAttribute target="gNa" newValue="120.0"/>
+        <changeAttribute target="iapp" newValue="1.0"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" name="Simulation" initialTime="0" outputStartTime="0" outputEndTime="25000" numberOfPoints="1000">
+      <algorithm kisaoID="KISAO:0000032">
+        <listOfAlgorithmParameters>
+          <algorithmParameter kisaoID="KISAO:0000483" value="0.01"/>
+        </listOfAlgorithmParameters>
+      </algorithm>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" name="Task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_T" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T" name="T" symbol="urn:sedml:symbol:time" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_H" name="H">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_H </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_H" name="H" target="H" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M" name="M">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M" name="M" target="M" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_N" name="N">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_N </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_N" name="N" target="N" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_V" name="V">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_V </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_V" name="V" target="V" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_VEX" name="VEX">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_VEX </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_VEX" name="VEX" target="VEX" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report" name="Report">
+      <listOfDataSets>
+        <dataSet id="data_set_T" name="T" label="T" dataReference="data_generator_T"/>
+        <dataSet id="data_set_H" name="H" label="H" dataReference="data_generator_H"/>
+        <dataSet id="data_set_M" name="M" label="M" dataReference="data_generator_M"/>
+        <dataSet id="data_set_N" name="N" label="N" dataReference="data_generator_N"/>
+        <dataSet id="data_set_V" name="V" label="V" dataReference="data_generator_V"/>
+        <dataSet id="data_set_VEX" name="VEX" label="VEX" dataReference="data_generator_VEX"/>
+      </listOfDataSets>
+    </report>
+    <plot2D id="plot">
+      <listOfCurves>
+        <curve id="curve_1" name="V vs T" logX="false" xDataReference="data_generator_T" logY="false" yDataReference="data_generator_V"/>
+      </listOfCurves>
+    </plot2D>
+  </listOfOutputs>
+</sedML>

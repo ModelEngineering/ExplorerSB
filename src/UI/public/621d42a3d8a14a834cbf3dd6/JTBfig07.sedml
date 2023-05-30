@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfModels>
+    <model id="model" name="Model" language="urn:sedml:language:xpp" source="JTBfig07.ode">
+      <listOfChanges>
+        <changeAttribute target="HK" newValue="0.367"/>
+        <changeAttribute target="HNA" newValue="0.844"/>
+        <changeAttribute target="MNA" newValue="0.041"/>
+        <changeAttribute target="NI" newValue="0.657"/>
+        <changeAttribute target="NIR" newValue="0.003"/>
+        <changeAttribute target="NK" newValue="0.288"/>
+        <changeAttribute target="RIR" newValue="0.282"/>
+        <changeAttribute target="V" newValue="-74.0"/>
+        <changeAttribute target="cm" newValue="1.0"/>
+        <changeAttribute target="dt1" newValue="530.0"/>
+        <changeAttribute target="dt2" newValue="0.0"/>
+        <changeAttribute target="dt3" newValue="0.0"/>
+        <changeAttribute target="f" newValue="0.9"/>
+        <changeAttribute target="girbar" newValue="1.0"/>
+        <changeAttribute target="gkbar" newValue="8.0"/>
+        <changeAttribute target="gl" newValue="0.05"/>
+        <changeAttribute target="gnabar" newValue="15.0"/>
+        <changeAttribute target="ia1" newValue="1.4"/>
+        <changeAttribute target="ia2" newValue="0.0"/>
+        <changeAttribute target="ia3" newValue="0.0"/>
+        <changeAttribute target="kio" newValue="0.001"/>
+        <changeAttribute target="koi" newValue="0.081"/>
+        <changeAttribute target="t1" newValue="30.0"/>
+        <changeAttribute target="t2" newValue="0.0"/>
+        <changeAttribute target="t3" newValue="0.0"/>
+        <changeAttribute target="vir" newValue="-80.0"/>
+        <changeAttribute target="vk" newValue="-80.0"/>
+        <changeAttribute target="vl" newValue="-80.0"/>
+        <changeAttribute target="vna" newValue="50.0"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" name="Simulation" initialTime="0" outputStartTime="0" outputEndTime="700" numberOfPoints="1000">
+      <algorithm kisaoID="KISAO:0000030">
+        <listOfAlgorithmParameters>
+          <algorithmParameter kisaoID="KISAO:0000483" value="0.05"/>
+        </listOfAlgorithmParameters>
+      </algorithm>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" name="Task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_T" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T" name="T" symbol="urn:sedml:symbol:time" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_HK" name="HK">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_HK </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_HK" name="HK" target="HK" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_HNA" name="HNA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_HNA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_HNA" name="HNA" target="HNA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_IK" name="IK">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_IK </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_IK" name="IK" target="IK" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MNA" name="MNA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MNA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MNA" name="MNA" target="MNA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_NI" name="NI">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_NI </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_NI" name="NI" target="NI" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_NIR" name="NIR">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_NIR </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_NIR" name="NIR" target="NIR" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_NK" name="NK">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_NK </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_NK" name="NK" target="NK" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_RIR" name="RIR">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_RIR </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_RIR" name="RIR" target="RIR" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_V" name="V">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_V </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_V" name="V" target="V" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report" name="Report">
+      <listOfDataSets>
+        <dataSet id="data_set_T" name="T" label="T" dataReference="data_generator_T"/>
+        <dataSet id="data_set_HK" name="HK" label="HK" dataReference="data_generator_HK"/>
+        <dataSet id="data_set_HNA" name="HNA" label="HNA" dataReference="data_generator_HNA"/>
+        <dataSet id="data_set_IK" name="IK" label="IK" dataReference="data_generator_IK"/>
+        <dataSet id="data_set_MNA" name="MNA" label="MNA" dataReference="data_generator_MNA"/>
+        <dataSet id="data_set_NI" name="NI" label="NI" dataReference="data_generator_NI"/>
+        <dataSet id="data_set_NIR" name="NIR" label="NIR" dataReference="data_generator_NIR"/>
+        <dataSet id="data_set_NK" name="NK" label="NK" dataReference="data_generator_NK"/>
+        <dataSet id="data_set_RIR" name="RIR" label="RIR" dataReference="data_generator_RIR"/>
+        <dataSet id="data_set_V" name="V" label="V" dataReference="data_generator_V"/>
+      </listOfDataSets>
+    </report>
+  </listOfOutputs>
+</sedML>

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfModels>
+    <model id="model" name="Model" language="urn:sedml:language:xpp" source="twocompart_mnmodel.ode">
+      <listOfChanges>
+        <changeAttribute target="CAD" newValue="0.027721"/>
+        <changeAttribute target="CAS" newValue="0.000487"/>
+        <changeAttribute target="HNA" newValue="0.463375"/>
+        <changeAttribute target="HSCAN" newValue="0.857482"/>
+        <changeAttribute target="Iappld" newValue="0.0"/>
+        <changeAttribute target="Iappls" newValue="0.0"/>
+        <changeAttribute target="MCAP" newValue="0.14071"/>
+        <changeAttribute target="MNAP" newValue="0.00099"/>
+        <changeAttribute target="MSCAN" newValue="0.008207"/>
+        <changeAttribute target="N" newValue="0.150394"/>
+        <changeAttribute target="VD" newValue="-52.66585"/>
+        <changeAttribute target="VS" newValue="-53.97266"/>
+        <changeAttribute target="alpha1" newValue="0.009"/>
+        <changeAttribute target="alpha2" newValue="0.009"/>
+        <changeAttribute target="c" newValue="1.0"/>
+        <changeAttribute target="eca" newValue="80.0"/>
+        <changeAttribute target="ek" newValue="-80.0"/>
+        <changeAttribute target="el" newValue="-60.0"/>
+        <changeAttribute target="ena" newValue="55.0"/>
+        <changeAttribute target="f" newValue="0.01"/>
+        <changeAttribute target="gc" newValue="0.1"/>
+        <changeAttribute target="gcap" newValue="0.33"/>
+        <changeAttribute target="gdkca" newValue="0.69"/>
+        <changeAttribute target="gkdr" newValue="100.0"/>
+        <changeAttribute target="gl" newValue="0.51"/>
+        <changeAttribute target="gna" newValue="120.0"/>
+        <changeAttribute target="gnap" newValue="0.2"/>
+        <changeAttribute target="gscan" newValue="14.0"/>
+        <changeAttribute target="gskca" newValue="3.136"/>
+        <changeAttribute target="kca" newValue="2.0"/>
+        <changeAttribute target="khna" newValue="7.0"/>
+        <changeAttribute target="khscan" newValue="5.0"/>
+        <changeAttribute target="kmcap" newValue="-7.0"/>
+        <changeAttribute target="kmna" newValue="-7.8"/>
+        <changeAttribute target="kmnap" newValue="-4.0"/>
+        <changeAttribute target="kmscan" newValue="-5.0"/>
+        <changeAttribute target="kn" newValue="-15.0"/>
+        <changeAttribute target="offsetp" newValue="0.0"/>
+        <changeAttribute target="offsetr" newValue="0.0"/>
+        <changeAttribute target="p" newValue="0.1"/>
+        <changeAttribute target="scalep1" newValue="0.0"/>
+        <changeAttribute target="scalep2" newValue="0.0"/>
+        <changeAttribute target="scaler" newValue="0.01"/>
+        <changeAttribute target="tauhscan" newValue="160.0"/>
+        <changeAttribute target="taumcap" newValue="40.0"/>
+        <changeAttribute target="taumnap" newValue="40.0"/>
+        <changeAttribute target="taumscan" newValue="16.0"/>
+        <changeAttribute target="thetahna" newValue="-55.0"/>
+        <changeAttribute target="thetahsca" newValue="-45.0"/>
+        <changeAttribute target="thetamcap" newValue="-40.0"/>
+        <changeAttribute target="thetamna" newValue="-35.0"/>
+        <changeAttribute target="thetamnap" newValue="-25.0"/>
+        <changeAttribute target="thetamsca" newValue="-30.0"/>
+        <changeAttribute target="thetan" newValue="-28.0"/>
+        <changeAttribute target="toffp1" newValue="4000.0"/>
+        <changeAttribute target="toffp2" newValue="10000.0"/>
+        <changeAttribute target="toffr" newValue="10000.0"/>
+        <changeAttribute target="tonp1" newValue="2000.0"/>
+        <changeAttribute target="tonp2" newValue="4000.0"/>
+        <changeAttribute target="tonr" newValue="0.0"/>
+        <changeAttribute target="tswitchr" newValue="2500.0"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" name="Simulation" initialTime="0" outputStartTime="0" outputEndTime="10000" numberOfPoints="1000">
+      <algorithm kisaoID="KISAO:0000672"/>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" name="Task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_T" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T" name="T" symbol="urn:sedml:symbol:time" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_CA1" name="CA1">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_CA1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_CA1" name="CA1" target="CA1" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_CACD" name="CACD">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_CACD </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_CACD" name="CACD" target="CACD" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_CACS" name="CACS">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_CACS </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_CACS" name="CACS" target="CACS" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_CAD" name="CAD">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_CAD </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_CAD" name="CAD" target="CAD" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_CAP" name="CAP">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_CAP </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_CAP" name="CAP" target="CAP" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_CAS" name="CAS">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_CAS </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_CAS" name="CAS" target="CAS" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_DKCA" name="DKCA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_DKCA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_DKCA" name="DKCA" target="DKCA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_DLEAK" name="DLEAK">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_DLEAK </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_DLEAK" name="DLEAK" target="DLEAK" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_HNA" name="HNA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_HNA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_HNA" name="HNA" target="HNA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_HSCAN" name="HSCAN">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_HSCAN </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_HSCAN" name="HSCAN" target="HSCAN" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_I1" name="I1">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_I1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_I1" name="I1" target="I1" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_I2" name="I2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_I2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_I2" name="I2" target="I2" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_KDR" name="KDR">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_KDR </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_KDR" name="KDR" target="KDR" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MCAP" name="MCAP">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MCAP </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MCAP" name="MCAP" target="MCAP" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MNAP" name="MNAP">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MNAP </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MNAP" name="MNAP" target="MNAP" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MSCAN" name="MSCAN">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MSCAN </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MSCAN" name="MSCAN" target="MSCAN" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_N" name="N">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_N </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_N" name="N" target="N" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_NA" name="NA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_NA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_NA" name="NA" target="NA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_NAP" name="NAP">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_NAP </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_NAP" name="NAP" target="NAP" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_SKCA" name="SKCA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_SKCA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_SKCA" name="SKCA" target="SKCA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_SLEAK" name="SLEAK">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_SLEAK </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_SLEAK" name="SLEAK" target="SLEAK" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_VD" name="VD">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_VD </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_VD" name="VD" target="VD" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_VS" name="VS">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_VS </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_VS" name="VS" target="VS" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report" name="Report">
+      <listOfDataSets>
+        <dataSet id="data_set_T" name="T" label="T" dataReference="data_generator_T"/>
+        <dataSet id="data_set_CA1" name="CA1" label="CA1" dataReference="data_generator_CA1"/>
+        <dataSet id="data_set_CACD" name="CACD" label="CACD" dataReference="data_generator_CACD"/>
+        <dataSet id="data_set_CACS" name="CACS" label="CACS" dataReference="data_generator_CACS"/>
+        <dataSet id="data_set_CAD" name="CAD" label="CAD" dataReference="data_generator_CAD"/>
+        <dataSet id="data_set_CAP" name="CAP" label="CAP" dataReference="data_generator_CAP"/>
+        <dataSet id="data_set_CAS" name="CAS" label="CAS" dataReference="data_generator_CAS"/>
+        <dataSet id="data_set_DKCA" name="DKCA" label="DKCA" dataReference="data_generator_DKCA"/>
+        <dataSet id="data_set_DLEAK" name="DLEAK" label="DLEAK" dataReference="data_generator_DLEAK"/>
+        <dataSet id="data_set_HNA" name="HNA" label="HNA" dataReference="data_generator_HNA"/>
+        <dataSet id="data_set_HSCAN" name="HSCAN" label="HSCAN" dataReference="data_generator_HSCAN"/>
+        <dataSet id="data_set_I1" name="I1" label="I1" dataReference="data_generator_I1"/>
+        <dataSet id="data_set_I2" name="I2" label="I2" dataReference="data_generator_I2"/>
+        <dataSet id="data_set_KDR" name="KDR" label="KDR" dataReference="data_generator_KDR"/>
+        <dataSet id="data_set_MCAP" name="MCAP" label="MCAP" dataReference="data_generator_MCAP"/>
+        <dataSet id="data_set_MNAP" name="MNAP" label="MNAP" dataReference="data_generator_MNAP"/>
+        <dataSet id="data_set_MSCAN" name="MSCAN" label="MSCAN" dataReference="data_generator_MSCAN"/>
+        <dataSet id="data_set_N" name="N" label="N" dataReference="data_generator_N"/>
+        <dataSet id="data_set_NA" name="NA" label="NA" dataReference="data_generator_NA"/>
+        <dataSet id="data_set_NAP" name="NAP" label="NAP" dataReference="data_generator_NAP"/>
+        <dataSet id="data_set_SKCA" name="SKCA" label="SKCA" dataReference="data_generator_SKCA"/>
+        <dataSet id="data_set_SLEAK" name="SLEAK" label="SLEAK" dataReference="data_generator_SLEAK"/>
+        <dataSet id="data_set_VD" name="VD" label="VD" dataReference="data_generator_VD"/>
+        <dataSet id="data_set_VS" name="VS" label="VS" dataReference="data_generator_VS"/>
+      </listOfDataSets>
+    </report>
+    <plot2D id="plot">
+      <listOfCurves>
+        <curve id="curve_2" name="I1 vs T" logX="false" xDataReference="data_generator_T" logY="false" yDataReference="data_generator_I1"/>
+      </listOfCurves>
+    </plot2D>
+  </listOfOutputs>
+</sedML>

@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfModels>
+    <model id="model" name="Model" language="urn:sedml:language:xpp" source="OneCellTwoOsc.ode"/>
+    <model id="model_figure_2a" name="Figure 2a" language="urn:sedml:language:xpp" source="#model">
+      <listOfChanges>
+        <changeAttribute target="A" newValue="0.005"/>
+        <changeAttribute target="C" newValue="0.0247530791180861"/>
+        <changeAttribute target="Cms" newValue="21.0"/>
+        <changeAttribute target="Ct" newValue="1.25"/>
+        <changeAttribute target="H" newValue="0.3993173817399912"/>
+        <changeAttribute target="I" newValue="0.9"/>
+        <changeAttribute target="I_aps" newValue="0.0"/>
+        <changeAttribute target="Ka" newValue="0.4"/>
+        <changeAttribute target="Kcan" newValue="0.74"/>
+        <changeAttribute target="Kd" newValue="0.4"/>
+        <changeAttribute target="Ke" newValue="0.2"/>
+        <changeAttribute target="Ki" newValue="1.0"/>
+        <changeAttribute target="L" newValue="0.941723602876669"/>
+        <changeAttribute target="N" newValue="0.006018887841041419"/>
+        <changeAttribute target="P" newValue="31000.0"/>
+        <changeAttribute target="V" newValue="-49.42172818719667"/>
+        <changeAttribute target="Ve" newValue="400.0"/>
+        <changeAttribute target="fi" newValue="2.5e-05"/>
+        <changeAttribute target="gcan" newValue="0.7"/>
+        <changeAttribute target="gk" newValue="11.2"/>
+        <changeAttribute target="gl" newValue="2.3"/>
+        <changeAttribute target="gna" newValue="28.0"/>
+        <changeAttribute target="gnap" newValue="2.5"/>
+        <changeAttribute target="ncan" newValue="0.97"/>
+        <changeAttribute target="sigma" newValue="0.185"/>
+      </listOfChanges>
+    </model>
+    <model id="model_figure_2b" name="Figure 2b" language="urn:sedml:language:xpp" source="#model">
+      <listOfChanges>
+        <changeAttribute target="A" newValue="0.005"/>
+        <changeAttribute target="C" newValue="0.03615191958941736"/>
+        <changeAttribute target="Cms" newValue="21.0"/>
+        <changeAttribute target="Ct" newValue="1.25"/>
+        <changeAttribute target="H" newValue="0.3197023760799105"/>
+        <changeAttribute target="I" newValue="1.2"/>
+        <changeAttribute target="I_aps" newValue="0.0"/>
+        <changeAttribute target="Ka" newValue="0.4"/>
+        <changeAttribute target="Kcan" newValue="0.74"/>
+        <changeAttribute target="Kd" newValue="0.4"/>
+        <changeAttribute target="Ke" newValue="0.2"/>
+        <changeAttribute target="Ki" newValue="1.0"/>
+        <changeAttribute target="L" newValue="0.6205909157975574"/>
+        <changeAttribute target="N" newValue="0.001419552575007756"/>
+        <changeAttribute target="P" newValue="31000.0"/>
+        <changeAttribute target="V" newValue="-55.22977428425013"/>
+        <changeAttribute target="Ve" newValue="400.0"/>
+        <changeAttribute target="fi" newValue="2.5e-05"/>
+        <changeAttribute target="gcan" newValue="0.7"/>
+        <changeAttribute target="gk" newValue="11.2"/>
+        <changeAttribute target="gl" newValue="2.3"/>
+        <changeAttribute target="gna" newValue="28.0"/>
+        <changeAttribute target="gnap" newValue="1.0"/>
+        <changeAttribute target="ncan" newValue="0.97"/>
+        <changeAttribute target="sigma" newValue="0.185"/>
+      </listOfChanges>
+    </model>
+    <model id="model_figure_2c" name="Figure 2c" language="urn:sedml:language:xpp" source="#model">
+      <listOfChanges>
+        <changeAttribute target="A" newValue="0.005"/>
+        <changeAttribute target="C" newValue="0.02217569847910465"/>
+        <changeAttribute target="Cms" newValue="21.0"/>
+        <changeAttribute target="Ct" newValue="1.25"/>
+        <changeAttribute target="H" newValue="0.3801759147096553"/>
+        <changeAttribute target="I" newValue="0.95"/>
+        <changeAttribute target="I_aps" newValue="0.0"/>
+        <changeAttribute target="Ka" newValue="0.4"/>
+        <changeAttribute target="Kcan" newValue="0.74"/>
+        <changeAttribute target="Kd" newValue="0.4"/>
+        <changeAttribute target="Ke" newValue="0.2"/>
+        <changeAttribute target="Ki" newValue="1.0"/>
+        <changeAttribute target="L" newValue="0.9155099622361579"/>
+        <changeAttribute target="N" newValue="0.001974612756708118"/>
+        <changeAttribute target="P" newValue="31000.0"/>
+        <changeAttribute target="V" newValue="-53.90067040881341"/>
+        <changeAttribute target="Ve" newValue="400.0"/>
+        <changeAttribute target="fi" newValue="2.5e-05"/>
+        <changeAttribute target="gcan" newValue="0.7"/>
+        <changeAttribute target="gk" newValue="11.2"/>
+        <changeAttribute target="gl" newValue="2.3"/>
+        <changeAttribute target="gna" newValue="28.0"/>
+        <changeAttribute target="gnap" newValue="2.0"/>
+        <changeAttribute target="ncan" newValue="0.97"/>
+        <changeAttribute target="sigma" newValue="0.185"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" name="Simulation" initialTime="0" outputStartTime="0" outputEndTime="10000" numberOfPoints="1000">
+      <algorithm kisaoID="KISAO:0000672">
+        <listOfAlgorithmParameters>
+          <algorithmParameter kisaoID="KISAO:0000485" value="1e-12"/>
+          <algorithmParameter kisaoID="KISAO:0000467" value="1"/>
+          <algorithmParameter kisaoID="KISAO:0000597" value="0.001"/>
+          <algorithmParameter kisaoID="KISAO:0000565" value="0.001"/>
+        </listOfAlgorithmParameters>
+      </algorithm>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task_figure_2a" name="Figure 2a" modelReference="model_figure_2a" simulationReference="simulation"/>
+    <task id="task_figure_2b" name="Figure 2b" modelReference="model_figure_2b" simulationReference="simulation"/>
+    <task id="task_figure_2c" name="Figure 2c" modelReference="model_figure_2c" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_T_figure_2a" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T_figure_2a </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T_figure_2a" name="T" symbol="urn:sedml:symbol:time" taskReference="task_figure_2a"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C_figure_2a" name="C">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C_figure_2a </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C_figure_2a" name="C" target="C" taskReference="task_figure_2a"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_CE_figure_2a" name="CE">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_CE_figure_2a </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_CE_figure_2a" name="CE" target="CE" taskReference="task_figure_2a"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_H_figure_2a" name="H">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_H_figure_2a </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_H_figure_2a" name="H" target="H" taskReference="task_figure_2a"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_ICAN_figure_2a" name="ICAN">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_ICAN_figure_2a </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_ICAN_figure_2a" name="ICAN" target="ICAN" taskReference="task_figure_2a"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_INAPS_figure_2a" name="INAPS">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_INAPS_figure_2a </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_INAPS_figure_2a" name="INAPS" target="INAPS" taskReference="task_figure_2a"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_L_figure_2a" name="L">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_L_figure_2a </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_L_figure_2a" name="L" target="L" taskReference="task_figure_2a"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_N_figure_2a" name="N">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_N_figure_2a </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_N_figure_2a" name="N" target="N" taskReference="task_figure_2a"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_V_figure_2a" name="V">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_V_figure_2a </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_V_figure_2a" name="V" target="V" taskReference="task_figure_2a"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_T_figure_2b" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T_figure_2b </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T_figure_2b" name="T" symbol="urn:sedml:symbol:time" taskReference="task_figure_2b"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C_figure_2b" name="C">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C_figure_2b </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C_figure_2b" name="C" target="C" taskReference="task_figure_2b"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_CE_figure_2b" name="CE">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_CE_figure_2b </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_CE_figure_2b" name="CE" target="CE" taskReference="task_figure_2b"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_H_figure_2b" name="H">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_H_figure_2b </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_H_figure_2b" name="H" target="H" taskReference="task_figure_2b"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_ICAN_figure_2b" name="ICAN">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_ICAN_figure_2b </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_ICAN_figure_2b" name="ICAN" target="ICAN" taskReference="task_figure_2b"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_INAPS_figure_2b" name="INAPS">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_INAPS_figure_2b </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_INAPS_figure_2b" name="INAPS" target="INAPS" taskReference="task_figure_2b"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_L_figure_2b" name="L">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_L_figure_2b </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_L_figure_2b" name="L" target="L" taskReference="task_figure_2b"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_N_figure_2b" name="N">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_N_figure_2b </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_N_figure_2b" name="N" target="N" taskReference="task_figure_2b"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_V_figure_2b" name="V">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_V_figure_2b </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_V_figure_2b" name="V" target="V" taskReference="task_figure_2b"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_T_figure_2c" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T_figure_2c </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T_figure_2c" name="T" symbol="urn:sedml:symbol:time" taskReference="task_figure_2c"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C_figure_2c" name="C">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C_figure_2c </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C_figure_2c" name="C" target="C" taskReference="task_figure_2c"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_CE_figure_2c" name="CE">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_CE_figure_2c </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_CE_figure_2c" name="CE" target="CE" taskReference="task_figure_2c"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_H_figure_2c" name="H">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_H_figure_2c </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_H_figure_2c" name="H" target="H" taskReference="task_figure_2c"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_ICAN_figure_2c" name="ICAN">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_ICAN_figure_2c </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_ICAN_figure_2c" name="ICAN" target="ICAN" taskReference="task_figure_2c"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_INAPS_figure_2c" name="INAPS">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_INAPS_figure_2c </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_INAPS_figure_2c" name="INAPS" target="INAPS" taskReference="task_figure_2c"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_L_figure_2c" name="L">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_L_figure_2c </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_L_figure_2c" name="L" target="L" taskReference="task_figure_2c"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_N_figure_2c" name="N">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_N_figure_2c </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_N_figure_2c" name="N" target="N" taskReference="task_figure_2c"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_V_figure_2c" name="V">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_V_figure_2c </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_V_figure_2c" name="V" target="V" taskReference="task_figure_2c"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report_figure_2a" name="Figure 2a">
+      <listOfDataSets>
+        <dataSet id="data_set_T_figure_2a" name="T" label="T" dataReference="data_generator_T_figure_2a"/>
+        <dataSet id="data_set_C_figure_2a" name="C" label="C" dataReference="data_generator_C_figure_2a"/>
+        <dataSet id="data_set_CE_figure_2a" name="CE" label="CE" dataReference="data_generator_CE_figure_2a"/>
+        <dataSet id="data_set_H_figure_2a" name="H" label="H" dataReference="data_generator_H_figure_2a"/>
+        <dataSet id="data_set_ICAN_figure_2a" name="ICAN" label="ICAN" dataReference="data_generator_ICAN_figure_2a"/>
+        <dataSet id="data_set_INAPS_figure_2a" name="INAPS" label="INAPS" dataReference="data_generator_INAPS_figure_2a"/>
+        <dataSet id="data_set_L_figure_2a" name="L" label="L" dataReference="data_generator_L_figure_2a"/>
+        <dataSet id="data_set_N_figure_2a" name="N" label="N" dataReference="data_generator_N_figure_2a"/>
+        <dataSet id="data_set_V_figure_2a" name="V" label="V" dataReference="data_generator_V_figure_2a"/>
+      </listOfDataSets>
+    </report>
+    <plot2D id="plot_figure_2a" name="Figure 2a">
+      <listOfCurves>
+        <curve id="curve_1_figure_2a" name="V vs T" logX="false" xDataReference="data_generator_T_figure_2a" logY="false" yDataReference="data_generator_V_figure_2a"/>
+      </listOfCurves>
+    </plot2D>
+    <report id="report_figure_2b" name="Figure 2b">
+      <listOfDataSets>
+        <dataSet id="data_set_T_figure_2b" name="T" label="T" dataReference="data_generator_T_figure_2b"/>
+        <dataSet id="data_set_C_figure_2b" name="C" label="C" dataReference="data_generator_C_figure_2b"/>
+        <dataSet id="data_set_CE_figure_2b" name="CE" label="CE" dataReference="data_generator_CE_figure_2b"/>
+        <dataSet id="data_set_H_figure_2b" name="H" label="H" dataReference="data_generator_H_figure_2b"/>
+        <dataSet id="data_set_ICAN_figure_2b" name="ICAN" label="ICAN" dataReference="data_generator_ICAN_figure_2b"/>
+        <dataSet id="data_set_INAPS_figure_2b" name="INAPS" label="INAPS" dataReference="data_generator_INAPS_figure_2b"/>
+        <dataSet id="data_set_L_figure_2b" name="L" label="L" dataReference="data_generator_L_figure_2b"/>
+        <dataSet id="data_set_N_figure_2b" name="N" label="N" dataReference="data_generator_N_figure_2b"/>
+        <dataSet id="data_set_V_figure_2b" name="V" label="V" dataReference="data_generator_V_figure_2b"/>
+      </listOfDataSets>
+    </report>
+    <plot2D id="plot_figure_2b" name="Figure 2b">
+      <listOfCurves>
+        <curve id="curve_1_figure_2b" name="V vs T" logX="false" xDataReference="data_generator_T_figure_2b" logY="false" yDataReference="data_generator_V_figure_2b"/>
+      </listOfCurves>
+    </plot2D>
+    <report id="report_figure_2c" name="Figure 2c">
+      <listOfDataSets>
+        <dataSet id="data_set_T_figure_2c" name="T" label="T" dataReference="data_generator_T_figure_2c"/>
+        <dataSet id="data_set_C_figure_2c" name="C" label="C" dataReference="data_generator_C_figure_2c"/>
+        <dataSet id="data_set_CE_figure_2c" name="CE" label="CE" dataReference="data_generator_CE_figure_2c"/>
+        <dataSet id="data_set_H_figure_2c" name="H" label="H" dataReference="data_generator_H_figure_2c"/>
+        <dataSet id="data_set_ICAN_figure_2c" name="ICAN" label="ICAN" dataReference="data_generator_ICAN_figure_2c"/>
+        <dataSet id="data_set_INAPS_figure_2c" name="INAPS" label="INAPS" dataReference="data_generator_INAPS_figure_2c"/>
+        <dataSet id="data_set_L_figure_2c" name="L" label="L" dataReference="data_generator_L_figure_2c"/>
+        <dataSet id="data_set_N_figure_2c" name="N" label="N" dataReference="data_generator_N_figure_2c"/>
+        <dataSet id="data_set_V_figure_2c" name="V" label="V" dataReference="data_generator_V_figure_2c"/>
+      </listOfDataSets>
+    </report>
+    <plot2D id="plot_figure_2c" name="Figure 2c">
+      <listOfCurves>
+        <curve id="curve_1_figure_2c" name="V vs T" logX="false" xDataReference="data_generator_T_figure_2c" logY="false" yDataReference="data_generator_V_figure_2c"/>
+      </listOfCurves>
+    </plot2D>
+  </listOfOutputs>
+</sedML>

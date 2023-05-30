@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="Hillfcn" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#">
+    <!-- the math of the Hill functions-->
+    <component name="Hillfcn">
+        <variable name="x" public_interface="in" units="dimensionless"/>
+        <variable name="n" public_interface="in" units="dimensionless"/>
+        <variable name="H" public_interface="out" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>H</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="dimensionless">1</cn>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">1</cn>
+                        <apply>
+                            <power/>
+                            <ci>x</ci>
+                            <ci>n</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

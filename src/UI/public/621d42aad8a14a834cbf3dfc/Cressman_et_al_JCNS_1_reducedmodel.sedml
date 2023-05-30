@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfModels>
+    <model id="model" name="Model" language="urn:sedml:language:xpp" source="Cressman_et_al_JCNS_1_reducedmodel.ode">
+      <listOfChanges>
+        <changeAttribute target="KO" newValue="0.0"/>
+        <changeAttribute target="NAI" newValue="0.0"/>
+        <changeAttribute target="epsilon" newValue="1.2"/>
+        <changeAttribute target="glia" newValue="66.0"/>
+        <changeAttribute target="kbath" newValue="4.0"/>
+        <changeAttribute target="rho" newValue="1.25"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" name="Simulation" initialTime="0" outputStartTime="0" outputEndTime="1000" numberOfPoints="1000">
+      <algorithm kisaoID="KISAO:0000032">
+        <listOfAlgorithmParameters>
+          <algorithmParameter kisaoID="KISAO:0000483" value="0.05"/>
+        </listOfAlgorithmParameters>
+      </algorithm>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" name="Task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_T" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T" name="T" symbol="urn:sedml:symbol:time" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_KO" name="KO">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_KO </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_KO" name="KO" target="KO" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_NAI" name="NAI">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_NAI </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_NAI" name="NAI" target="NAI" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report" name="Report">
+      <listOfDataSets>
+        <dataSet id="data_set_T" name="T" label="T" dataReference="data_generator_T"/>
+        <dataSet id="data_set_KO" name="KO" label="KO" dataReference="data_generator_KO"/>
+        <dataSet id="data_set_NAI" name="NAI" label="NAI" dataReference="data_generator_NAI"/>
+      </listOfDataSets>
+    </report>
+  </listOfOutputs>
+</sedML>

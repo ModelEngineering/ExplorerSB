@@ -1,0 +1,2115 @@
+// Created by libAntimony v2.13.2
+model *e_coli_core()
+
+  // Compartments and Species:
+  compartment c, e;
+  species M_13dpg_c in c, M_2pg_c in c, M_3pg_c in c, M_6pgc_c in c, M_6pgl_c in c;
+  species M_ac_c in c, M_ac_e in e, M_acald_c in c, M_acald_e in e, M_accoa_c in c;
+  species M_acon_C_c in c, M_actp_c in c, M_adp_c in c, M_akg_c in c, M_akg_e in e;
+  species M_amp_c in c, M_atp_c in c, M_cit_c in c, M_co2_c in c, M_co2_e in e;
+  species M_coa_c in c, M_dhap_c in c, M_e4p_c in c, M_etoh_c in c, M_etoh_e in e;
+  species M_f6p_c in c, M_fdp_c in c, M_for_c in c, M_for_e in e, M_fru_e in e;
+  species M_fum_c in c, M_fum_e in e, M_g3p_c in c, M_g6p_c in c, M_glc__D_e in e;
+  species M_gln__L_c in c, M_gln__L_e in e, M_glu__L_c in c, M_glu__L_e in e;
+  species M_glx_c in c, M_h2o_c in c, M_h2o_e in e, M_h_c in c, M_h_e in e;
+  species M_icit_c in c, M_lac__D_c in c, M_lac__D_e in e, M_mal__L_c in c;
+  species M_mal__L_e in e, M_nad_c in c, M_nadh_c in c, M_nadp_c in c, M_nadph_c in c;
+  species M_nh4_c in c, M_nh4_e in e, M_o2_c in c, M_o2_e in e, M_oaa_c in c;
+  species M_pep_c in c, M_pi_c in c, M_pi_e in e, M_pyr_c in c, M_pyr_e in e;
+  species M_q8_c in c, M_q8h2_c in c, M_r5p_c in c, M_ru5p__D_c in c, M_s7p_c in c;
+  species M_succ_c in c, M_succ_e in e, M_succoa_c in c, M_xu5p__D_c in c;
+
+  // Reactions:
+  R_ACALD: M_acald_c + M_coa_c + M_nad_c -> M_accoa_c + M_h_c + M_nadh_c; ;
+  R_ACALDt: M_acald_e -> M_acald_c; ;
+  R_ACKr: M_ac_c + M_atp_c -> M_actp_c + M_adp_c; ;
+  R_ACONTa: M_cit_c -> M_acon_C_c + M_h2o_c; ;
+  R_ACONTb: M_acon_C_c + M_h2o_c -> M_icit_c; ;
+  R_ACt2r: M_ac_e + M_h_e -> M_ac_c + M_h_c; ;
+  R_ADK1: M_amp_c + M_atp_c -> 2 M_adp_c; ;
+  R_AKGDH: M_akg_c + M_coa_c + M_nad_c => M_co2_c + M_nadh_c + M_succoa_c; ;
+  R_AKGt2r: M_akg_e + M_h_e -> M_akg_c + M_h_c; ;
+  R_ALCD2x: M_etoh_c + M_nad_c -> M_acald_c + M_h_c + M_nadh_c; ;
+  R_ATPM: M_atp_c + M_h2o_c => M_adp_c + M_h_c + M_pi_c; ;
+  R_ATPS4r: M_adp_c + 4 M_h_e + M_pi_c -> M_atp_c + M_h2o_c + 3 M_h_c; ;
+  R_Biomass_Ecoli_core: 1.496 M_3pg_c + 3.7478 M_accoa_c + 59.81 M_atp_c + 0.361 M_e4p_c + 0.0709 M_f6p_c + 0.129 M_g3p_c + 0.205 M_g6p_c + 0.2557 M_gln__L_c + 4.9414 M_glu__L_c + 59.81 M_h2o_c + 3.547 M_nad_c + 13.0279 M_nadph_c + 1.7867 M_oaa_c + 0.5191 M_pep_c + 2.8328 M_pyr_c + 0.8977 M_r5p_c => 59.81 M_adp_c + 4.1182 M_akg_c + 3.7478 M_coa_c + 59.81 M_h_c + 3.547 M_nadh_c + 13.0279 M_nadp_c + 59.81 M_pi_c; ;
+  R_CO2t: M_co2_e -> M_co2_c; ;
+  R_CS: M_accoa_c + M_h2o_c + M_oaa_c => M_cit_c + M_coa_c + M_h_c; ;
+  R_CYTBD: 2 M_h_c + 0.5 M_o2_c + M_q8h2_c => M_h2o_c + 2 M_h_e + M_q8_c; ;
+  R_D_LACt2: M_h_e + M_lac__D_e -> M_h_c + M_lac__D_c; ;
+  R_ENO: M_2pg_c -> M_h2o_c + M_pep_c; ;
+  R_ETOHt2r: M_etoh_e + M_h_e -> M_etoh_c + M_h_c; ;
+  R_EX_ac_e: M_ac_e => ; ;
+  R_EX_acald_e: M_acald_e => ; ;
+  R_EX_akg_e: M_akg_e => ; ;
+  R_EX_co2_e: M_co2_e -> ; ;
+  R_EX_etoh_e: M_etoh_e => ; ;
+  R_EX_for_e: M_for_e => ; ;
+  R_EX_fru_e: M_fru_e => ; ;
+  R_EX_fum_e: M_fum_e => ; ;
+  R_EX_glc__D_e: M_glc__D_e -> ; ;
+  R_EX_gln__L_e: M_gln__L_e => ; ;
+  R_EX_glu__L_e: M_glu__L_e => ; ;
+  R_EX_h_e: M_h_e -> ; ;
+  R_EX_h2o_e: M_h2o_e -> ; ;
+  R_EX_lac__D_e: M_lac__D_e => ; ;
+  R_EX_mal__L_e: M_mal__L_e => ; ;
+  R_EX_nh4_e: M_nh4_e -> ; ;
+  R_EX_o2_e: M_o2_e -> ; ;
+  R_EX_pi_e: M_pi_e -> ; ;
+  R_EX_pyr_e: M_pyr_e => ; ;
+  R_EX_succ_e: M_succ_e => ; ;
+  R_FBA: M_fdp_c -> M_dhap_c + M_g3p_c; ;
+  R_FBP: M_fdp_c + M_h2o_c => M_f6p_c + M_pi_c; ;
+  R_FORt2: M_for_e + M_h_e => M_for_c + M_h_c; ;
+  R_FORti: M_for_c => M_for_e; ;
+  R_FRD7: M_fum_c + M_q8h2_c => M_q8_c + M_succ_c; ;
+  R_FRUpts2: M_fru_e + M_pep_c => M_f6p_c + M_pyr_c; ;
+  R_FUM: M_fum_c + M_h2o_c -> M_mal__L_c; ;
+  R_FUMt2_2: M_fum_e + 2 M_h_e => M_fum_c + 2 M_h_c; ;
+  R_G6PDH2r: M_g6p_c + M_nadp_c -> M_6pgl_c + M_h_c + M_nadph_c; ;
+  R_GAPD: M_g3p_c + M_nad_c + M_pi_c -> M_13dpg_c + M_h_c + M_nadh_c; ;
+  R_GLCpts: M_glc__D_e + M_pep_c => M_g6p_c + M_pyr_c; ;
+  R_GLNS: M_atp_c + M_glu__L_c + M_nh4_c => M_adp_c + M_gln__L_c + M_h_c + M_pi_c; ;
+  R_GLNabc: M_atp_c + M_gln__L_e + M_h2o_c => M_adp_c + M_gln__L_c + M_h_c + M_pi_c; ;
+  R_GLUDy: M_glu__L_c + M_h2o_c + M_nadp_c -> M_akg_c + M_h_c + M_nadph_c + M_nh4_c; ;
+  R_GLUN: M_gln__L_c + M_h2o_c => M_glu__L_c + M_nh4_c; ;
+  R_GLUSy: M_akg_c + M_gln__L_c + M_h_c + M_nadph_c => 2 M_glu__L_c + M_nadp_c; ;
+  R_GLUt2r: M_glu__L_e + M_h_e -> M_glu__L_c + M_h_c; ;
+  R_GND: M_6pgc_c + M_nadp_c => M_co2_c + M_nadph_c + M_ru5p__D_c; ;
+  R_H2Ot: M_h2o_e -> M_h2o_c; ;
+  R_ICDHyr: M_icit_c + M_nadp_c -> M_akg_c + M_co2_c + M_nadph_c; ;
+  R_ICL: M_icit_c => M_glx_c + M_succ_c; ;
+  R_LDH_D: M_lac__D_c + M_nad_c -> M_h_c + M_nadh_c + M_pyr_c; ;
+  R_MALS: M_accoa_c + M_glx_c + M_h2o_c => M_coa_c + M_h_c + M_mal__L_c; ;
+  R_MALt2_2: 2 M_h_e + M_mal__L_e => 2 M_h_c + M_mal__L_c; ;
+  R_MDH: M_mal__L_c + M_nad_c -> M_h_c + M_nadh_c + M_oaa_c; ;
+  R_ME1: M_mal__L_c + M_nad_c => M_co2_c + M_nadh_c + M_pyr_c; ;
+  R_ME2: M_mal__L_c + M_nadp_c => M_co2_c + M_nadph_c + M_pyr_c; ;
+  R_NADH16: 4 M_h_c + M_nadh_c + M_q8_c => 3 M_h_e + M_nad_c + M_q8h2_c; ;
+  R_NADTRHD: M_nad_c + M_nadph_c => M_nadh_c + M_nadp_c; ;
+  R_NH4t: M_nh4_e -> M_nh4_c; ;
+  R_O2t: M_o2_e -> M_o2_c; ;
+  R_PDH: M_coa_c + M_nad_c + M_pyr_c => M_accoa_c + M_co2_c + M_nadh_c; ;
+  R_PFK: M_atp_c + M_f6p_c => M_adp_c + M_fdp_c + M_h_c; ;
+  R_PFL: M_coa_c + M_pyr_c => M_accoa_c + M_for_c; ;
+  R_PGI: M_g6p_c -> M_f6p_c; ;
+  R_PGK: M_3pg_c + M_atp_c -> M_13dpg_c + M_adp_c; ;
+  R_PGL: M_6pgl_c + M_h2o_c => M_6pgc_c + M_h_c; ;
+  R_PGM: M_2pg_c -> M_3pg_c; ;
+  R_PIt2r: M_h_e + M_pi_e -> M_h_c + M_pi_c; ;
+  R_PPC: M_co2_c + M_h2o_c + M_pep_c => M_h_c + M_oaa_c + M_pi_c; ;
+  R_PPCK: M_atp_c + M_oaa_c => M_adp_c + M_co2_c + M_pep_c; ;
+  R_PPS: M_atp_c + M_h2o_c + M_pyr_c => M_amp_c + 2 M_h_c + M_pep_c + M_pi_c; ;
+  R_PTAr: M_accoa_c + M_pi_c -> M_actp_c + M_coa_c; ;
+  R_PYK: M_adp_c + M_h_c + M_pep_c => M_atp_c + M_pyr_c; ;
+  R_PYRt2: M_h_e + M_pyr_e -> M_h_c + M_pyr_c; ;
+  R_RPE: M_ru5p__D_c -> M_xu5p__D_c; ;
+  R_RPI: M_r5p_c -> M_ru5p__D_c; ;
+  R_SUCCt2_2: 2 M_h_e + M_succ_e => 2 M_h_c + M_succ_c; ;
+  R_SUCCt3: M_h_e + M_succ_c => M_h_c + M_succ_e; ;
+  R_SUCDi: M_q8_c + M_succ_c => M_fum_c + M_q8h2_c; ;
+  R_SUCOAS: M_atp_c + M_coa_c + M_succ_c -> M_adp_c + M_pi_c + M_succoa_c; ;
+  R_TALA: M_g3p_c + M_s7p_c -> M_e4p_c + M_f6p_c; ;
+  R_THD2: 2 M_h_e + M_nadh_c + M_nadp_c => 2 M_h_c + M_nad_c + M_nadph_c; ;
+  R_TKT1: M_r5p_c + M_xu5p__D_c -> M_g3p_c + M_s7p_c; ;
+  R_TKT2: M_e4p_c + M_xu5p__D_c -> M_f6p_c + M_g3p_c; ;
+  R_TPI: M_dhap_c -> M_g3p_c; ;
+
+  // The objective function (for FBC analysis):
+  obj: maximize R_Biomass_Ecoli_core;
+
+  // Species initializations:
+  M_13dpg_c = ;
+  M_2pg_c = ;
+  M_3pg_c = ;
+  M_6pgc_c = ;
+  M_6pgl_c = ;
+  M_ac_c = ;
+  M_ac_e = ;
+  M_acald_c = ;
+  M_acald_e = ;
+  M_accoa_c = ;
+  M_acon_C_c = ;
+  M_actp_c = ;
+  M_adp_c = ;
+  M_akg_c = ;
+  M_akg_e = ;
+  M_amp_c = ;
+  M_atp_c = ;
+  M_cit_c = ;
+  M_co2_c = ;
+  M_co2_e = ;
+  M_coa_c = ;
+  M_dhap_c = ;
+  M_e4p_c = ;
+  M_etoh_c = ;
+  M_etoh_e = ;
+  M_f6p_c = ;
+  M_fdp_c = ;
+  M_for_c = ;
+  M_for_e = ;
+  M_fru_e = ;
+  M_fum_c = ;
+  M_fum_e = ;
+  M_g3p_c = ;
+  M_g6p_c = ;
+  M_glc__D_e = ;
+  M_gln__L_c = ;
+  M_gln__L_e = ;
+  M_glu__L_c = ;
+  M_glu__L_e = ;
+  M_glx_c = ;
+  M_h2o_c = ;
+  M_h2o_e = ;
+  M_h_c = ;
+  M_h_e = ;
+  M_icit_c = ;
+  M_lac__D_c = ;
+  M_lac__D_e = ;
+  M_mal__L_c = ;
+  M_mal__L_e = ;
+  M_nad_c = ;
+  M_nadh_c = ;
+  M_nadp_c = ;
+  M_nadph_c = ;
+  M_nh4_c = ;
+  M_nh4_e = ;
+  M_o2_c = ;
+  M_o2_e = ;
+  M_oaa_c = ;
+  M_pep_c = ;
+  M_pi_c = ;
+  M_pi_e = ;
+  M_pyr_c = ;
+  M_pyr_e = ;
+  M_q8_c = ;
+  M_q8h2_c = ;
+  M_r5p_c = ;
+  M_ru5p__D_c = ;
+  M_s7p_c = ;
+  M_succ_c = ;
+  M_succ_e = ;
+  M_succoa_c = ;
+  M_xu5p__D_c = ;
+
+  // Compartment initializations:
+  c = ;
+  e = ;
+
+  // Variable initializations:
+  cobra_default_lb = -1000;
+  cobra_default_lb has mmol_per_gDW_per_hr;
+  cobra_default_ub = 1000;
+  cobra_default_ub has mmol_per_gDW_per_hr;
+  cobra_0_bound = 0;
+  cobra_0_bound has mmol_per_gDW_per_hr;
+  R_ATPM_lower_bound = 8.39;
+  R_ATPM_lower_bound has mmol_per_gDW_per_hr;
+  R_EX_glc__D_e_lower_bound = -10;
+  R_EX_glc__D_e_lower_bound has mmol_per_gDW_per_hr;
+
+  // Other declarations:
+  const c, e, cobra_default_lb, cobra_default_ub, cobra_0_bound, R_ATPM_lower_bound;
+  const R_EX_glc__D_e_lower_bound;
+
+  // Unit definitions:
+  unit mmol_per_gDW_per_hr = 1e-3 mole / (gram * 3600 second);
+
+  // Display Names:
+  c is "cytosol";
+  e is "extracellular";
+  M_13dpg_c is "3-Phospho-D-glyceroyl phosphate";
+  M_2pg_c is "D-Glycerate 2-phosphate";
+  M_3pg_c is "3-Phospho-D-glycerate";
+  M_6pgc_c is "6-Phospho-D-gluconate";
+  M_6pgl_c is "6-phospho-D-glucono-1,5-lactone";
+  M_ac_c is "Acetate";
+  M_ac_e is "Acetate";
+  M_acald_c is "Acetaldehyde";
+  M_acald_e is "Acetaldehyde";
+  M_accoa_c is "Acetyl-CoA";
+  M_acon_C_c is "cis-Aconitate";
+  M_actp_c is "Acetyl phosphate";
+  M_adp_c is "ADP";
+  M_akg_c is "2-Oxoglutarate";
+  M_akg_e is "2-Oxoglutarate";
+  M_amp_c is "AMP";
+  M_atp_c is "ATP";
+  M_cit_c is "Citrate";
+  M_co2_c is "CO2";
+  M_co2_e is "CO2";
+  M_coa_c is "Coenzyme A";
+  M_dhap_c is "Dihydroxyacetone phosphate";
+  M_e4p_c is "D-Erythrose 4-phosphate";
+  M_etoh_c is "Ethanol";
+  M_etoh_e is "Ethanol";
+  M_f6p_c is "D-Fructose 6-phosphate";
+  M_fdp_c is "D-Fructose 1,6-bisphosphate";
+  M_for_c is "Formate";
+  M_for_e is "Formate";
+  M_fru_e is "D-Fructose";
+  M_fum_c is "Fumarate";
+  M_fum_e is "Fumarate";
+  M_g3p_c is "Glyceraldehyde 3-phosphate";
+  M_g6p_c is "D-Glucose 6-phosphate";
+  M_glc__D_e is "D-Glucose";
+  M_gln__L_c is "L-Glutamine";
+  M_gln__L_e is "L-Glutamine";
+  M_glu__L_c is "L-Glutamate";
+  M_glu__L_e is "L-Glutamate";
+  M_glx_c is "Glyoxylate";
+  M_h2o_c is "H2O";
+  M_h2o_e is "H2O";
+  M_h_c is "H+";
+  M_h_e is "H+";
+  M_icit_c is "Isocitrate";
+  M_lac__D_c is "D-Lactate";
+  M_lac__D_e is "D-Lactate";
+  M_mal__L_c is "L-Malate";
+  M_mal__L_e is "L-Malate";
+  M_nad_c is "Nicotinamide adenine dinucleotide";
+  M_nadh_c is "Nicotinamide adenine dinucleotide - reduced";
+  M_nadp_c is "Nicotinamide adenine dinucleotide phosphate";
+  M_nadph_c is "Nicotinamide adenine dinucleotide phosphate - reduced";
+  M_nh4_c is "Ammonium";
+  M_nh4_e is "Ammonium";
+  M_o2_c is "O2";
+  M_o2_e is "O2";
+  M_oaa_c is "Oxaloacetate";
+  M_pep_c is "Phosphoenolpyruvate";
+  M_pi_c is "Phosphate";
+  M_pi_e is "Phosphate";
+  M_pyr_c is "Pyruvate";
+  M_pyr_e is "Pyruvate";
+  M_q8_c is "Ubiquinone-8";
+  M_q8h2_c is "Ubiquinol-8";
+  M_r5p_c is "alpha-D-Ribose 5-phosphate";
+  M_ru5p__D_c is "D-Ribulose 5-phosphate";
+  M_s7p_c is "Sedoheptulose 7-phosphate";
+  M_succ_c is "Succinate";
+  M_succ_e is "Succinate";
+  M_succoa_c is "Succinyl-CoA";
+  M_xu5p__D_c is "D-Xylulose 5-phosphate";
+  R_ACALD is "acetaldehyde dehydrogenase (acetylating)";
+  R_ACALDt is "R acetaldehyde reversible - transport";
+  R_ACKr is "acetate kinase";
+  R_ACONTa is "aconitase (half-reaction A, Citrate hydro-lyase)";
+  R_ACONTb is "aconitase (half-reaction B, Isocitrate hydro-lyase)";
+  R_ACt2r is "R acetate reversible transport via proton - symport";
+  R_ADK1 is "adenylate kinase";
+  R_AKGDH is "2-Oxogluterate dehydrogenase";
+  R_AKGt2r is "R 2 oxoglutarate reversible transport via - symport";
+  R_ALCD2x is "alcohol dehydrogenase (ethanol)";
+  R_ATPM is "ATP maintenance requirement";
+  R_ATPS4r is "ATP synthase (four protons for one ATP)";
+  R_Biomass_Ecoli_core is "Biomass Objective Function with GAM";
+  R_CO2t is "R CO2 transporter via - diffusion";
+  R_CS is "citrate synthase";
+  R_CYTBD is "cytochrome oxidase bd (ubiquinol-8: 2 protons)";
+  R_D_LACt2 is "R D lactate transport via proton - symport";
+  R_ENO is "enolase";
+  R_ETOHt2r is "ETOHt2r";
+  R_EX_ac_e is "Acetate exchange";
+  R_EX_acald_e is "Acetaldehyde exchange";
+  R_EX_akg_e is "2-Oxoglutarate exchange";
+  R_EX_co2_e is "CO2 exchange";
+  R_EX_etoh_e is "Ethanol exchange";
+  R_EX_for_e is "Formate exchange";
+  R_EX_fru_e is "D-Fructose exchange";
+  R_EX_fum_e is "Fumarate exchange";
+  R_EX_glc__D_e is "D-Glucose exchange";
+  R_EX_gln__L_e is "L-Glutamine exchange";
+  R_EX_glu__L_e is "L-Glutamate exchange";
+  R_EX_h_e is "H+ exchange";
+  R_EX_h2o_e is "H2O exchange";
+  R_EX_lac__D_e is "D-lactate exchange";
+  R_EX_mal__L_e is "L-Malate exchange";
+  R_EX_nh4_e is "Ammonia exchange";
+  R_EX_o2_e is "O2 exchange";
+  R_EX_pi_e is "Phosphate exchange";
+  R_EX_pyr_e is "Pyruvate exchange";
+  R_EX_succ_e is "Succinate exchange";
+  R_FBA is "fructose-bisphosphate aldolase";
+  R_FBP is "fructose-bisphosphatase";
+  R_FORt2 is "formate transport in via proton symport";
+  R_FORti is "formate transport via diffusion";
+  R_FRD7 is "fumarate reductase";
+  R_FRUpts2 is "R Fructose transport via PEPPyr PTS-f6p - generating";
+  R_FUM is "fumarase";
+  R_FUMt2_2 is "R Fumarate transport via proton symport-2 - H";
+  R_G6PDH2r is "glucose 6-phosphate dehydrogenase";
+  R_GAPD is "glyceraldehyde-3-phosphate dehydrogenase";
+  R_GLCpts is "D-glucose transport via PEP:Pyr PTS";
+  R_GLNS is "glutamine synthetase";
+  R_GLNabc is "GLNabc";
+  R_GLUDy is "glutamate dehydrogenase (NADP)";
+  R_GLUN is "glutaminase";
+  R_GLUSy is "glutamate synthase (NADPH)";
+  R_GLUt2r is "R L glutamate transport via proton - symport-reversible";
+  R_GND is "phosphogluconate dehydrogenase";
+  R_H2Ot is "R H2O transport via - diffusion";
+  R_ICDHyr is "isocitrate dehydrogenase (NADP)";
+  R_ICL is "Isocitrate lyase";
+  R_LDH_D is "D-lactate dehydrogenase";
+  R_MALS is "malate synthase";
+  R_MALt2_2 is "R Malate transport via proton symport-2 - H";
+  R_MDH is "malate dehydrogenase";
+  R_ME1 is "malic enzyme (NAD)";
+  R_ME2 is "malic enzyme (NADP)";
+  R_NADH16 is "NADH dehydrogenase (ubiquinone-8 & 3 protons)";
+  R_NADTRHD is "NAD transhydrogenase";
+  R_NH4t is "R ammonia reversible - transport";
+  R_O2t is "R o2 - transport-diffusion";
+  R_PDH is "pyruvate dehydrogenase";
+  R_PFK is "phosphofructokinase";
+  R_PFL is "pyruvate formate lyase";
+  R_PGI is "glucose-6-phosphate isomerase";
+  R_PGK is "phosphoglycerate kinase";
+  R_PGL is "6-phosphogluconolactonase";
+  R_PGM is "phosphoglycerate mutase";
+  R_PIt2r is "R phosphate reversible transport via - symport";
+  R_PPC is "phosphoenolpyruvate carboxylase";
+  R_PPCK is "phosphoenolpyruvate carboxykinase";
+  R_PPS is "phosphoenolpyruvate synthase";
+  R_PTAr is "phosphotransacetylase";
+  R_PYK is "pyruvate kinase";
+  R_PYRt2 is "R pyruvate transport in via proton - symport";
+  R_RPE is "ribulose 5-phosphate 3-epimerase";
+  R_RPI is "ribose-5-phosphate isomerase";
+  R_SUCCt2_2 is "R succinate transport via proton symport-2 - H";
+  R_SUCCt3 is "succinate transport out via proton antiport";
+  R_SUCDi is "succinate dehydrogenase (irreversible)";
+  R_SUCOAS is "succinyl-CoA synthetase (ADP-forming)";
+  R_TALA is "transaldolase";
+  R_THD2 is "R NAD - P-transhydrogenase";
+  R_TKT1 is "transketolase";
+  R_TKT2 is "transketolase";
+  R_TPI is "triose-phosphate isomerase";
+
+  // SBO terms:
+  cobra_default_lb.sboTerm = 626
+  cobra_default_ub.sboTerm = 626
+  cobra_0_bound.sboTerm = 626
+  R_ATPM_lower_bound.sboTerm = 625
+  R_EX_glc__D_e_lower_bound.sboTerm = 625
+  R_Biomass_Ecoli_core.sboTerm = 629
+  R_EX_ac_e.sboTerm = 627
+  R_EX_acald_e.sboTerm = 627
+  R_EX_akg_e.sboTerm = 627
+  R_EX_co2_e.sboTerm = 627
+  R_EX_etoh_e.sboTerm = 627
+  R_EX_for_e.sboTerm = 627
+  R_EX_fru_e.sboTerm = 627
+  R_EX_fum_e.sboTerm = 627
+  R_EX_glc__D_e.sboTerm = 627
+  R_EX_gln__L_e.sboTerm = 627
+  R_EX_glu__L_e.sboTerm = 627
+  R_EX_h_e.sboTerm = 627
+  R_EX_h2o_e.sboTerm = 627
+  R_EX_lac__D_e.sboTerm = 627
+  R_EX_mal__L_e.sboTerm = 627
+  R_EX_nh4_e.sboTerm = 627
+  R_EX_o2_e.sboTerm = 627
+  R_EX_pi_e.sboTerm = 627
+  R_EX_pyr_e.sboTerm = 627
+  R_EX_succ_e.sboTerm = 627
+
+  // CV terms:
+  M_13dpg_c identity "http://identifiers.org/bigg.metabolite/13dpg",
+                     "http://identifiers.org/biocyc/DPG",
+                     "http://identifiers.org/chebi/CHEBI:16001",
+                     "http://identifiers.org/chebi/CHEBI:1658",
+                     "http://identifiers.org/chebi/CHEBI:20189",
+                     "http://identifiers.org/chebi/CHEBI:57604",
+                     "http://identifiers.org/chebi/CHEBI:11881",
+                     "http://identifiers.org/hmdb/HMDB01270",
+                     "http://identifiers.org/kegg.compound/C00236",
+                     "http://identifiers.org/pubchem.substance/3535",
+                     "http://identifiers.org/reactome/REACT_29800",
+                     "http://identifiers.org/seed.compound/cpd00203",
+                     "http://identifiers.org/unipathway.compound/UPC00236"
+  M_2pg_c identity "http://identifiers.org/bigg.metabolite/2pg",
+                   "http://identifiers.org/biocyc/2-PG",
+                   "http://identifiers.org/chebi/CHEBI:1267",
+                   "http://identifiers.org/chebi/CHEBI:58289",
+                   "http://identifiers.org/chebi/CHEBI:17835",
+                   "http://identifiers.org/chebi/CHEBI:21028",
+                   "http://identifiers.org/chebi/CHEBI:11651",
+                   "http://identifiers.org/chebi/CHEBI:12986",
+                   "http://identifiers.org/chebi/CHEBI:24344",
+                   "http://identifiers.org/chebi/CHEBI:39868",
+                   "http://identifiers.org/hmdb/HMDB03391",
+                   "http://identifiers.org/hmdb/HMDB00362",
+                   "http://identifiers.org/kegg.compound/C00631",
+                   "http://identifiers.org/pubchem.substance/3904",
+                   "http://identifiers.org/reactome/REACT_30485",
+                   "http://identifiers.org/seed.compound/cpd00482",
+                   "http://identifiers.org/unipathway.compound/UPC00631"
+  M_3pg_c identity "http://identifiers.org/bigg.metabolite/3pg",
+                   "http://identifiers.org/biocyc/G3P",
+                   "http://identifiers.org/chebi/CHEBI:40016",
+                   "http://identifiers.org/chebi/CHEBI:58272",
+                   "http://identifiers.org/chebi/CHEBI:57998",
+                   "http://identifiers.org/chebi/CHEBI:11879",
+                   "http://identifiers.org/chebi/CHEBI:1657",
+                   "http://identifiers.org/chebi/CHEBI:1659",
+                   "http://identifiers.org/chebi/CHEBI:17050",
+                   "http://identifiers.org/chebi/CHEBI:21029",
+                   "http://identifiers.org/chebi/CHEBI:11882",
+                   "http://identifiers.org/chebi/CHEBI:11880",
+                   "http://identifiers.org/chebi/CHEBI:12987",
+                   "http://identifiers.org/chebi/CHEBI:17794",
+                   "http://identifiers.org/chebi/CHEBI:24345",
+                   "http://identifiers.org/hmdb/HMDB00807",
+                   "http://identifiers.org/kegg.compound/C00197",
+                   "http://identifiers.org/kegg.compound/C00597",
+                   "http://identifiers.org/pubchem.substance/3497",
+                   "http://identifiers.org/reactome/REACT_29728",
+                   "http://identifiers.org/seed.compound/cpd00169",
+                   "http://identifiers.org/unipathway.compound/UPC00597",
+                   "http://identifiers.org/unipathway.compound/UPC00197"
+  M_6pgc_c identity "http://identifiers.org/bigg.metabolite/6pgc",
+                    "http://identifiers.org/biocyc/CPD-2961",
+                    "http://identifiers.org/chebi/CHEBI:2231",
+                    "http://identifiers.org/chebi/CHEBI:12232",
+                    "http://identifiers.org/chebi/CHEBI:48928",
+                    "http://identifiers.org/chebi/CHEBI:16863",
+                    "http://identifiers.org/chebi/CHEBI:58759",
+                    "http://identifiers.org/chebi/CHEBI:40282",
+                    "http://identifiers.org/chebi/CHEBI:33851",
+                    "http://identifiers.org/hmdb/HMDB01316",
+                    "http://identifiers.org/kegg.compound/C00345",
+                    "http://identifiers.org/pubchem.substance/3638",
+                    "http://identifiers.org/reactome/REACT_29996",
+                    "http://identifiers.org/seed.compound/cpd00284",
+                    "http://identifiers.org/unipathway.compound/UPC00345"
+  M_6pgl_c identity "http://identifiers.org/bigg.metabolite/6pgl",
+                    "http://identifiers.org/biocyc/D-6-P-GLUCONO-DELTA-LACTONE",
+                    "http://identifiers.org/chebi/CHEBI:16938",
+                    "http://identifiers.org/chebi/CHEBI:12233",
+                    "http://identifiers.org/chebi/CHEBI:4160",
+                    "http://identifiers.org/chebi/CHEBI:20989",
+                    "http://identifiers.org/chebi/CHEBI:57955",
+                    "http://identifiers.org/chebi/CHEBI:12958",
+                    "http://identifiers.org/hmdb/HMDB01127",
+                    "http://identifiers.org/kegg.compound/C01236",
+                    "http://identifiers.org/pubchem.substance/4457",
+                    "http://identifiers.org/reactome/REACT_31467",
+                    "http://identifiers.org/seed.compound/cpd00911",
+                    "http://identifiers.org/unipathway.compound/UPC01236"
+  M_ac_c identity "http://identifiers.org/bigg.metabolite/ac",
+                  "http://identifiers.org/biocyc/ACET",
+                  "http://identifiers.org/cas/71-50-1",
+                  "http://identifiers.org/cas/71-50-1",
+                  "http://identifiers.org/chebi/CHEBI:62947",
+                  "http://identifiers.org/chebi/CHEBI:62964",
+                  "http://identifiers.org/chebi/CHEBI:32029",
+                  "http://identifiers.org/chebi/CHEBI:22165",
+                  "http://identifiers.org/chebi/CHEBI:3310",
+                  "http://identifiers.org/chebi/CHEBI:2387",
+                  "http://identifiers.org/chebi/CHEBI:62984",
+                  "http://identifiers.org/chebi/CHEBI:63879",
+                  "http://identifiers.org/chebi/CHEBI:32138",
+                  "http://identifiers.org/chebi/CHEBI:15366",
+                  "http://identifiers.org/chebi/CHEBI:13704",
+                  "http://identifiers.org/chebi/CHEBI:63078",
+                  "http://identifiers.org/chebi/CHEBI:30089",
+                  "http://identifiers.org/chebi/CHEBI:40480",
+                  "http://identifiers.org/chebi/CHEBI:22169",
+                  "http://identifiers.org/chebi/CHEBI:40486",
+                  "http://identifiers.org/chebi/CHEBI:59199",
+                  "http://identifiers.org/chebi/CHEBI:63045",
+                  "http://identifiers.org/chebi/CHEBI:32954",
+                  "http://identifiers.org/hmdb/HMDB00042",
+                  "http://identifiers.org/kegg.compound/C00033",
+                  "http://identifiers.org/kegg.drug/D00010",
+                  "http://identifiers.org/lipidmaps/LMFA01010000",
+                  "http://identifiers.org/lipidmaps/LMFA01010002",
+                  "http://identifiers.org/pubchem.substance/3335",
+                  "http://identifiers.org/reactome/REACT_113539",
+                  "http://identifiers.org/reactome/REACT_2022890",
+                  "http://identifiers.org/reactome/REACT_29416",
+                  "http://identifiers.org/reactome/REACT_1524044",
+                  "http://identifiers.org/reactome/REACT_390305",
+                  "http://identifiers.org/seed.compound/cpd00029",
+                  "http://identifiers.org/unipathway.compound/UPC00033"
+  M_ac_e identity "http://identifiers.org/bigg.metabolite/ac",
+                  "http://identifiers.org/biocyc/ACET",
+                  "http://identifiers.org/cas/71-50-1",
+                  "http://identifiers.org/cas/71-50-1",
+                  "http://identifiers.org/chebi/CHEBI:62947",
+                  "http://identifiers.org/chebi/CHEBI:62964",
+                  "http://identifiers.org/chebi/CHEBI:32029",
+                  "http://identifiers.org/chebi/CHEBI:22165",
+                  "http://identifiers.org/chebi/CHEBI:3310",
+                  "http://identifiers.org/chebi/CHEBI:2387",
+                  "http://identifiers.org/chebi/CHEBI:62984",
+                  "http://identifiers.org/chebi/CHEBI:63879",
+                  "http://identifiers.org/chebi/CHEBI:32138",
+                  "http://identifiers.org/chebi/CHEBI:15366",
+                  "http://identifiers.org/chebi/CHEBI:13704",
+                  "http://identifiers.org/chebi/CHEBI:63078",
+                  "http://identifiers.org/chebi/CHEBI:30089",
+                  "http://identifiers.org/chebi/CHEBI:40480",
+                  "http://identifiers.org/chebi/CHEBI:22169",
+                  "http://identifiers.org/chebi/CHEBI:40486",
+                  "http://identifiers.org/chebi/CHEBI:59199",
+                  "http://identifiers.org/chebi/CHEBI:63045",
+                  "http://identifiers.org/chebi/CHEBI:32954",
+                  "http://identifiers.org/hmdb/HMDB00042",
+                  "http://identifiers.org/kegg.compound/C00033",
+                  "http://identifiers.org/kegg.drug/D00010",
+                  "http://identifiers.org/lipidmaps/LMFA01010000",
+                  "http://identifiers.org/lipidmaps/LMFA01010002",
+                  "http://identifiers.org/pubchem.substance/3335",
+                  "http://identifiers.org/reactome/REACT_113539",
+                  "http://identifiers.org/reactome/REACT_2022890",
+                  "http://identifiers.org/reactome/REACT_29416",
+                  "http://identifiers.org/reactome/REACT_1524044",
+                  "http://identifiers.org/reactome/REACT_390305",
+                  "http://identifiers.org/seed.compound/cpd00029",
+                  "http://identifiers.org/unipathway.compound/UPC00033"
+  M_acald_c identity "http://identifiers.org/bigg.metabolite/acald",
+                     "http://identifiers.org/biocyc/ACETALD",
+                     "http://identifiers.org/cas/75-07-0",
+                     "http://identifiers.org/cas/75-07-0",
+                     "http://identifiers.org/chebi/CHEBI:13703",
+                     "http://identifiers.org/chebi/CHEBI:2383",
+                     "http://identifiers.org/chebi/CHEBI:15343",
+                     "http://identifiers.org/chebi/CHEBI:22158",
+                     "http://identifiers.org/chebi/CHEBI:40533",
+                     "http://identifiers.org/hmdb/HMDB00990",
+                     "http://identifiers.org/kegg.compound/C00084",
+                     "http://identifiers.org/pubchem.substance/3384",
+                     "http://identifiers.org/reactome/REACT_113532",
+                     "http://identifiers.org/reactome/REACT_29510",
+                     "http://identifiers.org/reactome/REACT_113681",
+                     "http://identifiers.org/reactome/REACT_113745",
+                     "http://identifiers.org/seed.compound/cpd00071",
+                     "http://identifiers.org/unipathway.compound/UPC00084"
+  M_acald_e identity "http://identifiers.org/bigg.metabolite/acald",
+                     "http://identifiers.org/biocyc/ACETALD",
+                     "http://identifiers.org/cas/75-07-0",
+                     "http://identifiers.org/cas/75-07-0",
+                     "http://identifiers.org/chebi/CHEBI:13703",
+                     "http://identifiers.org/chebi/CHEBI:2383",
+                     "http://identifiers.org/chebi/CHEBI:15343",
+                     "http://identifiers.org/chebi/CHEBI:22158",
+                     "http://identifiers.org/chebi/CHEBI:40533",
+                     "http://identifiers.org/hmdb/HMDB00990",
+                     "http://identifiers.org/kegg.compound/C00084",
+                     "http://identifiers.org/pubchem.substance/3384",
+                     "http://identifiers.org/reactome/REACT_113532",
+                     "http://identifiers.org/reactome/REACT_29510",
+                     "http://identifiers.org/reactome/REACT_113681",
+                     "http://identifiers.org/reactome/REACT_113745",
+                     "http://identifiers.org/seed.compound/cpd00071",
+                     "http://identifiers.org/unipathway.compound/UPC00084"
+  M_accoa_c identity "http://identifiers.org/bigg.metabolite/accoa",
+                     "http://identifiers.org/biocyc/ACETYL-COA",
+                     "http://identifiers.org/cas/72-89-9",
+                     "http://identifiers.org/cas/72-89-9",
+                     "http://identifiers.org/chebi/CHEBI:13712",
+                     "http://identifiers.org/chebi/CHEBI:22192",
+                     "http://identifiers.org/chebi/CHEBI:40470",
+                     "http://identifiers.org/chebi/CHEBI:2408",
+                     "http://identifiers.org/chebi/CHEBI:57288",
+                     "http://identifiers.org/chebi/CHEBI:15351",
+                     "http://identifiers.org/hmdb/HMDB01206",
+                     "http://identifiers.org/kegg.compound/C00024",
+                     "http://identifiers.org/lipidmaps/LMFA07050029",
+                     "http://identifiers.org/lipidmaps/LMFA07050000",
+                     "http://identifiers.org/pubchem.substance/3326",
+                     "http://identifiers.org/reactome/REACT_113559",
+                     "http://identifiers.org/reactome/REACT_727753",
+                     "http://identifiers.org/reactome/REACT_113560",
+                     "http://identifiers.org/reactome/REACT_353123",
+                     "http://identifiers.org/reactome/REACT_76183",
+                     "http://identifiers.org/seed.compound/cpd00022",
+                     "http://identifiers.org/unipathway.compound/UPC00024"
+  M_acon_C_c identity "http://identifiers.org/bigg.metabolite/acon_C",
+                      "http://identifiers.org/cas/585-84-2",
+                      "http://identifiers.org/cas/585-84-2",
+                      "http://identifiers.org/kegg.compound/C00417",
+                      "http://identifiers.org/pubchem.substance/3707"
+  M_actp_c identity "http://identifiers.org/bigg.metabolite/actp",
+                    "http://identifiers.org/biocyc/ACETYL-P",
+                    "http://identifiers.org/cas/19926-71-7",
+                    "http://identifiers.org/cas/19926-71-7",
+                    "http://identifiers.org/chebi/CHEBI:13711",
+                    "http://identifiers.org/chebi/CHEBI:2407",
+                    "http://identifiers.org/chebi/CHEBI:22191",
+                    "http://identifiers.org/chebi/CHEBI:46262",
+                    "http://identifiers.org/chebi/CHEBI:15350",
+                    "http://identifiers.org/hmdb/HMDB01494",
+                    "http://identifiers.org/kegg.compound/C00227",
+                    "http://identifiers.org/pubchem.substance/3527",
+                    "http://identifiers.org/seed.compound/cpd00196",
+                    "http://identifiers.org/unipathway.compound/UPC00227"
+  M_adp_c identity "http://identifiers.org/bigg.metabolite/adp",
+                   "http://identifiers.org/biocyc/ADP",
+                   "http://identifiers.org/biocyc/ADP-GROUP",
+                   "http://identifiers.org/cas/58-64-0",
+                   "http://identifiers.org/cas/58-64-0",
+                   "http://identifiers.org/chebi/CHEBI:13222",
+                   "http://identifiers.org/chebi/CHEBI:16761",
+                   "http://identifiers.org/chebi/CHEBI:2342",
+                   "http://identifiers.org/chebi/CHEBI:22244",
+                   "http://identifiers.org/chebi/CHEBI:40553",
+                   "http://identifiers.org/chebi/CHEBI:456216",
+                   "http://identifiers.org/hmdb/HMDB01341",
+                   "http://identifiers.org/kegg.compound/C00008",
+                   "http://identifiers.org/kegg.glycan/G11113",
+                   "http://identifiers.org/pubchem.substance/3310",
+                   "http://identifiers.org/reactome/REACT_190072",
+                   "http://identifiers.org/reactome/REACT_481002",
+                   "http://identifiers.org/reactome/REACT_211606",
+                   "http://identifiers.org/reactome/REACT_429160",
+                   "http://identifiers.org/reactome/REACT_29370",
+                   "http://identifiers.org/reactome/REACT_196180",
+                   "http://identifiers.org/reactome/REACT_113581",
+                   "http://identifiers.org/reactome/REACT_113582",
+                   "http://identifiers.org/reactome/REACT_114564",
+                   "http://identifiers.org/reactome/REACT_114565",
+                   "http://identifiers.org/reactome/REACT_429153",
+                   "http://identifiers.org/seed.compound/cpd00008",
+                   "http://identifiers.org/unipathway.compound/UPC00008"
+  M_akg_c identity "http://identifiers.org/bigg.metabolite/akg",
+                   "http://identifiers.org/biocyc/2-KETOGLUTARATE",
+                   "http://identifiers.org/cas/328-50-7",
+                   "http://identifiers.org/cas/328-50-7",
+                   "http://identifiers.org/chebi/CHEBI:30915",
+                   "http://identifiers.org/chebi/CHEBI:40661",
+                   "http://identifiers.org/chebi/CHEBI:1253",
+                   "http://identifiers.org/chebi/CHEBI:19749",
+                   "http://identifiers.org/chebi/CHEBI:19748",
+                   "http://identifiers.org/chebi/CHEBI:16810",
+                   "http://identifiers.org/chebi/CHEBI:30916",
+                   "http://identifiers.org/chebi/CHEBI:11638",
+                   "http://identifiers.org/hmdb/HMDB02812",
+                   "http://identifiers.org/hmdb/HMDB00208",
+                   "http://identifiers.org/kegg.compound/C00026",
+                   "http://identifiers.org/pubchem.substance/3328",
+                   "http://identifiers.org/reactome/REACT_113594",
+                   "http://identifiers.org/reactome/REACT_113671",
+                   "http://identifiers.org/reactome/REACT_389537",
+                   "http://identifiers.org/reactome/REACT_561075",
+                   "http://identifiers.org/reactome/REACT_29406",
+                   "http://identifiers.org/reactome/REACT_1650779",
+                   "http://identifiers.org/seed.compound/cpd00024",
+                   "http://identifiers.org/unipathway.compound/UPC00026"
+  M_akg_e identity "http://identifiers.org/bigg.metabolite/akg",
+                   "http://identifiers.org/biocyc/2-KETOGLUTARATE",
+                   "http://identifiers.org/cas/328-50-7",
+                   "http://identifiers.org/cas/328-50-7",
+                   "http://identifiers.org/chebi/CHEBI:30915",
+                   "http://identifiers.org/chebi/CHEBI:40661",
+                   "http://identifiers.org/chebi/CHEBI:1253",
+                   "http://identifiers.org/chebi/CHEBI:19749",
+                   "http://identifiers.org/chebi/CHEBI:19748",
+                   "http://identifiers.org/chebi/CHEBI:16810",
+                   "http://identifiers.org/chebi/CHEBI:30916",
+                   "http://identifiers.org/chebi/CHEBI:11638",
+                   "http://identifiers.org/hmdb/HMDB02812",
+                   "http://identifiers.org/hmdb/HMDB00208",
+                   "http://identifiers.org/kegg.compound/C00026",
+                   "http://identifiers.org/pubchem.substance/3328",
+                   "http://identifiers.org/reactome/REACT_113594",
+                   "http://identifiers.org/reactome/REACT_113671",
+                   "http://identifiers.org/reactome/REACT_389537",
+                   "http://identifiers.org/reactome/REACT_561075",
+                   "http://identifiers.org/reactome/REACT_29406",
+                   "http://identifiers.org/reactome/REACT_1650779",
+                   "http://identifiers.org/seed.compound/cpd00024",
+                   "http://identifiers.org/unipathway.compound/UPC00026"
+  M_amp_c identity "http://identifiers.org/bigg.metabolite/amp",
+                   "http://identifiers.org/biocyc/CPD0-1139",
+                   "http://identifiers.org/biocyc/AMP-GROUP",
+                   "http://identifiers.org/biocyc/AMP",
+                   "http://identifiers.org/cas/61-19-8",
+                   "http://identifiers.org/cas/61-19-8",
+                   "http://identifiers.org/chebi/CHEBI:12056",
+                   "http://identifiers.org/chebi/CHEBI:47222",
+                   "http://identifiers.org/chebi/CHEBI:40726",
+                   "http://identifiers.org/chebi/CHEBI:40826",
+                   "http://identifiers.org/chebi/CHEBI:13740",
+                   "http://identifiers.org/chebi/CHEBI:13235",
+                   "http://identifiers.org/chebi/CHEBI:13234",
+                   "http://identifiers.org/chebi/CHEBI:40786",
+                   "http://identifiers.org/chebi/CHEBI:37096",
+                   "http://identifiers.org/chebi/CHEBI:22245",
+                   "http://identifiers.org/chebi/CHEBI:22242",
+                   "http://identifiers.org/chebi/CHEBI:40510",
+                   "http://identifiers.org/chebi/CHEBI:16027",
+                   "http://identifiers.org/chebi/CHEBI:2356",
+                   "http://identifiers.org/chebi/CHEBI:456215",
+                   "http://identifiers.org/chebi/CHEBI:13736",
+                   "http://identifiers.org/hmdb/HMDB00045",
+                   "http://identifiers.org/kegg.compound/C00020",
+                   "http://identifiers.org/kegg.drug/D02769",
+                   "http://identifiers.org/kegg.drug/D06299",
+                   "http://identifiers.org/pubchem.substance/3322",
+                   "http://identifiers.org/reactome/REACT_389620",
+                   "http://identifiers.org/reactome/REACT_159448",
+                   "http://identifiers.org/reactome/REACT_164121",
+                   "http://identifiers.org/reactome/REACT_76577",
+                   "http://identifiers.org/reactome/REACT_2046064",
+                   "http://identifiers.org/seed.compound/cpd00018",
+                   "http://identifiers.org/unipathway.compound/UPC00020"
+  M_atp_c identity "http://identifiers.org/bigg.metabolite/atp",
+                   "http://identifiers.org/biocyc/ATP",
+                   "http://identifiers.org/cas/56-65-5",
+                   "http://identifiers.org/cas/56-65-5",
+                   "http://identifiers.org/chebi/CHEBI:40938",
+                   "http://identifiers.org/chebi/CHEBI:15422",
+                   "http://identifiers.org/chebi/CHEBI:57299",
+                   "http://identifiers.org/chebi/CHEBI:13236",
+                   "http://identifiers.org/chebi/CHEBI:10789",
+                   "http://identifiers.org/chebi/CHEBI:30616",
+                   "http://identifiers.org/chebi/CHEBI:22249",
+                   "http://identifiers.org/chebi/CHEBI:10841",
+                   "http://identifiers.org/chebi/CHEBI:2359",
+                   "http://identifiers.org/hmdb/HMDB00538",
+                   "http://identifiers.org/kegg.compound/C00002",
+                   "http://identifiers.org/kegg.drug/D08646",
+                   "http://identifiers.org/pubchem.substance/3304",
+                   "http://identifiers.org/reactome/REACT_190078",
+                   "http://identifiers.org/reactome/REACT_113592",
+                   "http://identifiers.org/reactome/REACT_113593",
+                   "http://identifiers.org/reactome/REACT_114570",
+                   "http://identifiers.org/reactome/REACT_29358",
+                   "http://identifiers.org/reactome/REACT_389573",
+                   "http://identifiers.org/reactome/REACT_139836",
+                   "http://identifiers.org/reactome/REACT_211579",
+                   "http://identifiers.org/seed.compound/cpd00002",
+                   "http://identifiers.org/unipathway.compound/UPC00002"
+  M_cit_c identity "http://identifiers.org/bigg.metabolite/cit",
+                   "http://identifiers.org/biocyc/CIT",
+                   "http://identifiers.org/cas/77-92-9",
+                   "http://identifiers.org/cas/77-92-9",
+                   "http://identifiers.org/chebi/CHEBI:53258",
+                   "http://identifiers.org/chebi/CHEBI:23322",
+                   "http://identifiers.org/chebi/CHEBI:50744",
+                   "http://identifiers.org/chebi/CHEBI:23321",
+                   "http://identifiers.org/chebi/CHEBI:35810",
+                   "http://identifiers.org/chebi/CHEBI:3727",
+                   "http://identifiers.org/chebi/CHEBI:32142",
+                   "http://identifiers.org/chebi/CHEBI:30769",
+                   "http://identifiers.org/chebi/CHEBI:63037",
+                   "http://identifiers.org/chebi/CHEBI:63076",
+                   "http://identifiers.org/chebi/CHEBI:41523",
+                   "http://identifiers.org/chebi/CHEBI:35806",
+                   "http://identifiers.org/chebi/CHEBI:35802",
+                   "http://identifiers.org/chebi/CHEBI:35809",
+                   "http://identifiers.org/chebi/CHEBI:16947",
+                   "http://identifiers.org/chebi/CHEBI:13999",
+                   "http://identifiers.org/chebi/CHEBI:42563",
+                   "http://identifiers.org/hmdb/HMDB00094",
+                   "http://identifiers.org/kegg.compound/C00158",
+                   "http://identifiers.org/kegg.compound/C13660",
+                   "http://identifiers.org/kegg.compound/C12649",
+                   "http://identifiers.org/kegg.drug/D07525",
+                   "http://identifiers.org/kegg.drug/D00037",
+                   "http://identifiers.org/kegg.drug/D01222",
+                   "http://identifiers.org/kegg.drug/D07691",
+                   "http://identifiers.org/pubchem.substance/3458",
+                   "http://identifiers.org/reactome/REACT_76190",
+                   "http://identifiers.org/reactome/REACT_433138",
+                   "http://identifiers.org/reactome/REACT_29654",
+                   "http://identifiers.org/seed.compound/cpd00137",
+                   "http://identifiers.org/seed.compound/cpd09279",
+                   "http://identifiers.org/unipathway.compound/UPC00158"
+  M_co2_c identity "http://identifiers.org/bigg.metabolite/co2",
+                   "http://identifiers.org/biocyc/CARBON-DIOXIDE",
+                   "http://identifiers.org/cas/124-38-9",
+                   "http://identifiers.org/cas/124-38-9",
+                   "http://identifiers.org/chebi/CHEBI:48829",
+                   "http://identifiers.org/chebi/CHEBI:16526",
+                   "http://identifiers.org/chebi/CHEBI:13284",
+                   "http://identifiers.org/chebi/CHEBI:13285",
+                   "http://identifiers.org/chebi/CHEBI:13282",
+                   "http://identifiers.org/chebi/CHEBI:13283",
+                   "http://identifiers.org/chebi/CHEBI:23011",
+                   "http://identifiers.org/chebi/CHEBI:3283",
+                   "http://identifiers.org/hmdb/HMDB01967",
+                   "http://identifiers.org/kegg.compound/C00011",
+                   "http://identifiers.org/kegg.drug/D00004",
+                   "http://identifiers.org/pubchem.substance/3313",
+                   "http://identifiers.org/reactome/REACT_159751",
+                   "http://identifiers.org/reactome/REACT_159942",
+                   "http://identifiers.org/reactome/REACT_1237009",
+                   "http://identifiers.org/reactome/REACT_29376",
+                   "http://identifiers.org/reactome/REACT_113528",
+                   "http://identifiers.org/reactome/REACT_389536",
+                   "http://identifiers.org/reactome/REACT_189480",
+                   "http://identifiers.org/seed.compound/cpd00011",
+                   "http://identifiers.org/unipathway.compound/UPC00011"
+  M_co2_e identity "http://identifiers.org/bigg.metabolite/co2",
+                   "http://identifiers.org/biocyc/CARBON-DIOXIDE",
+                   "http://identifiers.org/cas/124-38-9",
+                   "http://identifiers.org/cas/124-38-9",
+                   "http://identifiers.org/chebi/CHEBI:48829",
+                   "http://identifiers.org/chebi/CHEBI:16526",
+                   "http://identifiers.org/chebi/CHEBI:13284",
+                   "http://identifiers.org/chebi/CHEBI:13285",
+                   "http://identifiers.org/chebi/CHEBI:13282",
+                   "http://identifiers.org/chebi/CHEBI:13283",
+                   "http://identifiers.org/chebi/CHEBI:23011",
+                   "http://identifiers.org/chebi/CHEBI:3283",
+                   "http://identifiers.org/hmdb/HMDB01967",
+                   "http://identifiers.org/kegg.compound/C00011",
+                   "http://identifiers.org/kegg.drug/D00004",
+                   "http://identifiers.org/pubchem.substance/3313",
+                   "http://identifiers.org/reactome/REACT_159751",
+                   "http://identifiers.org/reactome/REACT_159942",
+                   "http://identifiers.org/reactome/REACT_1237009",
+                   "http://identifiers.org/reactome/REACT_29376",
+                   "http://identifiers.org/reactome/REACT_113528",
+                   "http://identifiers.org/reactome/REACT_389536",
+                   "http://identifiers.org/reactome/REACT_189480",
+                   "http://identifiers.org/seed.compound/cpd00011",
+                   "http://identifiers.org/unipathway.compound/UPC00011"
+  M_coa_c identity "http://identifiers.org/bigg.metabolite/coa",
+                   "http://identifiers.org/biocyc/CO-A",
+                   "http://identifiers.org/cas/85-61-0",
+                   "http://identifiers.org/cas/85-61-0",
+                   "http://identifiers.org/chebi/CHEBI:57287",
+                   "http://identifiers.org/chebi/CHEBI:13295",
+                   "http://identifiers.org/chebi/CHEBI:13294",
+                   "http://identifiers.org/chebi/CHEBI:13298",
+                   "http://identifiers.org/chebi/CHEBI:41631",
+                   "http://identifiers.org/chebi/CHEBI:41597",
+                   "http://identifiers.org/chebi/CHEBI:741566",
+                   "http://identifiers.org/chebi/CHEBI:15346",
+                   "http://identifiers.org/chebi/CHEBI:23355",
+                   "http://identifiers.org/chebi/CHEBI:3771",
+                   "http://identifiers.org/hmdb/HMDB01423",
+                   "http://identifiers.org/kegg.compound/C00010",
+                   "http://identifiers.org/pubchem.substance/3312",
+                   "http://identifiers.org/reactome/REACT_76194",
+                   "http://identifiers.org/reactome/REACT_193514",
+                   "http://identifiers.org/reactome/REACT_29374",
+                   "http://identifiers.org/reactome/REACT_2485002",
+                   "http://identifiers.org/reactome/REACT_162743",
+                   "http://identifiers.org/seed.compound/cpd00010",
+                   "http://identifiers.org/unipathway.compound/UPC00010"
+  M_dhap_c identity "http://identifiers.org/bigg.metabolite/dhap",
+                    "http://identifiers.org/biocyc/DIHYDROXY-ACETONE-PHOSPHATE",
+                    "http://identifiers.org/cas/57-04-5",
+                    "http://identifiers.org/cas/57-04-5",
+                    "http://identifiers.org/chebi/CHEBI:14341",
+                    "http://identifiers.org/chebi/CHEBI:57642",
+                    "http://identifiers.org/chebi/CHEBI:14342",
+                    "http://identifiers.org/chebi/CHEBI:16108",
+                    "http://identifiers.org/chebi/CHEBI:5454",
+                    "http://identifiers.org/chebi/CHEBI:24355",
+                    "http://identifiers.org/chebi/CHEBI:39571",
+                    "http://identifiers.org/hmdb/HMDB01473",
+                    "http://identifiers.org/hmdb/HMDB11735",
+                    "http://identifiers.org/kegg.compound/C00111",
+                    "http://identifiers.org/pubchem.substance/3411",
+                    "http://identifiers.org/reactome/REACT_188451",
+                    "http://identifiers.org/reactome/REACT_75970",
+                    "http://identifiers.org/reactome/REACT_390404",
+                    "http://identifiers.org/seed.compound/cpd00095",
+                    "http://identifiers.org/unipathway.compound/UPC00111"
+  M_e4p_c identity "http://identifiers.org/bigg.metabolite/e4p",
+                   "http://identifiers.org/biocyc/ERYTHROSE-4P",
+                   "http://identifiers.org/cas/585-18-2",
+                   "http://identifiers.org/cas/585-18-2",
+                   "http://identifiers.org/chebi/CHEBI:42349",
+                   "http://identifiers.org/chebi/CHEBI:48153",
+                   "http://identifiers.org/chebi/CHEBI:4256",
+                   "http://identifiers.org/chebi/CHEBI:20927",
+                   "http://identifiers.org/chebi/CHEBI:12921",
+                   "http://identifiers.org/chebi/CHEBI:21109",
+                   "http://identifiers.org/chebi/CHEBI:27508",
+                   "http://identifiers.org/chebi/CHEBI:4114",
+                   "http://identifiers.org/chebi/CHEBI:16897",
+                   "http://identifiers.org/hmdb/HMDB01321",
+                   "http://identifiers.org/kegg.compound/C03109",
+                   "http://identifiers.org/kegg.compound/C00279",
+                   "http://identifiers.org/pubchem.substance/3574",
+                   "http://identifiers.org/reactome/REACT_29878",
+                   "http://identifiers.org/seed.compound/cpd01994",
+                   "http://identifiers.org/seed.compound/cpd00236",
+                   "http://identifiers.org/unipathway.compound/UPC00279"
+  M_etoh_c identity "http://identifiers.org/bigg.metabolite/etoh",
+                    "http://identifiers.org/biocyc/ETOH",
+                    "http://identifiers.org/cas/64-17-5",
+                    "http://identifiers.org/cas/64-17-5",
+                    "http://identifiers.org/chebi/CHEBI:4879",
+                    "http://identifiers.org/chebi/CHEBI:30880",
+                    "http://identifiers.org/chebi/CHEBI:16236",
+                    "http://identifiers.org/chebi/CHEBI:30878",
+                    "http://identifiers.org/chebi/CHEBI:52092",
+                    "http://identifiers.org/chebi/CHEBI:14222",
+                    "http://identifiers.org/chebi/CHEBI:52096",
+                    "http://identifiers.org/chebi/CHEBI:23978",
+                    "http://identifiers.org/chebi/CHEBI:44594",
+                    "http://identifiers.org/chebi/CHEBI:42377",
+                    "http://identifiers.org/hmdb/HMDB00108",
+                    "http://identifiers.org/kegg.compound/C00469",
+                    "http://identifiers.org/kegg.drug/D04855",
+                    "http://identifiers.org/kegg.drug/D06542",
+                    "http://identifiers.org/kegg.drug/D00068",
+                    "http://identifiers.org/kegg.drug/D02798",
+                    "http://identifiers.org/pubchem.substance/3752",
+                    "http://identifiers.org/reactome/REACT_30203",
+                    "http://identifiers.org/reactome/REACT_113748",
+                    "http://identifiers.org/seed.compound/cpd00363",
+                    "http://identifiers.org/unipathway.compound/UPC00469"
+  M_etoh_e identity "http://identifiers.org/bigg.metabolite/etoh",
+                    "http://identifiers.org/biocyc/ETOH",
+                    "http://identifiers.org/cas/64-17-5",
+                    "http://identifiers.org/cas/64-17-5",
+                    "http://identifiers.org/chebi/CHEBI:4879",
+                    "http://identifiers.org/chebi/CHEBI:30880",
+                    "http://identifiers.org/chebi/CHEBI:16236",
+                    "http://identifiers.org/chebi/CHEBI:30878",
+                    "http://identifiers.org/chebi/CHEBI:52092",
+                    "http://identifiers.org/chebi/CHEBI:14222",
+                    "http://identifiers.org/chebi/CHEBI:52096",
+                    "http://identifiers.org/chebi/CHEBI:23978",
+                    "http://identifiers.org/chebi/CHEBI:44594",
+                    "http://identifiers.org/chebi/CHEBI:42377",
+                    "http://identifiers.org/hmdb/HMDB00108",
+                    "http://identifiers.org/kegg.compound/C00469",
+                    "http://identifiers.org/kegg.drug/D04855",
+                    "http://identifiers.org/kegg.drug/D06542",
+                    "http://identifiers.org/kegg.drug/D00068",
+                    "http://identifiers.org/kegg.drug/D02798",
+                    "http://identifiers.org/pubchem.substance/3752",
+                    "http://identifiers.org/reactome/REACT_30203",
+                    "http://identifiers.org/reactome/REACT_113748",
+                    "http://identifiers.org/seed.compound/cpd00363",
+                    "http://identifiers.org/unipathway.compound/UPC00469"
+  M_f6p_c identity "http://identifiers.org/bigg.metabolite/f6p",
+                   "http://identifiers.org/biocyc/FRUCTOSE-6P",
+                   "http://identifiers.org/cas/643-13-0",
+                   "http://identifiers.org/cas/643-13-0",
+                   "http://identifiers.org/chebi/CHEBI:57634",
+                   "http://identifiers.org/chebi/CHEBI:12352",
+                   "http://identifiers.org/chebi/CHEBI:45804",
+                   "http://identifiers.org/chebi/CHEBI:61527",
+                   "http://identifiers.org/chebi/CHEBI:61553",
+                   "http://identifiers.org/chebi/CHEBI:10375",
+                   "http://identifiers.org/chebi/CHEBI:16084",
+                   "http://identifiers.org/chebi/CHEBI:42378",
+                   "http://identifiers.org/chebi/CHEBI:22768",
+                   "http://identifiers.org/hmdb/HMDB03971",
+                   "http://identifiers.org/kegg.compound/C05345",
+                   "http://identifiers.org/kegg.compound/C00085",
+                   "http://identifiers.org/pubchem.substance/3385",
+                   "http://identifiers.org/seed.compound/cpd00072",
+                   "http://identifiers.org/unipathway.compound/UPC05345",
+                   "http://identifiers.org/unipathway.compound/UPC00085"
+  M_fdp_c identity "http://identifiers.org/bigg.metabolite/fdp",
+                   "http://identifiers.org/biocyc/FRUCTOSE-16-DIPHOSPHATE",
+                   "http://identifiers.org/cas/488-69-7",
+                   "http://identifiers.org/cas/488-69-7",
+                   "http://identifiers.org/chebi/CHEBI:32968",
+                   "http://identifiers.org/chebi/CHEBI:49299",
+                   "http://identifiers.org/chebi/CHEBI:42553",
+                   "http://identifiers.org/chebi/CHEBI:32966",
+                   "http://identifiers.org/chebi/CHEBI:37736",
+                   "http://identifiers.org/chebi/CHEBI:28013",
+                   "http://identifiers.org/chebi/CHEBI:32967",
+                   "http://identifiers.org/chebi/CHEBI:41014",
+                   "http://identifiers.org/chebi/CHEBI:22767",
+                   "http://identifiers.org/chebi/CHEBI:10374",
+                   "http://identifiers.org/chebi/CHEBI:40595",
+                   "http://identifiers.org/chebi/CHEBI:40591",
+                   "http://identifiers.org/kegg.compound/C05378",
+                   "http://identifiers.org/kegg.compound/C00354",
+                   "http://identifiers.org/pubchem.substance/3647",
+                   "http://identifiers.org/seed.compound/cpd00290",
+                   "http://identifiers.org/unipathway.compound/UPC00354"
+  M_for_c identity "http://identifiers.org/bigg.metabolite/for",
+                   "http://identifiers.org/biocyc/FORMATE",
+                   "http://identifiers.org/biocyc/CARBOXYL-GROUP",
+                   "http://identifiers.org/cas/64-18-6",
+                   "http://identifiers.org/cas/64-18-6",
+                   "http://identifiers.org/chebi/CHEBI:42460",
+                   "http://identifiers.org/chebi/CHEBI:14276",
+                   "http://identifiers.org/chebi/CHEBI:63050",
+                   "http://identifiers.org/chebi/CHEBI:5145",
+                   "http://identifiers.org/chebi/CHEBI:24082",
+                   "http://identifiers.org/chebi/CHEBI:24081",
+                   "http://identifiers.org/chebi/CHEBI:30751",
+                   "http://identifiers.org/chebi/CHEBI:63880",
+                   "http://identifiers.org/chebi/CHEBI:15740",
+                   "http://identifiers.org/chebi/CHEBI:52343",
+                   "http://identifiers.org/hmdb/HMDB00142",
+                   "http://identifiers.org/kegg.compound/C00058",
+                   "http://identifiers.org/lipidmaps/LMFA01010040",
+                   "http://identifiers.org/pubchem.substance/3358",
+                   "http://identifiers.org/reactome/REACT_389585",
+                   "http://identifiers.org/reactome/REACT_29460",
+                   "http://identifiers.org/seed.compound/cpd00047",
+                   "http://identifiers.org/unipathway.compound/UPC00058"
+  M_for_e identity "http://identifiers.org/bigg.metabolite/for",
+                   "http://identifiers.org/biocyc/FORMATE",
+                   "http://identifiers.org/biocyc/CARBOXYL-GROUP",
+                   "http://identifiers.org/cas/64-18-6",
+                   "http://identifiers.org/cas/64-18-6",
+                   "http://identifiers.org/chebi/CHEBI:42460",
+                   "http://identifiers.org/chebi/CHEBI:14276",
+                   "http://identifiers.org/chebi/CHEBI:63050",
+                   "http://identifiers.org/chebi/CHEBI:5145",
+                   "http://identifiers.org/chebi/CHEBI:24082",
+                   "http://identifiers.org/chebi/CHEBI:24081",
+                   "http://identifiers.org/chebi/CHEBI:30751",
+                   "http://identifiers.org/chebi/CHEBI:63880",
+                   "http://identifiers.org/chebi/CHEBI:15740",
+                   "http://identifiers.org/chebi/CHEBI:52343",
+                   "http://identifiers.org/hmdb/HMDB00142",
+                   "http://identifiers.org/kegg.compound/C00058",
+                   "http://identifiers.org/lipidmaps/LMFA01010040",
+                   "http://identifiers.org/pubchem.substance/3358",
+                   "http://identifiers.org/reactome/REACT_389585",
+                   "http://identifiers.org/reactome/REACT_29460",
+                   "http://identifiers.org/seed.compound/cpd00047",
+                   "http://identifiers.org/unipathway.compound/UPC00058"
+  M_fru_e identity "http://identifiers.org/bigg.metabolite/fru",
+                   "http://identifiers.org/biocyc/CPD-10723",
+                   "http://identifiers.org/biocyc/BETA-D-FRUCTOSE",
+                   "http://identifiers.org/cas/57-48-7",
+                   "http://identifiers.org/cas/57-48-7",
+                   "http://identifiers.org/chebi/CHEBI:5172",
+                   "http://identifiers.org/chebi/CHEBI:10373",
+                   "http://identifiers.org/chebi/CHEBI:37721",
+                   "http://identifiers.org/chebi/CHEBI:37720",
+                   "http://identifiers.org/chebi/CHEBI:28757",
+                   "http://identifiers.org/chebi/CHEBI:48673",
+                   "http://identifiers.org/chebi/CHEBI:24104",
+                   "http://identifiers.org/chebi/CHEBI:49089",
+                   "http://identifiers.org/chebi/CHEBI:22766",
+                   "http://identifiers.org/chebi/CHEBI:42560",
+                   "http://identifiers.org/chebi/CHEBI:24110",
+                   "http://identifiers.org/chebi/CHEBI:28645",
+                   "http://identifiers.org/hmdb/HMDB00660",
+                   "http://identifiers.org/kegg.compound/C02336",
+                   "http://identifiers.org/kegg.compound/C00095",
+                   "http://identifiers.org/pubchem.substance/3395",
+                   "http://identifiers.org/seed.compound/cpd00082",
+                   "http://identifiers.org/unipathway.compound/UPC00095"
+  M_fum_c identity "http://identifiers.org/bigg.metabolite/fum",
+                   "http://identifiers.org/biocyc/FUM",
+                   "http://identifiers.org/cas/110-17-8",
+                   "http://identifiers.org/cas/110-17-8",
+                   "http://identifiers.org/chebi/CHEBI:42743",
+                   "http://identifiers.org/chebi/CHEBI:18012",
+                   "http://identifiers.org/chebi/CHEBI:5190",
+                   "http://identifiers.org/chebi/CHEBI:22958",
+                   "http://identifiers.org/chebi/CHEBI:24122",
+                   "http://identifiers.org/chebi/CHEBI:24124",
+                   "http://identifiers.org/chebi/CHEBI:22956",
+                   "http://identifiers.org/chebi/CHEBI:22957",
+                   "http://identifiers.org/chebi/CHEBI:37154",
+                   "http://identifiers.org/chebi/CHEBI:37155",
+                   "http://identifiers.org/chebi/CHEBI:42511",
+                   "http://identifiers.org/chebi/CHEBI:29806",
+                   "http://identifiers.org/chebi/CHEBI:36180",
+                   "http://identifiers.org/chebi/CHEBI:14284",
+                   "http://identifiers.org/hmdb/HMDB00134",
+                   "http://identifiers.org/kegg.compound/C00122",
+                   "http://identifiers.org/kegg.drug/D02308",
+                   "http://identifiers.org/pubchem.substance/3422",
+                   "http://identifiers.org/reactome/REACT_29586",
+                   "http://identifiers.org/reactome/REACT_113588",
+                   "http://identifiers.org/seed.compound/cpd00106",
+                   "http://identifiers.org/unipathway.compound/UPC00122"
+  M_fum_e identity "http://identifiers.org/bigg.metabolite/fum",
+                   "http://identifiers.org/biocyc/FUM",
+                   "http://identifiers.org/cas/110-17-8",
+                   "http://identifiers.org/cas/110-17-8",
+                   "http://identifiers.org/chebi/CHEBI:42743",
+                   "http://identifiers.org/chebi/CHEBI:18012",
+                   "http://identifiers.org/chebi/CHEBI:5190",
+                   "http://identifiers.org/chebi/CHEBI:22958",
+                   "http://identifiers.org/chebi/CHEBI:24122",
+                   "http://identifiers.org/chebi/CHEBI:24124",
+                   "http://identifiers.org/chebi/CHEBI:22956",
+                   "http://identifiers.org/chebi/CHEBI:22957",
+                   "http://identifiers.org/chebi/CHEBI:37154",
+                   "http://identifiers.org/chebi/CHEBI:37155",
+                   "http://identifiers.org/chebi/CHEBI:42511",
+                   "http://identifiers.org/chebi/CHEBI:29806",
+                   "http://identifiers.org/chebi/CHEBI:36180",
+                   "http://identifiers.org/chebi/CHEBI:14284",
+                   "http://identifiers.org/hmdb/HMDB00134",
+                   "http://identifiers.org/kegg.compound/C00122",
+                   "http://identifiers.org/kegg.drug/D02308",
+                   "http://identifiers.org/pubchem.substance/3422",
+                   "http://identifiers.org/reactome/REACT_29586",
+                   "http://identifiers.org/reactome/REACT_113588",
+                   "http://identifiers.org/seed.compound/cpd00106",
+                   "http://identifiers.org/unipathway.compound/UPC00122"
+  M_g3p_c identity "http://identifiers.org/bigg.metabolite/g3p",
+                   "http://identifiers.org/cas/142-10-9",
+                   "http://identifiers.org/cas/142-10-9",
+                   "http://identifiers.org/chebi/CHEBI:17138",
+                   "http://identifiers.org/chebi/CHEBI:14333",
+                   "http://identifiers.org/chebi/CHEBI:5446",
+                   "http://identifiers.org/chebi/CHEBI:58027",
+                   "http://identifiers.org/hmdb/HMDB01112",
+                   "http://identifiers.org/kegg.compound/C00661",
+                   "http://identifiers.org/kegg.compound/C00118",
+                   "http://identifiers.org/pubchem.substance/3930",
+                   "http://identifiers.org/seed.compound/cpd00102",
+                   "http://identifiers.org/unipathway.compound/UPC00661",
+                   "http://identifiers.org/unipathway.compound/UPC00118"
+  M_g6p_c identity "http://identifiers.org/bigg.metabolite/g6p",
+                   "http://identifiers.org/biocyc/D-glucose-6-phosphate",
+                   "http://identifiers.org/biocyc/GLC-6-P",
+                   "http://identifiers.org/cas/56-73-5",
+                   "http://identifiers.org/cas/56-73-5",
+                   "http://identifiers.org/chebi/CHEBI:10399",
+                   "http://identifiers.org/chebi/CHEBI:22797",
+                   "http://identifiers.org/chebi/CHEBI:41041",
+                   "http://identifiers.org/chebi/CHEBI:17719",
+                   "http://identifiers.org/chebi/CHEBI:4170",
+                   "http://identifiers.org/chebi/CHEBI:61548",
+                   "http://identifiers.org/chebi/CHEBI:58247",
+                   "http://identifiers.org/chebi/CHEBI:12375",
+                   "http://identifiers.org/hmdb/HMDB03498",
+                   "http://identifiers.org/hmdb/HMDB06793",
+                   "http://identifiers.org/hmdb/HMDB01401",
+                   "http://identifiers.org/hmdb/HMDB01549",
+                   "http://identifiers.org/kegg.compound/C00092",
+                   "http://identifiers.org/kegg.compound/C01172",
+                   "http://identifiers.org/pubchem.substance/3392",
+                   "http://identifiers.org/reactome/REACT_1629756",
+                   "http://identifiers.org/seed.compound/cpd00079",
+                   "http://identifiers.org/unipathway.compound/UPC00092"
+  M_glc__D_e identity "http://identifiers.org/bigg.metabolite/glc__D",
+                      "http://identifiers.org/cas/50-99-7",
+                      "http://identifiers.org/cas/50-99-7",
+                      "http://identifiers.org/kegg.compound/C00031",
+                      "http://identifiers.org/pubchem.substance/3333"
+  M_gln__L_c identity "http://identifiers.org/bigg.metabolite/gln__L",
+                      "http://identifiers.org/cas/56-85-9",
+                      "http://identifiers.org/cas/56-85-9",
+                      "http://identifiers.org/kegg.compound/C00064",
+                      "http://identifiers.org/pubchem.substance/3364"
+  M_gln__L_e identity "http://identifiers.org/bigg.metabolite/gln__L",
+                      "http://identifiers.org/cas/56-85-9",
+                      "http://identifiers.org/cas/56-85-9",
+                      "http://identifiers.org/kegg.compound/C00064",
+                      "http://identifiers.org/pubchem.substance/3364"
+  M_glu__L_c identity "http://identifiers.org/bigg.metabolite/glu__L",
+                      "http://identifiers.org/cas/56-86-0",
+                      "http://identifiers.org/cas/56-86-0",
+                      "http://identifiers.org/kegg.compound/C00025",
+                      "http://identifiers.org/pubchem.substance/3327"
+  M_glu__L_e identity "http://identifiers.org/bigg.metabolite/glu__L",
+                      "http://identifiers.org/cas/56-86-0",
+                      "http://identifiers.org/cas/56-86-0",
+                      "http://identifiers.org/kegg.compound/C00025",
+                      "http://identifiers.org/pubchem.substance/3327"
+  M_glx_c identity "http://identifiers.org/bigg.metabolite/glx",
+                   "http://identifiers.org/biocyc/GLYOX",
+                   "http://identifiers.org/cas/298-12-4",
+                   "http://identifiers.org/cas/298-12-4",
+                   "http://identifiers.org/chebi/CHEBI:36655",
+                   "http://identifiers.org/chebi/CHEBI:42767",
+                   "http://identifiers.org/chebi/CHEBI:14368",
+                   "http://identifiers.org/chebi/CHEBI:35977",
+                   "http://identifiers.org/chebi/CHEBI:24421",
+                   "http://identifiers.org/chebi/CHEBI:24420",
+                   "http://identifiers.org/chebi/CHEBI:16891",
+                   "http://identifiers.org/chebi/CHEBI:5509",
+                   "http://identifiers.org/hmdb/HMDB00119",
+                   "http://identifiers.org/kegg.compound/C00048",
+                   "http://identifiers.org/pubchem.substance/3350",
+                   "http://identifiers.org/reactome/REACT_904849",
+                   "http://identifiers.org/reactome/REACT_389678",
+                   "http://identifiers.org/seed.compound/cpd00040",
+                   "http://identifiers.org/unipathway.compound/UPC00048"
+  M_h2o_c identity "http://identifiers.org/bigg.metabolite/h2o",
+                   "http://identifiers.org/biocyc/WATER",
+                   "http://identifiers.org/biocyc/OH",
+                   "http://identifiers.org/biocyc/OXONIUM",
+                   "http://identifiers.org/cas/7732-18-5",
+                   "http://identifiers.org/cas/7732-18-5",
+                   "http://identifiers.org/chebi/CHEBI:15377",
+                   "http://identifiers.org/chebi/CHEBI:13365",
+                   "http://identifiers.org/chebi/CHEBI:41979",
+                   "http://identifiers.org/chebi/CHEBI:16234",
+                   "http://identifiers.org/chebi/CHEBI:36385",
+                   "http://identifiers.org/chebi/CHEBI:42857",
+                   "http://identifiers.org/chebi/CHEBI:27313",
+                   "http://identifiers.org/chebi/CHEBI:44819",
+                   "http://identifiers.org/chebi/CHEBI:29373",
+                   "http://identifiers.org/chebi/CHEBI:10743",
+                   "http://identifiers.org/chebi/CHEBI:5594",
+                   "http://identifiers.org/chebi/CHEBI:29356",
+                   "http://identifiers.org/chebi/CHEBI:53442",
+                   "http://identifiers.org/chebi/CHEBI:29375",
+                   "http://identifiers.org/chebi/CHEBI:29374",
+                   "http://identifiers.org/chebi/CHEBI:13419",
+                   "http://identifiers.org/chebi/CHEBI:43228",
+                   "http://identifiers.org/chebi/CHEBI:44292",
+                   "http://identifiers.org/chebi/CHEBI:13352",
+                   "http://identifiers.org/chebi/CHEBI:41981",
+                   "http://identifiers.org/chebi/CHEBI:29412",
+                   "http://identifiers.org/chebi/CHEBI:42043",
+                   "http://identifiers.org/chebi/CHEBI:33811",
+                   "http://identifiers.org/chebi/CHEBI:33813",
+                   "http://identifiers.org/chebi/CHEBI:35511",
+                   "http://identifiers.org/chebi/CHEBI:5585",
+                   "http://identifiers.org/chebi/CHEBI:44641",
+                   "http://identifiers.org/chebi/CHEBI:44701",
+                   "http://identifiers.org/hmdb/HMDB01039",
+                   "http://identifiers.org/hmdb/HMDB02111",
+                   "http://identifiers.org/kegg.compound/C01328",
+                   "http://identifiers.org/kegg.compound/C00001",
+                   "http://identifiers.org/kegg.compound/C18714",
+                   "http://identifiers.org/kegg.compound/C18712",
+                   "http://identifiers.org/kegg.drug/D00001",
+                   "http://identifiers.org/kegg.drug/D06322",
+                   "http://identifiers.org/kegg.drug/D03703",
+                   "http://identifiers.org/pubchem.substance/3303",
+                   "http://identifiers.org/reactome/REACT_947593",
+                   "http://identifiers.org/reactome/REACT_189422",
+                   "http://identifiers.org/reactome/REACT_141343",
+                   "http://identifiers.org/reactome/REACT_113518",
+                   "http://identifiers.org/reactome/REACT_1605715",
+                   "http://identifiers.org/reactome/REACT_109276",
+                   "http://identifiers.org/reactome/REACT_113521",
+                   "http://identifiers.org/reactome/REACT_113519",
+                   "http://identifiers.org/reactome/REACT_2022884",
+                   "http://identifiers.org/reactome/REACT_351603",
+                   "http://identifiers.org/reactome/REACT_29356",
+                   "http://identifiers.org/seed.compound/cpd15275",
+                   "http://identifiers.org/seed.compound/cpd00001",
+                   "http://identifiers.org/unipathway.compound/UPC00001",
+                   "http://identifiers.org/unipathway.compound/UPC01328"
+  M_h2o_e identity "http://identifiers.org/bigg.metabolite/h2o",
+                   "http://identifiers.org/biocyc/WATER",
+                   "http://identifiers.org/biocyc/OH",
+                   "http://identifiers.org/biocyc/OXONIUM",
+                   "http://identifiers.org/cas/7732-18-5",
+                   "http://identifiers.org/cas/7732-18-5",
+                   "http://identifiers.org/chebi/CHEBI:15377",
+                   "http://identifiers.org/chebi/CHEBI:13365",
+                   "http://identifiers.org/chebi/CHEBI:41979",
+                   "http://identifiers.org/chebi/CHEBI:16234",
+                   "http://identifiers.org/chebi/CHEBI:36385",
+                   "http://identifiers.org/chebi/CHEBI:42857",
+                   "http://identifiers.org/chebi/CHEBI:27313",
+                   "http://identifiers.org/chebi/CHEBI:44819",
+                   "http://identifiers.org/chebi/CHEBI:29373",
+                   "http://identifiers.org/chebi/CHEBI:10743",
+                   "http://identifiers.org/chebi/CHEBI:5594",
+                   "http://identifiers.org/chebi/CHEBI:29356",
+                   "http://identifiers.org/chebi/CHEBI:53442",
+                   "http://identifiers.org/chebi/CHEBI:29375",
+                   "http://identifiers.org/chebi/CHEBI:29374",
+                   "http://identifiers.org/chebi/CHEBI:13419",
+                   "http://identifiers.org/chebi/CHEBI:43228",
+                   "http://identifiers.org/chebi/CHEBI:44292",
+                   "http://identifiers.org/chebi/CHEBI:13352",
+                   "http://identifiers.org/chebi/CHEBI:41981",
+                   "http://identifiers.org/chebi/CHEBI:29412",
+                   "http://identifiers.org/chebi/CHEBI:42043",
+                   "http://identifiers.org/chebi/CHEBI:33811",
+                   "http://identifiers.org/chebi/CHEBI:33813",
+                   "http://identifiers.org/chebi/CHEBI:35511",
+                   "http://identifiers.org/chebi/CHEBI:5585",
+                   "http://identifiers.org/chebi/CHEBI:44641",
+                   "http://identifiers.org/chebi/CHEBI:44701",
+                   "http://identifiers.org/hmdb/HMDB01039",
+                   "http://identifiers.org/hmdb/HMDB02111",
+                   "http://identifiers.org/kegg.compound/C01328",
+                   "http://identifiers.org/kegg.compound/C00001",
+                   "http://identifiers.org/kegg.compound/C18714",
+                   "http://identifiers.org/kegg.compound/C18712",
+                   "http://identifiers.org/kegg.drug/D00001",
+                   "http://identifiers.org/kegg.drug/D06322",
+                   "http://identifiers.org/kegg.drug/D03703",
+                   "http://identifiers.org/pubchem.substance/3303",
+                   "http://identifiers.org/reactome/REACT_947593",
+                   "http://identifiers.org/reactome/REACT_189422",
+                   "http://identifiers.org/reactome/REACT_141343",
+                   "http://identifiers.org/reactome/REACT_113518",
+                   "http://identifiers.org/reactome/REACT_1605715",
+                   "http://identifiers.org/reactome/REACT_109276",
+                   "http://identifiers.org/reactome/REACT_113521",
+                   "http://identifiers.org/reactome/REACT_113519",
+                   "http://identifiers.org/reactome/REACT_2022884",
+                   "http://identifiers.org/reactome/REACT_351603",
+                   "http://identifiers.org/reactome/REACT_29356",
+                   "http://identifiers.org/seed.compound/cpd15275",
+                   "http://identifiers.org/seed.compound/cpd00001",
+                   "http://identifiers.org/unipathway.compound/UPC00001",
+                   "http://identifiers.org/unipathway.compound/UPC01328"
+  M_h_c identity "http://identifiers.org/bigg.metabolite/h",
+                 "http://identifiers.org/biocyc/PROTON",
+                 "http://identifiers.org/cas/12408-02-5",
+                 "http://identifiers.org/cas/12408-02-5",
+                 "http://identifiers.org/chebi/CHEBI:24636",
+                 "http://identifiers.org/chebi/CHEBI:15378",
+                 "http://identifiers.org/chebi/CHEBI:10744",
+                 "http://identifiers.org/chebi/CHEBI:13357",
+                 "http://identifiers.org/chebi/CHEBI:5584",
+                 "http://identifiers.org/kegg.compound/C00080",
+                 "http://identifiers.org/pubchem.substance/3380",
+                 "http://identifiers.org/reactome/REACT_194688",
+                 "http://identifiers.org/reactome/REACT_425978",
+                 "http://identifiers.org/reactome/REACT_193465",
+                 "http://identifiers.org/reactome/REACT_374900",
+                 "http://identifiers.org/reactome/REACT_74722",
+                 "http://identifiers.org/reactome/REACT_425999",
+                 "http://identifiers.org/reactome/REACT_428040",
+                 "http://identifiers.org/reactome/REACT_163953",
+                 "http://identifiers.org/reactome/REACT_372511",
+                 "http://identifiers.org/reactome/REACT_2000349",
+                 "http://identifiers.org/reactome/REACT_70106",
+                 "http://identifiers.org/reactome/REACT_1470067",
+                 "http://identifiers.org/reactome/REACT_113529",
+                 "http://identifiers.org/reactome/REACT_425969",
+                 "http://identifiers.org/reactome/REACT_428548",
+                 "http://identifiers.org/reactome/REACT_156540",
+                 "http://identifiers.org/reactome/REACT_1614597",
+                 "http://identifiers.org/reactome/REACT_351626",
+                 "http://identifiers.org/reactome/REACT_427899",
+                 "http://identifiers.org/seed.compound/cpd00067",
+                 "http://identifiers.org/unipathway.compound/UPC00080"
+  M_h_e identity "http://identifiers.org/bigg.metabolite/h",
+                 "http://identifiers.org/biocyc/PROTON",
+                 "http://identifiers.org/cas/12408-02-5",
+                 "http://identifiers.org/cas/12408-02-5",
+                 "http://identifiers.org/chebi/CHEBI:24636",
+                 "http://identifiers.org/chebi/CHEBI:15378",
+                 "http://identifiers.org/chebi/CHEBI:10744",
+                 "http://identifiers.org/chebi/CHEBI:13357",
+                 "http://identifiers.org/chebi/CHEBI:5584",
+                 "http://identifiers.org/kegg.compound/C00080",
+                 "http://identifiers.org/pubchem.substance/3380",
+                 "http://identifiers.org/reactome/REACT_194688",
+                 "http://identifiers.org/reactome/REACT_425978",
+                 "http://identifiers.org/reactome/REACT_193465",
+                 "http://identifiers.org/reactome/REACT_374900",
+                 "http://identifiers.org/reactome/REACT_74722",
+                 "http://identifiers.org/reactome/REACT_425999",
+                 "http://identifiers.org/reactome/REACT_428040",
+                 "http://identifiers.org/reactome/REACT_163953",
+                 "http://identifiers.org/reactome/REACT_372511",
+                 "http://identifiers.org/reactome/REACT_2000349",
+                 "http://identifiers.org/reactome/REACT_70106",
+                 "http://identifiers.org/reactome/REACT_1470067",
+                 "http://identifiers.org/reactome/REACT_113529",
+                 "http://identifiers.org/reactome/REACT_425969",
+                 "http://identifiers.org/reactome/REACT_428548",
+                 "http://identifiers.org/reactome/REACT_156540",
+                 "http://identifiers.org/reactome/REACT_1614597",
+                 "http://identifiers.org/reactome/REACT_351626",
+                 "http://identifiers.org/reactome/REACT_427899",
+                 "http://identifiers.org/seed.compound/cpd00067",
+                 "http://identifiers.org/unipathway.compound/UPC00080"
+  M_icit_c identity "http://identifiers.org/bigg.metabolite/icit",
+                    "http://identifiers.org/cas/30810-51-6",
+                    "http://identifiers.org/cas/30810-51-6",
+                    "http://identifiers.org/chebi/CHEBI:14465",
+                    "http://identifiers.org/chebi/CHEBI:24886",
+                    "http://identifiers.org/chebi/CHEBI:24884",
+                    "http://identifiers.org/chebi/CHEBI:36454",
+                    "http://identifiers.org/chebi/CHEBI:16087",
+                    "http://identifiers.org/chebi/CHEBI:5998",
+                    "http://identifiers.org/chebi/CHEBI:30887",
+                    "http://identifiers.org/chebi/CHEBI:36453",
+                    "http://identifiers.org/hmdb/HMDB00193",
+                    "http://identifiers.org/kegg.compound/C00311",
+                    "http://identifiers.org/pubchem.substance/3605",
+                    "http://identifiers.org/seed.compound/cpd00260",
+                    "http://identifiers.org/unipathway.compound/UPC00311"
+  M_lac__D_c identity "http://identifiers.org/bigg.metabolite/lac__D",
+                      "http://identifiers.org/cas/10326-41-7",
+                      "http://identifiers.org/cas/10326-41-7",
+                      "http://identifiers.org/kegg.compound/C00256",
+                      "http://identifiers.org/pubchem.substance/3555"
+  M_lac__D_e identity "http://identifiers.org/bigg.metabolite/lac__D",
+                      "http://identifiers.org/cas/10326-41-7",
+                      "http://identifiers.org/cas/10326-41-7",
+                      "http://identifiers.org/kegg.compound/C00256",
+                      "http://identifiers.org/pubchem.substance/3555"
+  M_mal__L_c identity "http://identifiers.org/bigg.metabolite/mal__L",
+                      "http://identifiers.org/cas/97-67-6",
+                      "http://identifiers.org/cas/97-67-6",
+                      "http://identifiers.org/kegg.compound/C00149",
+                      "http://identifiers.org/pubchem.substance/3449"
+  M_mal__L_e identity "http://identifiers.org/bigg.metabolite/mal__L",
+                      "http://identifiers.org/cas/97-67-6",
+                      "http://identifiers.org/cas/97-67-6",
+                      "http://identifiers.org/kegg.compound/C00149",
+                      "http://identifiers.org/pubchem.substance/3449"
+  M_nad_c identity "http://identifiers.org/bigg.metabolite/nad",
+                   "http://identifiers.org/biocyc/NAD",
+                   "http://identifiers.org/cas/53-84-9",
+                   "http://identifiers.org/cas/53-84-9",
+                   "http://identifiers.org/chebi/CHEBI:21901",
+                   "http://identifiers.org/chebi/CHEBI:7422",
+                   "http://identifiers.org/chebi/CHEBI:44214",
+                   "http://identifiers.org/chebi/CHEBI:15846",
+                   "http://identifiers.org/chebi/CHEBI:13394",
+                   "http://identifiers.org/chebi/CHEBI:13393",
+                   "http://identifiers.org/chebi/CHEBI:44215",
+                   "http://identifiers.org/chebi/CHEBI:13389",
+                   "http://identifiers.org/chebi/CHEBI:57540",
+                   "http://identifiers.org/chebi/CHEBI:44281",
+                   "http://identifiers.org/hmdb/HMDB00902",
+                   "http://identifiers.org/kegg.compound/C00003",
+                   "http://identifiers.org/kegg.drug/D00002",
+                   "http://identifiers.org/pubchem.substance/3305",
+                   "http://identifiers.org/reactome/REACT_192307",
+                   "http://identifiers.org/reactome/REACT_29360",
+                   "http://identifiers.org/reactome/REACT_427523",
+                   "http://identifiers.org/reactome/REACT_194653",
+                   "http://identifiers.org/reactome/REACT_113526",
+                   "http://identifiers.org/seed.compound/cpd00003",
+                   "http://identifiers.org/unipathway.compound/UPC00003"
+  M_nadh_c identity "http://identifiers.org/bigg.metabolite/nadh",
+                    "http://identifiers.org/biocyc/NADH",
+                    "http://identifiers.org/cas/58-68-4",
+                    "http://identifiers.org/cas/58-68-4",
+                    "http://identifiers.org/chebi/CHEBI:13395",
+                    "http://identifiers.org/chebi/CHEBI:21902",
+                    "http://identifiers.org/chebi/CHEBI:16908",
+                    "http://identifiers.org/chebi/CHEBI:7423",
+                    "http://identifiers.org/chebi/CHEBI:44216",
+                    "http://identifiers.org/chebi/CHEBI:57945",
+                    "http://identifiers.org/chebi/CHEBI:13396",
+                    "http://identifiers.org/hmdb/HMDB01487",
+                    "http://identifiers.org/kegg.compound/C00004",
+                    "http://identifiers.org/pubchem.substance/3306",
+                    "http://identifiers.org/reactome/REACT_192305",
+                    "http://identifiers.org/reactome/REACT_73473",
+                    "http://identifiers.org/reactome/REACT_194697",
+                    "http://identifiers.org/reactome/REACT_29362",
+                    "http://identifiers.org/seed.compound/cpd00004",
+                    "http://identifiers.org/unipathway.compound/UPC00004"
+  M_nadp_c identity "http://identifiers.org/bigg.metabolite/nadp",
+                    "http://identifiers.org/biocyc/NADP",
+                    "http://identifiers.org/biocyc/NAD-P-OR-NOP",
+                    "http://identifiers.org/cas/53-59-8",
+                    "http://identifiers.org/cas/53-59-8",
+                    "http://identifiers.org/chebi/CHEBI:7424",
+                    "http://identifiers.org/chebi/CHEBI:13398",
+                    "http://identifiers.org/chebi/CHEBI:13397",
+                    "http://identifiers.org/chebi/CHEBI:13390",
+                    "http://identifiers.org/chebi/CHEBI:25524",
+                    "http://identifiers.org/chebi/CHEBI:25523",
+                    "http://identifiers.org/chebi/CHEBI:44405",
+                    "http://identifiers.org/chebi/CHEBI:44409",
+                    "http://identifiers.org/chebi/CHEBI:18009",
+                    "http://identifiers.org/chebi/CHEBI:58349",
+                    "http://identifiers.org/chebi/CHEBI:21903",
+                    "http://identifiers.org/hmdb/HMDB00217",
+                    "http://identifiers.org/kegg.compound/C00006",
+                    "http://identifiers.org/pubchem.substance/3308",
+                    "http://identifiers.org/reactome/REACT_29366",
+                    "http://identifiers.org/reactome/REACT_2000348",
+                    "http://identifiers.org/reactome/REACT_113563",
+                    "http://identifiers.org/reactome/REACT_113564",
+                    "http://identifiers.org/reactome/REACT_389556",
+                    "http://identifiers.org/reactome/REACT_428218",
+                    "http://identifiers.org/reactome/REACT_351628",
+                    "http://identifiers.org/reactome/REACT_194668",
+                    "http://identifiers.org/reactome/REACT_517495",
+                    "http://identifiers.org/seed.compound/cpd00006",
+                    "http://identifiers.org/unipathway.compound/UPC00006"
+  M_nadph_c identity "http://identifiers.org/bigg.metabolite/nadph",
+                     "http://identifiers.org/biocyc/NADH-P-OR-NOP",
+                     "http://identifiers.org/biocyc/NADPH",
+                     "http://identifiers.org/cas/2646-71-1",
+                     "http://identifiers.org/cas/2646-71-1",
+                     "http://identifiers.org/chebi/CHEBI:13400",
+                     "http://identifiers.org/chebi/CHEBI:16474",
+                     "http://identifiers.org/chebi/CHEBI:7425",
+                     "http://identifiers.org/chebi/CHEBI:13399",
+                     "http://identifiers.org/chebi/CHEBI:13392",
+                     "http://identifiers.org/chebi/CHEBI:57783",
+                     "http://identifiers.org/chebi/CHEBI:21904",
+                     "http://identifiers.org/chebi/CHEBI:44286",
+                     "http://identifiers.org/hmdb/HMDB00799",
+                     "http://identifiers.org/hmdb/HMDB06341",
+                     "http://identifiers.org/hmdb/HMDB00221",
+                     "http://identifiers.org/kegg.compound/C00005",
+                     "http://identifiers.org/pubchem.substance/3307",
+                     "http://identifiers.org/reactome/REACT_2000347",
+                     "http://identifiers.org/reactome/REACT_29364",
+                     "http://identifiers.org/reactome/REACT_428206",
+                     "http://identifiers.org/reactome/REACT_113602",
+                     "http://identifiers.org/reactome/REACT_113600",
+                     "http://identifiers.org/reactome/REACT_113601",
+                     "http://identifiers.org/reactome/REACT_194725",
+                     "http://identifiers.org/reactome/REACT_517496",
+                     "http://identifiers.org/reactome/REACT_351627",
+                     "http://identifiers.org/seed.compound/cpd00005",
+                     "http://identifiers.org/unipathway.compound/UPC00005"
+  M_nh4_c identity "http://identifiers.org/bigg.metabolite/nh4",
+                   "http://identifiers.org/biocyc/AMMONIUM",
+                   "http://identifiers.org/biocyc/NH4OH",
+                   "http://identifiers.org/biocyc/AMMONIA",
+                   "http://identifiers.org/cas/14798-03-9",
+                   "http://identifiers.org/cas/14798-03-9",
+                   "http://identifiers.org/chebi/CHEBI:13408",
+                   "http://identifiers.org/chebi/CHEBI:13405",
+                   "http://identifiers.org/chebi/CHEBI:13406",
+                   "http://identifiers.org/chebi/CHEBI:13407",
+                   "http://identifiers.org/chebi/CHEBI:28938",
+                   "http://identifiers.org/chebi/CHEBI:62982",
+                   "http://identifiers.org/chebi/CHEBI:44269",
+                   "http://identifiers.org/chebi/CHEBI:66871",
+                   "http://identifiers.org/chebi/CHEBI:18219",
+                   "http://identifiers.org/chebi/CHEBI:16134",
+                   "http://identifiers.org/chebi/CHEBI:29337",
+                   "http://identifiers.org/chebi/CHEBI:49783",
+                   "http://identifiers.org/chebi/CHEBI:44404",
+                   "http://identifiers.org/chebi/CHEBI:7436",
+                   "http://identifiers.org/chebi/CHEBI:7435",
+                   "http://identifiers.org/chebi/CHEBI:7434",
+                   "http://identifiers.org/chebi/CHEBI:22533",
+                   "http://identifiers.org/chebi/CHEBI:22534",
+                   "http://identifiers.org/chebi/CHEBI:22535",
+                   "http://identifiers.org/chebi/CHEBI:29340",
+                   "http://identifiers.org/chebi/CHEBI:63040",
+                   "http://identifiers.org/chebi/CHEBI:13772",
+                   "http://identifiers.org/chebi/CHEBI:13771",
+                   "http://identifiers.org/chebi/CHEBI:29240",
+                   "http://identifiers.org/chebi/CHEBI:44284",
+                   "http://identifiers.org/hmdb/HMDB00051",
+                   "http://identifiers.org/kegg.compound/C01358",
+                   "http://identifiers.org/kegg.compound/C00014",
+                   "http://identifiers.org/kegg.compound/C01342",
+                   "http://identifiers.org/kegg.drug/D02916",
+                   "http://identifiers.org/kegg.drug/D02915",
+                   "http://identifiers.org/kegg.drug/D04594",
+                   "http://identifiers.org/pubchem.substance/4547",
+                   "http://identifiers.org/reactome/REACT_140912",
+                   "http://identifiers.org/reactome/REACT_2022135",
+                   "http://identifiers.org/reactome/REACT_76230",
+                   "http://identifiers.org/reactome/REACT_113561",
+                   "http://identifiers.org/reactome/REACT_389843",
+                   "http://identifiers.org/reactome/REACT_29382",
+                   "http://identifiers.org/reactome/REACT_31633",
+                   "http://identifiers.org/seed.compound/cpd00013",
+                   "http://identifiers.org/unipathway.compound/UPC00014"
+  M_nh4_e identity "http://identifiers.org/bigg.metabolite/nh4",
+                   "http://identifiers.org/biocyc/AMMONIUM",
+                   "http://identifiers.org/biocyc/NH4OH",
+                   "http://identifiers.org/biocyc/AMMONIA",
+                   "http://identifiers.org/cas/14798-03-9",
+                   "http://identifiers.org/cas/14798-03-9",
+                   "http://identifiers.org/chebi/CHEBI:13408",
+                   "http://identifiers.org/chebi/CHEBI:13405",
+                   "http://identifiers.org/chebi/CHEBI:13406",
+                   "http://identifiers.org/chebi/CHEBI:13407",
+                   "http://identifiers.org/chebi/CHEBI:28938",
+                   "http://identifiers.org/chebi/CHEBI:62982",
+                   "http://identifiers.org/chebi/CHEBI:44269",
+                   "http://identifiers.org/chebi/CHEBI:66871",
+                   "http://identifiers.org/chebi/CHEBI:18219",
+                   "http://identifiers.org/chebi/CHEBI:16134",
+                   "http://identifiers.org/chebi/CHEBI:29337",
+                   "http://identifiers.org/chebi/CHEBI:49783",
+                   "http://identifiers.org/chebi/CHEBI:44404",
+                   "http://identifiers.org/chebi/CHEBI:7436",
+                   "http://identifiers.org/chebi/CHEBI:7435",
+                   "http://identifiers.org/chebi/CHEBI:7434",
+                   "http://identifiers.org/chebi/CHEBI:22533",
+                   "http://identifiers.org/chebi/CHEBI:22534",
+                   "http://identifiers.org/chebi/CHEBI:22535",
+                   "http://identifiers.org/chebi/CHEBI:29340",
+                   "http://identifiers.org/chebi/CHEBI:63040",
+                   "http://identifiers.org/chebi/CHEBI:13772",
+                   "http://identifiers.org/chebi/CHEBI:13771",
+                   "http://identifiers.org/chebi/CHEBI:29240",
+                   "http://identifiers.org/chebi/CHEBI:44284",
+                   "http://identifiers.org/hmdb/HMDB00051",
+                   "http://identifiers.org/kegg.compound/C01358",
+                   "http://identifiers.org/kegg.compound/C00014",
+                   "http://identifiers.org/kegg.compound/C01342",
+                   "http://identifiers.org/kegg.drug/D02916",
+                   "http://identifiers.org/kegg.drug/D02915",
+                   "http://identifiers.org/kegg.drug/D04594",
+                   "http://identifiers.org/pubchem.substance/4547",
+                   "http://identifiers.org/reactome/REACT_140912",
+                   "http://identifiers.org/reactome/REACT_2022135",
+                   "http://identifiers.org/reactome/REACT_76230",
+                   "http://identifiers.org/reactome/REACT_113561",
+                   "http://identifiers.org/reactome/REACT_389843",
+                   "http://identifiers.org/reactome/REACT_29382",
+                   "http://identifiers.org/reactome/REACT_31633",
+                   "http://identifiers.org/seed.compound/cpd00013",
+                   "http://identifiers.org/unipathway.compound/UPC00014"
+  M_o2_c identity "http://identifiers.org/bigg.metabolite/o2",
+                  "http://identifiers.org/biocyc/OXYGEN-MOLECULE",
+                  "http://identifiers.org/cas/7782-44-7",
+                  "http://identifiers.org/cas/7782-44-7",
+                  "http://identifiers.org/chebi/CHEBI:44742",
+                  "http://identifiers.org/chebi/CHEBI:27140",
+                  "http://identifiers.org/chebi/CHEBI:15379",
+                  "http://identifiers.org/chebi/CHEBI:25366",
+                  "http://identifiers.org/chebi/CHEBI:26689",
+                  "http://identifiers.org/chebi/CHEBI:30491",
+                  "http://identifiers.org/chebi/CHEBI:13416",
+                  "http://identifiers.org/chebi/CHEBI:29793",
+                  "http://identifiers.org/chebi/CHEBI:23833",
+                  "http://identifiers.org/chebi/CHEBI:7860",
+                  "http://identifiers.org/chebi/CHEBI:10745",
+                  "http://identifiers.org/hmdb/HMDB01377",
+                  "http://identifiers.org/kegg.compound/C00007",
+                  "http://identifiers.org/kegg.drug/D00003",
+                  "http://identifiers.org/pubchem.substance/3309",
+                  "http://identifiers.org/reactome/REACT_113534",
+                  "http://identifiers.org/reactome/REACT_29368",
+                  "http://identifiers.org/reactome/REACT_113535",
+                  "http://identifiers.org/reactome/REACT_1236709",
+                  "http://identifiers.org/reactome/REACT_113533",
+                  "http://identifiers.org/reactome/REACT_189461",
+                  "http://identifiers.org/reactome/REACT_113685",
+                  "http://identifiers.org/reactome/REACT_352327",
+                  "http://identifiers.org/reactome/REACT_351593",
+                  "http://identifiers.org/seed.compound/cpd00532",
+                  "http://identifiers.org/unipathway.compound/UPC00007"
+  M_o2_e identity "http://identifiers.org/bigg.metabolite/o2",
+                  "http://identifiers.org/biocyc/OXYGEN-MOLECULE",
+                  "http://identifiers.org/cas/7782-44-7",
+                  "http://identifiers.org/cas/7782-44-7",
+                  "http://identifiers.org/chebi/CHEBI:44742",
+                  "http://identifiers.org/chebi/CHEBI:27140",
+                  "http://identifiers.org/chebi/CHEBI:15379",
+                  "http://identifiers.org/chebi/CHEBI:25366",
+                  "http://identifiers.org/chebi/CHEBI:26689",
+                  "http://identifiers.org/chebi/CHEBI:30491",
+                  "http://identifiers.org/chebi/CHEBI:13416",
+                  "http://identifiers.org/chebi/CHEBI:29793",
+                  "http://identifiers.org/chebi/CHEBI:23833",
+                  "http://identifiers.org/chebi/CHEBI:7860",
+                  "http://identifiers.org/chebi/CHEBI:10745",
+                  "http://identifiers.org/hmdb/HMDB01377",
+                  "http://identifiers.org/kegg.compound/C00007",
+                  "http://identifiers.org/kegg.drug/D00003",
+                  "http://identifiers.org/pubchem.substance/3309",
+                  "http://identifiers.org/reactome/REACT_113534",
+                  "http://identifiers.org/reactome/REACT_29368",
+                  "http://identifiers.org/reactome/REACT_113535",
+                  "http://identifiers.org/reactome/REACT_1236709",
+                  "http://identifiers.org/reactome/REACT_113533",
+                  "http://identifiers.org/reactome/REACT_189461",
+                  "http://identifiers.org/reactome/REACT_113685",
+                  "http://identifiers.org/reactome/REACT_352327",
+                  "http://identifiers.org/reactome/REACT_351593",
+                  "http://identifiers.org/seed.compound/cpd00532",
+                  "http://identifiers.org/unipathway.compound/UPC00007"
+  M_oaa_c identity "http://identifiers.org/bigg.metabolite/oaa",
+                   "http://identifiers.org/biocyc/OXALACETIC_ACID",
+                   "http://identifiers.org/biocyc/ENOL-OXALOACETATE",
+                   "http://identifiers.org/cas/328-42-7",
+                   "http://identifiers.org/cas/328-42-7",
+                   "http://identifiers.org/chebi/CHEBI:23911",
+                   "http://identifiers.org/chebi/CHEBI:23910",
+                   "http://identifiers.org/chebi/CHEBI:12810",
+                   "http://identifiers.org/chebi/CHEBI:10547",
+                   "http://identifiers.org/chebi/CHEBI:16452",
+                   "http://identifiers.org/chebi/CHEBI:17479",
+                   "http://identifiers.org/chebi/CHEBI:30744",
+                   "http://identifiers.org/chebi/CHEBI:7812",
+                   "http://identifiers.org/chebi/CHEBI:19638",
+                   "http://identifiers.org/chebi/CHEBI:25734",
+                   "http://identifiers.org/chebi/CHEBI:25731",
+                   "http://identifiers.org/chebi/CHEBI:12820",
+                   "http://identifiers.org/chebi/CHEBI:1158",
+                   "http://identifiers.org/chebi/CHEBI:14703",
+                   "http://identifiers.org/chebi/CHEBI:28394",
+                   "http://identifiers.org/chebi/CHEBI:24958",
+                   "http://identifiers.org/chebi/CHEBI:24959",
+                   "http://identifiers.org/hmdb/HMDB00223",
+                   "http://identifiers.org/kegg.compound/C03981",
+                   "http://identifiers.org/kegg.compound/C00036",
+                   "http://identifiers.org/lipidmaps/LMFA01170061",
+                   "http://identifiers.org/lipidmaps/LMFA01170120",
+                   "http://identifiers.org/pubchem.substance/3338",
+                   "http://identifiers.org/reactome/REACT_76213",
+                   "http://identifiers.org/reactome/REACT_113587",
+                   "http://identifiers.org/seed.compound/cpd00032",
+                   "http://identifiers.org/unipathway.compound/UPC00036"
+  M_pep_c identity "http://identifiers.org/bigg.metabolite/pep",
+                   "http://identifiers.org/biocyc/PHOSPHO-ENOL-PYRUVATE",
+                   "http://identifiers.org/cas/138-08-9",
+                   "http://identifiers.org/cas/138-08-9",
+                   "http://identifiers.org/chebi/CHEBI:44897",
+                   "http://identifiers.org/chebi/CHEBI:44894",
+                   "http://identifiers.org/chebi/CHEBI:14812",
+                   "http://identifiers.org/chebi/CHEBI:8147",
+                   "http://identifiers.org/chebi/CHEBI:26055",
+                   "http://identifiers.org/chebi/CHEBI:26054",
+                   "http://identifiers.org/chebi/CHEBI:58702",
+                   "http://identifiers.org/chebi/CHEBI:18021",
+                   "http://identifiers.org/hmdb/HMDB00263",
+                   "http://identifiers.org/kegg.compound/C00074",
+                   "http://identifiers.org/pubchem.substance/3374",
+                   "http://identifiers.org/reactome/REACT_29492",
+                   "http://identifiers.org/reactome/REACT_372364",
+                   "http://identifiers.org/seed.compound/cpd00061",
+                   "http://identifiers.org/unipathway.compound/UPC00074"
+  M_pi_c identity "http://identifiers.org/bigg.metabolite/pi",
+                  "http://identifiers.org/biocyc/Pi",
+                  "http://identifiers.org/biocyc/PHOSPHATE-GROUP",
+                  "http://identifiers.org/biocyc/CPD0-1421",
+                  "http://identifiers.org/cas/14265-44-2",
+                  "http://identifiers.org/cas/14265-44-2",
+                  "http://identifiers.org/chebi/CHEBI:37583",
+                  "http://identifiers.org/chebi/CHEBI:7793",
+                  "http://identifiers.org/chebi/CHEBI:37585",
+                  "http://identifiers.org/chebi/CHEBI:34683",
+                  "http://identifiers.org/chebi/CHEBI:14791",
+                  "http://identifiers.org/chebi/CHEBI:34855",
+                  "http://identifiers.org/chebi/CHEBI:29137",
+                  "http://identifiers.org/chebi/CHEBI:29139",
+                  "http://identifiers.org/chebi/CHEBI:63036",
+                  "http://identifiers.org/chebi/CHEBI:26020",
+                  "http://identifiers.org/chebi/CHEBI:39739",
+                  "http://identifiers.org/chebi/CHEBI:32597",
+                  "http://identifiers.org/chebi/CHEBI:32596",
+                  "http://identifiers.org/chebi/CHEBI:43474",
+                  "http://identifiers.org/chebi/CHEBI:63051",
+                  "http://identifiers.org/chebi/CHEBI:43470",
+                  "http://identifiers.org/chebi/CHEBI:9679",
+                  "http://identifiers.org/chebi/CHEBI:35433",
+                  "http://identifiers.org/chebi/CHEBI:4496",
+                  "http://identifiers.org/chebi/CHEBI:45024",
+                  "http://identifiers.org/chebi/CHEBI:18367",
+                  "http://identifiers.org/chebi/CHEBI:26078",
+                  "http://identifiers.org/chebi/CHEBI:39745",
+                  "http://identifiers.org/chebi/CHEBI:24838",
+                  "http://identifiers.org/hmdb/HMDB02142",
+                  "http://identifiers.org/kegg.compound/C13556",
+                  "http://identifiers.org/kegg.compound/C13558",
+                  "http://identifiers.org/kegg.compound/C00009",
+                  "http://identifiers.org/kegg.drug/D05467",
+                  "http://identifiers.org/pubchem.substance/3311",
+                  "http://identifiers.org/reactome/REACT_947590",
+                  "http://identifiers.org/reactome/REACT_109277",
+                  "http://identifiers.org/reactome/REACT_113548",
+                  "http://identifiers.org/reactome/REACT_2255331",
+                  "http://identifiers.org/reactome/REACT_29372",
+                  "http://identifiers.org/reactome/REACT_113550",
+                  "http://identifiers.org/reactome/REACT_113551",
+                  "http://identifiers.org/seed.compound/cpd09464",
+                  "http://identifiers.org/seed.compound/cpd09463",
+                  "http://identifiers.org/seed.compound/cpd00009",
+                  "http://identifiers.org/unipathway.compound/UPC00009"
+  M_pi_e identity "http://identifiers.org/bigg.metabolite/pi",
+                  "http://identifiers.org/biocyc/Pi",
+                  "http://identifiers.org/biocyc/PHOSPHATE-GROUP",
+                  "http://identifiers.org/biocyc/CPD0-1421",
+                  "http://identifiers.org/cas/14265-44-2",
+                  "http://identifiers.org/cas/14265-44-2",
+                  "http://identifiers.org/chebi/CHEBI:37583",
+                  "http://identifiers.org/chebi/CHEBI:7793",
+                  "http://identifiers.org/chebi/CHEBI:37585",
+                  "http://identifiers.org/chebi/CHEBI:34683",
+                  "http://identifiers.org/chebi/CHEBI:14791",
+                  "http://identifiers.org/chebi/CHEBI:34855",
+                  "http://identifiers.org/chebi/CHEBI:29137",
+                  "http://identifiers.org/chebi/CHEBI:29139",
+                  "http://identifiers.org/chebi/CHEBI:63036",
+                  "http://identifiers.org/chebi/CHEBI:26020",
+                  "http://identifiers.org/chebi/CHEBI:39739",
+                  "http://identifiers.org/chebi/CHEBI:32597",
+                  "http://identifiers.org/chebi/CHEBI:32596",
+                  "http://identifiers.org/chebi/CHEBI:43474",
+                  "http://identifiers.org/chebi/CHEBI:63051",
+                  "http://identifiers.org/chebi/CHEBI:43470",
+                  "http://identifiers.org/chebi/CHEBI:9679",
+                  "http://identifiers.org/chebi/CHEBI:35433",
+                  "http://identifiers.org/chebi/CHEBI:4496",
+                  "http://identifiers.org/chebi/CHEBI:45024",
+                  "http://identifiers.org/chebi/CHEBI:18367",
+                  "http://identifiers.org/chebi/CHEBI:26078",
+                  "http://identifiers.org/chebi/CHEBI:39745",
+                  "http://identifiers.org/chebi/CHEBI:24838",
+                  "http://identifiers.org/hmdb/HMDB02142",
+                  "http://identifiers.org/kegg.compound/C13556",
+                  "http://identifiers.org/kegg.compound/C13558",
+                  "http://identifiers.org/kegg.compound/C00009",
+                  "http://identifiers.org/kegg.drug/D05467",
+                  "http://identifiers.org/pubchem.substance/3311",
+                  "http://identifiers.org/reactome/REACT_947590",
+                  "http://identifiers.org/reactome/REACT_109277",
+                  "http://identifiers.org/reactome/REACT_113548",
+                  "http://identifiers.org/reactome/REACT_2255331",
+                  "http://identifiers.org/reactome/REACT_29372",
+                  "http://identifiers.org/reactome/REACT_113550",
+                  "http://identifiers.org/reactome/REACT_113551",
+                  "http://identifiers.org/seed.compound/cpd09464",
+                  "http://identifiers.org/seed.compound/cpd09463",
+                  "http://identifiers.org/seed.compound/cpd00009",
+                  "http://identifiers.org/unipathway.compound/UPC00009"
+  M_pyr_c identity "http://identifiers.org/bigg.metabolite/pyr",
+                   "http://identifiers.org/biocyc/PYRUVATE",
+                   "http://identifiers.org/cas/127-17-3",
+                   "http://identifiers.org/cas/127-17-3",
+                   "http://identifiers.org/chebi/CHEBI:15361",
+                   "http://identifiers.org/chebi/CHEBI:14987",
+                   "http://identifiers.org/chebi/CHEBI:8685",
+                   "http://identifiers.org/chebi/CHEBI:32816",
+                   "http://identifiers.org/chebi/CHEBI:45253",
+                   "http://identifiers.org/chebi/CHEBI:26466",
+                   "http://identifiers.org/chebi/CHEBI:26462",
+                   "http://identifiers.org/hmdb/HMDB00243",
+                   "http://identifiers.org/kegg.compound/C00022",
+                   "http://identifiers.org/lipidmaps/LMFA01060077",
+                   "http://identifiers.org/pubchem.substance/3324",
+                   "http://identifiers.org/reactome/REACT_113557",
+                   "http://identifiers.org/reactome/REACT_389680",
+                   "http://identifiers.org/reactome/REACT_29398",
+                   "http://identifiers.org/seed.compound/cpd00020",
+                   "http://identifiers.org/unipathway.compound/UPC00022"
+  M_pyr_e identity "http://identifiers.org/bigg.metabolite/pyr",
+                   "http://identifiers.org/biocyc/PYRUVATE",
+                   "http://identifiers.org/cas/127-17-3",
+                   "http://identifiers.org/cas/127-17-3",
+                   "http://identifiers.org/chebi/CHEBI:15361",
+                   "http://identifiers.org/chebi/CHEBI:14987",
+                   "http://identifiers.org/chebi/CHEBI:8685",
+                   "http://identifiers.org/chebi/CHEBI:32816",
+                   "http://identifiers.org/chebi/CHEBI:45253",
+                   "http://identifiers.org/chebi/CHEBI:26466",
+                   "http://identifiers.org/chebi/CHEBI:26462",
+                   "http://identifiers.org/hmdb/HMDB00243",
+                   "http://identifiers.org/kegg.compound/C00022",
+                   "http://identifiers.org/lipidmaps/LMFA01060077",
+                   "http://identifiers.org/pubchem.substance/3324",
+                   "http://identifiers.org/reactome/REACT_113557",
+                   "http://identifiers.org/reactome/REACT_389680",
+                   "http://identifiers.org/reactome/REACT_29398",
+                   "http://identifiers.org/seed.compound/cpd00020",
+                   "http://identifiers.org/unipathway.compound/UPC00022"
+  M_q8_c identity "http://identifiers.org/bigg.metabolite/q8",
+                  "http://identifiers.org/biocyc/UBIQUINONE-8",
+                  "http://identifiers.org/cas/1339-63-5",
+                  "http://identifiers.org/cas/1339-63-5",
+                  "http://identifiers.org/chebi/CHEBI:61683",
+                  "http://identifiers.org/kegg.compound/C17569",
+                  "http://identifiers.org/kegg.compound/C00399",
+                  "http://identifiers.org/lipidmaps/LMPR02010005",
+                  "http://identifiers.org/pubchem.substance/3689",
+                  "http://identifiers.org/seed.compound/cpd15560"
+  M_q8h2_c identity "http://identifiers.org/bigg.metabolite/q8h2",
+                    "http://identifiers.org/biocyc/CPD-9956",
+                    "http://identifiers.org/chebi/CHEBI:61682",
+                    "http://identifiers.org/kegg.compound/C00390",
+                    "http://identifiers.org/pubchem.substance/3680",
+                    "http://identifiers.org/seed.compound/cpd15561"
+  M_r5p_c identity "http://identifiers.org/bigg.metabolite/r5p",
+                   "http://identifiers.org/biocyc/RIBOSE-5P",
+                   "http://identifiers.org/cas/4300-28-1",
+                   "http://identifiers.org/cas/4300-28-1",
+                   "http://identifiers.org/chebi/CHEBI:12331",
+                   "http://identifiers.org/chebi/CHEBI:52742",
+                   "http://identifiers.org/chebi/CHEBI:10270",
+                   "http://identifiers.org/chebi/CHEBI:22413",
+                   "http://identifiers.org/chebi/CHEBI:18189",
+                   "http://identifiers.org/hmdb/HMDB00618",
+                   "http://identifiers.org/hmdb/HMDB01548",
+                   "http://identifiers.org/hmdb/HMDB02033",
+                   "http://identifiers.org/hmdb/HMDB02694",
+                   "http://identifiers.org/kegg.compound/C00117",
+                   "http://identifiers.org/kegg.compound/C03736",
+                   "http://identifiers.org/pubchem.substance/3417",
+                   "http://identifiers.org/seed.compound/cpd00101",
+                   "http://identifiers.org/unipathway.compound/UPC00117"
+  M_ru5p__D_c identity "http://identifiers.org/bigg.metabolite/ru5p__D",
+                       "http://identifiers.org/cas/4151-19-3",
+                       "http://identifiers.org/cas/4151-19-3",
+                       "http://identifiers.org/kegg.compound/C00199",
+                       "http://identifiers.org/pubchem.substance/3499"
+  M_s7p_c identity "http://identifiers.org/bigg.metabolite/s7p",
+                   "http://identifiers.org/biocyc/D-SEDOHEPTULOSE-7-P",
+                   "http://identifiers.org/cas/583-08-4",
+                   "http://identifiers.org/chebi/CHEBI:26621",
+                   "http://identifiers.org/chebi/CHEBI:57483",
+                   "http://identifiers.org/chebi/CHEBI:9083",
+                   "http://identifiers.org/chebi/CHEBI:15721",
+                   "http://identifiers.org/chebi/CHEBI:4244",
+                   "http://identifiers.org/chebi/CHEBI:15074",
+                   "http://identifiers.org/chebi/CHEBI:15073",
+                   "http://identifiers.org/kegg.compound/C05382",
+                   "http://identifiers.org/kegg.compound/C00281",
+                   "http://identifiers.org/pubchem.substance/3576",
+                   "http://identifiers.org/reactome/REACT_29882",
+                   "http://identifiers.org/seed.compound/cpd00238",
+                   "http://identifiers.org/unipathway.compound/UPC05382"
+  M_succ_c identity "http://identifiers.org/bigg.metabolite/succ",
+                    "http://identifiers.org/biocyc/SUC",
+                    "http://identifiers.org/cas/110-15-6",
+                    "http://identifiers.org/cas/110-15-6",
+                    "http://identifiers.org/chebi/CHEBI:22941",
+                    "http://identifiers.org/chebi/CHEBI:22943",
+                    "http://identifiers.org/chebi/CHEBI:26807",
+                    "http://identifiers.org/chebi/CHEBI:26803",
+                    "http://identifiers.org/chebi/CHEBI:30031",
+                    "http://identifiers.org/chebi/CHEBI:9304",
+                    "http://identifiers.org/chebi/CHEBI:15125",
+                    "http://identifiers.org/chebi/CHEBI:45639",
+                    "http://identifiers.org/chebi/CHEBI:15741",
+                    "http://identifiers.org/chebi/CHEBI:30779",
+                    "http://identifiers.org/hmdb/HMDB00254",
+                    "http://identifiers.org/kegg.compound/C00042",
+                    "http://identifiers.org/lipidmaps/LMFA01170043",
+                    "http://identifiers.org/pubchem.substance/3344",
+                    "http://identifiers.org/reactome/REACT_113536",
+                    "http://identifiers.org/reactome/REACT_433123",
+                    "http://identifiers.org/reactome/REACT_29434",
+                    "http://identifiers.org/reactome/REACT_389583",
+                    "http://identifiers.org/reactome/REACT_1650769",
+                    "http://identifiers.org/reactome/REACT_159939",
+                    "http://identifiers.org/seed.compound/cpd00036",
+                    "http://identifiers.org/unipathway.compound/UPC00042"
+  M_succ_e identity "http://identifiers.org/bigg.metabolite/succ",
+                    "http://identifiers.org/biocyc/SUC",
+                    "http://identifiers.org/cas/110-15-6",
+                    "http://identifiers.org/cas/110-15-6",
+                    "http://identifiers.org/chebi/CHEBI:22941",
+                    "http://identifiers.org/chebi/CHEBI:22943",
+                    "http://identifiers.org/chebi/CHEBI:26807",
+                    "http://identifiers.org/chebi/CHEBI:26803",
+                    "http://identifiers.org/chebi/CHEBI:30031",
+                    "http://identifiers.org/chebi/CHEBI:9304",
+                    "http://identifiers.org/chebi/CHEBI:15125",
+                    "http://identifiers.org/chebi/CHEBI:45639",
+                    "http://identifiers.org/chebi/CHEBI:15741",
+                    "http://identifiers.org/chebi/CHEBI:30779",
+                    "http://identifiers.org/hmdb/HMDB00254",
+                    "http://identifiers.org/kegg.compound/C00042",
+                    "http://identifiers.org/lipidmaps/LMFA01170043",
+                    "http://identifiers.org/pubchem.substance/3344",
+                    "http://identifiers.org/reactome/REACT_113536",
+                    "http://identifiers.org/reactome/REACT_433123",
+                    "http://identifiers.org/reactome/REACT_29434",
+                    "http://identifiers.org/reactome/REACT_389583",
+                    "http://identifiers.org/reactome/REACT_1650769",
+                    "http://identifiers.org/reactome/REACT_159939",
+                    "http://identifiers.org/seed.compound/cpd00036",
+                    "http://identifiers.org/unipathway.compound/UPC00042"
+  M_succoa_c identity "http://identifiers.org/bigg.metabolite/succoa",
+                      "http://identifiers.org/cas/604-98-8",
+                      "http://identifiers.org/cas/604-98-8",
+                      "http://identifiers.org/chebi/CHEBI:15127",
+                      "http://identifiers.org/chebi/CHEBI:15380",
+                      "http://identifiers.org/chebi/CHEBI:57292",
+                      "http://identifiers.org/chebi/CHEBI:26811",
+                      "http://identifiers.org/chebi/CHEBI:9310",
+                      "http://identifiers.org/chebi/CHEBI:45541",
+                      "http://identifiers.org/chebi/CHEBI:10746",
+                      "http://identifiers.org/hmdb/HMDB01022",
+                      "http://identifiers.org/kegg.compound/C00091",
+                      "http://identifiers.org/pubchem.substance/3391",
+                      "http://identifiers.org/reactome/REACT_70958",
+                      "http://identifiers.org/seed.compound/cpd00078",
+                      "http://identifiers.org/unipathway.compound/UPC00091"
+  M_xu5p__D_c identity "http://identifiers.org/bigg.metabolite/xu5p__D",
+                       "http://identifiers.org/kegg.compound/C00231",
+                       "http://identifiers.org/pubchem.substance/3530"
+  R_ACALD identity "http://identifiers.org/bigg.reaction/ACALD"
+  R_ACALDt identity "http://identifiers.org/bigg.reaction/ACALDt"
+  R_ACKr identity "http://identifiers.org/bigg.reaction/ACKr"
+  R_ACONTa identity "http://identifiers.org/bigg.reaction/ACONTa"
+  R_ACONTb identity "http://identifiers.org/bigg.reaction/ACONTb"
+  R_ACt2r identity "http://identifiers.org/bigg.reaction/ACt2r"
+  R_ADK1 identity "http://identifiers.org/bigg.reaction/ADK1"
+  R_AKGDH identity "http://identifiers.org/bigg.reaction/AKGDH"
+  R_AKGt2r identity "http://identifiers.org/bigg.reaction/AKGt2r"
+  R_ALCD2x identity "http://identifiers.org/bigg.reaction/ALCD2x"
+  R_ATPM identity "http://identifiers.org/bigg.reaction/ATPM"
+  R_ATPS4r identity "http://identifiers.org/bigg.reaction/ATPS4r"
+  R_Biomass_Ecoli_core identity "http://identifiers.org/bigg.reaction/Ecoli_core_w_GAM"
+  R_CO2t identity "http://identifiers.org/bigg.reaction/CO2t"
+  R_CS identity "http://identifiers.org/bigg.reaction/CS"
+  R_CYTBD identity "http://identifiers.org/bigg.reaction/CYTBD"
+  R_D_LACt2 identity "http://identifiers.org/bigg.reaction/D_LACt2"
+  R_ENO identity "http://identifiers.org/bigg.reaction/ENO"
+  R_ETOHt2r identity "http://identifiers.org/bigg.reaction/ETOHt2r"
+  R_EX_ac_e identity "http://identifiers.org/bigg.reaction/ac"
+  R_EX_acald_e identity "http://identifiers.org/bigg.reaction/acald"
+  R_EX_akg_e identity "http://identifiers.org/bigg.reaction/akg"
+  R_EX_co2_e identity "http://identifiers.org/bigg.reaction/co2"
+  R_EX_etoh_e identity "http://identifiers.org/bigg.reaction/etoh"
+  R_EX_for_e identity "http://identifiers.org/bigg.reaction/for"
+  R_EX_fru_e identity "http://identifiers.org/bigg.reaction/fru"
+  R_EX_fum_e identity "http://identifiers.org/bigg.reaction/fum"
+  R_EX_glc__D_e identity "http://identifiers.org/bigg.reaction/glc"
+  R_EX_gln__L_e identity "http://identifiers.org/bigg.reaction/gln__L"
+  R_EX_glu__L_e identity "http://identifiers.org/bigg.reaction/glu__L"
+  R_EX_h_e identity "http://identifiers.org/bigg.reaction/h"
+  R_EX_h2o_e identity "http://identifiers.org/bigg.reaction/h2o"
+  R_EX_lac__D_e identity "http://identifiers.org/bigg.reaction/lac__D"
+  R_EX_mal__L_e identity "http://identifiers.org/bigg.reaction/mal__L"
+  R_EX_nh4_e identity "http://identifiers.org/bigg.reaction/nh4"
+  R_EX_o2_e identity "http://identifiers.org/bigg.reaction/o2"
+  R_EX_pi_e identity "http://identifiers.org/bigg.reaction/pi"
+  R_EX_pyr_e identity "http://identifiers.org/bigg.reaction/pyr"
+  R_EX_succ_e identity "http://identifiers.org/bigg.reaction/succ"
+  R_FBA identity "http://identifiers.org/bigg.reaction/FBA"
+  R_FBP identity "http://identifiers.org/bigg.reaction/FBP"
+  R_FORt2 identity "http://identifiers.org/bigg.reaction/FORt2"
+  R_FORti identity "http://identifiers.org/bigg.reaction/FORti"
+  R_FRD7 identity "http://identifiers.org/bigg.reaction/FRD7"
+  R_FRUpts2 identity "http://identifiers.org/bigg.reaction/FRUpts2"
+  R_FUM identity "http://identifiers.org/bigg.reaction/FUM"
+  R_FUMt2_2 identity "http://identifiers.org/bigg.reaction/FUMt2_2"
+  R_G6PDH2r identity "http://identifiers.org/bigg.reaction/G6PDH2r"
+  R_GAPD identity "http://identifiers.org/bigg.reaction/GAPD"
+  R_GLCpts identity "http://identifiers.org/bigg.reaction/GLCpts"
+  R_GLNS identity "http://identifiers.org/bigg.reaction/GLNS"
+  R_GLNabc identity "http://identifiers.org/bigg.reaction/GLNabc"
+  R_GLUDy identity "http://identifiers.org/bigg.reaction/GLUDy"
+  R_GLUN identity "http://identifiers.org/bigg.reaction/GLUN"
+  R_GLUSy identity "http://identifiers.org/bigg.reaction/GLUSy"
+  R_GLUt2r identity "http://identifiers.org/bigg.reaction/GLUt2r"
+  R_GND identity "http://identifiers.org/bigg.reaction/GND"
+  R_H2Ot identity "http://identifiers.org/bigg.reaction/H2Ot"
+  R_ICDHyr identity "http://identifiers.org/bigg.reaction/ICDHyr"
+  R_ICL identity "http://identifiers.org/bigg.reaction/ICL"
+  R_LDH_D identity "http://identifiers.org/bigg.reaction/LDH_D"
+  R_MALS identity "http://identifiers.org/bigg.reaction/MALS"
+  R_MALt2_2 identity "http://identifiers.org/bigg.reaction/MALt2_2"
+  R_MDH identity "http://identifiers.org/bigg.reaction/MDH"
+  R_ME1 identity "http://identifiers.org/bigg.reaction/ME1"
+  R_ME2 identity "http://identifiers.org/bigg.reaction/ME2"
+  R_NADH16 identity "http://identifiers.org/bigg.reaction/NADH16"
+  R_NADTRHD identity "http://identifiers.org/bigg.reaction/NADTRHD"
+  R_NH4t identity "http://identifiers.org/bigg.reaction/NH4t"
+  R_O2t identity "http://identifiers.org/bigg.reaction/O2t"
+  R_PDH identity "http://identifiers.org/bigg.reaction/PDH"
+  R_PFK identity "http://identifiers.org/bigg.reaction/PFK"
+  R_PFL identity "http://identifiers.org/bigg.reaction/PFL"
+  R_PGI identity "http://identifiers.org/bigg.reaction/PGI"
+  R_PGK identity "http://identifiers.org/bigg.reaction/PGK"
+  R_PGL identity "http://identifiers.org/bigg.reaction/PGL"
+  R_PGM identity "http://identifiers.org/bigg.reaction/PGM"
+  R_PIt2r identity "http://identifiers.org/bigg.reaction/PIt2r"
+  R_PPC identity "http://identifiers.org/bigg.reaction/PPC"
+  R_PPCK identity "http://identifiers.org/bigg.reaction/PPCK"
+  R_PPS identity "http://identifiers.org/bigg.reaction/PPS"
+  R_PTAr identity "http://identifiers.org/bigg.reaction/PTAr"
+  R_PYK identity "http://identifiers.org/bigg.reaction/PYK"
+  R_PYRt2 identity "http://identifiers.org/bigg.reaction/PYRt2"
+  R_RPE identity "http://identifiers.org/bigg.reaction/RPE"
+  R_RPI identity "http://identifiers.org/bigg.reaction/RPI"
+  R_SUCCt2_2 identity "http://identifiers.org/bigg.reaction/SUCCt2_2"
+  R_SUCCt3 identity "http://identifiers.org/bigg.reaction/SUCCt3"
+  R_SUCDi identity "http://identifiers.org/bigg.reaction/SUCDi"
+  R_SUCOAS identity "http://identifiers.org/bigg.reaction/SUCOAS"
+  R_TALA identity "http://identifiers.org/bigg.reaction/TALA"
+  R_THD2 identity "http://identifiers.org/bigg.reaction/THD2"
+  R_TKT1 identity "http://identifiers.org/bigg.reaction/TKT1"
+  R_TKT2 identity "http://identifiers.org/bigg.reaction/TKT2"
+  R_TPI identity "http://identifiers.org/bigg.reaction/TPI"
+end

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" xmlns:cellml="http://www.cellml.org/cellml/1.0#" level="1" version="3">
+  <listOfModels>
+    <model id="model" language="urn:sedml:language:cellml" source="baylor_hollingworth_chandler_2002_a.cellml">
+      <listOfChanges>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;Ca&apos;]/cellml:variable[@name=&apos;Ca&apos;]/@initial_value" newValue="0.05"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;ATP&apos;]/cellml:variable[@name=&apos;ATP&apos;]/@initial_value" newValue="8000.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;CaATP&apos;]/cellml:variable[@name=&apos;CaATP&apos;]/@initial_value" newValue="1.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;reaction_constants&apos;]/cellml:variable[@name=&apos;k1&apos;]/@initial_value" newValue="1.566E7"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;reaction_constants&apos;]/cellml:variable[@name=&apos;k1_&apos;]/@initial_value" newValue="34461.0"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" initialTime="0" outputStartTime="0" outputEndTime="1" numberOfPoints="10">
+      <algorithm kisaoID="KISAO:0000019"/>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_value_component_environment_variable_time" name="Value of variable &quot;time&quot; of component &quot;environment&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_environment_variable_time </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_environment_variable_time" name="Value of variable &quot;time&quot; of component &quot;environment&quot;" target="/cellml:model/cellml:component[@name=&apos;environment&apos;]/cellml:variable[@name=&apos;time&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_Ca_variable_Ca" name="Value of variable &quot;Ca&quot; of component &quot;Ca&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_Ca_variable_Ca </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_Ca_variable_Ca" name="Value of variable &quot;Ca&quot; of component &quot;Ca&quot;" target="/cellml:model/cellml:component[@name=&apos;Ca&apos;]/cellml:variable[@name=&apos;Ca&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_ATP_variable_ATP" name="Value of variable &quot;ATP&quot; of component &quot;ATP&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_ATP_variable_ATP </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_ATP_variable_ATP" name="Value of variable &quot;ATP&quot; of component &quot;ATP&quot;" target="/cellml:model/cellml:component[@name=&apos;ATP&apos;]/cellml:variable[@name=&apos;ATP&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_CaATP_variable_CaATP" name="Value of variable &quot;CaATP&quot; of component &quot;CaATP&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_CaATP_variable_CaATP </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_CaATP_variable_CaATP" name="Value of variable &quot;CaATP&quot; of component &quot;CaATP&quot;" target="/cellml:model/cellml:component[@name=&apos;CaATP&apos;]/cellml:variable[@name=&apos;CaATP&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_reaction_constants_variable_k1" name="Value of variable &quot;k1&quot; of component &quot;reaction_constants&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_reaction_constants_variable_k1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_reaction_constants_variable_k1" name="Value of variable &quot;k1&quot; of component &quot;reaction_constants&quot;" target="/cellml:model/cellml:component[@name=&apos;reaction_constants&apos;]/cellml:variable[@name=&apos;k1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_reaction_constants_variable_k1_" name="Value of variable &quot;k1_&quot; of component &quot;reaction_constants&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_reaction_constants_variable_k1_ </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_reaction_constants_variable_k1_" name="Value of variable &quot;k1_&quot; of component &quot;reaction_constants&quot;" target="/cellml:model/cellml:component[@name=&apos;reaction_constants&apos;]/cellml:variable[@name=&apos;k1_&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report">
+      <listOfDataSets>
+        <dataSet id="data_set_value_component_environment_variable_time" name="Value of variable &quot;time&quot; of component &quot;environment&quot;" label="value_component_environment_variable_time" dataReference="data_generator_value_component_environment_variable_time"/>
+        <dataSet id="data_set_value_component_Ca_variable_Ca" name="Value of variable &quot;Ca&quot; of component &quot;Ca&quot;" label="value_component_Ca_variable_Ca" dataReference="data_generator_value_component_Ca_variable_Ca"/>
+        <dataSet id="data_set_value_component_ATP_variable_ATP" name="Value of variable &quot;ATP&quot; of component &quot;ATP&quot;" label="value_component_ATP_variable_ATP" dataReference="data_generator_value_component_ATP_variable_ATP"/>
+        <dataSet id="data_set_value_component_CaATP_variable_CaATP" name="Value of variable &quot;CaATP&quot; of component &quot;CaATP&quot;" label="value_component_CaATP_variable_CaATP" dataReference="data_generator_value_component_CaATP_variable_CaATP"/>
+        <dataSet id="data_set_value_component_reaction_constants_variable_k1" name="Value of variable &quot;k1&quot; of component &quot;reaction_constants&quot;" label="value_component_reaction_constants_variable_k1" dataReference="data_generator_value_component_reaction_constants_variable_k1"/>
+        <dataSet id="data_set_value_component_reaction_constants_variable_k1_" name="Value of variable &quot;k1_&quot; of component &quot;reaction_constants&quot;" label="value_component_reaction_constants_variable_k1_" dataReference="data_generator_value_component_reaction_constants_variable_k1_"/>
+      </listOfDataSets>
+    </report>
+  </listOfOutputs>
+</sedML>

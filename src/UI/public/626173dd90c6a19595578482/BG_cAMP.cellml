@@ -1,0 +1,1598 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- BG model of cAMP with effects from Gs (B1AR) and Gi (muscarinic), based on saucerman2003
+ Assume the cAMP is the same isoform to be affected by either G protein's alpha subunit.
+ Assume only one PDE isoform (the one from Saucerman)
+ Assume one form of adenylyl cyclase
+ Assume one cytosolic compartment
+ all other reactions from Saucerman (e.g. FSK, IBMX) are included. -->
+<!-- 15sept21 initialising file -->
+<model name="BG_cAMP" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="units_and_constants/units_BG.cellml">
+        <units name="per_sec" units_ref="per_sec"/>
+        <units name="J_per_K_per_mol" units_ref="J_per_K_per_mol"/>
+        <units name="C_per_mol" units_ref="C_per_mol"/>
+        <units name="fmol" units_ref="fmol"/>
+        <units name="fmol_per_L" units_ref="fmol_per_L"/>
+        <units name="fmol_per_L_per_sec" units_ref="fmol_per_L_per_sec"/>
+        <units name="per_sec_per_fmol_per_L" units_ref="per_sec_per_fmol_per_L"/>
+        <units name="per_fmol" units_ref="per_fmol"/>
+        <units name="fmol_per_sec" units_ref="fmol_per_sec"/>
+        <units name="J_per_mol" units_ref="J_per_mol"/>
+        <units name="mM" units_ref="mM"/>
+        <units name="uM" units_ref="uM"/>
+        <units name="mM_per_sec" units_ref="mM_per_sec"/>
+        <units name="uM_per_sec" units_ref="uM_per_sec"/>
+        <units name="pL" units_ref="pL"/>
+        <units name="m_to_u" units_ref="m_to_u"/>
+    </import>
+    <import xlink:href="units_and_constants/constants_BG.cellml">
+        <component component_ref="constants" name="constants"/>
+    </import>
+    <component name="environment">
+        <variable name="time" public_interface="out" units="second"/>
+        <!-- initial conditions-->
+        <variable initial_value="190" name="q_ATP_init" units="fmol"/>
+        <variable initial_value="1.889E-03" name="q_AC_init" units="fmol"/>
+        <variable initial_value="3.212E-02" name="q_cAMP_init" units="fmol"/>
+        <variable initial_value="1e-18" name="q_AC_ATP_init" units="fmol"/>
+        <variable initial_value="3.8e-5" name="q_FSK_init" units="fmol"/>
+        <variable initial_value="1e-18" name="q_FSK_AC_init" units="fmol"/>
+        <variable initial_value="1e-18" name="q_FSK_AC_ATP_init" units="fmol"/>
+        <variable initial_value="9.519E-04" name="q_Gsa_GTP_init" units="fmol"/>
+        <variable initial_value="1e-18" name="q_Gsa_GTP_AC_init" units="fmol"/>
+        <variable initial_value="1e-18" name="q_Gsa_GTP_AC_ATP_init" units="fmol"/>
+        <variable initial_value="1.482E-03" name="q_PDE_init" units="fmol"/>
+        <variable initial_value="1e-18" name="q_PDEinh_init" units="fmol"/>
+        <variable initial_value="1e-18" name="q_PDE_cAMP_init" units="fmol"/>
+        <variable initial_value="3.80E-06" name="q_IBMX_init" units="fmol"/>
+        <variable initial_value="1e-18" name="q_five_AMP_init" units="fmol"/>
+        <variable initial_value="4.81E-04" name="q_Gia_GTP_init" units="fmol"/>
+        <variable initial_value="1e-18" name="q_ACinh_init" units="fmol"/>
+        <variable initial_value="1e-18" name="q_PPi_init" units="fmol"/>
+        <!-- mass conservation checks-->
+        <variable name="ATP_T" public_interface="in" units="fmol"/>
+        <variable name="AC_T" public_interface="in" units="fmol"/>
+        <variable name="Gs_T" public_interface="in" units="fmol"/>
+        <variable name="cAMP_T" public_interface="in" units="fmol"/>
+        <!-- Global value-->
+        <variable name="q_ATP" public_interface="out" units="fmol"/>
+        <variable name="q_cAMP" public_interface="out" units="fmol"/>
+        <variable name="q_AC" public_interface="out" units="fmol"/>
+        <variable name="q_AC_ATP" public_interface="out" units="fmol"/>
+        <variable name="q_Gsa_GTP_AC" public_interface="out" units="fmol"/>
+        <variable name="q_Gsa_GTP_AC_ATP" public_interface="out" units="fmol"/>
+        <variable name="q_FSK_AC" public_interface="out" units="fmol"/>
+        <variable name="q_FSK_AC_ATP" public_interface="out" units="fmol"/>
+        <variable name="q_PDE" public_interface="out" units="fmol"/>
+        <variable name="q_PDE_cAMP" public_interface="out" units="fmol"/>
+        <variable name="q_five_AMP" public_interface="out" units="fmol"/>
+        <variable name="q_IBMX" public_interface="out" units="fmol"/>
+        <variable name="q_PDEinh" public_interface="out" units="fmol"/>
+        <variable name="q_Gsa_GTP" public_interface="out" units="fmol"/>
+        <variable name="q_FSK" public_interface="out" units="fmol"/>
+        <variable name="q_Gia_GTP" public_interface="out" units="fmol"/>
+        <variable name="q_ACinh" public_interface="out" units="fmol"/>
+        <variable name="q_PPi" public_interface="out" units="fmol"/>
+        <!-- From submodule-->
+        <variable name="q_ATP_mcAMP" public_interface="in" units="fmol"/>
+        <variable name="q_cAMP_mcAMP" public_interface="in" units="fmol"/>
+        <variable name="q_AC_mcAMP" public_interface="in" units="fmol"/>
+        <variable name="q_AC_ATP_mcAMP" public_interface="in" units="fmol"/>
+        <variable name="q_Gsa_GTP_AC_mcAMP" public_interface="in" units="fmol"/>
+        <variable name="q_Gsa_GTP_AC_ATP_mcAMP" public_interface="in" units="fmol"/>
+        <variable name="q_FSK_AC_mcAMP" public_interface="in" units="fmol"/>
+        <variable name="q_FSK_AC_ATP_mcAMP" public_interface="in" units="fmol"/>
+        <variable name="q_PDE_mcAMP" public_interface="in" units="fmol"/>
+        <variable name="q_PDE_cAMP_mcAMP" public_interface="in" units="fmol"/>
+        <variable name="q_five_AMP_mcAMP" public_interface="in" units="fmol"/>
+        <variable name="q_IBMX_mcAMP" public_interface="in" units="fmol"/>
+        <variable name="q_PDEinh_mcAMP" public_interface="in" units="fmol"/>
+        <variable name="q_Gsa_GTP_mcAMP" public_interface="in" units="fmol"/>
+        <variable name="q_FSK_mcAMP" public_interface="in" units="fmol"/>
+        <variable name="q_Gia_GTP_mcAMP" public_interface="in" units="fmol"/>
+        <variable name="q_ACinh_mcAMP" public_interface="in" units="fmol"/>
+        <variable name="q_PPi_mcAMP" public_interface="in" units="fmol"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>q_ATP</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_ATP_mcAMP</ci>
+                    <ci>q_ATP_init</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>q_cAMP</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_cAMP_mcAMP</ci>
+                    <ci>q_cAMP_init</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>q_AC</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_AC_mcAMP</ci>
+                    <ci>q_AC_init</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>q_AC_ATP</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_AC_ATP_mcAMP</ci>
+                    <ci>q_AC_ATP_init</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>q_Gsa_GTP_AC</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_Gsa_GTP_AC_mcAMP</ci>
+                    <ci>q_Gsa_GTP_AC_init</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>q_Gsa_GTP_AC_ATP</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_Gsa_GTP_AC_ATP_mcAMP</ci>
+                    <ci>q_Gsa_GTP_AC_ATP_init</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>q_FSK_AC</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_FSK_AC_mcAMP</ci>
+                    <ci>q_FSK_AC_init</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>q_FSK_AC_ATP</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_FSK_AC_ATP_mcAMP</ci>
+                    <ci>q_FSK_AC_ATP_init</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>q_PDE</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_PDE_mcAMP</ci>
+                    <ci>q_PDE_init</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>q_PDE_cAMP</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_PDE_cAMP_mcAMP</ci>
+                    <ci>q_PDE_cAMP_init</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>q_five_AMP</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_five_AMP_mcAMP</ci>
+                    <ci>q_five_AMP_init</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>q_IBMX</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_IBMX_mcAMP</ci>
+                    <ci>q_IBMX_init</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>q_PDEinh</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_PDEinh_mcAMP</ci>
+                    <ci>q_PDEinh_init</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>q_Gsa_GTP</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_Gsa_GTP_mcAMP</ci>
+                    <ci>q_Gsa_GTP_init</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>q_FSK</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_FSK_mcAMP</ci>
+                    <ci>q_FSK_init</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>q_Gia_GTP</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_Gia_GTP_mcAMP</ci>
+                    <ci>q_Gia_GTP_init</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>q_ACinh</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_ACinh_mcAMP</ci>
+                    <ci>q_ACinh_init</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>q_PPi</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_PPi_mcAMP</ci>
+                    <ci>q_PPi_init</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <component name="cAMP_parameters">
+        <variable initial_value="9.47329e+06" name="kappa_1a" public_interface="out" units="fmol_per_sec"/>
+        <variable initial_value="0.00197793" name="kappa_1b" public_interface="out" units="fmol_per_sec"/>
+        <variable initial_value="176000" name="kappa_2a" public_interface="out" units="fmol_per_sec"/>
+        <variable initial_value="0.047492" name="kappa_2b" public_interface="out" units="fmol_per_sec"/>
+        <variable initial_value="5.07667e+08" name="kappa_3a" public_interface="out" units="fmol_per_sec"/>
+        <variable initial_value="5.9031e-17" name="kappa_3b" public_interface="out" units="fmol_per_sec"/>
+        <variable initial_value="36084.5" name="kappa_4a" public_interface="out" units="fmol_per_sec"/>
+        <variable initial_value="0.138787" name="kappa_4b" public_interface="out" units="fmol_per_sec"/>
+        <variable initial_value="751.564" name="kappa_5" public_interface="out" units="fmol_per_sec"/>
+        <variable initial_value="556.617" name="kappa_6" public_interface="out" units="fmol_per_sec"/>
+        <variable initial_value="160555" name="kappa_7" public_interface="out" units="fmol_per_sec"/>
+        <variable initial_value="685.521" name="kappa_GiAC" public_interface="out" units="fmol_per_sec"/>
+        <variable initial_value="9.19362e-06" name="K_ATP" public_interface="out" units="per_fmol"/>
+        <variable initial_value="0.0102598" name="K_cAMP" public_interface="out" units="per_fmol"/>
+        <variable initial_value="9.02358" name="K_AC" public_interface="out" units="per_fmol"/>
+        <variable initial_value="2.93942" name="K_AC_ATP" public_interface="out" units="per_fmol"/>
+        <variable initial_value="52.2258" name="K_Gsa_GTP_AC" public_interface="out" units="per_fmol"/>
+        <variable initial_value="5.20284" name="K_Gsa_GTP_AC_ATP" public_interface="out" units="per_fmol"/>
+        <variable initial_value="0.181058" name="K_FSK_AC" public_interface="out" units="per_fmol"/>
+        <variable initial_value="0.0492449" name="K_FSK_AC_ATP" public_interface="out" units="per_fmol"/>
+        <variable initial_value="2.28256" name="K_PDE" public_interface="out" units="per_fmol"/>
+        <variable initial_value="1.04728" name="K_PDE_cAMP" public_interface="out" units="per_fmol"/>
+        <variable initial_value="0.0102598" name="K_five_AMP" public_interface="out" units="per_fmol"/>
+        <variable initial_value="0.01642" name="K_IBMX" public_interface="out" units="per_fmol"/>
+        <variable initial_value="38.679" name="K_PDEinh" public_interface="out" units="per_fmol"/>
+        <variable initial_value="0.420618" name="K_Gsa_GTP" public_interface="out" units="per_fmol"/>
+        <variable initial_value="1.32565e-05" name="K_FSK" public_interface="out" units="per_fmol"/>
+        <variable initial_value="0.013661" name="K_Gia_GTP" public_interface="out" units="per_fmol"/>
+        <variable initial_value="42.4053" name="K_ACinh" public_interface="out" units="per_fmol"/>
+        <variable initial_value="2.60488e-05" name="K_PPi" public_interface="out" units="per_fmol"/>
+    </component>
+    <component name="cAMP">
+        <variable name="time" public_interface="in" units="second"/>
+        <!-- Physical parameters-->
+        <variable name="R" public_interface="in" units="J_per_K_per_mol"/>
+        <variable name="T" public_interface="in" units="kelvin"/>
+        <!-- Bond graph parameters, found using pinv of kinetic parameters-->
+        <variable name="kappa_1a" public_interface="in" units="fmol_per_sec"/>
+        <variable name="kappa_1b" public_interface="in" units="fmol_per_sec"/>
+        <variable name="kappa_2a" public_interface="in" units="fmol_per_sec"/>
+        <variable name="kappa_2b" public_interface="in" units="fmol_per_sec"/>
+        <variable name="kappa_3a" public_interface="in" units="fmol_per_sec"/>
+        <variable name="kappa_3b" public_interface="in" units="fmol_per_sec"/>
+        <variable name="kappa_4a" public_interface="in" units="fmol_per_sec"/>
+        <variable name="kappa_4b" public_interface="in" units="fmol_per_sec"/>
+        <variable name="kappa_5" public_interface="in" units="fmol_per_sec"/>
+        <variable name="kappa_6" public_interface="in" units="fmol_per_sec"/>
+        <variable name="kappa_7" public_interface="in" units="fmol_per_sec"/>
+        <variable name="kappa_GiAC" public_interface="in" units="fmol_per_sec"/>
+        <variable name="K_ATP" public_interface="in" units="per_fmol"/>
+        <variable name="K_cAMP" public_interface="in" units="per_fmol"/>
+        <variable name="K_AC" public_interface="in" units="per_fmol"/>
+        <variable name="K_AC_ATP" public_interface="in" units="per_fmol"/>
+        <variable name="K_Gsa_GTP_AC" public_interface="in" units="per_fmol"/>
+        <variable name="K_Gsa_GTP_AC_ATP" public_interface="in" units="per_fmol"/>
+        <variable name="K_FSK_AC" public_interface="in" units="per_fmol"/>
+        <variable name="K_FSK_AC_ATP" public_interface="in" units="per_fmol"/>
+        <variable name="K_PDE" public_interface="in" units="per_fmol"/>
+        <variable name="K_PDE_cAMP" public_interface="in" units="per_fmol"/>
+        <variable name="K_five_AMP" public_interface="in" units="per_fmol"/>
+        <variable name="K_IBMX" public_interface="in" units="per_fmol"/>
+        <variable name="K_PDEinh" public_interface="in" units="per_fmol"/>
+        <variable name="K_Gsa_GTP" public_interface="in" units="per_fmol"/>
+        <variable name="K_FSK" public_interface="in" units="per_fmol"/>
+        <variable name="K_Gia_GTP" public_interface="in" units="per_fmol"/>
+        <variable name="K_ACinh" public_interface="in" units="per_fmol"/>
+        <variable name="K_PPi" public_interface="in" units="per_fmol"/>
+        <!-- Input from global environment-->
+        <variable name="q_ATP_global" public_interface="in" units="fmol"/>
+        <variable name="q_cAMP_global" public_interface="in" units="fmol"/>
+        <variable name="q_AC_global" public_interface="in" units="fmol"/>
+        <variable name="q_AC_ATP_global" public_interface="in" units="fmol"/>
+        <variable name="q_Gsa_GTP_AC_global" public_interface="in" units="fmol"/>
+        <variable name="q_Gsa_GTP_AC_ATP_global" public_interface="in" units="fmol"/>
+        <variable name="q_FSK_AC_global" public_interface="in" units="fmol"/>
+        <variable name="q_FSK_AC_ATP_global" public_interface="in" units="fmol"/>
+        <variable name="q_PDE_global" public_interface="in" units="fmol"/>
+        <variable name="q_PDE_cAMP_global" public_interface="in" units="fmol"/>
+        <variable name="q_five_AMP_global" public_interface="in" units="fmol"/>
+        <variable name="q_IBMX_global" public_interface="in" units="fmol"/>
+        <variable name="q_PDEinh_global" public_interface="in" units="fmol"/>
+        <variable name="q_Gsa_GTP_global" public_interface="in" units="fmol"/>
+        <variable name="q_FSK_global" public_interface="in" units="fmol"/>
+        <variable name="q_Gia_GTP_global" public_interface="in" units="fmol"/>
+        <variable name="q_ACinh_global" public_interface="in" units="fmol"/>
+        <variable name="q_PPi_global" public_interface="in" units="fmol"/>
+        <!-- Output to global environment-->
+        <variable initial_value="1e-16" name="q_ATP" public_interface="out" units="fmol"/>
+        <variable initial_value="1e-16" name="q_cAMP" public_interface="out" units="fmol"/>
+        <variable initial_value="1e-16" name="q_AC" public_interface="out" units="fmol"/>
+        <variable initial_value="1e-16" name="q_AC_ATP" public_interface="out" units="fmol"/>
+        <variable initial_value="1e-16" name="q_Gsa_GTP_AC" public_interface="out" units="fmol"/>
+        <variable initial_value="1e-16" name="q_Gsa_GTP_AC_ATP" public_interface="out" units="fmol"/>
+        <variable initial_value="1e-16" name="q_FSK_AC" public_interface="out" units="fmol"/>
+        <variable initial_value="1e-16" name="q_FSK_AC_ATP" public_interface="out" units="fmol"/>
+        <variable initial_value="1e-16" name="q_PDE" public_interface="out" units="fmol"/>
+        <variable initial_value="1e-16" name="q_PDE_cAMP" public_interface="out" units="fmol"/>
+        <variable initial_value="1e-16" name="q_five_AMP" public_interface="out" units="fmol"/>
+        <variable initial_value="1e-16" name="q_IBMX" public_interface="out" units="fmol"/>
+        <variable initial_value="1e-16" name="q_PDEinh" public_interface="out" units="fmol"/>
+        <variable initial_value="1e-16" name="q_Gsa_GTP" public_interface="out" units="fmol"/>
+        <variable initial_value="1e-16" name="q_FSK" public_interface="out" units="fmol"/>
+        <variable initial_value="1e-16" name="q_Gia_GTP" public_interface="out" units="fmol"/>
+        <variable initial_value="1e-16" name="q_ACinh" public_interface="out" units="fmol"/>
+        <variable initial_value="1e-16" name="q_PPi" public_interface="out" units="fmol"/>
+        <!-- Bond variables-->
+        <variable name="v1a" units="fmol_per_sec"/>
+        <variable name="v1b" units="fmol_per_sec"/>
+        <variable name="v2a" units="fmol_per_sec"/>
+        <variable name="v2b" units="fmol_per_sec"/>
+        <variable name="v3a" units="fmol_per_sec"/>
+        <variable name="v3b" units="fmol_per_sec"/>
+        <variable name="v4a" units="fmol_per_sec"/>
+        <variable name="v4b" units="fmol_per_sec"/>
+        <variable name="v5" units="fmol_per_sec"/>
+        <variable name="v6" units="fmol_per_sec"/>
+        <variable name="v7" units="fmol_per_sec"/>
+        <variable name="vGiAC" units="fmol_per_sec"/>
+        <variable name="mu_ATP" units="J_per_mol"/>
+        <variable name="mu_AC" units="J_per_mol"/>
+        <variable name="mu_cAMP" units="J_per_mol"/>
+        <variable name="mu_AC_ATP" units="J_per_mol"/>
+        <variable name="mu_FSK" units="J_per_mol"/>
+        <variable name="mu_FSK_AC" units="J_per_mol"/>
+        <variable name="mu_FSK_AC_ATP" units="J_per_mol"/>
+        <variable name="mu_Gsa_GTP" units="J_per_mol"/>
+        <variable name="mu_Gsa_GTP_AC" units="J_per_mol"/>
+        <variable name="mu_Gsa_GTP_AC_ATP" units="J_per_mol"/>
+        <variable name="mu_PDE" units="J_per_mol"/>
+        <variable name="mu_PDEinh" units="J_per_mol"/>
+        <variable name="mu_PDE_cAMP" units="J_per_mol"/>
+        <variable name="mu_IBMX" units="J_per_mol"/>
+        <variable name="mu_five_AMP" units="J_per_mol"/>
+        <variable name="mu_Gia_GTP" units="J_per_mol"/>
+        <variable name="mu_ACinh" units="J_per_mol"/>
+        <variable name="mu_PPi" units="J_per_mol"/>
+        <variable initial_value="38.0" name="vol" units="pL"/>
+        <!-- Constitutive equations-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>mu_ATP</ci>
+                <apply>
+                    <times/>
+                    <ci>R</ci>
+                    <ci>T</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <times/>
+                            <ci>K_ATP</ci>
+                            <ci>q_ATP_global</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_cAMP</ci>
+                <apply>
+                    <times/>
+                    <ci>R</ci>
+                    <ci>T</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <times/>
+                            <ci>K_cAMP</ci>
+                            <ci>q_cAMP_global</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_AC</ci>
+                <apply>
+                    <times/>
+                    <ci>R</ci>
+                    <ci>T</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <times/>
+                            <ci>K_AC</ci>
+                            <ci>q_AC_global</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_AC_ATP</ci>
+                <apply>
+                    <times/>
+                    <ci>R</ci>
+                    <ci>T</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <times/>
+                            <ci>K_AC_ATP</ci>
+                            <ci>q_AC_ATP_global</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_Gsa_GTP_AC</ci>
+                <apply>
+                    <times/>
+                    <ci>R</ci>
+                    <ci>T</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <times/>
+                            <ci>K_Gsa_GTP_AC</ci>
+                            <ci>q_Gsa_GTP_AC_global</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_Gsa_GTP_AC_ATP</ci>
+                <apply>
+                    <times/>
+                    <ci>R</ci>
+                    <ci>T</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <times/>
+                            <ci>K_Gsa_GTP_AC_ATP</ci>
+                            <ci>q_Gsa_GTP_AC_ATP_global</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_FSK_AC</ci>
+                <apply>
+                    <times/>
+                    <ci>R</ci>
+                    <ci>T</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <times/>
+                            <ci>K_FSK_AC</ci>
+                            <ci>q_FSK_AC_global</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_FSK_AC_ATP</ci>
+                <apply>
+                    <times/>
+                    <ci>R</ci>
+                    <ci>T</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <times/>
+                            <ci>K_FSK_AC_ATP</ci>
+                            <ci>q_FSK_AC_ATP_global</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_PDE</ci>
+                <apply>
+                    <times/>
+                    <ci>R</ci>
+                    <ci>T</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <times/>
+                            <ci>K_PDE</ci>
+                            <ci>q_PDE_global</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_PDE_cAMP</ci>
+                <apply>
+                    <times/>
+                    <ci>R</ci>
+                    <ci>T</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <times/>
+                            <ci>K_PDE_cAMP</ci>
+                            <ci>q_PDE_cAMP_global</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_five_AMP</ci>
+                <apply>
+                    <times/>
+                    <ci>R</ci>
+                    <ci>T</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <times/>
+                            <ci>K_five_AMP</ci>
+                            <ci>q_five_AMP_global</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_IBMX</ci>
+                <apply>
+                    <times/>
+                    <ci>R</ci>
+                    <ci>T</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <times/>
+                            <ci>K_IBMX</ci>
+                            <ci>q_IBMX_global</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_PDEinh</ci>
+                <apply>
+                    <times/>
+                    <ci>R</ci>
+                    <ci>T</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <times/>
+                            <ci>K_PDEinh</ci>
+                            <ci>q_PDEinh_global</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_Gsa_GTP</ci>
+                <apply>
+                    <times/>
+                    <ci>R</ci>
+                    <ci>T</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <times/>
+                            <ci>K_Gsa_GTP</ci>
+                            <ci>q_Gsa_GTP_global</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_FSK</ci>
+                <apply>
+                    <times/>
+                    <ci>R</ci>
+                    <ci>T</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <times/>
+                            <ci>K_FSK</ci>
+                            <ci>q_FSK_global</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_Gia_GTP</ci>
+                <apply>
+                    <times/>
+                    <ci>R</ci>
+                    <ci>T</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <times/>
+                            <ci>K_Gia_GTP</ci>
+                            <ci>q_Gia_GTP_global</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_ACinh</ci>
+                <apply>
+                    <times/>
+                    <ci>R</ci>
+                    <ci>T</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <times/>
+                            <ci>K_ACinh</ci>
+                            <ci>q_ACinh_global</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_PPi</ci>
+                <apply>
+                    <times/>
+                    <ci>R</ci>
+                    <ci>T</ci>
+                    <apply>
+                        <ln/>
+                        <apply>
+                            <times/>
+                            <ci>K_PPi</ci>
+                            <ci>q_PPi_global</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>v1a</ci>
+                <apply>
+                    <times/>
+                    <ci>kappa_1a</ci>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <plus/>
+                                    <ci>mu_AC</ci>
+                                    <ci>mu_ATP</ci>
+                                </apply>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <ci>mu_AC_ATP</ci>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>v1b</ci>
+                <apply>
+                    <times/>
+                    <ci>kappa_1b</ci>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <ci>mu_AC_ATP</ci>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <plus/>
+                                    <ci>mu_AC</ci>
+                                    <ci>mu_cAMP</ci>
+                                    <ci>mu_PPi</ci>
+                                </apply>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>v2a</ci>
+                <apply>
+                    <times/>
+                    <ci>kappa_2a</ci>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <plus/>
+                                    <ci>mu_Gsa_GTP_AC</ci>
+                                    <ci>mu_ATP</ci>
+                                </apply>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <ci>mu_Gsa_GTP_AC_ATP</ci>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>v2b</ci>
+                <apply>
+                    <times/>
+                    <ci>kappa_2b</ci>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <ci>mu_Gsa_GTP_AC_ATP</ci>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <plus/>
+                                    <ci>mu_Gsa_GTP_AC</ci>
+                                    <ci>mu_cAMP</ci>
+                                    <ci>mu_PPi</ci>
+                                </apply>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>v3a</ci>
+                <apply>
+                    <times/>
+                    <ci>kappa_3a</ci>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <plus/>
+                                    <ci>mu_FSK_AC</ci>
+                                    <ci>mu_ATP</ci>
+                                </apply>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <ci>mu_FSK_AC_ATP</ci>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>v3b</ci>
+                <apply>
+                    <times/>
+                    <ci>kappa_3b</ci>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <ci>mu_FSK_AC_ATP</ci>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <plus/>
+                                    <ci>mu_FSK_AC</ci>
+                                    <ci>mu_cAMP</ci>
+                                    <ci>mu_PPi</ci>
+                                </apply>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>v4a</ci>
+                <apply>
+                    <times/>
+                    <ci>kappa_4a</ci>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <plus/>
+                                    <ci>mu_PDE</ci>
+                                    <ci>mu_cAMP</ci>
+                                </apply>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <ci>mu_PDE_cAMP</ci>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>v4b</ci>
+                <apply>
+                    <times/>
+                    <ci>kappa_4b</ci>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <ci>mu_PDE_cAMP</ci>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <plus/>
+                                    <ci>mu_PDE</ci>
+                                    <ci>mu_five_AMP</ci>
+                                </apply>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>v5</ci>
+                <apply>
+                    <times/>
+                    <ci>kappa_5</ci>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <plus/>
+                                    <ci>mu_PDE</ci>
+                                    <ci>mu_IBMX</ci>
+                                </apply>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <ci>mu_PDEinh</ci>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>v6</ci>
+                <apply>
+                    <times/>
+                    <ci>kappa_6</ci>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <plus/>
+                                    <ci>mu_AC</ci>
+                                    <ci>mu_Gsa_GTP</ci>
+                                </apply>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <ci>mu_Gsa_GTP_AC</ci>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>v7</ci>
+                <apply>
+                    <times/>
+                    <ci>kappa_7</ci>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <plus/>
+                                    <ci>mu_FSK</ci>
+                                    <ci>mu_AC</ci>
+                                </apply>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <ci>mu_FSK_AC</ci>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>vGiAC</ci>
+                <apply>
+                    <times/>
+                    <ci>kappa_GiAC</ci>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <plus/>
+                                    <ci>mu_AC</ci>
+                                    <ci>mu_Gia_GTP</ci>
+                                </apply>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <divide/>
+                                <ci>mu_ACinh</ci>
+                                <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>q_ATP</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <ci>v1a</ci>
+                        </apply>
+                        <ci>v3a</ci>
+                    </apply>
+                    <ci>v2a</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>q_AC</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <ci>v1b</ci>
+                                <ci>v1a</ci>
+                            </apply>
+                            <ci>v6</ci>
+                        </apply>
+                        <ci>v7</ci>
+                    </apply>
+                    <ci>vGiAC</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>q_AC_ATP</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>v1a</ci>
+                    <ci>v1b</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>q_cAMP</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <plus/>
+                        <ci>v1b</ci>
+                        <ci>v3b</ci>
+                        <ci>v2b</ci>
+                    </apply>
+                    <ci>v4a</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>q_FSK</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>v7</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>q_FSK_AC</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <plus/>
+                        <ci>v7</ci>
+                        <ci>v3b</ci>
+                    </apply>
+                    <ci>v3a</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>q_FSK_AC_ATP</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>v3a</ci>
+                    <ci>v3b</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>q_Gsa_GTP</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>v6</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>q_Gsa_GTP_AC</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <minus/>
+                        <ci>v6</ci>
+                        <ci>v2a</ci>
+                    </apply>
+                    <ci>v2b</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>q_Gsa_GTP_AC_ATP</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>v2a</ci>
+                    <ci>v2b</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>q_PDE_cAMP</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>v4a</ci>
+                    <ci>v4b</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>q_PDE</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <minus/>
+                        <ci>v4b</ci>
+                        <ci>v4a</ci>
+                    </apply>
+                    <ci>v5</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>q_IBMX</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>v5</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>q_PDEinh</ci>
+                </apply>
+                <ci>v5</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>q_five_AMP</ci>
+                </apply>
+                <ci>v4b</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>q_Gia_GTP</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>vGiAC</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>q_ACinh</ci>
+                </apply>
+                <ci>vGiAC</ci>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>q_PPi</ci>
+                </apply>
+                <ci>vGiAC</ci>
+            </apply>
+        </math>
+        <!-- mass conservation checks -->
+        <variable name="ATP_T" public_interface="out" units="fmol"/>
+        <variable name="AC_T" public_interface="out" units="fmol"/>
+        <variable name="Gs_T" public_interface="out" units="fmol"/>
+        <variable name="cAMP_T" public_interface="out" units="fmol"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>ATP_T</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_ATP_global</ci>
+                    <ci>q_AC_ATP_global</ci>
+                    <ci>q_FSK_AC_ATP_global</ci>
+                    <ci>q_Gsa_GTP_AC_ATP_global</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>AC_T</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_AC_global</ci>
+                    <ci>q_AC_ATP_global</ci>
+                    <ci>q_FSK_AC_global</ci>
+                    <ci>q_FSK_AC_ATP_global</ci>
+                    <ci>q_Gsa_GTP_AC_global</ci>
+                    <ci>q_Gsa_GTP_AC_ATP_global</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Gs_T</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_Gsa_GTP_global</ci>
+                    <ci>q_Gsa_GTP_AC_global</ci>
+                    <ci>q_Gsa_GTP_AC_ATP_global</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>cAMP_T</ci>
+                <apply>
+                    <plus/>
+                    <ci>q_cAMP_global</ci>
+                    <ci>q_PDE_cAMP_global</ci>
+                    <ci>q_five_AMP</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <connection>
+        <map_components component_1="environment" component_2="cAMP"/>
+        <map_variables variable_1="time" variable_2="time"/>
+        <map_variables variable_1="q_ATP_mcAMP" variable_2="q_ATP"/>
+        <map_variables variable_1="q_ATP" variable_2="q_ATP_global"/>
+        <map_variables variable_1="q_cAMP_mcAMP" variable_2="q_cAMP"/>
+        <map_variables variable_1="q_cAMP" variable_2="q_cAMP_global"/>
+        <map_variables variable_1="q_AC_mcAMP" variable_2="q_AC"/>
+        <map_variables variable_1="q_AC" variable_2="q_AC_global"/>
+        <map_variables variable_1="q_AC_ATP_mcAMP" variable_2="q_AC_ATP"/>
+        <map_variables variable_1="q_AC_ATP" variable_2="q_AC_ATP_global"/>
+        <map_variables variable_1="q_Gsa_GTP_AC_mcAMP" variable_2="q_Gsa_GTP_AC"/>
+        <map_variables variable_1="q_Gsa_GTP_AC" variable_2="q_Gsa_GTP_AC_global"/>
+        <map_variables variable_1="q_Gsa_GTP_AC_ATP_mcAMP" variable_2="q_Gsa_GTP_AC_ATP"/>
+        <map_variables variable_1="q_Gsa_GTP_AC_ATP" variable_2="q_Gsa_GTP_AC_ATP_global"/>
+        <map_variables variable_1="q_FSK_AC_mcAMP" variable_2="q_FSK_AC"/>
+        <map_variables variable_1="q_FSK_AC" variable_2="q_FSK_AC_global"/>
+        <map_variables variable_1="q_FSK_AC_ATP_mcAMP" variable_2="q_FSK_AC_ATP"/>
+        <map_variables variable_1="q_FSK_AC_ATP" variable_2="q_FSK_AC_ATP_global"/>
+        <map_variables variable_1="q_PDE_mcAMP" variable_2="q_PDE"/>
+        <map_variables variable_1="q_PDE" variable_2="q_PDE_global"/>
+        <map_variables variable_1="q_PDE_cAMP_mcAMP" variable_2="q_PDE_cAMP"/>
+        <map_variables variable_1="q_PDE_cAMP" variable_2="q_PDE_cAMP_global"/>
+        <map_variables variable_1="q_five_AMP_mcAMP" variable_2="q_five_AMP"/>
+        <map_variables variable_1="q_five_AMP" variable_2="q_five_AMP_global"/>
+        <map_variables variable_1="q_IBMX_mcAMP" variable_2="q_IBMX"/>
+        <map_variables variable_1="q_IBMX" variable_2="q_IBMX_global"/>
+        <map_variables variable_1="q_PDEinh_mcAMP" variable_2="q_PDEinh"/>
+        <map_variables variable_1="q_PDEinh" variable_2="q_PDEinh_global"/>
+        <map_variables variable_1="q_Gsa_GTP_mcAMP" variable_2="q_Gsa_GTP"/>
+        <map_variables variable_1="q_Gsa_GTP" variable_2="q_Gsa_GTP_global"/>
+        <map_variables variable_1="q_FSK_mcAMP" variable_2="q_FSK"/>
+        <map_variables variable_1="q_FSK" variable_2="q_FSK_global"/>
+        <map_variables variable_1="q_Gia_GTP_mcAMP" variable_2="q_Gia_GTP"/>
+        <map_variables variable_1="q_Gia_GTP" variable_2="q_Gia_GTP_global"/>
+        <map_variables variable_1="q_ACinh_mcAMP" variable_2="q_ACinh"/>
+        <map_variables variable_1="q_ACinh" variable_2="q_ACinh_global"/>
+        <map_variables variable_1="q_PPi_mcAMP" variable_2="q_PPi"/>
+        <map_variables variable_1="q_PPi" variable_2="q_PPi_global"/>
+        <map_variables variable_1="ATP_T" variable_2="ATP_T"/>
+        <map_variables variable_1="AC_T" variable_2="AC_T"/>
+        <map_variables variable_1="Gs_T" variable_2="Gs_T"/>
+        <map_variables variable_1="cAMP_T" variable_2="cAMP_T"/>
+    </connection>
+    <connection>
+        <map_components component_1="cAMP_parameters" component_2="cAMP"/>
+        <map_variables variable_1="kappa_1a" variable_2="kappa_1a"/>
+        <map_variables variable_1="kappa_1b" variable_2="kappa_1b"/>
+        <map_variables variable_1="kappa_2a" variable_2="kappa_2a"/>
+        <map_variables variable_1="kappa_2b" variable_2="kappa_2b"/>
+        <map_variables variable_1="kappa_3a" variable_2="kappa_3a"/>
+        <map_variables variable_1="kappa_3b" variable_2="kappa_3b"/>
+        <map_variables variable_1="kappa_4a" variable_2="kappa_4a"/>
+        <map_variables variable_1="kappa_4b" variable_2="kappa_4b"/>
+        <map_variables variable_1="kappa_5" variable_2="kappa_5"/>
+        <map_variables variable_1="kappa_6" variable_2="kappa_6"/>
+        <map_variables variable_1="kappa_7" variable_2="kappa_7"/>
+        <map_variables variable_1="kappa_GiAC" variable_2="kappa_GiAC"/>
+        <map_variables variable_1="K_ATP" variable_2="K_ATP"/>
+        <map_variables variable_1="K_cAMP" variable_2="K_cAMP"/>
+        <map_variables variable_1="K_AC" variable_2="K_AC"/>
+        <map_variables variable_1="K_AC_ATP" variable_2="K_AC_ATP"/>
+        <map_variables variable_1="K_Gsa_GTP_AC" variable_2="K_Gsa_GTP_AC"/>
+        <map_variables variable_1="K_Gsa_GTP_AC_ATP" variable_2="K_Gsa_GTP_AC_ATP"/>
+        <map_variables variable_1="K_FSK_AC" variable_2="K_FSK_AC"/>
+        <map_variables variable_1="K_FSK_AC_ATP" variable_2="K_FSK_AC_ATP"/>
+        <map_variables variable_1="K_PDE" variable_2="K_PDE"/>
+        <map_variables variable_1="K_PDE_cAMP" variable_2="K_PDE_cAMP"/>
+        <map_variables variable_1="K_five_AMP" variable_2="K_five_AMP"/>
+        <map_variables variable_1="K_IBMX" variable_2="K_IBMX"/>
+        <map_variables variable_1="K_PDEinh" variable_2="K_PDEinh"/>
+        <map_variables variable_1="K_Gsa_GTP" variable_2="K_Gsa_GTP"/>
+        <map_variables variable_1="K_FSK" variable_2="K_FSK"/>
+        <map_variables variable_1="K_Gia_GTP" variable_2="K_Gia_GTP"/>
+        <map_variables variable_1="K_ACinh" variable_2="K_ACinh"/>
+        <map_variables variable_1="K_PPi" variable_2="K_PPi"/>
+    </connection>
+    <connection>
+        <map_components component_1="constants" component_2="cAMP"/>
+        <map_variables variable_1="R" variable_2="R"/>
+        <map_variables variable_1="T" variable_2="T"/>
+    </connection>
+</model>

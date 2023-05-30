@@ -1,0 +1,1108 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+This CellML file was generated on 13/10/2009 at 10:39:37 at a.m. using:
+
+COR (0.9.31.1319)
+Copyright 2002-2009 Dr Alan Garny
+http://cor.physiol.ox.ac.uk/ - cor@physiol.ox.ac.uk
+
+CellML 1.0 was used to generate this model
+http://www.cellml.org/
+--><model xmlns="http://www.cellml.org/cellml/1.0#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" xml:base="file:///C:/Users/gnun003/Documents/Koivumaki/Finished/koivumaki_takalo_korhonen_tavi_weckstrom_2009_reduced_myocyte_long.cellml" cmeta:id="koivumaki_takalo_korhonen_tavi_weckstrom_2009_reduced_myocyte_long" name="koivumaki_takalo_korhonen_tavi_weckstrom_2009_reduced_myocyte_long">
+	<documentation xmlns="http://cellml.org/tmp-documentation">
+		<article>
+			<articleinfo>
+				<title>Modelling Sarcoplasmic Reticulum Calcium APTase and its Regulation in Cardiac Myocytes
+</title>
+				<author>
+					<firstname>Geoffrey</firstname>
+					<surname>Nunns</surname>
+					<affiliation>
+						<shortaffil>Bioengineering Institute, University of Auckland</shortaffil>
+					</affiliation>
+				</author>
+			</articleinfo>
+			<section id="sec_status">
+				<title>Model Status</title>
+				<para>
+				This CellML model runs in PCenv, and OpenCell to recreate the published results, but not COR because of the presence of the modulo operator. This model describes the SERCA pump coupled to a reduced cardiac myocyte, and is based on the original matlab code dy_reduced_myocyte. It describes the long action potential, another version describes the short AP. 
+				 
+				</para>
+			</section>
+			<sect1 id="sec_structure">
+				<title>Model Structure</title>
+				<para>
+ABSTRACT: When developing large-scale mathematical models of physiology, some reduction in complexity is necessarily required to maintain computational efficiency. A prime example of such an intricate cell is the cardiac myocyte. For the predictive power of the cardiomyocyte models, it is vital to accurately describe the calcium transport mechanisms, since they essentially link the electrical activation to contractility. The removal of calcium from the cytoplasm takes place mainly by the Na(+)/Ca(2+) exchanger, and the sarcoplasmic reticulum Ca(2+) ATPase (SERCA). In the present study, we review the properties of SERCA, its frequency-dependent and beta-adrenergic regulation, and the approaches of mathematical modelling that have been used to investigate its function. Furthermore, we present novel theoretical considerations that might prove useful for the elucidation of the role of SERCA in cardiac function, achieving a reduction in model complexity, but at the same time retaining the central aspects of its function. Our results indicate that to faithfully predict the physiological properties of SERCA, we should take into account the calcium-buffering effect and reversible function of the pump. This 'uncomplicated' modelling approach could be useful to other similar transport mechanisms as well.
+</para>
+
+<informalfigure float="0" id="fig_reaction_diagram">
+					<mediaobject>
+						<imageobject>
+							<objectinfo>
+								<title>model diagram</title>
+							</objectinfo>
+							<imagedata fileref="koivumaki_2009b.png"/>
+						</imageobject>
+					</mediaobject>
+					<caption>Schematic diagram of the cell model.</caption>
+				</informalfigure>
+				
+				<para>
+The original paper reference is cited below:
+</para>
+				<para>
+Modelling Sarcoplasmic Reticulum Calcium APTase and its Regulation in Cardiac Myocytes, Jussi T. Koivumaki, Jouni Takalo, Topi Korhonen, Pasi Tavi, Matti Weckstrom, 2009, <emphasis>Phil. Trans. R. Soc. A</emphasis>, volume 367, 2181-2202.  <ulink url="http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&amp;cmd=Retrieve&amp;dopt=AbstractPlus&amp;list_uids=19414452&amp;query_hl=1&amp;itool=pubmed_docsum">PubMed ID: 19414452</ulink>
+				</para>
+			</sect1>
+		</article>
+	</documentation>
+	   <units name="msec">
+      <unit prefix="milli" units="second"/>
+   </units>
+   <units name="per_msec">
+      <unit exponent="-1" prefix="milli" units="second"/>
+   </units>
+   <units name="uM">
+      <unit prefix="micro" units="mole"/>
+      <unit exponent="-1" units="liter"/>
+   </units>
+   <units name="per_uM2">
+      <unit exponent="-2" units="uM"/>
+   </units>
+   <units name="cm2">
+      <unit exponent="2" prefix="centi" units="meter"/>
+   </units>
+   <units name="uL">
+      <unit prefix="micro" units="liter"/>
+   </units>
+   <units name="mV">
+      <unit prefix="milli" units="volt"/>
+   </units>
+   <units name="uM_per_msec">
+      <unit units="uM"/>
+      <unit exponent="-1" prefix="milli" units="second"/>
+   </units>
+   <units name="per_uM_per_msec">
+      <unit exponent="-1" units="uM"/>
+      <unit exponent="-1" prefix="milli" units="second"/>
+   </units>
+   <units name="per_uM2_per_msec">
+      <unit exponent="-2" units="uM"/>
+      <unit exponent="-1" prefix="milli" units="second"/>
+   </units>
+   <units name="uF_per_cm2">
+      <unit prefix="micro" units="farad"/>
+      <unit exponent="-2" prefix="centi" units="meter"/>
+   </units>
+   <units name="C_per_mmole">
+      <unit units="coulomb"/>
+      <unit exponent="-1" prefix="milli" units="mole"/>
+   </units>
+   <units name="J_per_K_per_mol">
+      <unit units="joule"/>
+      <unit exponent="-1" units="kelvin"/>
+      <unit exponent="-1" units="mole"/>
+   </units>
+   <units name="uA_per_uF">
+      <unit prefix="micro" units="ampere"/>
+      <unit exponent="-1" prefix="micro" units="farad"/>
+   </units>
+   <units name="mV_per_V">
+      <unit units="mV"/>
+      <unit exponent="-1" units="volt"/>
+   </units>
+   <units name="mM_per_M">
+      <unit prefix="milli" units="mole"/>
+      <unit exponent="-1" units="mole"/>
+   </units>
+   <component name="environment">
+      <variable name="time" public_interface="out" units="msec"/>
+      <variable name="t_modulo" public_interface="out" units="msec"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply><eq/><ci>t_modulo</ci><apply><rem/><ci>time</ci><cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">1000</cn></apply></apply>
+      </math>
+   </component>
+   <component name="general_parameters">
+      <variable initial_value="1.534e-4" name="Acap" public_interface="out" units="cm2"/>
+      <variable initial_value="25.84e-6" name="V_myo" public_interface="out" units="uL"/>
+      <variable initial_value="1" name="C_m" public_interface="out" units="uF_per_cm2"/>
+      <variable initial_value="96.5" name="F" public_interface="out" units="C_per_mmole"/>
+      <variable initial_value="298" name="T" public_interface="out" units="kelvin"/>
+      <variable initial_value="8.314" name="R" public_interface="out" units="J_per_K_per_mol"/>
+      <variable initial_value="24" name="CaM_tot" public_interface="out" units="uM"/>
+      <variable initial_value="2.38" name="Km_CaM" public_interface="out" units="uM"/>
+      <variable initial_value="1000" name="Ca_o" public_interface="out" units="uM"/>
+      <variable initial_value="140000" name="Na_o" public_interface="out" units="uM"/>
+      <variable initial_value="760" name="Ca_NSR" public_interface="out" units="uM"/>
+      <variable initial_value="0.0003" name="J_leak" public_interface="out" units="uM_per_msec"/>
+   </component>
+   <component name="action_potential">
+      <variable name="V" public_interface="out" units="mV"/>
+      <variable name="t_modulo" public_interface="in" units="msec"/>
+      <variable initial_value="0.5" name="t1" units="msec"/>
+      <variable initial_value="200" name="t2" units="msec"/>
+      <variable initial_value="2" name="p" units="dimensionless"/>
+      <variable initial_value="135" name="A" units="mV"/>
+      <variable initial_value="110" name="A1" units="msec"/>
+      <variable initial_value="-90" name="rest" units="mV"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <ci>V</ci>
+            <apply>
+               <plus/>
+               <ci>rest</ci>
+               <apply>
+                  <times/>
+                  <ci>A</ci>
+                  <apply>
+                     <power/>
+                     <apply>
+                        <minus/>
+                        <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">1</cn>
+                        <apply>
+                           <exp/>
+                           <apply>
+                              <divide/>
+                              <apply>
+                                 <minus/>
+                                 <ci>t_modulo</ci>
+                              </apply>
+                              <ci>t1</ci>
+                           </apply>
+                        </apply>
+                     </apply>
+                     <ci>p</ci>
+                  </apply>
+                  <apply>
+                     <exp/>
+                     <apply>
+                        <divide/>
+                        <apply>
+                           <minus/>
+                           <ci>t_modulo</ci>
+                        </apply>
+                        <ci>t2</ci>
+                     </apply>
+                  </apply>
+                  <apply>
+                     <minus/>
+                     <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">1</cn>
+                     <apply>
+                        <divide/>
+                        <apply>
+                           <power/>
+                           <ci>t_modulo</ci>
+                           <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">10</cn>
+                        </apply>
+                        <apply>
+                           <plus/>
+                           <apply>
+                              <power/>
+                              <ci>A1</ci>
+                              <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">10</cn>
+                           </apply>
+                           <apply>
+                              <power/>
+                              <ci>t_modulo</ci>
+                              <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">10</cn>
+                           </apply>
+                        </apply>
+                     </apply>
+                  </apply>
+               </apply>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <component name="calcium_input">
+      <variable name="Ca_input" public_interface="out" units="uM_per_msec"/>
+      <variable name="t_modulo" public_interface="in" units="msec"/>
+      <variable name="tcalcium" units="msec"/>
+      <variable initial_value="1.5" name="Ca_tau1" units="msec"/>
+      <variable initial_value="7.5" name="Ca_tau2" units="msec"/>
+      <variable initial_value="2" name="Ca_pow" units="dimensionless"/>
+      <variable initial_value="10" name="Ca_amp" units="uM_per_msec"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <ci>tcalcium</ci>
+            <piecewise>
+               <piece>
+                  <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="msec">0</cn>
+                  <apply>
+                     <leq/>
+                     <apply>
+                        <minus/>
+                        <ci>t_modulo</ci>
+                        <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="msec">1.2</cn>
+                     </apply>
+                     <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="msec">0</cn>
+                  </apply>
+               </piece>
+               <otherwise>
+                  <apply>
+                     <minus/>
+                     <ci>t_modulo</ci>
+                     <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="msec">1.2</cn>
+                  </apply>
+               </otherwise>
+            </piecewise>
+         </apply>
+         <apply>
+            <eq/>
+            <ci>Ca_input</ci>
+            <apply>
+               <times/>
+               <ci>Ca_amp</ci>
+               <apply>
+                  <power/>
+                  <apply>
+                     <minus/>
+                     <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">1</cn>
+                     <apply>
+                        <exp/>
+                        <apply>
+                           <divide/>
+                           <apply>
+                              <minus/>
+                              <ci>tcalcium</ci>
+                           </apply>
+                           <ci>Ca_tau1</ci>
+                        </apply>
+                     </apply>
+                  </apply>
+                  <ci>Ca_pow</ci>
+               </apply>
+               <apply>
+                  <exp/>
+                  <apply>
+                     <divide/>
+                     <apply>
+                        <minus/>
+                        <ci>tcalcium</ci>
+                     </apply>
+                     <ci>Ca_tau2</ci>
+                  </apply>
+               </apply>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <component name="NCX_current">
+      <variable name="INaCa" public_interface="out" units="uA_per_uF"/>
+      <variable initial_value="10000" name="Na_i" units="uM"/>
+      <variable initial_value="87500" name="KmNa" units="uM"/>
+      <variable initial_value="1380" name="KmCa" units="uM"/>
+      <variable initial_value="0.1" name="ksat" units="dimensionless"/>
+      <variable initial_value="0.35" name="eta" units="dimensionless"/>
+      <variable initial_value="950" name="kNaCa" units="uA_per_uF"/>
+      <variable name="Ca_o" public_interface="in" units="uM"/>
+      <variable name="Na_o" public_interface="in" units="uM"/>
+      <variable name="Ca_cyt" public_interface="in" units="uM"/>
+      <variable name="F" public_interface="in" units="C_per_mmole"/>
+      <variable name="T" public_interface="in" units="kelvin"/>
+      <variable name="R" public_interface="in" units="J_per_K_per_mol"/>
+      <variable name="V" public_interface="in" units="mV"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <ci>INaCa</ci>
+            <apply>
+               <times/>
+               <apply>
+                  <divide/>
+                  <ci>kNaCa</ci>
+                  <apply>
+                     <times/>
+                     <apply>
+                        <plus/>
+                        <apply>
+                           <power/>
+                           <ci>KmNa</ci>
+                           <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">3</cn>
+                        </apply>
+                        <apply>
+                           <power/>
+                           <ci>Na_o</ci>
+                           <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">3</cn>
+                        </apply>
+                     </apply>
+                     <apply>
+                        <plus/>
+                        <ci>KmCa</ci>
+                        <ci>Ca_o</ci>
+                     </apply>
+                     <apply>
+                        <plus/>
+                        <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">1</cn>
+                        <apply>
+                           <times/>
+                           <ci>ksat</ci>
+                           <apply>
+                              <exp/>
+                              <apply>
+                                 <divide/>
+                                 <apply>
+                                    <times/>
+                                    <apply>
+                                       <minus/>
+                                       <ci>eta</ci>
+                                       <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">1</cn>
+                                    </apply>
+                                    <ci>V</ci>
+                                    <ci>F</ci>
+                                 </apply>
+                                 <apply>
+                                    <times/>
+                                    <ci>R</ci>
+                                    <ci>T</ci>
+                                 </apply>
+                              </apply>
+                           </apply>
+                        </apply>
+                     </apply>
+                  </apply>
+               </apply>
+               <apply>
+                  <minus/>
+                  <apply>
+                     <times/>
+                     <apply>
+                        <exp/>
+                        <apply>
+                           <divide/>
+                           <apply>
+                              <times/>
+                              <ci>eta</ci>
+                              <ci>V</ci>
+                              <ci>F</ci>
+                           </apply>
+                           <apply>
+                              <times/>
+                              <ci>R</ci>
+                              <ci>T</ci>
+                           </apply>
+                        </apply>
+                     </apply>
+                     <apply>
+                        <power/>
+                        <ci>Na_i</ci>
+                        <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">3</cn>
+                     </apply>
+                     <ci>Ca_o</ci>
+                  </apply>
+                  <apply>
+                     <times/>
+                     <apply>
+                        <exp/>
+                        <apply>
+                           <divide/>
+                           <apply>
+                              <times/>
+                              <apply>
+                                 <minus/>
+                                 <ci>eta</ci>
+                                 <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">1</cn>
+                              </apply>
+                              <ci>V</ci>
+                              <ci>F</ci>
+                           </apply>
+                           <apply>
+                              <times/>
+                              <ci>R</ci>
+                              <ci>T</ci>
+                           </apply>
+                        </apply>
+                     </apply>
+                     <apply>
+                        <power/>
+                        <ci>Na_o</ci>
+                        <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">3</cn>
+                     </apply>
+                     <ci>Ca_cyt</ci>
+                  </apply>
+               </apply>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <component name="serca_parameters">
+      <variable initial_value="20" name="SERCA_TOT" public_interface="out" units="uM"/>
+      <variable initial_value="0.1" name="CaMKII_reg" public_interface="out" units="dimensionless"/>
+      <variable initial_value="0.1" name="PKA_reg" public_interface="out" units="dimensionless"/>
+      <variable initial_value="1" name="PSR" units="dimensionless"/>
+      <variable initial_value="0.15" name="Kmf_PLBKO" units="uM"/>
+      <variable initial_value="0.15" name="Kmf_PLB" units="uM"/>
+      <variable initial_value="2500" name="Kmr_PLBKO" units="uM"/>
+      <variable initial_value="1110" name="Kmr_PLB" units="uM"/>
+      <variable initial_value="1" name="PLB_tot" public_interface="out" units="uM"/>
+      <variable initial_value="1" name="kplb_pos" public_interface="out" units="per_msec"/>
+      <variable initial_value="6.8" name="kplb_neg" public_interface="out" units="per_msec"/>
+      <variable name="EC_50_fwd" public_interface="out" units="uM"/>
+      <variable name="EC_50_rev" public_interface="out" units="uM"/>
+      <variable name="PLB_dephosph" public_interface="in" units="uM"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <ci>EC_50_fwd</ci>
+            <apply>
+               <times/>
+               <apply>
+                  <plus/>
+                  <ci>Kmf_PLBKO</ci>
+                  <apply>
+                     <divide/>
+                     <apply>
+                        <times/>
+                        <ci>Kmf_PLB</ci>
+                        <ci>PSR</ci>
+                        <ci>PLB_dephosph</ci>
+                     </apply>
+                     <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="uM">1</cn>
+                  </apply>
+               </apply>
+               <apply>
+                  <plus/>
+                  <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">1</cn>
+                  <apply>
+                     <times/>
+                     <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">0.27</cn>
+                     <ci>CaMKII_reg</ci>
+                  </apply>
+               </apply>
+            </apply>
+         </apply>
+         <apply>
+            <eq/>
+            <ci>EC_50_rev</ci>
+            <apply>
+               <minus/>
+               <ci>Kmr_PLBKO</ci>
+               <apply>
+                  <divide/>
+                  <apply>
+                     <times/>
+                     <ci>Kmr_PLB</ci>
+                     <ci>PSR</ci>
+                     <ci>PLB_dephosph</ci>
+                  </apply>
+                  <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="uM">1</cn>
+               </apply>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <component name="transition_parameters">
+      <variable name="k_cyt_serca" public_interface="out" units="per_uM2_per_msec"/>
+      <variable name="k_serca_cyt" public_interface="out" units="per_msec"/>
+      <variable name="k_serca_sr" public_interface="out" units="per_msec"/>
+      <variable name="k_sr_serca" public_interface="out" units="per_uM2_per_msec"/>
+      <variable name="br_cyt_serca" units="per_uM2_per_msec"/>
+      <variable initial_value="0.00625" name="br_serca_sr" units="per_msec"/>
+      <variable name="CaMKII_reg" public_interface="in" units="dimensionless"/>
+      <variable name="EC_50_fwd" public_interface="in" units="uM"/>
+      <variable name="EC_50_rev" public_interface="in" units="uM"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <ci>br_cyt_serca</ci>
+            <apply>
+               <times/>
+               <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="per_uM2">1000</cn>
+               <ci>br_serca_sr</ci>
+            </apply>
+         </apply>
+         <apply>
+            <eq/>
+            <ci>k_cyt_serca</ci>
+            <apply>
+               <times/>
+               <ci>br_cyt_serca</ci>
+               <apply>
+                  <plus/>
+                  <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">1</cn>
+                  <apply>
+                     <times/>
+                     <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">0.7</cn>
+                     <ci>CaMKII_reg</ci>
+                  </apply>
+               </apply>
+            </apply>
+         </apply>
+         <apply>
+            <eq/>
+            <ci>k_serca_cyt</ci>
+            <apply>
+               <times/>
+               <apply>
+                  <power/>
+                  <ci>EC_50_fwd</ci>
+                  <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">2</cn>
+               </apply>
+               <ci>br_cyt_serca</ci>
+            </apply>
+         </apply>
+         <apply>
+            <eq/>
+            <ci>k_serca_sr</ci>
+            <apply>
+               <times/>
+               <ci>br_serca_sr</ci>
+               <apply>
+                  <plus/>
+                  <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">1</cn>
+                  <apply>
+                     <times/>
+                     <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">0.7</cn>
+                     <ci>CaMKII_reg</ci>
+                  </apply>
+               </apply>
+            </apply>
+         </apply>
+         <apply>
+            <eq/>
+            <ci>k_sr_serca</ci>
+            <apply>
+               <divide/>
+               <ci>br_serca_sr</ci>
+               <apply>
+                  <power/>
+                  <ci>EC_50_rev</ci>
+                  <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">2</cn>
+               </apply>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <component name="calcium_fluxes">
+      <variable name="J_up" units="uM_per_msec"/>
+      <variable name="J_cyt_serca" public_interface="out" units="uM_per_msec"/>
+      <variable name="J_serca_sr" public_interface="out" units="uM_per_msec"/>
+      <variable name="Ca_cyt" public_interface="in" units="uM"/>
+      <variable name="Ca_NSR" public_interface="in" units="uM"/>
+      <variable name="SERCA_TOT" public_interface="in" units="uM"/>
+      <variable name="k_cyt_serca" public_interface="in" units="per_uM2_per_msec"/>
+      <variable name="k_serca_cyt" public_interface="in" units="per_msec"/>
+      <variable name="k_serca_sr" public_interface="in" units="per_msec"/>
+      <variable name="k_sr_serca" public_interface="in" units="per_uM2_per_msec"/>
+      <variable name="Ca_serca" public_interface="in" units="uM"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <ci>J_cyt_serca</ci>
+            <apply>
+               <minus/>
+               <apply>
+                  <times/>
+                  <ci>k_cyt_serca</ci>
+                  <apply>
+                     <power/>
+                     <ci>Ca_cyt</ci>
+                     <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">2</cn>
+                  </apply>
+                  <apply>
+                     <minus/>
+                     <ci>SERCA_TOT</ci>
+                     <ci>Ca_serca</ci>
+                  </apply>
+               </apply>
+               <apply>
+                  <times/>
+                  <ci>k_serca_cyt</ci>
+                  <ci>Ca_serca</ci>
+               </apply>
+            </apply>
+         </apply>
+         <apply>
+            <eq/>
+            <ci>J_serca_sr</ci>
+            <apply>
+               <minus/>
+               <apply>
+                  <times/>
+                  <ci>k_serca_sr</ci>
+                  <ci>Ca_serca</ci>
+               </apply>
+               <apply>
+                  <times/>
+                  <ci>k_sr_serca</ci>
+                  <apply>
+                     <power/>
+                     <ci>Ca_NSR</ci>
+                     <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">2</cn>
+                  </apply>
+                  <apply>
+                     <minus/>
+                     <ci>SERCA_TOT</ci>
+                     <ci>Ca_serca</ci>
+                  </apply>
+               </apply>
+            </apply>
+         </apply>
+         <apply>
+            <eq/>
+            <ci>J_up</ci>
+            <apply>
+               <minus/>
+               <ci>J_cyt_serca</ci>
+               <ci>J_serca_sr</ci>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <component name="calcium_buffering">
+      <variable initial_value="70" name="LTRPN_tot" public_interface="out" units="uM"/>
+      <variable initial_value="0.1" name="kltrpn_pos" public_interface="out" units="per_uM_per_msec"/>
+      <variable initial_value="0.06" name="kltrpn_neg" public_interface="out" units="per_msec"/>
+      <variable name="J_LTRPN" public_interface="out" units="uM_per_msec"/>
+      <variable name="B_i" public_interface="out" units="dimensionless"/>
+      <variable name="CaM_tot" public_interface="in" units="uM"/>
+      <variable name="Km_CaM" public_interface="in" units="uM"/>
+      <variable name="Ca_cyt" public_interface="in" units="uM"/>
+      <variable name="LTRPN" public_interface="in" units="uM"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <ci>B_i</ci>
+            <apply>
+               <power/>
+               <apply>
+                  <plus/>
+                  <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">1</cn>
+                  <apply>
+                     <divide/>
+                     <apply>
+                        <times/>
+                        <ci>CaM_tot</ci>
+                        <ci>Km_CaM</ci>
+                     </apply>
+                     <apply>
+                        <power/>
+                        <apply>
+                           <plus/>
+                           <ci>Km_CaM</ci>
+                           <ci>Ca_cyt</ci>
+                        </apply>
+                        <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">2</cn>
+                     </apply>
+                  </apply>
+               </apply>
+               <apply>
+                  <minus/>
+                  <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">1</cn>
+               </apply>
+            </apply>
+         </apply>
+         <apply>
+            <eq/>
+            <ci>J_LTRPN</ci>
+            <apply>
+               <minus/>
+               <apply>
+                  <times/>
+                  <ci>kltrpn_pos</ci>
+                  <ci>Ca_cyt</ci>
+                  <apply>
+                     <minus/>
+                     <ci>LTRPN_tot</ci>
+                     <ci>LTRPN</ci>
+                  </apply>
+               </apply>
+               <apply>
+                  <times/>
+                  <ci>kltrpn_neg</ci>
+                  <ci>LTRPN</ci>
+               </apply>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <component name="differential_equations">
+      <variable name="time" public_interface="in" units="msec"/>
+      <variable name="Acap" public_interface="in" units="cm2"/>
+      <variable name="V_myo" public_interface="in" units="uL"/>
+      <variable name="C_m" public_interface="in" units="uF_per_cm2"/>
+      <variable name="F" public_interface="in" units="C_per_mmole"/>
+      <variable name="J_leak" public_interface="in" units="uM_per_msec"/>
+      <variable name="LTRPN_tot" public_interface="in" units="uM"/>
+      <variable name="CaMKII_reg" public_interface="in" units="dimensionless"/>
+      <variable name="PKA_reg" public_interface="in" units="dimensionless"/>
+      <variable name="PLB_tot" public_interface="in" units="uM"/>
+      <variable name="kplb_pos" public_interface="in" units="per_msec"/>
+      <variable name="kplb_neg" public_interface="in" units="per_msec"/>
+      <variable name="kltrpn_pos" public_interface="in" units="per_uM_per_msec"/>
+      <variable name="kltrpn_neg" public_interface="in" units="per_msec"/>
+      <variable name="B_i" public_interface="in" units="dimensionless"/>
+      <variable name="Ca_input" public_interface="in" units="uM_per_msec"/>
+      <variable name="INaCa" public_interface="in" units="uA_per_uF"/>
+      <variable name="J_LTRPN" public_interface="in" units="uM_per_msec"/>
+      <variable name="J_cyt_serca" public_interface="in" units="uM_per_msec"/>
+      <variable name="J_serca_sr" public_interface="in" units="uM_per_msec"/>
+      <variable initial_value="0.1" name="Ca_cyt" public_interface="out" units="uM"/>
+      <variable initial_value="11" name="LTRPN" public_interface="out" units="uM"/>
+      <variable initial_value="0.1" name="PLB_dephosph" public_interface="out" units="uM"/>
+      <variable initial_value="5" name="Ca_serca" public_interface="out" units="uM"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <apply>
+               <diff/>
+               <bvar>
+                  <ci>time</ci>
+               </bvar>
+               <ci>Ca_cyt</ci>
+            </apply>
+            <apply>
+               <times/>
+               <ci>B_i</ci>
+               <apply>
+                  <minus/>
+                  <apply>
+                     <plus/>
+                     <apply>
+                        <minus/>
+                        <apply>
+                           <divide/>
+                           <apply>
+                              <times/>
+                              <ci>INaCa</ci>
+                              <ci>Acap</ci>
+                              <ci>C_m</ci>
+                           </apply>
+                           <apply>
+                              <times/>
+                              <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">2</cn>
+                              <ci>V_myo</ci>
+                              <ci>F</ci>
+                           </apply>
+                        </apply>
+                        <ci>J_cyt_serca</ci>
+                     </apply>
+                     <ci>J_leak</ci>
+                     <ci>Ca_input</ci>
+                  </apply>
+                  <ci>J_LTRPN</ci>
+               </apply>
+            </apply>
+         </apply>
+         <apply>
+            <eq/>
+            <apply>
+               <diff/>
+               <bvar>
+                  <ci>time</ci>
+               </bvar>
+               <ci>LTRPN</ci>
+            </apply>
+            <apply>
+               <minus/>
+               <apply>
+                  <times/>
+                  <ci>kltrpn_pos</ci>
+                  <ci>Ca_cyt</ci>
+                  <apply>
+                     <minus/>
+                     <ci>LTRPN_tot</ci>
+                     <ci>LTRPN</ci>
+                  </apply>
+               </apply>
+               <apply>
+                  <times/>
+                  <ci>kltrpn_neg</ci>
+                  <ci>LTRPN</ci>
+               </apply>
+            </apply>
+         </apply>
+         <apply>
+            <eq/>
+            <apply>
+               <diff/>
+               <bvar>
+                  <ci>time</ci>
+               </bvar>
+               <ci>PLB_dephosph</ci>
+            </apply>
+            <apply>
+               <minus/>
+               <apply>
+                  <times/>
+                  <ci>kplb_pos</ci>
+                  <apply>
+                     <minus/>
+                     <ci>PLB_tot</ci>
+                     <ci>PLB_dephosph</ci>
+                  </apply>
+               </apply>
+               <apply>
+                  <times/>
+                  <ci>kplb_neg</ci>
+                  <apply>
+                     <power/>
+                     <apply>
+                        <plus/>
+                        <ci>CaMKII_reg</ci>
+                        <ci>PKA_reg</ci>
+                     </apply>
+                     <cn xmlns:cellml="http://www.cellml.org/cellml/1.0#" cellml:units="dimensionless">2</cn>
+                  </apply>
+                  <ci>PLB_dephosph</ci>
+               </apply>
+            </apply>
+         </apply>
+         <apply>
+            <eq/>
+            <apply>
+               <diff/>
+               <bvar>
+                  <ci>time</ci>
+               </bvar>
+               <ci>Ca_serca</ci>
+            </apply>
+            <apply>
+               <minus/>
+               <ci>J_cyt_serca</ci>
+               <ci>J_serca_sr</ci>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <connection>
+      <map_components component_1="environment" component_2="action_potential"/>
+      <map_variables variable_1="t_modulo" variable_2="t_modulo"/>
+   </connection>
+   <connection>
+      <map_components component_1="environment" component_2="calcium_input"/>
+      <map_variables variable_1="t_modulo" variable_2="t_modulo"/>
+   </connection>
+   <connection>
+      <map_components component_1="environment" component_2="differential_equations"/>
+      <map_variables variable_1="time" variable_2="time"/>
+   </connection>
+   <connection>
+      <map_components component_1="general_parameters" component_2="NCX_current"/>
+      <map_variables variable_1="Na_o" variable_2="Na_o"/>
+      <map_variables variable_1="Ca_o" variable_2="Ca_o"/>
+      <map_variables variable_1="F" variable_2="F"/>
+      <map_variables variable_1="T" variable_2="T"/>
+      <map_variables variable_1="R" variable_2="R"/>
+   </connection>
+   <connection>
+      <map_components component_1="general_parameters" component_2="calcium_fluxes"/>
+      <map_variables variable_1="Ca_NSR" variable_2="Ca_NSR"/>
+   </connection>
+   <connection>
+      <map_components component_1="general_parameters" component_2="calcium_buffering"/>
+      <map_variables variable_1="CaM_tot" variable_2="CaM_tot"/>
+      <map_variables variable_1="Km_CaM" variable_2="Km_CaM"/>
+   </connection>
+   <connection>
+      <map_components component_1="general_parameters" component_2="differential_equations"/>
+      <map_variables variable_1="Acap" variable_2="Acap"/>
+      <map_variables variable_1="V_myo" variable_2="V_myo"/>
+      <map_variables variable_1="C_m" variable_2="C_m"/>
+      <map_variables variable_1="F" variable_2="F"/>
+      <map_variables variable_1="J_leak" variable_2="J_leak"/>
+   </connection>
+   <connection>
+      <map_components component_1="action_potential" component_2="NCX_current"/>
+      <map_variables variable_1="V" variable_2="V"/>
+   </connection>
+   <connection>
+      <map_components component_1="calcium_input" component_2="differential_equations"/>
+      <map_variables variable_1="Ca_input" variable_2="Ca_input"/>
+   </connection>
+   <connection>
+      <map_components component_1="NCX_current" component_2="differential_equations"/>
+      <map_variables variable_1="INaCa" variable_2="INaCa"/>
+      <map_variables variable_1="Ca_cyt" variable_2="Ca_cyt"/>
+   </connection>
+   <connection>
+      <map_components component_1="serca_parameters" component_2="transition_parameters"/>
+      <map_variables variable_1="CaMKII_reg" variable_2="CaMKII_reg"/>
+      <map_variables variable_1="EC_50_fwd" variable_2="EC_50_fwd"/>
+      <map_variables variable_1="EC_50_rev" variable_2="EC_50_rev"/>
+   </connection>
+   <connection>
+      <map_components component_1="serca_parameters" component_2="calcium_fluxes"/>
+      <map_variables variable_1="SERCA_TOT" variable_2="SERCA_TOT"/>
+   </connection>
+   <connection>
+      <map_components component_1="serca_parameters" component_2="differential_equations"/>
+      <map_variables variable_1="CaMKII_reg" variable_2="CaMKII_reg"/>
+      <map_variables variable_1="PKA_reg" variable_2="PKA_reg"/>
+      <map_variables variable_1="PLB_tot" variable_2="PLB_tot"/>
+      <map_variables variable_1="kplb_pos" variable_2="kplb_pos"/>
+      <map_variables variable_1="kplb_neg" variable_2="kplb_neg"/>
+      <map_variables variable_1="PLB_dephosph" variable_2="PLB_dephosph"/>
+   </connection>
+   <connection>
+      <map_components component_1="transition_parameters" component_2="calcium_fluxes"/>
+      <map_variables variable_1="k_cyt_serca" variable_2="k_cyt_serca"/>
+      <map_variables variable_1="k_serca_cyt" variable_2="k_serca_cyt"/>
+      <map_variables variable_1="k_serca_sr" variable_2="k_serca_sr"/>
+      <map_variables variable_1="k_sr_serca" variable_2="k_sr_serca"/>
+   </connection>
+   <connection>
+      <map_components component_1="calcium_fluxes" component_2="differential_equations"/>
+      <map_variables variable_1="J_cyt_serca" variable_2="J_cyt_serca"/>
+      <map_variables variable_1="J_serca_sr" variable_2="J_serca_sr"/>
+      <map_variables variable_1="Ca_cyt" variable_2="Ca_cyt"/>
+      <map_variables variable_1="Ca_serca" variable_2="Ca_serca"/>
+   </connection>
+   <connection>
+      <map_components component_1="calcium_buffering" component_2="differential_equations"/>
+      <map_variables variable_1="J_LTRPN" variable_2="J_LTRPN"/>
+      <map_variables variable_1="B_i" variable_2="B_i"/>
+      <map_variables variable_1="kltrpn_pos" variable_2="kltrpn_pos"/>
+      <map_variables variable_1="kltrpn_neg" variable_2="kltrpn_neg"/>
+      <map_variables variable_1="LTRPN_tot" variable_2="LTRPN_tot"/>
+      <map_variables variable_1="LTRPN" variable_2="LTRPN"/>
+      <map_variables variable_1="Ca_cyt" variable_2="Ca_cyt"/>
+   </connection>
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqs="http://www.cellml.org/bqs/1.0#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#">
+  <foo xmlns="http://www.example.org/foo/bar/baz"/> 
+- <!-- 
+      The following RDF block contains metadata that applies to this document
+      as a whole, as indicated by the empty about attribute on the 
+      <rdf:Description> element.
+    
+
+  --> 
+- <rdf:Description rdf:about="">
+- <!-- 
+        The Model Builder Metadata.  The Dublin Core "creator" element is used  
+        to indicate the person who translated the model into CellML.
+      
+
+  --> 
+- <dc:creator rdf:parseType="Resource">
+- <vCard:N rdf:parseType="Resource">
+  <vCard:Family>Nunns</vCard:Family> 
+  <vCard:Given>Geoffrey</vCard:Given> 
+  <vCard:Other>Rogan</vCard:Other> 
+  </vCard:N>
+- <vCard:EMAIL rdf:parseType="Resource">
+  <rdf:value>gnunns1@jhu.edu</rdf:value> 
+  <rdf:type rdf:resource="http://imc.org/vCard/3.0#internet"/> 
+  </vCard:EMAIL>
+- <vCard:ORG rdf:parseType="Resource">
+  <vCard:Orgname>The University of Auckland</vCard:Orgname> 
+  <vCard:Orgunit>Auckland Bioengineering Institute</vCard:Orgunit> 
+  </vCard:ORG>
+  </dc:creator>
+- <!-- 
+        The Creation Date metadata. This is the date on which the model
+        was translated into CellML.
+      
+
+  --> 
+- <dcterms:created rdf:parseType="Resource">
+  <dcterms:W3CDTF>2009-10-06</dcterms:W3CDTF> 
+  </dcterms:created>
+- <!-- 
+        The Modification History metadata. This lists the changes that have been
+        made to the document, who made the changes, and when they were made.
+      
+
+  --> 
+  </rdf:Description>
+- <!-- 
+      The following metadata refers to the model itself, as indicated by the
+      reference to the ID "aslanidi_2009", which is    
+      declared on the <model> element.
+    
+
+  --> 
+- <rdf:Description rdf:about="#koivumaki_takalo_korhonen_tavi_weckstrom_2009_reduced_myocyte_long">
+- <!--  A human readable name for the model. 
+  --> 
+  <dc:title>The Koivumaki et al. 2009 model of SERCA pump dynamics and regulation in cardiac myocytes</dc:title> 
+- <!--  A comment regarding the model. 
+  --> 
+- <cmeta:comment rdf:parseType="Resource">
+  <rdf:value>This is the CellML description of Koivumaki et al.'s mathematical model of SERCA pump dynamics and regulation in cardiac myocyte</rdf:value> 
+- <!--  The creator of the comment. 
+  --> 
+- <dc:creator rdf:parseType="Resource">
+  <vCard:FN>Geoffrey Nunns</vCard:FN> 
+  </dc:creator>
+  </cmeta:comment>
+  <cmeta:species>Human</cmeta:species> 
+  <cmeta:bio_entity>cardiac myocyte</cmeta:bio_entity> 
+- <!--   Keyword(s) 
+  --> 
+- <bqs:reference rdf:parseType="Resource">
+- <dc:subject rdf:parseType="Resource">
+  <bqs:subject_type>keyword</bqs:subject_type> 
+- <rdf:value>
+- <rdf:Bag>
+  <rdf:li>electrophysiology and signal transduction</rdf:li> 
+  <rdf:li>cardiac</rdf:li> 
+  </rdf:Bag>
+  </rdf:value>
+  </dc:subject>
+  </bqs:reference>
+- <bqs:reference rdf:parseType="Resource">
+  <bqs:Pubmed_id>19414452</bqs:Pubmed_id> 
+- <bqs:JournalArticle rdf:parseType="Resource">
+- <dc:creator>
+- <rdf:Seq>
+- <rdf:li rdf:parseType="Resource">
+- <bqs:Person rdf:parseType="Resource">
+- <vCard:N rdf:parseType="Resource">
+  <vCard:Family>Koivumaki</vCard:Family> 
+  <vCard:Given>Jussi</vCard:Given> 
+  <vCard:Other>T</vCard:Other> 
+  </vCard:N>
+  </bqs:Person>
+  </rdf:li>
+- <rdf:li rdf:parseType="Resource">
+- <bqs:Person rdf:parseType="Resource">
+- <vCard:N rdf:parseType="Resource">
+  <vCard:Family>Takalo</vCard:Family> 
+  <vCard:Given>Jouni</vCard:Given> 
+  </vCard:N>
+  </bqs:Person>
+  </rdf:li>
+- <rdf:li rdf:parseType="Resource">
+- <bqs:Person rdf:parseType="Resource">
+- <vCard:N rdf:parseType="Resource">
+  <vCard:Family>Korhonen</vCard:Family> 
+  <vCard:Given>Topi</vCard:Given> 
+  </vCard:N>
+  </bqs:Person>
+  </rdf:li>
+  - <rdf:li rdf:parseType="Resource">
+- <bqs:Person rdf:parseType="Resource">
+- <vCard:N rdf:parseType="Resource">
+  <vCard:Family>Tavi</vCard:Family> 
+  <vCard:Given>Pasi</vCard:Given> 
+  </vCard:N>
+  </bqs:Person>
+  </rdf:li>
+  - <rdf:li rdf:parseType="Resource">
+- <bqs:Person rdf:parseType="Resource">
+- <vCard:N rdf:parseType="Resource">
+  <vCard:Family>Weckstrom</vCard:Family> 
+  <vCard:Given>Matti</vCard:Given> 
+  </vCard:N>
+  </bqs:Person>
+  </rdf:li>
+- 
+  </rdf:Seq>
+  </dc:creator>
+  <dc:title>Modelling Sarcoplasmic Reticulum Calcium APTase and its Regulation in Cardiac Myocytes</dc:title> 
+- <dcterms:issued rdf:parseType="Resource">
+  <dcterms:W3CDTF>2009-03-04</dcterms:W3CDTF> 
+  </dcterms:issued>
+- <bqs:Journal rdf:parseType="Resource">
+  <dc:title>Phil. Trans. R. Soc. A</dc:title> 
+  </bqs:Journal>
+  <bqs:volume>367</bqs:volume> 
+  <bqs:first_page>2181</bqs:first_page> 
+  <bqs:last_page>2202</bqs:last_page> 
+  </bqs:JournalArticle>
+  </bqs:reference>
+  </rdf:Description>
+  </rdf:RDF></model>

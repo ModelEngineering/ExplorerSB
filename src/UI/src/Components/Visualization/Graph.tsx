@@ -26,7 +26,7 @@ const ChromaticScale = [
 ];
 
 const Graph = forwardRef(function Graph(
-  { data, xVariable, variables, displayMode}: { data: Object[]; xVariable: string | undefined; variables: Object[]; displayMode: DisplayMode},
+  { data, xVariable, variables, displayMode}: { data: Object[]; xVariable: string | undefined; variables: { name: string }[]; displayMode: DisplayMode},
   ref: any
   ) {
   const [localVariables, setLocalVariables] = useState<string[]>([]);
@@ -40,7 +40,7 @@ const Graph = forwardRef(function Graph(
   return (
     <div id="graph-container" className={displayMode === DisplayMode.Graph ? "" : "hidden"}>
       {xVariable === undefined ? <p>Graph not Available</p> :
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer minWidth="0" width="100%" height="100%">
         <LineChart
           width={500}
           height={300}
@@ -59,10 +59,10 @@ const Graph = forwardRef(function Graph(
             height={70}
             dataKey={xVariable}
             label={{ offset: 20, value: "Time", position: "insideBottom" }}
-            interval={"preserveStart"}
+            interval={"equidistantPreserveStart"}
             domain={['auto', 'auto']}
           />
-          <YAxis label={{ value: "Value", angle: "-90", position: "left" }} />
+          <YAxis label={{ value: "Value", angle: "-90", position: "left" }} domain={['auto', 'auto']}/>
           <Tooltip
             isAnimationActive={false}
             position={{ y: 0 }}
@@ -80,6 +80,7 @@ const Graph = forwardRef(function Graph(
                 key={variable}
                 type="monotone"
                 dataKey={variable}
+                strokeWidth={3}
                 stroke={ChromaticScale[index]}
                 activeDot={{ r: 1 }}
                 dot={false}

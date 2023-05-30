@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="default_values" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="../cellLib/Components/units.cellml">
+        <units name="J_per_K_mol" units_ref="J_per_K_mol"/>
+        <units name="mV" units_ref="mV"/>
+        <units name="mM" units_ref="mM"/>
+        <units name="nS" units_ref="nS"/>
+        <units name="mM_per_s" units_ref="mM_per_s"/>
+        <units name="C_per_mmol" units_ref="C_per_mmol"/>
+        <units name="fm3" units_ref="fm3"/>
+        <units name="mM_per_s_mV" units_ref="mM_per_s_mV"/>
+        <units name="per_s" units_ref="per_s"/>
+    </import>
+    <component name="constants">
+        <variable initial_value="8.314" name="R" public_interface="out" units="J_per_K_mol"/>
+        <variable initial_value="96.48534" name="F" public_interface="out" units="C_per_mmol"/>
+    </component>
+    <component name="model_para">
+        <variable initial_value="310" name="T" public_interface="out" units="kelvin"/>
+        <!--  var Nai: mM {init: 16.55, pub: out};-->
+        <variable initial_value="2.9836" name="Nai" public_interface="out" units="mM"/>
+        <variable initial_value="140" name="Nao" public_interface="out" units="mM"/>
+        <variable initial_value="2" name="Cao" public_interface="out" units="mM"/>
+        <variable initial_value="21" name="V_cell" public_interface="out" units="fm3"/>
+        <variable initial_value="-27" name="V_Cahalf" public_interface="out" units="mV"/>
+        <variable initial_value="11" name="K_Cahalf" public_interface="out" units="mV"/>
+        <variable initial_value="0.046842" name="g_mCa" public_interface="out" units="nS"/>
+        <variable initial_value="5.1449e-4" name="V_pmax" public_interface="out" units="mM_per_s"/>
+        <variable initial_value="1.9015" name="n" public_interface="out" units="dimensionless"/>
+        <variable initial_value="0.6e-3" name="K_ph" public_interface="out" units="mM"/>
+        <variable initial_value="7e-3" name="K_NaCa" public_interface="out" units="mM"/>
+        <variable initial_value="5.7297e-5" name="G_NaCa" public_interface="out" units="mM_per_s_mV"/>
+        <variable initial_value="8.7613" name="n_M" public_interface="out" units="dimensionless"/>
+        <variable initial_value="256.98e-6" name="Ca_halfMLCK" public_interface="out" units="mM"/>
+        <variable initial_value="0.0378" name="K_7" public_interface="out" units="per_s"/>
+        <variable initial_value="1.2387" name="K_2" public_interface="out" units="per_s"/>
+        <variable initial_value="0.1419" name="K_3" public_interface="out" units="per_s"/>
+        <variable initial_value="0.035475" name="K_4" public_interface="out" units="per_s"/>
+        <variable initial_value="1.2387" name="K_5" public_interface="out" units="per_s"/>
+        <variable initial_value="1" name="inhPump" public_interface="out" units="dimensionless"/>
+    </component>
+    <component name="initials">
+        <variable initial_value="1" name="M_init" public_interface="out" units="dimensionless"/>
+        <variable initial_value="0" name="Mp_init" public_interface="out" units="dimensionless"/>
+        <variable initial_value="0" name="AM_init" public_interface="out" units="dimensionless"/>
+        <variable initial_value="0" name="AMp_init" public_interface="out" units="dimensionless"/>
+        <variable initial_value="0.1e-6" name="Cai_init" public_interface="out" units="mM"/>
+    </component>
+</model>

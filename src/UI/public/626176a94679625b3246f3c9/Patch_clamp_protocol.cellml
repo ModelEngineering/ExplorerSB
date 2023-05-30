@@ -1,0 +1,300 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="Patch_clamp_protocol" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- clamp the voltage for the activation behaviour-->
+    <import xlink:href="../Components/units.cellml">
+        <units name="ms" units_ref="ms"/>
+        <units name="mV" units_ref="mV"/>
+    </import>
+    <component name="sPulse_protocol_ms">
+        <variable name="time" public_interface="in" units="ms"/>
+        <variable cmeta:id="steady_state_time" name="t_ss" public_interface="in" units="ms"/>
+        <variable cmeta:id="activation_holding_potential" name="V_actHolding" public_interface="in" units="mV"/>
+        <variable cmeta:id="activation_duration" name="t_act" public_interface="in" units="ms"/>
+        <variable cmeta:id="activation_test_potential" name="V_actTest" public_interface="in" units="mV"/>
+        <variable name="V" public_interface="out" units="mV"/>
+        <!--get the model to steady state at the holding potential.-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply id="activation_protocol_clamping">
+                <eq/>
+                <ci>V</ci>
+                <piecewise>
+                    <piece>
+                        <ci>V_actHolding</ci>
+                        <apply>
+                            <lt/>
+                            <ci>time</ci>
+                            <ci>t_ss</ci>
+                        </apply>
+                    </piece>
+                    <piece>
+                        <ci>V_actTest</ci>
+                        <apply>
+                            <and/>
+                            <apply>
+                                <geq/>
+                                <ci>time</ci>
+                                <ci>t_ss</ci>
+                            </apply>
+                            <apply>
+                                <lt/>
+                                <ci>time</ci>
+                                <apply>
+                                    <plus/>
+                                    <ci>t_act</ci>
+                                    <ci>t_ss</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <ci>V_actHolding</ci>
+                    </otherwise>
+                </piecewise>
+            </apply>
+        </math>
+    </component>
+    <component name="sPulse_protocol_s">
+        <variable name="time" public_interface="in" units="second"/>
+        <variable cmeta:id="steady_state_time" name="t_ss" public_interface="in" units="second"/>
+        <variable cmeta:id="activation_holding_potential" name="V_actHolding" public_interface="in" units="mV"/>
+        <variable cmeta:id="activation_duration" name="t_act" public_interface="in" units="second"/>
+        <variable cmeta:id="activation_test_potential" name="V_actTest" public_interface="in" units="mV"/>
+        <variable name="V" public_interface="out" units="mV"/>
+        <!--get the model to steady state at the holding potential.-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply id="activation_protocol_clamping">
+                <eq/>
+                <ci>V</ci>
+                <piecewise>
+                    <piece>
+                        <ci>V_actHolding</ci>
+                        <apply>
+                            <lt/>
+                            <ci>time</ci>
+                            <ci>t_ss</ci>
+                        </apply>
+                    </piece>
+                    <piece>
+                        <ci>V_actTest</ci>
+                        <apply>
+                            <and/>
+                            <apply>
+                                <geq/>
+                                <ci>time</ci>
+                                <ci>t_ss</ci>
+                            </apply>
+                            <apply>
+                                <lt/>
+                                <ci>time</ci>
+                                <apply>
+                                    <plus/>
+                                    <ci>t_act</ci>
+                                    <ci>t_ss</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <ci>V_actHolding</ci>
+                    </otherwise>
+                </piecewise>
+            </apply>
+        </math>
+    </component>
+    <component name="mPulse_protocol_ms">
+        <variable name="time" public_interface="in" units="ms"/>
+        <variable cmeta:id="steady_state_time" name="t_ss" public_interface="in" units="ms"/>
+        <variable cmeta:id="activation_holding_potential" name="V_actHolding" public_interface="in" units="mV"/>
+        <variable cmeta:id="activation_duration" name="t_act" public_interface="in" units="ms"/>
+        <variable cmeta:id="activation_test_potential" name="V_actTest" public_interface="in" units="mV"/>
+        <variable cmeta:id="interpulse" name="t_intp" public_interface="in" units="ms"/>
+        <variable cmeta:id="period" name="stimPeriod" units="ms"/>
+        <variable cmeta:id="localTimer" name="t" units="ms"/>
+        <variable cmeta:id="pulse_number" name="np" public_interface="in" units="dimensionless"/>
+        <variable name="V" public_interface="out" units="mV"/>
+        <!--get the model to steady state at the holding potential.-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>stimPeriod</ci>
+                <apply>
+                    <plus/>
+                    <ci>t_act</ci>
+                    <ci>t_intp</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <minus/>
+                        <ci>time</ci>
+                        <ci>t_ss</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>stimPeriod</ci>
+                        <apply>
+                            <floor/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <minus/>
+                                    <ci>time</ci>
+                                    <ci>t_ss</ci>
+                                </apply>
+                                <ci>stimPeriod</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply id="activation_protocol_clamping">
+                <eq/>
+                <ci>V</ci>
+                <piecewise>
+                    <piece>
+                        <ci>V_actHolding</ci>
+                        <apply>
+                            <lt/>
+                            <ci>time</ci>
+                            <ci>t_ss</ci>
+                        </apply>
+                    </piece>
+                    <piece>
+                        <ci>V_actTest</ci>
+                        <apply>
+                            <and/>
+                            <apply>
+                                <geq/>
+                                <ci>time</ci>
+                                <ci>t_ss</ci>
+                            </apply>
+                            <apply>
+                                <leq/>
+                                <ci>t</ci>
+                                <ci>t_act</ci>
+                            </apply>
+                            <apply>
+                                <leq/>
+                                <ci>time</ci>
+                                <apply>
+                                    <plus/>
+                                    <ci>t_ss</ci>
+                                    <apply>
+                                        <times/>
+                                        <ci>stimPeriod</ci>
+                                        <ci>np</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <ci>V_actHolding</ci>
+                    </otherwise>
+                </piecewise>
+            </apply>
+        </math>
+    </component>
+    <component name="mPulse_protocol_s">
+        <variable name="time" public_interface="in" units="second"/>
+        <variable cmeta:id="steady_state_time" name="t_ss" public_interface="in" units="second"/>
+        <variable cmeta:id="activation_holding_potential" name="V_actHolding" public_interface="in" units="mV"/>
+        <variable cmeta:id="activation_duration" name="t_act" public_interface="in" units="second"/>
+        <variable cmeta:id="activation_test_potential" name="V_actTest" public_interface="in" units="mV"/>
+        <variable cmeta:id="interpulse" name="t_intp" public_interface="in" units="second"/>
+        <variable cmeta:id="period" name="stimPeriod" units="second"/>
+        <variable cmeta:id="localTimer" name="t" units="second"/>
+        <variable cmeta:id="pulse_number" name="np" public_interface="in" units="dimensionless"/>
+        <variable name="V" public_interface="out" units="mV"/>
+        <!--get the model to steady state at the holding potential.-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>stimPeriod</ci>
+                <apply>
+                    <plus/>
+                    <ci>t_act</ci>
+                    <ci>t_intp</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>t</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <minus/>
+                        <ci>time</ci>
+                        <ci>t_ss</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>stimPeriod</ci>
+                        <apply>
+                            <floor/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <minus/>
+                                    <ci>time</ci>
+                                    <ci>t_ss</ci>
+                                </apply>
+                                <ci>stimPeriod</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply id="activation_protocol_clamping">
+                <eq/>
+                <ci>V</ci>
+                <piecewise>
+                    <piece>
+                        <ci>V_actHolding</ci>
+                        <apply>
+                            <leq/>
+                            <ci>time</ci>
+                            <ci>t_ss</ci>
+                        </apply>
+                    </piece>
+                    <piece>
+                        <ci>V_actTest</ci>
+                        <apply>
+                            <and/>
+                            <apply>
+                                <gt/>
+                                <ci>time</ci>
+                                <ci>t_ss</ci>
+                            </apply>
+                            <apply>
+                                <leq/>
+                                <ci>t</ci>
+                                <ci>t_act</ci>
+                            </apply>
+                            <apply>
+                                <leq/>
+                                <ci>time</ci>
+                                <apply>
+                                    <plus/>
+                                    <ci>t_ss</ci>
+                                    <apply>
+                                        <times/>
+                                        <ci>stimPeriod</ci>
+                                        <ci>np</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <ci>V_actHolding</ci>
+                    </otherwise>
+                </piecewise>
+            </apply>
+        </math>
+    </component>
+</model>

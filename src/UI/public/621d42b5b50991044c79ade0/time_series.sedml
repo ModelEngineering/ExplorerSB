@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfModels>
+    <model id="model" name="Model" language="urn:sedml:language:xpp" source="time_series.ode">
+      <listOfChanges>
+        <changeAttribute target="CLI" newValue="10.061391"/>
+        <changeAttribute target="DNK" newValue="0.0"/>
+        <changeAttribute target="H" newValue="0.978208"/>
+        <changeAttribute target="KI" newValue="128.56937"/>
+        <changeAttribute target="N" newValue="0.070174"/>
+        <changeAttribute target="V" newValue="-67.056664"/>
+        <changeAttribute target="delta_dif" newValue="200.0"/>
+        <changeAttribute target="delta_pmp" newValue="200.0"/>
+        <changeAttribute target="vle" newValue="3700.0"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" name="Simulation" initialTime="0" outputStartTime="0" outputEndTime="1000" numberOfPoints="1000">
+      <algorithm kisaoID="KISAO:0000668"/>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" name="Task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_T" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T" name="T" symbol="urn:sedml:symbol:time" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_CLI" name="CLI">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_CLI </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_CLI" name="CLI" target="CLI" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_DNK" name="DNK">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_DNK </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_DNK" name="DNK" target="DNK" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_H" name="H">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_H </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_H" name="H" target="H" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_KI" name="KI">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_KI </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_KI" name="KI" target="KI" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_N" name="N">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_N </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_N" name="N" target="N" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_V" name="V">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_V </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_V" name="V" target="V" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator__CLE" name="_CLE">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable__CLE </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable__CLE" name="_CLE" target="_CLE" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator__CLI" name="_CLI">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable__CLI </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable__CLI" name="_CLI" target="_CLI" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator__ECL" name="_ECL">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable__ECL </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable__ECL" name="_ECL" target="_ECL" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator__EK" name="_EK">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable__EK </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable__EK" name="_EK" target="_EK" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator__ENA" name="_ENA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable__ENA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable__ENA" name="_ENA" target="_ENA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator__KE" name="_KE">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable__KE </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable__KE" name="_KE" target="_KE" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator__KI" name="_KI">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable__KI </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable__KI" name="_KI" target="_KI" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator__MAX_P" name="_MAX_P">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable__MAX_P </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable__MAX_P" name="_MAX_P" target="_MAX_P" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator__NAE" name="_NAE">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable__NAE </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable__NAE" name="_NAE" target="_NAE" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator__NAI" name="_NAI">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable__NAI </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable__NAI" name="_NAI" target="_NAI" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report" name="Report">
+      <listOfDataSets>
+        <dataSet id="data_set_T" name="T" label="T" dataReference="data_generator_T"/>
+        <dataSet id="data_set_CLI" name="CLI" label="CLI" dataReference="data_generator_CLI"/>
+        <dataSet id="data_set_DNK" name="DNK" label="DNK" dataReference="data_generator_DNK"/>
+        <dataSet id="data_set_H" name="H" label="H" dataReference="data_generator_H"/>
+        <dataSet id="data_set_KI" name="KI" label="KI" dataReference="data_generator_KI"/>
+        <dataSet id="data_set_N" name="N" label="N" dataReference="data_generator_N"/>
+        <dataSet id="data_set_V" name="V" label="V" dataReference="data_generator_V"/>
+        <dataSet id="data_set__CLE" name="_CLE" label="_CLE" dataReference="data_generator__CLE"/>
+        <dataSet id="data_set__CLI" name="_CLI" label="_CLI" dataReference="data_generator__CLI"/>
+        <dataSet id="data_set__ECL" name="_ECL" label="_ECL" dataReference="data_generator__ECL"/>
+        <dataSet id="data_set__EK" name="_EK" label="_EK" dataReference="data_generator__EK"/>
+        <dataSet id="data_set__ENA" name="_ENA" label="_ENA" dataReference="data_generator__ENA"/>
+        <dataSet id="data_set__KE" name="_KE" label="_KE" dataReference="data_generator__KE"/>
+        <dataSet id="data_set__KI" name="_KI" label="_KI" dataReference="data_generator__KI"/>
+        <dataSet id="data_set__MAX_P" name="_MAX_P" label="_MAX_P" dataReference="data_generator__MAX_P"/>
+        <dataSet id="data_set__NAE" name="_NAE" label="_NAE" dataReference="data_generator__NAE"/>
+        <dataSet id="data_set__NAI" name="_NAI" label="_NAI" dataReference="data_generator__NAI"/>
+      </listOfDataSets>
+    </report>
+    <plot2D id="plot">
+      <listOfCurves>
+        <curve id="curve_1" name="V vs T" logX="false" xDataReference="data_generator_T" logY="false" yDataReference="data_generator_V"/>
+        <curve id="curve_2" name="_EK vs T" logX="false" xDataReference="data_generator_T" logY="false" yDataReference="data_generator__EK"/>
+        <curve id="curve_3" name="_ENA vs T" logX="false" xDataReference="data_generator_T" logY="false" yDataReference="data_generator__ENA"/>
+        <curve id="curve_4" name="_MAX_P vs T" logX="false" xDataReference="data_generator_T" logY="false" yDataReference="data_generator__MAX_P"/>
+      </listOfCurves>
+    </plot2D>
+  </listOfOutputs>
+</sedML>

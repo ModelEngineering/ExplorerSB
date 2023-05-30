@@ -1,0 +1,659 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" xmlns:cellml="http://www.cellml.org/cellml/1.0#" level="1" version="3">
+  <listOfModels>
+    <model id="model" language="urn:sedml:language:cellml" source="wang_2009.cellml">
+      <listOfChanges>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;r&apos;]/cellml:variable[@name=&apos;r&apos;]/@initial_value" newValue="0.5"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;c2&apos;]/cellml:variable[@name=&apos;c2&apos;]/@initial_value" newValue="0.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;e_PI3K&apos;]/cellml:variable[@name=&apos;kappa_PI3K&apos;]/@initial_value" newValue="0.3"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;e_PI3K&apos;]/cellml:variable[@name=&apos;alpha_PI3K&apos;]/@initial_value" newValue="80.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;m_3PI&apos;]/cellml:variable[@name=&apos;m_3PI&apos;]/@initial_value" newValue="0.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;m_3PI&apos;]/cellml:variable[@name=&apos;k_3PI&apos;]/@initial_value" newValue="1.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;e_GEF&apos;]/cellml:variable[@name=&apos;K_GR&apos;]/@initial_value" newValue="495.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;e_GEF&apos;]/cellml:variable[@name=&apos;K_GP&apos;]/@initial_value" newValue="5.09"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;m_Ras&apos;]/cellml:variable[@name=&apos;m_Ras&apos;]/@initial_value" newValue="0.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;m_Ras&apos;]/cellml:variable[@name=&apos;k_Ras&apos;]/@initial_value" newValue="1.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;m_Ras&apos;]/cellml:variable[@name=&apos;gamma&apos;]/@initial_value" newValue="0.1"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;x1&apos;]/cellml:variable[@name=&apos;x1&apos;]/@initial_value" newValue="0.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;x1&apos;]/cellml:variable[@name=&apos;kd_x1&apos;]/@initial_value" newValue="0.745"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;x2&apos;]/cellml:variable[@name=&apos;x2&apos;]/@initial_value" newValue="0.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;x2&apos;]/cellml:variable[@name=&apos;kd_x2&apos;]/@initial_value" newValue="2.85"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;x2&apos;]/cellml:variable[@name=&apos;K_x2&apos;]/@initial_value" newValue="6.77"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;y&apos;]/cellml:variable[@name=&apos;y&apos;]/@initial_value" newValue="1.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;y&apos;]/cellml:variable[@name=&apos;Vmax_yph1_KM_yph1&apos;]/@initial_value" newValue="4.40"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;ypp&apos;]/cellml:variable[@name=&apos;ypp&apos;]/@initial_value" newValue="0.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;ypp&apos;]/cellml:variable[@name=&apos;Vmax_yph2_KM_yph2&apos;]/@initial_value" newValue="6.77"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;z&apos;]/cellml:variable[@name=&apos;z&apos;]/@initial_value" newValue="1.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;z&apos;]/cellml:variable[@name=&apos;Vmax_zph1_KM_zph1&apos;]/@initial_value" newValue="0.451"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;z&apos;]/cellml:variable[@name=&apos;Vmax_y1_KM_y1&apos;]/@initial_value" newValue="11.8"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;zpp&apos;]/cellml:variable[@name=&apos;zpp&apos;]/@initial_value" newValue="0.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;zpp&apos;]/cellml:variable[@name=&apos;Vmax_zph2_KM_zph2&apos;]/@initial_value" newValue="0.228"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;zpp&apos;]/cellml:variable[@name=&apos;Vmax_y2_KM_y2&apos;]/@initial_value" newValue="31.9"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;f_GEF&apos;]/cellml:variable[@name=&apos;f_GEF&apos;]/@initial_value" newValue="1.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;f_GEF&apos;]/cellml:variable[@name=&apos;n&apos;]/@initial_value" newValue="1.03"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;f_GEF&apos;]/cellml:variable[@name=&apos;Kf&apos;]/@initial_value" newValue="3.76"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;f_GEF&apos;]/cellml:variable[@name=&apos;Zf&apos;]/@initial_value" newValue="0.272"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;f_GEF&apos;]/cellml:variable[@name=&apos;k_FB_f&apos;]/@initial_value" newValue="0.976"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;w&apos;]/cellml:variable[@name=&apos;w&apos;]/@initial_value" newValue="0.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;w&apos;]/cellml:variable[@name=&apos;kd_w&apos;]/@initial_value" newValue="0.0333"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;e_ph&apos;]/cellml:variable[@name=&apos;e_ph&apos;]/@initial_value" newValue="1.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;e_ph&apos;]/cellml:variable[@name=&apos;k_FB_ph&apos;]/@initial_value" newValue="2.34"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;e_ph&apos;]/cellml:variable[@name=&apos;p&apos;]/@initial_value" newValue="1.98"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;e_ph&apos;]/cellml:variable[@name=&apos;Wph&apos;]/@initial_value" newValue="0.385"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;e_ph&apos;]/cellml:variable[@name=&apos;Kph&apos;]/@initial_value" newValue="4.64"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;L&apos;]/@initial_value" newValue="1.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;kt&apos;]/@initial_value" newValue="0.005"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;ke&apos;]/@initial_value" newValue="0.2"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;kxR0&apos;]/@initial_value" newValue="0.3"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;k_minusx&apos;]/@initial_value" newValue="0.07"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KDL&apos;]/@initial_value" newValue="1.5"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_x11&apos;]/@initial_value" newValue="30.3"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_x12&apos;]/@initial_value" newValue="45.5"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_x21&apos;]/@initial_value" newValue="21.6"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_x22&apos;]/@initial_value" newValue="15.7"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_y1&apos;]/@initial_value" newValue="31.9"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_y2&apos;]/@initial_value" newValue="8.81"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_zph1&apos;]/@initial_value" newValue="14.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_zph2&apos;]/@initial_value" newValue="31.5"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_yph1&apos;]/@initial_value" newValue="44.0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_yph2&apos;]/@initial_value" newValue="12.7"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;Vmax_x11_KM_x11&apos;]/@initial_value" newValue="1.18"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;Vmax_x21_KM_x21&apos;]/@initial_value" newValue="0.405"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;Vmax_x12_KM_x12&apos;]/@initial_value" newValue="4.71"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;Vmax_x22_KM_x22&apos;]/@initial_value" newValue="2.41"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" initialTime="0" outputStartTime="0" outputEndTime="1" numberOfPoints="10">
+      <algorithm kisaoID="KISAO:0000019"/>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_value_component_environment_variable_time" name="Value of variable &quot;time&quot; of component &quot;environment&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_environment_variable_time </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_environment_variable_time" name="Value of variable &quot;time&quot; of component &quot;environment&quot;" target="/cellml:model/cellml:component[@name=&apos;environment&apos;]/cellml:variable[@name=&apos;time&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_r_variable_r" name="Value of variable &quot;r&quot; of component &quot;r&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_r_variable_r </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_r_variable_r" name="Value of variable &quot;r&quot; of component &quot;r&quot;" target="/cellml:model/cellml:component[@name=&apos;r&apos;]/cellml:variable[@name=&apos;r&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_c1_variable_c1" name="Value of variable &quot;c1&quot; of component &quot;c1&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_c1_variable_c1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_c1_variable_c1" name="Value of variable &quot;c1&quot; of component &quot;c1&quot;" target="/cellml:model/cellml:component[@name=&apos;c1&apos;]/cellml:variable[@name=&apos;c1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_c2_variable_c2" name="Value of variable &quot;c2&quot; of component &quot;c2&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_c2_variable_c2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_c2_variable_c2" name="Value of variable &quot;c2&quot; of component &quot;c2&quot;" target="/cellml:model/cellml:component[@name=&apos;c2&apos;]/cellml:variable[@name=&apos;c2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_e_PI3K_variable_e_PI3K" name="Value of variable &quot;e_PI3K&quot; of component &quot;e_PI3K&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_e_PI3K_variable_e_PI3K </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_e_PI3K_variable_e_PI3K" name="Value of variable &quot;e_PI3K&quot; of component &quot;e_PI3K&quot;" target="/cellml:model/cellml:component[@name=&apos;e_PI3K&apos;]/cellml:variable[@name=&apos;e_PI3K&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_e_PI3K_variable_kappa_PI3K" name="Value of variable &quot;kappa_PI3K&quot; of component &quot;e_PI3K&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_e_PI3K_variable_kappa_PI3K </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_e_PI3K_variable_kappa_PI3K" name="Value of variable &quot;kappa_PI3K&quot; of component &quot;e_PI3K&quot;" target="/cellml:model/cellml:component[@name=&apos;e_PI3K&apos;]/cellml:variable[@name=&apos;kappa_PI3K&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_e_PI3K_variable_alpha_PI3K" name="Value of variable &quot;alpha_PI3K&quot; of component &quot;e_PI3K&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_e_PI3K_variable_alpha_PI3K </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_e_PI3K_variable_alpha_PI3K" name="Value of variable &quot;alpha_PI3K&quot; of component &quot;e_PI3K&quot;" target="/cellml:model/cellml:component[@name=&apos;e_PI3K&apos;]/cellml:variable[@name=&apos;alpha_PI3K&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_m_3PI_variable_m_3PI" name="Value of variable &quot;m_3PI&quot; of component &quot;m_3PI&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_m_3PI_variable_m_3PI </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_m_3PI_variable_m_3PI" name="Value of variable &quot;m_3PI&quot; of component &quot;m_3PI&quot;" target="/cellml:model/cellml:component[@name=&apos;m_3PI&apos;]/cellml:variable[@name=&apos;m_3PI&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_m_3PI_variable_k_3PI" name="Value of variable &quot;k_3PI&quot; of component &quot;m_3PI&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_m_3PI_variable_k_3PI </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_m_3PI_variable_k_3PI" name="Value of variable &quot;k_3PI&quot; of component &quot;m_3PI&quot;" target="/cellml:model/cellml:component[@name=&apos;m_3PI&apos;]/cellml:variable[@name=&apos;k_3PI&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_e_GEF_variable_e_GEF" name="Value of variable &quot;e_GEF&quot; of component &quot;e_GEF&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_e_GEF_variable_e_GEF </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_e_GEF_variable_e_GEF" name="Value of variable &quot;e_GEF&quot; of component &quot;e_GEF&quot;" target="/cellml:model/cellml:component[@name=&apos;e_GEF&apos;]/cellml:variable[@name=&apos;e_GEF&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_e_GEF_variable_K_GR" name="Value of variable &quot;K_GR&quot; of component &quot;e_GEF&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_e_GEF_variable_K_GR </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_e_GEF_variable_K_GR" name="Value of variable &quot;K_GR&quot; of component &quot;e_GEF&quot;" target="/cellml:model/cellml:component[@name=&apos;e_GEF&apos;]/cellml:variable[@name=&apos;K_GR&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_e_GEF_variable_K_GP" name="Value of variable &quot;K_GP&quot; of component &quot;e_GEF&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_e_GEF_variable_K_GP </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_e_GEF_variable_K_GP" name="Value of variable &quot;K_GP&quot; of component &quot;e_GEF&quot;" target="/cellml:model/cellml:component[@name=&apos;e_GEF&apos;]/cellml:variable[@name=&apos;K_GP&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_m_Ras_variable_m_Ras" name="Value of variable &quot;m_Ras&quot; of component &quot;m_Ras&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_m_Ras_variable_m_Ras </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_m_Ras_variable_m_Ras" name="Value of variable &quot;m_Ras&quot; of component &quot;m_Ras&quot;" target="/cellml:model/cellml:component[@name=&apos;m_Ras&apos;]/cellml:variable[@name=&apos;m_Ras&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_m_Ras_variable_k_Ras" name="Value of variable &quot;k_Ras&quot; of component &quot;m_Ras&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_m_Ras_variable_k_Ras </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_m_Ras_variable_k_Ras" name="Value of variable &quot;k_Ras&quot; of component &quot;m_Ras&quot;" target="/cellml:model/cellml:component[@name=&apos;m_Ras&apos;]/cellml:variable[@name=&apos;k_Ras&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_m_Ras_variable_gamma" name="Value of variable &quot;gamma&quot; of component &quot;m_Ras&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_m_Ras_variable_gamma </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_m_Ras_variable_gamma" name="Value of variable &quot;gamma&quot; of component &quot;m_Ras&quot;" target="/cellml:model/cellml:component[@name=&apos;m_Ras&apos;]/cellml:variable[@name=&apos;gamma&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_x1_variable_x1" name="Value of variable &quot;x1&quot; of component &quot;x1&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_x1_variable_x1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_x1_variable_x1" name="Value of variable &quot;x1&quot; of component &quot;x1&quot;" target="/cellml:model/cellml:component[@name=&apos;x1&apos;]/cellml:variable[@name=&apos;x1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_x1_variable_kd_x1" name="Value of variable &quot;kd_x1&quot; of component &quot;x1&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_x1_variable_kd_x1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_x1_variable_kd_x1" name="Value of variable &quot;kd_x1&quot; of component &quot;x1&quot;" target="/cellml:model/cellml:component[@name=&apos;x1&apos;]/cellml:variable[@name=&apos;kd_x1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_x2_variable_x2" name="Value of variable &quot;x2&quot; of component &quot;x2&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_x2_variable_x2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_x2_variable_x2" name="Value of variable &quot;x2&quot; of component &quot;x2&quot;" target="/cellml:model/cellml:component[@name=&apos;x2&apos;]/cellml:variable[@name=&apos;x2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_x2_variable_kd_x2" name="Value of variable &quot;kd_x2&quot; of component &quot;x2&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_x2_variable_kd_x2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_x2_variable_kd_x2" name="Value of variable &quot;kd_x2&quot; of component &quot;x2&quot;" target="/cellml:model/cellml:component[@name=&apos;x2&apos;]/cellml:variable[@name=&apos;kd_x2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_x2_variable_K_x2" name="Value of variable &quot;K_x2&quot; of component &quot;x2&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_x2_variable_K_x2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_x2_variable_K_x2" name="Value of variable &quot;K_x2&quot; of component &quot;x2&quot;" target="/cellml:model/cellml:component[@name=&apos;x2&apos;]/cellml:variable[@name=&apos;K_x2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_y_variable_y" name="Value of variable &quot;y&quot; of component &quot;y&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_y_variable_y </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_y_variable_y" name="Value of variable &quot;y&quot; of component &quot;y&quot;" target="/cellml:model/cellml:component[@name=&apos;y&apos;]/cellml:variable[@name=&apos;y&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_y_variable_Vmax_yph1_KM_yph1" name="Value of variable &quot;Vmax_yph1_KM_yph1&quot; of component &quot;y&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_y_variable_Vmax_yph1_KM_yph1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_y_variable_Vmax_yph1_KM_yph1" name="Value of variable &quot;Vmax_yph1_KM_yph1&quot; of component &quot;y&quot;" target="/cellml:model/cellml:component[@name=&apos;y&apos;]/cellml:variable[@name=&apos;Vmax_yph1_KM_yph1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_yp_variable_yp" name="Value of variable &quot;yp&quot; of component &quot;yp&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_yp_variable_yp </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_yp_variable_yp" name="Value of variable &quot;yp&quot; of component &quot;yp&quot;" target="/cellml:model/cellml:component[@name=&apos;yp&apos;]/cellml:variable[@name=&apos;yp&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_ypp_variable_ypp" name="Value of variable &quot;ypp&quot; of component &quot;ypp&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_ypp_variable_ypp </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_ypp_variable_ypp" name="Value of variable &quot;ypp&quot; of component &quot;ypp&quot;" target="/cellml:model/cellml:component[@name=&apos;ypp&apos;]/cellml:variable[@name=&apos;ypp&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_ypp_variable_Vmax_yph2_KM_yph2" name="Value of variable &quot;Vmax_yph2_KM_yph2&quot; of component &quot;ypp&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_ypp_variable_Vmax_yph2_KM_yph2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_ypp_variable_Vmax_yph2_KM_yph2" name="Value of variable &quot;Vmax_yph2_KM_yph2&quot; of component &quot;ypp&quot;" target="/cellml:model/cellml:component[@name=&apos;ypp&apos;]/cellml:variable[@name=&apos;Vmax_yph2_KM_yph2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_z_variable_z" name="Value of variable &quot;z&quot; of component &quot;z&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_z_variable_z </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_z_variable_z" name="Value of variable &quot;z&quot; of component &quot;z&quot;" target="/cellml:model/cellml:component[@name=&apos;z&apos;]/cellml:variable[@name=&apos;z&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_z_variable_Vmax_zph1_KM_zph1" name="Value of variable &quot;Vmax_zph1_KM_zph1&quot; of component &quot;z&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_z_variable_Vmax_zph1_KM_zph1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_z_variable_Vmax_zph1_KM_zph1" name="Value of variable &quot;Vmax_zph1_KM_zph1&quot; of component &quot;z&quot;" target="/cellml:model/cellml:component[@name=&apos;z&apos;]/cellml:variable[@name=&apos;Vmax_zph1_KM_zph1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_z_variable_Vmax_y1_KM_y1" name="Value of variable &quot;Vmax_y1_KM_y1&quot; of component &quot;z&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_z_variable_Vmax_y1_KM_y1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_z_variable_Vmax_y1_KM_y1" name="Value of variable &quot;Vmax_y1_KM_y1&quot; of component &quot;z&quot;" target="/cellml:model/cellml:component[@name=&apos;z&apos;]/cellml:variable[@name=&apos;Vmax_y1_KM_y1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_zp_variable_zp" name="Value of variable &quot;zp&quot; of component &quot;zp&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_zp_variable_zp </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_zp_variable_zp" name="Value of variable &quot;zp&quot; of component &quot;zp&quot;" target="/cellml:model/cellml:component[@name=&apos;zp&apos;]/cellml:variable[@name=&apos;zp&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_zpp_variable_zpp" name="Value of variable &quot;zpp&quot; of component &quot;zpp&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_zpp_variable_zpp </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_zpp_variable_zpp" name="Value of variable &quot;zpp&quot; of component &quot;zpp&quot;" target="/cellml:model/cellml:component[@name=&apos;zpp&apos;]/cellml:variable[@name=&apos;zpp&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_zpp_variable_Vmax_zph2_KM_zph2" name="Value of variable &quot;Vmax_zph2_KM_zph2&quot; of component &quot;zpp&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_zpp_variable_Vmax_zph2_KM_zph2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_zpp_variable_Vmax_zph2_KM_zph2" name="Value of variable &quot;Vmax_zph2_KM_zph2&quot; of component &quot;zpp&quot;" target="/cellml:model/cellml:component[@name=&apos;zpp&apos;]/cellml:variable[@name=&apos;Vmax_zph2_KM_zph2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_zpp_variable_Vmax_y2_KM_y2" name="Value of variable &quot;Vmax_y2_KM_y2&quot; of component &quot;zpp&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_zpp_variable_Vmax_y2_KM_y2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_zpp_variable_Vmax_y2_KM_y2" name="Value of variable &quot;Vmax_y2_KM_y2&quot; of component &quot;zpp&quot;" target="/cellml:model/cellml:component[@name=&apos;zpp&apos;]/cellml:variable[@name=&apos;Vmax_y2_KM_y2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_f_GEF_variable_f_GEF" name="Value of variable &quot;f_GEF&quot; of component &quot;f_GEF&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_f_GEF_variable_f_GEF </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_f_GEF_variable_f_GEF" name="Value of variable &quot;f_GEF&quot; of component &quot;f_GEF&quot;" target="/cellml:model/cellml:component[@name=&apos;f_GEF&apos;]/cellml:variable[@name=&apos;f_GEF&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_f_GEF_variable_n" name="Value of variable &quot;n&quot; of component &quot;f_GEF&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_f_GEF_variable_n </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_f_GEF_variable_n" name="Value of variable &quot;n&quot; of component &quot;f_GEF&quot;" target="/cellml:model/cellml:component[@name=&apos;f_GEF&apos;]/cellml:variable[@name=&apos;n&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_f_GEF_variable_Kf" name="Value of variable &quot;Kf&quot; of component &quot;f_GEF&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_f_GEF_variable_Kf </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_f_GEF_variable_Kf" name="Value of variable &quot;Kf&quot; of component &quot;f_GEF&quot;" target="/cellml:model/cellml:component[@name=&apos;f_GEF&apos;]/cellml:variable[@name=&apos;Kf&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_f_GEF_variable_Zf" name="Value of variable &quot;Zf&quot; of component &quot;f_GEF&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_f_GEF_variable_Zf </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_f_GEF_variable_Zf" name="Value of variable &quot;Zf&quot; of component &quot;f_GEF&quot;" target="/cellml:model/cellml:component[@name=&apos;f_GEF&apos;]/cellml:variable[@name=&apos;Zf&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_f_GEF_variable_k_FB_f" name="Value of variable &quot;k_FB_f&quot; of component &quot;f_GEF&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_f_GEF_variable_k_FB_f </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_f_GEF_variable_k_FB_f" name="Value of variable &quot;k_FB_f&quot; of component &quot;f_GEF&quot;" target="/cellml:model/cellml:component[@name=&apos;f_GEF&apos;]/cellml:variable[@name=&apos;k_FB_f&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_w_variable_w" name="Value of variable &quot;w&quot; of component &quot;w&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_w_variable_w </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_w_variable_w" name="Value of variable &quot;w&quot; of component &quot;w&quot;" target="/cellml:model/cellml:component[@name=&apos;w&apos;]/cellml:variable[@name=&apos;w&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_w_variable_kd_w" name="Value of variable &quot;kd_w&quot; of component &quot;w&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_w_variable_kd_w </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_w_variable_kd_w" name="Value of variable &quot;kd_w&quot; of component &quot;w&quot;" target="/cellml:model/cellml:component[@name=&apos;w&apos;]/cellml:variable[@name=&apos;kd_w&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_e_ph_variable_e_ph" name="Value of variable &quot;e_ph&quot; of component &quot;e_ph&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_e_ph_variable_e_ph </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_e_ph_variable_e_ph" name="Value of variable &quot;e_ph&quot; of component &quot;e_ph&quot;" target="/cellml:model/cellml:component[@name=&apos;e_ph&apos;]/cellml:variable[@name=&apos;e_ph&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_e_ph_variable_k_FB_ph" name="Value of variable &quot;k_FB_ph&quot; of component &quot;e_ph&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_e_ph_variable_k_FB_ph </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_e_ph_variable_k_FB_ph" name="Value of variable &quot;k_FB_ph&quot; of component &quot;e_ph&quot;" target="/cellml:model/cellml:component[@name=&apos;e_ph&apos;]/cellml:variable[@name=&apos;k_FB_ph&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_e_ph_variable_p" name="Value of variable &quot;p&quot; of component &quot;e_ph&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_e_ph_variable_p </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_e_ph_variable_p" name="Value of variable &quot;p&quot; of component &quot;e_ph&quot;" target="/cellml:model/cellml:component[@name=&apos;e_ph&apos;]/cellml:variable[@name=&apos;p&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_e_ph_variable_Wph" name="Value of variable &quot;Wph&quot; of component &quot;e_ph&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_e_ph_variable_Wph </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_e_ph_variable_Wph" name="Value of variable &quot;Wph&quot; of component &quot;e_ph&quot;" target="/cellml:model/cellml:component[@name=&apos;e_ph&apos;]/cellml:variable[@name=&apos;Wph&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_e_ph_variable_Kph" name="Value of variable &quot;Kph&quot; of component &quot;e_ph&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_e_ph_variable_Kph </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_e_ph_variable_Kph" name="Value of variable &quot;Kph&quot; of component &quot;e_ph&quot;" target="/cellml:model/cellml:component[@name=&apos;e_ph&apos;]/cellml:variable[@name=&apos;Kph&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_L" name="Value of variable &quot;L&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_L </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_L" name="Value of variable &quot;L&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;L&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_kt" name="Value of variable &quot;kt&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_kt </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_kt" name="Value of variable &quot;kt&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;kt&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_ke" name="Value of variable &quot;ke&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_ke </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_ke" name="Value of variable &quot;ke&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;ke&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_kxR0" name="Value of variable &quot;kxR0&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_kxR0 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_kxR0" name="Value of variable &quot;kxR0&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;kxR0&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_k_minusx" name="Value of variable &quot;k_minusx&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_k_minusx </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_k_minusx" name="Value of variable &quot;k_minusx&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;k_minusx&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_KDL" name="Value of variable &quot;KDL&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_KDL </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_KDL" name="Value of variable &quot;KDL&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KDL&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_KM_x11" name="Value of variable &quot;KM_x11&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_KM_x11 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_KM_x11" name="Value of variable &quot;KM_x11&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_x11&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_KM_x12" name="Value of variable &quot;KM_x12&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_KM_x12 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_KM_x12" name="Value of variable &quot;KM_x12&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_x12&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_KM_x21" name="Value of variable &quot;KM_x21&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_KM_x21 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_KM_x21" name="Value of variable &quot;KM_x21&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_x21&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_KM_x22" name="Value of variable &quot;KM_x22&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_KM_x22 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_KM_x22" name="Value of variable &quot;KM_x22&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_x22&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_KM_y1" name="Value of variable &quot;KM_y1&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_KM_y1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_KM_y1" name="Value of variable &quot;KM_y1&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_y1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_KM_y2" name="Value of variable &quot;KM_y2&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_KM_y2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_KM_y2" name="Value of variable &quot;KM_y2&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_y2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_KM_zph1" name="Value of variable &quot;KM_zph1&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_KM_zph1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_KM_zph1" name="Value of variable &quot;KM_zph1&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_zph1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_KM_zph2" name="Value of variable &quot;KM_zph2&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_KM_zph2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_KM_zph2" name="Value of variable &quot;KM_zph2&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_zph2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_KM_yph1" name="Value of variable &quot;KM_yph1&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_KM_yph1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_KM_yph1" name="Value of variable &quot;KM_yph1&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_yph1&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_KM_yph2" name="Value of variable &quot;KM_yph2&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_KM_yph2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_KM_yph2" name="Value of variable &quot;KM_yph2&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;KM_yph2&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_Vmax_x11_KM_x11" name="Value of variable &quot;Vmax_x11_KM_x11&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_Vmax_x11_KM_x11 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_Vmax_x11_KM_x11" name="Value of variable &quot;Vmax_x11_KM_x11&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;Vmax_x11_KM_x11&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_Vmax_x21_KM_x21" name="Value of variable &quot;Vmax_x21_KM_x21&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_Vmax_x21_KM_x21 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_Vmax_x21_KM_x21" name="Value of variable &quot;Vmax_x21_KM_x21&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;Vmax_x21_KM_x21&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_Vmax_x12_KM_x12" name="Value of variable &quot;Vmax_x12_KM_x12&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_Vmax_x12_KM_x12 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_Vmax_x12_KM_x12" name="Value of variable &quot;Vmax_x12_KM_x12&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;Vmax_x12_KM_x12&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_model_parameters_variable_Vmax_x22_KM_x22" name="Value of variable &quot;Vmax_x22_KM_x22&quot; of component &quot;model_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_model_parameters_variable_Vmax_x22_KM_x22 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_model_parameters_variable_Vmax_x22_KM_x22" name="Value of variable &quot;Vmax_x22_KM_x22&quot; of component &quot;model_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;model_parameters&apos;]/cellml:variable[@name=&apos;Vmax_x22_KM_x22&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report">
+      <listOfDataSets>
+        <dataSet id="data_set_value_component_environment_variable_time" name="Value of variable &quot;time&quot; of component &quot;environment&quot;" label="value_component_environment_variable_time" dataReference="data_generator_value_component_environment_variable_time"/>
+        <dataSet id="data_set_value_component_r_variable_r" name="Value of variable &quot;r&quot; of component &quot;r&quot;" label="value_component_r_variable_r" dataReference="data_generator_value_component_r_variable_r"/>
+        <dataSet id="data_set_value_component_c1_variable_c1" name="Value of variable &quot;c1&quot; of component &quot;c1&quot;" label="value_component_c1_variable_c1" dataReference="data_generator_value_component_c1_variable_c1"/>
+        <dataSet id="data_set_value_component_c2_variable_c2" name="Value of variable &quot;c2&quot; of component &quot;c2&quot;" label="value_component_c2_variable_c2" dataReference="data_generator_value_component_c2_variable_c2"/>
+        <dataSet id="data_set_value_component_e_PI3K_variable_e_PI3K" name="Value of variable &quot;e_PI3K&quot; of component &quot;e_PI3K&quot;" label="value_component_e_PI3K_variable_e_PI3K" dataReference="data_generator_value_component_e_PI3K_variable_e_PI3K"/>
+        <dataSet id="data_set_value_component_e_PI3K_variable_kappa_PI3K" name="Value of variable &quot;kappa_PI3K&quot; of component &quot;e_PI3K&quot;" label="value_component_e_PI3K_variable_kappa_PI3K" dataReference="data_generator_value_component_e_PI3K_variable_kappa_PI3K"/>
+        <dataSet id="data_set_value_component_e_PI3K_variable_alpha_PI3K" name="Value of variable &quot;alpha_PI3K&quot; of component &quot;e_PI3K&quot;" label="value_component_e_PI3K_variable_alpha_PI3K" dataReference="data_generator_value_component_e_PI3K_variable_alpha_PI3K"/>
+        <dataSet id="data_set_value_component_m_3PI_variable_m_3PI" name="Value of variable &quot;m_3PI&quot; of component &quot;m_3PI&quot;" label="value_component_m_3PI_variable_m_3PI" dataReference="data_generator_value_component_m_3PI_variable_m_3PI"/>
+        <dataSet id="data_set_value_component_m_3PI_variable_k_3PI" name="Value of variable &quot;k_3PI&quot; of component &quot;m_3PI&quot;" label="value_component_m_3PI_variable_k_3PI" dataReference="data_generator_value_component_m_3PI_variable_k_3PI"/>
+        <dataSet id="data_set_value_component_e_GEF_variable_e_GEF" name="Value of variable &quot;e_GEF&quot; of component &quot;e_GEF&quot;" label="value_component_e_GEF_variable_e_GEF" dataReference="data_generator_value_component_e_GEF_variable_e_GEF"/>
+        <dataSet id="data_set_value_component_e_GEF_variable_K_GR" name="Value of variable &quot;K_GR&quot; of component &quot;e_GEF&quot;" label="value_component_e_GEF_variable_K_GR" dataReference="data_generator_value_component_e_GEF_variable_K_GR"/>
+        <dataSet id="data_set_value_component_e_GEF_variable_K_GP" name="Value of variable &quot;K_GP&quot; of component &quot;e_GEF&quot;" label="value_component_e_GEF_variable_K_GP" dataReference="data_generator_value_component_e_GEF_variable_K_GP"/>
+        <dataSet id="data_set_value_component_m_Ras_variable_m_Ras" name="Value of variable &quot;m_Ras&quot; of component &quot;m_Ras&quot;" label="value_component_m_Ras_variable_m_Ras" dataReference="data_generator_value_component_m_Ras_variable_m_Ras"/>
+        <dataSet id="data_set_value_component_m_Ras_variable_k_Ras" name="Value of variable &quot;k_Ras&quot; of component &quot;m_Ras&quot;" label="value_component_m_Ras_variable_k_Ras" dataReference="data_generator_value_component_m_Ras_variable_k_Ras"/>
+        <dataSet id="data_set_value_component_m_Ras_variable_gamma" name="Value of variable &quot;gamma&quot; of component &quot;m_Ras&quot;" label="value_component_m_Ras_variable_gamma" dataReference="data_generator_value_component_m_Ras_variable_gamma"/>
+        <dataSet id="data_set_value_component_x1_variable_x1" name="Value of variable &quot;x1&quot; of component &quot;x1&quot;" label="value_component_x1_variable_x1" dataReference="data_generator_value_component_x1_variable_x1"/>
+        <dataSet id="data_set_value_component_x1_variable_kd_x1" name="Value of variable &quot;kd_x1&quot; of component &quot;x1&quot;" label="value_component_x1_variable_kd_x1" dataReference="data_generator_value_component_x1_variable_kd_x1"/>
+        <dataSet id="data_set_value_component_x2_variable_x2" name="Value of variable &quot;x2&quot; of component &quot;x2&quot;" label="value_component_x2_variable_x2" dataReference="data_generator_value_component_x2_variable_x2"/>
+        <dataSet id="data_set_value_component_x2_variable_kd_x2" name="Value of variable &quot;kd_x2&quot; of component &quot;x2&quot;" label="value_component_x2_variable_kd_x2" dataReference="data_generator_value_component_x2_variable_kd_x2"/>
+        <dataSet id="data_set_value_component_x2_variable_K_x2" name="Value of variable &quot;K_x2&quot; of component &quot;x2&quot;" label="value_component_x2_variable_K_x2" dataReference="data_generator_value_component_x2_variable_K_x2"/>
+        <dataSet id="data_set_value_component_y_variable_y" name="Value of variable &quot;y&quot; of component &quot;y&quot;" label="value_component_y_variable_y" dataReference="data_generator_value_component_y_variable_y"/>
+        <dataSet id="data_set_value_component_y_variable_Vmax_yph1_KM_yph1" name="Value of variable &quot;Vmax_yph1_KM_yph1&quot; of component &quot;y&quot;" label="value_component_y_variable_Vmax_yph1_KM_yph1" dataReference="data_generator_value_component_y_variable_Vmax_yph1_KM_yph1"/>
+        <dataSet id="data_set_value_component_yp_variable_yp" name="Value of variable &quot;yp&quot; of component &quot;yp&quot;" label="value_component_yp_variable_yp" dataReference="data_generator_value_component_yp_variable_yp"/>
+        <dataSet id="data_set_value_component_ypp_variable_ypp" name="Value of variable &quot;ypp&quot; of component &quot;ypp&quot;" label="value_component_ypp_variable_ypp" dataReference="data_generator_value_component_ypp_variable_ypp"/>
+        <dataSet id="data_set_value_component_ypp_variable_Vmax_yph2_KM_yph2" name="Value of variable &quot;Vmax_yph2_KM_yph2&quot; of component &quot;ypp&quot;" label="value_component_ypp_variable_Vmax_yph2_KM_yph2" dataReference="data_generator_value_component_ypp_variable_Vmax_yph2_KM_yph2"/>
+        <dataSet id="data_set_value_component_z_variable_z" name="Value of variable &quot;z&quot; of component &quot;z&quot;" label="value_component_z_variable_z" dataReference="data_generator_value_component_z_variable_z"/>
+        <dataSet id="data_set_value_component_z_variable_Vmax_zph1_KM_zph1" name="Value of variable &quot;Vmax_zph1_KM_zph1&quot; of component &quot;z&quot;" label="value_component_z_variable_Vmax_zph1_KM_zph1" dataReference="data_generator_value_component_z_variable_Vmax_zph1_KM_zph1"/>
+        <dataSet id="data_set_value_component_z_variable_Vmax_y1_KM_y1" name="Value of variable &quot;Vmax_y1_KM_y1&quot; of component &quot;z&quot;" label="value_component_z_variable_Vmax_y1_KM_y1" dataReference="data_generator_value_component_z_variable_Vmax_y1_KM_y1"/>
+        <dataSet id="data_set_value_component_zp_variable_zp" name="Value of variable &quot;zp&quot; of component &quot;zp&quot;" label="value_component_zp_variable_zp" dataReference="data_generator_value_component_zp_variable_zp"/>
+        <dataSet id="data_set_value_component_zpp_variable_zpp" name="Value of variable &quot;zpp&quot; of component &quot;zpp&quot;" label="value_component_zpp_variable_zpp" dataReference="data_generator_value_component_zpp_variable_zpp"/>
+        <dataSet id="data_set_value_component_zpp_variable_Vmax_zph2_KM_zph2" name="Value of variable &quot;Vmax_zph2_KM_zph2&quot; of component &quot;zpp&quot;" label="value_component_zpp_variable_Vmax_zph2_KM_zph2" dataReference="data_generator_value_component_zpp_variable_Vmax_zph2_KM_zph2"/>
+        <dataSet id="data_set_value_component_zpp_variable_Vmax_y2_KM_y2" name="Value of variable &quot;Vmax_y2_KM_y2&quot; of component &quot;zpp&quot;" label="value_component_zpp_variable_Vmax_y2_KM_y2" dataReference="data_generator_value_component_zpp_variable_Vmax_y2_KM_y2"/>
+        <dataSet id="data_set_value_component_f_GEF_variable_f_GEF" name="Value of variable &quot;f_GEF&quot; of component &quot;f_GEF&quot;" label="value_component_f_GEF_variable_f_GEF" dataReference="data_generator_value_component_f_GEF_variable_f_GEF"/>
+        <dataSet id="data_set_value_component_f_GEF_variable_n" name="Value of variable &quot;n&quot; of component &quot;f_GEF&quot;" label="value_component_f_GEF_variable_n" dataReference="data_generator_value_component_f_GEF_variable_n"/>
+        <dataSet id="data_set_value_component_f_GEF_variable_Kf" name="Value of variable &quot;Kf&quot; of component &quot;f_GEF&quot;" label="value_component_f_GEF_variable_Kf" dataReference="data_generator_value_component_f_GEF_variable_Kf"/>
+        <dataSet id="data_set_value_component_f_GEF_variable_Zf" name="Value of variable &quot;Zf&quot; of component &quot;f_GEF&quot;" label="value_component_f_GEF_variable_Zf" dataReference="data_generator_value_component_f_GEF_variable_Zf"/>
+        <dataSet id="data_set_value_component_f_GEF_variable_k_FB_f" name="Value of variable &quot;k_FB_f&quot; of component &quot;f_GEF&quot;" label="value_component_f_GEF_variable_k_FB_f" dataReference="data_generator_value_component_f_GEF_variable_k_FB_f"/>
+        <dataSet id="data_set_value_component_w_variable_w" name="Value of variable &quot;w&quot; of component &quot;w&quot;" label="value_component_w_variable_w" dataReference="data_generator_value_component_w_variable_w"/>
+        <dataSet id="data_set_value_component_w_variable_kd_w" name="Value of variable &quot;kd_w&quot; of component &quot;w&quot;" label="value_component_w_variable_kd_w" dataReference="data_generator_value_component_w_variable_kd_w"/>
+        <dataSet id="data_set_value_component_e_ph_variable_e_ph" name="Value of variable &quot;e_ph&quot; of component &quot;e_ph&quot;" label="value_component_e_ph_variable_e_ph" dataReference="data_generator_value_component_e_ph_variable_e_ph"/>
+        <dataSet id="data_set_value_component_e_ph_variable_k_FB_ph" name="Value of variable &quot;k_FB_ph&quot; of component &quot;e_ph&quot;" label="value_component_e_ph_variable_k_FB_ph" dataReference="data_generator_value_component_e_ph_variable_k_FB_ph"/>
+        <dataSet id="data_set_value_component_e_ph_variable_p" name="Value of variable &quot;p&quot; of component &quot;e_ph&quot;" label="value_component_e_ph_variable_p" dataReference="data_generator_value_component_e_ph_variable_p"/>
+        <dataSet id="data_set_value_component_e_ph_variable_Wph" name="Value of variable &quot;Wph&quot; of component &quot;e_ph&quot;" label="value_component_e_ph_variable_Wph" dataReference="data_generator_value_component_e_ph_variable_Wph"/>
+        <dataSet id="data_set_value_component_e_ph_variable_Kph" name="Value of variable &quot;Kph&quot; of component &quot;e_ph&quot;" label="value_component_e_ph_variable_Kph" dataReference="data_generator_value_component_e_ph_variable_Kph"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_L" name="Value of variable &quot;L&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_L" dataReference="data_generator_value_component_model_parameters_variable_L"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_kt" name="Value of variable &quot;kt&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_kt" dataReference="data_generator_value_component_model_parameters_variable_kt"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_ke" name="Value of variable &quot;ke&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_ke" dataReference="data_generator_value_component_model_parameters_variable_ke"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_kxR0" name="Value of variable &quot;kxR0&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_kxR0" dataReference="data_generator_value_component_model_parameters_variable_kxR0"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_k_minusx" name="Value of variable &quot;k_minusx&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_k_minusx" dataReference="data_generator_value_component_model_parameters_variable_k_minusx"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_KDL" name="Value of variable &quot;KDL&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_KDL" dataReference="data_generator_value_component_model_parameters_variable_KDL"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_KM_x11" name="Value of variable &quot;KM_x11&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_KM_x11" dataReference="data_generator_value_component_model_parameters_variable_KM_x11"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_KM_x12" name="Value of variable &quot;KM_x12&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_KM_x12" dataReference="data_generator_value_component_model_parameters_variable_KM_x12"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_KM_x21" name="Value of variable &quot;KM_x21&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_KM_x21" dataReference="data_generator_value_component_model_parameters_variable_KM_x21"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_KM_x22" name="Value of variable &quot;KM_x22&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_KM_x22" dataReference="data_generator_value_component_model_parameters_variable_KM_x22"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_KM_y1" name="Value of variable &quot;KM_y1&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_KM_y1" dataReference="data_generator_value_component_model_parameters_variable_KM_y1"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_KM_y2" name="Value of variable &quot;KM_y2&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_KM_y2" dataReference="data_generator_value_component_model_parameters_variable_KM_y2"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_KM_zph1" name="Value of variable &quot;KM_zph1&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_KM_zph1" dataReference="data_generator_value_component_model_parameters_variable_KM_zph1"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_KM_zph2" name="Value of variable &quot;KM_zph2&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_KM_zph2" dataReference="data_generator_value_component_model_parameters_variable_KM_zph2"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_KM_yph1" name="Value of variable &quot;KM_yph1&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_KM_yph1" dataReference="data_generator_value_component_model_parameters_variable_KM_yph1"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_KM_yph2" name="Value of variable &quot;KM_yph2&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_KM_yph2" dataReference="data_generator_value_component_model_parameters_variable_KM_yph2"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_Vmax_x11_KM_x11" name="Value of variable &quot;Vmax_x11_KM_x11&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_Vmax_x11_KM_x11" dataReference="data_generator_value_component_model_parameters_variable_Vmax_x11_KM_x11"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_Vmax_x21_KM_x21" name="Value of variable &quot;Vmax_x21_KM_x21&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_Vmax_x21_KM_x21" dataReference="data_generator_value_component_model_parameters_variable_Vmax_x21_KM_x21"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_Vmax_x12_KM_x12" name="Value of variable &quot;Vmax_x12_KM_x12&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_Vmax_x12_KM_x12" dataReference="data_generator_value_component_model_parameters_variable_Vmax_x12_KM_x12"/>
+        <dataSet id="data_set_value_component_model_parameters_variable_Vmax_x22_KM_x22" name="Value of variable &quot;Vmax_x22_KM_x22&quot; of component &quot;model_parameters&quot;" label="value_component_model_parameters_variable_Vmax_x22_KM_x22" dataReference="data_generator_value_component_model_parameters_variable_Vmax_x22_KM_x22"/>
+      </listOfDataSets>
+    </report>
+  </listOfOutputs>
+</sedML>

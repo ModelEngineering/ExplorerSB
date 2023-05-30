@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfModels>
+    <model id="model" name="Model" language="urn:sedml:language:xpp" source="fig3d.ode">
+      <listOfChanges>
+        <changeAttribute target="CAo" newValue="2.0"/>
+        <changeAttribute target="DCAL" newValue="0.001"/>
+        <changeAttribute target="Fe" newValue="96485.309"/>
+        <changeAttribute target="I_s" newValue="0.0"/>
+        <changeAttribute target="R" newValue="8.31441"/>
+        <changeAttribute target="SCA" newValue="0.0001"/>
+        <changeAttribute target="SCAH" newValue="0.9219"/>
+        <changeAttribute target="SCAM" newValue="0.004199"/>
+        <changeAttribute target="SKDR" newValue="0.1239"/>
+        <changeAttribute target="SNAH" newValue="0.5829"/>
+        <changeAttribute target="SNAM" newValue="0.001"/>
+        <changeAttribute target="SNAPM" newValue="0.001"/>
+        <changeAttribute target="Temp" newValue="309.15"/>
+        <changeAttribute target="VD" newValue="-70.0"/>
+        <changeAttribute target="VS" newValue="-70.0"/>
+        <changeAttribute target="Zca" newValue="2.0"/>
+        <changeAttribute target="alpha" newValue="1.0"/>
+        <changeAttribute target="anama" newValue="5.0"/>
+        <changeAttribute target="anamb" newValue="-1.0"/>
+        <changeAttribute target="anamc" newValue="-0.4"/>
+        <changeAttribute target="anamv" newValue="-49.0"/>
+        <changeAttribute target="anapma" newValue="5.0"/>
+        <changeAttribute target="anapmb" newValue="-1.0"/>
+        <changeAttribute target="anapmc" newValue="-0.0353"/>
+        <changeAttribute target="anapmv" newValue="-21.4"/>
+        <changeAttribute target="bnama" newValue="5.0"/>
+        <changeAttribute target="bnamb" newValue="-1.0"/>
+        <changeAttribute target="bnamc" newValue="0.4"/>
+        <changeAttribute target="bnamv" newValue="-25.0"/>
+        <changeAttribute target="bnapma" newValue="5.0"/>
+        <changeAttribute target="bnapmb" newValue="-1.0"/>
+        <changeAttribute target="bnapmc" newValue="0.000883"/>
+        <changeAttribute target="bnapmv" newValue="-25.7"/>
+        <changeAttribute target="cahslp" newValue="5.0"/>
+        <changeAttribute target="cahtau" newValue="50.0"/>
+        <changeAttribute target="cahth" newValue="-43.0"/>
+        <changeAttribute target="camslp" newValue="5.0"/>
+        <changeAttribute target="camtau" newValue="15.0"/>
+        <changeAttribute target="camth" newValue="-25.0"/>
+        <changeAttribute target="cmd" newValue="0.915"/>
+        <changeAttribute target="cms" newValue="1.058"/>
+        <changeAttribute target="dcalslp" newValue="6.0"/>
+        <changeAttribute target="dcaltau" newValue="60.0"/>
+        <changeAttribute target="dcalth" newValue="-43.0"/>
+        <changeAttribute target="dgcal" newValue="0.124"/>
+        <changeAttribute target="dgsyn_max" newValue="0.12"/>
+        <changeAttribute target="f" newValue="0.01"/>
+        <changeAttribute target="gc" newValue="0.211"/>
+        <changeAttribute target="gmd" newValue="0.131"/>
+        <changeAttribute target="gms" newValue="0.143"/>
+        <changeAttribute target="i0" newValue="0.0"/>
+        <changeAttribute target="kca" newValue="8.0"/>
+        <changeAttribute target="kd" newValue="0.0005"/>
+        <changeAttribute target="m" newValue="1.0"/>
+        <changeAttribute target="parea" newValue="0.492"/>
+        <changeAttribute target="sgca" newValue="0.008"/>
+        <changeAttribute target="sgkca" newValue="0.54"/>
+        <changeAttribute target="sgkdr" newValue="6.2"/>
+        <changeAttribute target="sgna" newValue="26.75"/>
+        <changeAttribute target="sgnap" newValue="0.00086"/>
+        <changeAttribute target="skdra" newValue="40.0"/>
+        <changeAttribute target="skdrb" newValue="50.0"/>
+        <changeAttribute target="skdrc" newValue="5.0"/>
+        <changeAttribute target="skdrslp" newValue="15.0"/>
+        <changeAttribute target="skdrth" newValue="-31.0"/>
+        <changeAttribute target="skdrv" newValue="-50.0"/>
+        <changeAttribute target="snaha" newValue="15.0"/>
+        <changeAttribute target="snahb" newValue="16.0"/>
+        <changeAttribute target="snahc" newValue="30.0"/>
+        <changeAttribute target="snahslp" newValue="7.0"/>
+        <changeAttribute target="snahth" newValue="-58.0"/>
+        <changeAttribute target="snahv" newValue="-60.0"/>
+        <changeAttribute target="t_m" newValue="10000.0"/>
+        <changeAttribute target="vdcal" newValue="130.0"/>
+        <changeAttribute target="vk" newValue="-10.0"/>
+        <changeAttribute target="vl" newValue="0.0"/>
+        <changeAttribute target="vna" newValue="120.0"/>
+        <changeAttribute target="vrest" newValue="-70.0"/>
+        <changeAttribute target="vsyn" newValue="70.0"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" name="Simulation" initialTime="0" outputStartTime="0" outputEndTime="20000" numberOfPoints="1000">
+      <algorithm kisaoID="KISAO:0000288">
+        <listOfAlgorithmParameters>
+          <algorithmParameter kisaoID="KISAO:0000597" value="0.009"/>
+          <algorithmParameter kisaoID="KISAO:0000467" value="0.5"/>
+        </listOfAlgorithmParameters>
+      </algorithm>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" name="Task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_T" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T" name="T" symbol="urn:sedml:symbol:time" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_DCAL" name="DCAL">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_DCAL </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_DCAL" name="DCAL" target="DCAL" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_GSYN" name="GSYN">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_GSYN </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_GSYN" name="GSYN" target="GSYN" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_SCA" name="SCA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_SCA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_SCA" name="SCA" target="SCA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_SCAH" name="SCAH">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_SCAH </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_SCAH" name="SCAH" target="SCAH" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_SCAM" name="SCAM">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_SCAM </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_SCAM" name="SCAM" target="SCAM" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_SKDR" name="SKDR">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_SKDR </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_SKDR" name="SKDR" target="SKDR" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_SNAH" name="SNAH">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_SNAH </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_SNAH" name="SNAH" target="SNAH" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_SNAM" name="SNAM">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_SNAM </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_SNAM" name="SNAM" target="SNAM" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_SNAPM" name="SNAPM">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_SNAPM </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_SNAPM" name="SNAPM" target="SNAPM" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_VD" name="VD">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_VD </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_VD" name="VD" target="VD" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_VS" name="VS">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_VS </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_VS" name="VS" target="VS" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_VSOMA" name="VSOMA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_VSOMA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_VSOMA" name="VSOMA" target="VSOMA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report" name="Report">
+      <listOfDataSets>
+        <dataSet id="data_set_T" name="T" label="T" dataReference="data_generator_T"/>
+        <dataSet id="data_set_DCAL" name="DCAL" label="DCAL" dataReference="data_generator_DCAL"/>
+        <dataSet id="data_set_GSYN" name="GSYN" label="GSYN" dataReference="data_generator_GSYN"/>
+        <dataSet id="data_set_SCA" name="SCA" label="SCA" dataReference="data_generator_SCA"/>
+        <dataSet id="data_set_SCAH" name="SCAH" label="SCAH" dataReference="data_generator_SCAH"/>
+        <dataSet id="data_set_SCAM" name="SCAM" label="SCAM" dataReference="data_generator_SCAM"/>
+        <dataSet id="data_set_SKDR" name="SKDR" label="SKDR" dataReference="data_generator_SKDR"/>
+        <dataSet id="data_set_SNAH" name="SNAH" label="SNAH" dataReference="data_generator_SNAH"/>
+        <dataSet id="data_set_SNAM" name="SNAM" label="SNAM" dataReference="data_generator_SNAM"/>
+        <dataSet id="data_set_SNAPM" name="SNAPM" label="SNAPM" dataReference="data_generator_SNAPM"/>
+        <dataSet id="data_set_VD" name="VD" label="VD" dataReference="data_generator_VD"/>
+        <dataSet id="data_set_VS" name="VS" label="VS" dataReference="data_generator_VS"/>
+        <dataSet id="data_set_VSOMA" name="VSOMA" label="VSOMA" dataReference="data_generator_VSOMA"/>
+      </listOfDataSets>
+    </report>
+    <plot2D id="plot">
+      <listOfCurves>
+        <curve id="curve_1" name="VSOMA vs T" logX="false" xDataReference="data_generator_T" logY="false" yDataReference="data_generator_VSOMA"/>
+        <curve id="curve_2" name="GSYN vs T" logX="false" xDataReference="data_generator_T" logY="false" yDataReference="data_generator_GSYN"/>
+      </listOfCurves>
+    </plot2D>
+  </listOfOutputs>
+</sedML>

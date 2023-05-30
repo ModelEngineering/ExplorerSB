@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfModels>
+    <model id="model" name="Model" language="urn:sedml:language:xpp" source="IP3R_model.ode">
+      <listOfChanges>
+        <changeAttribute target="CA" newValue="50.0"/>
+        <changeAttribute target="IP3" newValue="15.0"/>
+        <changeAttribute target="V" newValue="40000.0"/>
+        <changeAttribute target="X000" newValue="1000.0"/>
+        <changeAttribute target="X001" newValue="0.0"/>
+        <changeAttribute target="X010" newValue="0.0"/>
+        <changeAttribute target="X011" newValue="0.0"/>
+        <changeAttribute target="X100" newValue="0.0"/>
+        <changeAttribute target="X101" newValue="0.0"/>
+        <changeAttribute target="X110" newValue="0.0"/>
+        <changeAttribute target="a1" newValue="1.0"/>
+        <changeAttribute target="a2" newValue="0.1"/>
+        <changeAttribute target="a3" newValue="1.0"/>
+        <changeAttribute target="alpha" newValue="1.0"/>
+        <changeAttribute target="b1" newValue="0.1"/>
+        <changeAttribute target="b2" newValue="0.1"/>
+        <changeAttribute target="b3" newValue="0.1"/>
+        <changeAttribute target="beta" newValue="0.01"/>
+        <changeAttribute target="delta" newValue="0.1"/>
+        <changeAttribute target="gamma" newValue="50.0"/>
+        <changeAttribute target="mu" newValue="50.0"/>
+        <changeAttribute target="nip3r" newValue="1000.0"/>
+        <changeAttribute target="nplc" newValue="1000.0"/>
+        <changeAttribute target="pulsamp" newValue="50.0"/>
+        <changeAttribute target="pulsdur" newValue="1.0"/>
+        <changeAttribute target="pulst0" newValue="20.0"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" name="Simulation" initialTime="0" outputStartTime="0" outputEndTime="2000" numberOfPoints="1000">
+      <algorithm kisaoID="KISAO:0000032">
+        <listOfAlgorithmParameters>
+          <algorithmParameter kisaoID="KISAO:0000483" value="0.1"/>
+        </listOfAlgorithmParameters>
+      </algorithm>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" name="Task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_T" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T" name="T" symbol="urn:sedml:symbol:time" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_CA" name="CA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_CA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_CA" name="CA" target="CA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_IP3" name="IP3">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_IP3 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_IP3" name="IP3" target="IP3" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_IP3INJ" name="IP3INJ">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_IP3INJ </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_IP3INJ" name="IP3INJ" target="IP3INJ" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_X000" name="X000">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_X000 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_X000" name="X000" target="X000" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_X001" name="X001">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_X001 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_X001" name="X001" target="X001" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_X010" name="X010">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_X010 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_X010" name="X010" target="X010" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_X011" name="X011">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_X011 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_X011" name="X011" target="X011" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_X100" name="X100">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_X100 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_X100" name="X100" target="X100" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_X101" name="X101">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_X101 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_X101" name="X101" target="X101" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_X110" name="X110">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_X110 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_X110" name="X110" target="X110" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report" name="Report">
+      <listOfDataSets>
+        <dataSet id="data_set_T" name="T" label="T" dataReference="data_generator_T"/>
+        <dataSet id="data_set_CA" name="CA" label="CA" dataReference="data_generator_CA"/>
+        <dataSet id="data_set_IP3" name="IP3" label="IP3" dataReference="data_generator_IP3"/>
+        <dataSet id="data_set_IP3INJ" name="IP3INJ" label="IP3INJ" dataReference="data_generator_IP3INJ"/>
+        <dataSet id="data_set_X000" name="X000" label="X000" dataReference="data_generator_X000"/>
+        <dataSet id="data_set_X001" name="X001" label="X001" dataReference="data_generator_X001"/>
+        <dataSet id="data_set_X010" name="X010" label="X010" dataReference="data_generator_X010"/>
+        <dataSet id="data_set_X011" name="X011" label="X011" dataReference="data_generator_X011"/>
+        <dataSet id="data_set_X100" name="X100" label="X100" dataReference="data_generator_X100"/>
+        <dataSet id="data_set_X101" name="X101" label="X101" dataReference="data_generator_X101"/>
+        <dataSet id="data_set_X110" name="X110" label="X110" dataReference="data_generator_X110"/>
+      </listOfDataSets>
+    </report>
+  </listOfOutputs>
+</sedML>

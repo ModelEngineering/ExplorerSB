@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="ICaL" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="units.cellml">
+        <units name="mM" units_ref="mM"/>
+        <units name="ms" units_ref="ms"/>
+        <units name="pA" units_ref="pA"/>
+        <units name="mV" units_ref="mV"/>
+        <units name="nS" units_ref="nS"/>
+    </import>
+    <import xlink:href="Ionic_currents.cellml">
+        <component component_ref="Ionic_currents" name="Ionic_currents"/>
+    </import>
+    <import xlink:href="E_Nernst.cellml">
+        <component component_ref="E_Ca" name="E_Ca"/>
+    </import>
+    <import xlink:href="ICaL_channel_states.cellml">
+        <component component_ref="ICaL_channel_states" name="ICaL_channel_states"/>
+    </import>
+    <component name="ICaL">
+        <variable name="time" private_interface="out" public_interface="in" units="ms"/>
+        <variable name="P_CaL" private_interface="in" public_interface="out" units="dimensionless"/>
+        <variable name="norm_CaL" private_interface="in" public_interface="out" units="dimensionless"/>
+        <variable name="I_CaL" private_interface="in" public_interface="out" units="pA"/>
+        <variable name="V" private_interface="out" public_interface="in" units="mV"/>
+        <variable name="g_CaL" private_interface="out" public_interface="in" units="nS"/>
+        <variable name="T" private_interface="out" public_interface="in" units="kelvin"/>
+        <variable name="T0CaL" private_interface="out" public_interface="in" units="kelvin"/>
+        <variable name="Q10Ca" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="Cao" private_interface="out" public_interface="in" units="mM"/>
+        <variable name="Cai" private_interface="out" public_interface="in" units="mM"/>
+        <variable name="C0_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="C1_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="C2_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="C3_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="C0Ca_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="C1Ca_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="C2Ca_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="C3Ca_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="ICa_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="IVs_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="IVf_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="IVfCa_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="IVsCa_init" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="O_CaL_init" private_interface="out" public_interface="in" units="dimensionless"/>
+    </component>
+    <group>
+        <relationship_ref relationship="encapsulation"/>
+        <component_ref component="ICaL">
+            <component_ref component="Ionic_currents"/>
+            <component_ref component="E_Ca"/>
+            <component_ref component="ICaL_channel_states"/>
+        </component_ref>
+    </group>
+    <connection>
+        <map_components component_1="ICaL" component_2="Ionic_currents"/>
+        <map_variables variable_1="I_CaL" variable_2="I"/>
+        <map_variables variable_1="V" variable_2="V"/>
+        <map_variables variable_1="g_CaL" variable_2="g_max"/>
+    </connection>
+    <connection>
+        <map_components component_1="ICaL" component_2="E_Ca"/>
+        <map_variables variable_1="T" variable_2="T"/>
+        <map_variables variable_1="Cai" variable_2="Cai"/>
+        <map_variables variable_1="Cao" variable_2="Cao"/>
+    </connection>
+    <connection>
+        <map_components component_1="E_Ca" component_2="Ionic_currents"/>
+        <map_variables variable_1="E_Ca" variable_2="E"/>
+    </connection>
+    <connection>
+        <map_components component_1="ICaL_channel_states" component_2="Ionic_currents"/>
+        <map_variables variable_1="O_CaL" variable_2="PO"/>
+    </connection>
+    <connection>
+        <map_components component_1="ICaL" component_2="ICaL_channel_states"/>
+        <map_variables variable_1="time" variable_2="time"/>
+        <map_variables variable_1="P_CaL" variable_2="O_CaL"/>
+        <map_variables variable_1="norm_CaL" variable_2="norm"/>
+        <map_variables variable_1="V" variable_2="V"/>
+        <map_variables variable_1="T" variable_2="T"/>
+        <map_variables variable_1="Cai" variable_2="Cai"/>
+        <map_variables variable_1="T0CaL" variable_2="T0"/>
+        <map_variables variable_1="Q10Ca" variable_2="Q10Ca"/>
+        <map_variables variable_1="C0_init" variable_2="C0_init"/>
+        <map_variables variable_1="C1_init" variable_2="C1_init"/>
+        <map_variables variable_1="C2_init" variable_2="C2_init"/>
+        <map_variables variable_1="C3_init" variable_2="C3_init"/>
+        <map_variables variable_1="C0Ca_init" variable_2="C0Ca_init"/>
+        <map_variables variable_1="C1Ca_init" variable_2="C1Ca_init"/>
+        <map_variables variable_1="C2Ca_init" variable_2="C2Ca_init"/>
+        <map_variables variable_1="C3Ca_init" variable_2="C3Ca_init"/>
+        <map_variables variable_1="ICa_init" variable_2="ICa_init"/>
+        <map_variables variable_1="IVs_init" variable_2="IVs_init"/>
+        <map_variables variable_1="IVf_init" variable_2="IVf_init"/>
+        <map_variables variable_1="IVfCa_init" variable_2="IVfCa_init"/>
+        <map_variables variable_1="IVsCa_init" variable_2="IVsCa_init"/>
+        <map_variables variable_1="O_CaL_init" variable_2="O_CaL_init"/>
+    </connection>
+</model>

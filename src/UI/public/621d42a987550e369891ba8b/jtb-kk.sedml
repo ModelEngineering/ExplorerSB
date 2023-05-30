@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfModels>
+    <model id="model" name="Model" language="urn:sedml:language:xpp" source="jtb-kk.ode">
+      <listOfChanges>
+        <changeAttribute target="CA" newValue="6e-05"/>
+        <changeAttribute target="H" newValue="0.0"/>
+        <changeAttribute target="HB" newValue="0.77"/>
+        <changeAttribute target="Iapp" newValue="-0.5"/>
+        <changeAttribute target="M" newValue="0.14"/>
+        <changeAttribute target="MB" newValue="0.95"/>
+        <changeAttribute target="MCA" newValue="0.0002"/>
+        <changeAttribute target="N" newValue="0.048"/>
+        <changeAttribute target="V" newValue="-42.0"/>
+        <changeAttribute target="VB" newValue="-58.0"/>
+        <changeAttribute target="VCa" newValue="150.0"/>
+        <changeAttribute target="VK" newValue="-70.0"/>
+        <changeAttribute target="VNa" newValue="40.0"/>
+        <changeAttribute target="beta" newValue="4e-05"/>
+        <changeAttribute target="gB" newValue="0.1372"/>
+        <changeAttribute target="gCa" newValue="1.5"/>
+        <changeAttribute target="gCaCa" newValue="0.02"/>
+        <changeAttribute target="gK" newValue="0.25"/>
+        <changeAttribute target="gKTEA" newValue="10.0"/>
+        <changeAttribute target="gNa" newValue="0.0231"/>
+        <changeAttribute target="gNaTTX" newValue="400.0"/>
+        <changeAttribute target="gNaV" newValue="0.11"/>
+        <changeAttribute target="kbeta" newValue="15000.0"/>
+        <changeAttribute target="ks" newValue="50.0"/>
+        <changeAttribute target="rho" newValue="0.002"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" name="Simulation" initialTime="0" outputStartTime="0" outputEndTime="150" numberOfPoints="1000">
+      <algorithm kisaoID="KISAO:0000032">
+        <listOfAlgorithmParameters>
+          <algorithmParameter kisaoID="KISAO:0000483" value="0.0001"/>
+        </listOfAlgorithmParameters>
+      </algorithm>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" name="Task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_T" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T" name="T" symbol="urn:sedml:symbol:time" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_CA" name="CA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_CA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_CA" name="CA" target="CA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_H" name="H">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_H </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_H" name="H" target="H" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_HB" name="HB">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_HB </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_HB" name="HB" target="HB" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M" name="M">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M" name="M" target="M" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MB" name="MB">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MB </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MB" name="MB" target="MB" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MCA" name="MCA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MCA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MCA" name="MCA" target="MCA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_N" name="N">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_N </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_N" name="N" target="N" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_V" name="V">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_V </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_V" name="V" target="V" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report" name="Report">
+      <listOfDataSets>
+        <dataSet id="data_set_T" name="T" label="T" dataReference="data_generator_T"/>
+        <dataSet id="data_set_CA" name="CA" label="CA" dataReference="data_generator_CA"/>
+        <dataSet id="data_set_H" name="H" label="H" dataReference="data_generator_H"/>
+        <dataSet id="data_set_HB" name="HB" label="HB" dataReference="data_generator_HB"/>
+        <dataSet id="data_set_M" name="M" label="M" dataReference="data_generator_M"/>
+        <dataSet id="data_set_MB" name="MB" label="MB" dataReference="data_generator_MB"/>
+        <dataSet id="data_set_MCA" name="MCA" label="MCA" dataReference="data_generator_MCA"/>
+        <dataSet id="data_set_N" name="N" label="N" dataReference="data_generator_N"/>
+        <dataSet id="data_set_V" name="V" label="V" dataReference="data_generator_V"/>
+      </listOfDataSets>
+    </report>
+  </listOfOutputs>
+</sedML>

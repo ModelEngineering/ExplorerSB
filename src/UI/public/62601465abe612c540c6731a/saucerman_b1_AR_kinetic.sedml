@@ -1,0 +1,638 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<sedML level="1" version="3" xmlns="http://sed-ml.org/sed-ml/level1/version3" xmlns:cellml="http://www.cellml.org/cellml/1.0#">
+    <listOfSimulations>
+        <uniformTimeCourse id="simulation1" initialTime="0" numberOfPoints="10000" outputEndTime="10" outputStartTime="0">
+            <annotation>
+                <nlaSolver name="KINSOL" xmlns="http://www.opencor.ws/">
+                    <solverProperty id="LinearSolver" value="Dense"/>
+                    <solverProperty id="LowerHalfBandwidth" value="0"/>
+                    <solverProperty id="MaximumNumberOfIterations" value="200"/>
+                    <solverProperty id="UpperHalfBandwidth" value="0"/>
+                </nlaSolver>
+            </annotation>
+            <algorithm kisaoID="KISAO:0000019">
+                <listOfAlgorithmParameters>
+                    <algorithmParameter kisaoID="KISAO:0000211" value="1e-07"/>
+                    <algorithmParameter kisaoID="KISAO:0000475" value="BDF"/>
+                    <algorithmParameter kisaoID="KISAO:0000481" value="true"/>
+                    <algorithmParameter kisaoID="KISAO:0000476" value="Newton"/>
+                    <algorithmParameter kisaoID="KISAO:0000477" value="Dense"/>
+                    <algorithmParameter kisaoID="KISAO:0000480" value="0"/>
+                    <algorithmParameter kisaoID="KISAO:0000415" value="500"/>
+                    <algorithmParameter kisaoID="KISAO:0000467" value="0"/>
+                    <algorithmParameter kisaoID="KISAO:0000478" value="Banded"/>
+                    <algorithmParameter kisaoID="KISAO:0000209" value="1e-07"/>
+                    <algorithmParameter kisaoID="KISAO:0000479" value="0"/>
+                </listOfAlgorithmParameters>
+            </algorithm>
+        </uniformTimeCourse>
+    </listOfSimulations>
+    <listOfModels>
+        <model id="model" language="urn:sedml:language:cellml.1_0" source="saucerman_b1_AR_kinetic.cellml"/>
+    </listOfModels>
+    <listOfTasks>
+        <repeatedTask id="repeatedTask" range="once" resetModel="true">
+            <listOfRanges>
+                <vectorRange id="once">
+                    <value> 1 </value>
+                </vectorRange>
+            </listOfRanges>
+            <listOfSubTasks>
+                <subTask order="1" task="task1"/>
+            </listOfSubTasks>
+        </repeatedTask>
+        <task id="task1" modelReference="model" simulationReference="simulation1"/>
+    </listOfTasks>
+    <listOfDataGenerators>
+        <dataGenerator id="xDataGenerator1_1">
+            <listOfVariables>
+                <variable id="xVariable1_1" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='time']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> xVariable1_1 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="yDataGenerator1_1">
+            <listOfVariables>
+                <variable id="yVariable1_1" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='b1_AR_d']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> yVariable1_1 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="xDataGenerator1_2">
+            <listOfVariables>
+                <variable id="xVariable1_2" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='time']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> xVariable1_2 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="yDataGenerator1_2">
+            <listOfVariables>
+                <variable id="yVariable1_2" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='b1_AR_p']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> yVariable1_2 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="xDataGenerator1_3">
+            <listOfVariables>
+                <variable id="xVariable1_3" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='time']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> xVariable1_3 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="yDataGenerator1_3">
+            <listOfVariables>
+                <variable id="yVariable1_3" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='b1_AR_tot']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> yVariable1_3 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="xDataGenerator2_1">
+            <listOfVariables>
+                <variable id="xVariable2_1" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='time']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> xVariable2_1 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="yDataGenerator2_1">
+            <listOfVariables>
+                <variable id="yVariable2_1" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='Gs']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> yVariable2_1 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="xDataGenerator2_2">
+            <listOfVariables>
+                <variable id="xVariable2_2" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='time']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> xVariable2_2 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="yDataGenerator2_2">
+            <listOfVariables>
+                <variable id="yVariable2_2" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='Gs_agdp']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> yVariable2_2 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="xDataGenerator2_3">
+            <listOfVariables>
+                <variable id="xVariable2_3" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='time']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> xVariable2_3 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="yDataGenerator2_3">
+            <listOfVariables>
+                <variable id="yVariable2_3" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='Gs_agtp_tot']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> yVariable2_3 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="xDataGenerator2_4">
+            <listOfVariables>
+                <variable id="xVariable2_4" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='time']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> xVariable2_4 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="yDataGenerator2_4">
+            <listOfVariables>
+                <variable id="yVariable2_4" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='Gs_bg']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> yVariable2_4 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="xDataGenerator3_1">
+            <listOfVariables>
+                <variable id="xVariable3_1" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='time']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> xVariable3_1 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="yDataGenerator3_1">
+            <listOfVariables>
+                <variable id="yVariable3_1" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='L']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> yVariable3_1 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="xDataGenerator3_2">
+            <listOfVariables>
+                <variable id="xVariable3_2" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='time']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> xVariable3_2 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="yDataGenerator3_2">
+            <listOfVariables>
+                <variable id="yVariable3_2" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='LR']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> yVariable3_2 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="xDataGenerator3_3">
+            <listOfVariables>
+                <variable id="xVariable3_3" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='time']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> xVariable3_3 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="yDataGenerator3_3">
+            <listOfVariables>
+                <variable id="yVariable3_3" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='LRG']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> yVariable3_3 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="xDataGenerator3_4">
+            <listOfVariables>
+                <variable id="xVariable3_4" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='time']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> xVariable3_4 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="yDataGenerator3_4">
+            <listOfVariables>
+                <variable id="yVariable3_4" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='RG']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> yVariable3_4 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="xDataGenerator3_5">
+            <listOfVariables>
+                <variable id="xVariable3_5" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='time']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> xVariable3_5 </ci>
+            </math>
+        </dataGenerator>
+        <dataGenerator id="yDataGenerator3_5">
+            <listOfVariables>
+                <variable id="yVariable3_5" target="/cellml:model/cellml:component[@name='b1_AR_module']/cellml:variable[@name='R']" taskReference="repeatedTask"/>
+            </listOfVariables>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci> yVariable3_5 </ci>
+            </math>
+        </dataGenerator>
+    </listOfDataGenerators>
+    <listOfOutputs>
+        <plot2D id="plot1">
+            <annotation>
+                <properties version="2" xmlns="http://www.opencor.ws/">
+                    <backgroundColor>#ffffff</backgroundColor>
+                    <fontSize>10</fontSize>
+                    <foregroundColor>#000000</foregroundColor>
+                    <height>1</height>
+                    <gridLines>
+                        <style>dot</style>
+                        <width>1</width>
+                        <color>#a0a0a4</color>
+                    </gridLines>
+                    <legend>
+                        <fontSize>10</fontSize>
+                        <visible>true</visible>
+                    </legend>
+                    <pointCoordinates>
+                        <style>dash</style>
+                        <width>1</width>
+                        <color>#b0008080</color>
+                        <fontColor>#ffffff</fontColor>
+                        <fontSize>10</fontSize>
+                    </pointCoordinates>
+                    <surroundingArea>
+                        <backgroundColor>#f0f0f0</backgroundColor>
+                        <foregroundColor>#000000</foregroundColor>
+                    </surroundingArea>
+                    <title/>
+                    <xAxis>
+                        <fontSize>10</fontSize>
+                        <logarithmicScale>false</logarithmicScale>
+                        <title/>
+                    </xAxis>
+                    <yAxis>
+                        <fontSize>10</fontSize>
+                        <logarithmicScale>false</logarithmicScale>
+                        <title/>
+                    </yAxis>
+                    <zoomRegion>
+                        <style>solid</style>
+                        <width>1</width>
+                        <color>#b0800000</color>
+                        <fontColor>#ffffff</fontColor>
+                        <fontSize>10</fontSize>
+                        <filled>true</filled>
+                        <fillColor>#30ffff00</fillColor>
+                    </zoomRegion>
+                </properties>
+            </annotation>
+            <listOfCurves>
+                <curve id="curve1_1" logX="false" logY="false" xDataReference="xDataGenerator1_1" yDataReference="yDataGenerator1_1">
+                    <annotation>
+                        <properties xmlns="http://www.opencor.ws/">
+                            <selected>true</selected>
+                            <title>b1_AR_d</title>
+                            <line>
+                                <style>solid</style>
+                                <width>3</width>
+                                <color>#0072bd</color>
+                            </line>
+                            <symbol>
+                                <style>none</style>
+                                <size>8</size>
+                                <color>#0072bd</color>
+                                <filled>true</filled>
+                                <fillColor>#ffffff</fillColor>
+                            </symbol>
+                        </properties>
+                    </annotation>
+                </curve>
+                <curve id="curve1_2" logX="false" logY="false" xDataReference="xDataGenerator1_2" yDataReference="yDataGenerator1_2">
+                    <annotation>
+                        <properties xmlns="http://www.opencor.ws/">
+                            <selected>false</selected>
+                            <title>b1_AR_p</title>
+                            <line>
+                                <style>solid</style>
+                                <width>3</width>
+                                <color>#d95319</color>
+                            </line>
+                            <symbol>
+                                <style>none</style>
+                                <size>8</size>
+                                <color>#d95319</color>
+                                <filled>true</filled>
+                                <fillColor>#ffffff</fillColor>
+                            </symbol>
+                        </properties>
+                    </annotation>
+                </curve>
+                <curve id="curve1_3" logX="false" logY="false" xDataReference="xDataGenerator1_3" yDataReference="yDataGenerator1_3">
+                    <annotation>
+                        <properties xmlns="http://www.opencor.ws/">
+                            <selected>false</selected>
+                            <title>b1_AR_tot</title>
+                            <line>
+                                <style>solid</style>
+                                <width>3</width>
+                                <color>#edb120</color>
+                            </line>
+                            <symbol>
+                                <style>none</style>
+                                <size>8</size>
+                                <color>#edb120</color>
+                                <filled>true</filled>
+                                <fillColor>#ffffff</fillColor>
+                            </symbol>
+                        </properties>
+                    </annotation>
+                </curve>
+            </listOfCurves>
+        </plot2D>
+        <plot2D id="plot2">
+            <annotation>
+                <properties version="2" xmlns="http://www.opencor.ws/">
+                    <backgroundColor>#ffffff</backgroundColor>
+                    <fontSize>10</fontSize>
+                    <foregroundColor>#000000</foregroundColor>
+                    <height>1</height>
+                    <gridLines>
+                        <style>dot</style>
+                        <width>1</width>
+                        <color>#a0a0a4</color>
+                    </gridLines>
+                    <legend>
+                        <fontSize>10</fontSize>
+                        <visible>true</visible>
+                    </legend>
+                    <pointCoordinates>
+                        <style>dash</style>
+                        <width>1</width>
+                        <color>#b0008080</color>
+                        <fontColor>#ffffff</fontColor>
+                        <fontSize>10</fontSize>
+                    </pointCoordinates>
+                    <surroundingArea>
+                        <backgroundColor>#f0f0f0</backgroundColor>
+                        <foregroundColor>#000000</foregroundColor>
+                    </surroundingArea>
+                    <title/>
+                    <xAxis>
+                        <fontSize>10</fontSize>
+                        <logarithmicScale>false</logarithmicScale>
+                        <title/>
+                    </xAxis>
+                    <yAxis>
+                        <fontSize>10</fontSize>
+                        <logarithmicScale>false</logarithmicScale>
+                        <title/>
+                    </yAxis>
+                    <zoomRegion>
+                        <style>solid</style>
+                        <width>1</width>
+                        <color>#b0800000</color>
+                        <fontColor>#ffffff</fontColor>
+                        <fontSize>10</fontSize>
+                        <filled>true</filled>
+                        <fillColor>#30ffff00</fillColor>
+                    </zoomRegion>
+                </properties>
+            </annotation>
+            <listOfCurves>
+                <curve id="curve2_1" logX="false" logY="false" xDataReference="xDataGenerator2_1" yDataReference="yDataGenerator2_1">
+                    <annotation>
+                        <properties xmlns="http://www.opencor.ws/">
+                            <selected>false</selected>
+                            <title>Gs</title>
+                            <line>
+                                <style>solid</style>
+                                <width>3</width>
+                                <color>#0072bd</color>
+                            </line>
+                            <symbol>
+                                <style>none</style>
+                                <size>8</size>
+                                <color>#0072bd</color>
+                                <filled>true</filled>
+                                <fillColor>#ffffff</fillColor>
+                            </symbol>
+                        </properties>
+                    </annotation>
+                </curve>
+                <curve id="curve2_2" logX="false" logY="false" xDataReference="xDataGenerator2_2" yDataReference="yDataGenerator2_2">
+                    <annotation>
+                        <properties xmlns="http://www.opencor.ws/">
+                            <selected>false</selected>
+                            <title>Gs_agdp</title>
+                            <line>
+                                <style>solid</style>
+                                <width>3</width>
+                                <color>#d95319</color>
+                            </line>
+                            <symbol>
+                                <style>none</style>
+                                <size>8</size>
+                                <color>#d95319</color>
+                                <filled>true</filled>
+                                <fillColor>#ffffff</fillColor>
+                            </symbol>
+                        </properties>
+                    </annotation>
+                </curve>
+                <curve id="curve2_3" logX="false" logY="false" xDataReference="xDataGenerator2_3" yDataReference="yDataGenerator2_3">
+                    <annotation>
+                        <properties xmlns="http://www.opencor.ws/">
+                            <selected>false</selected>
+                            <title>Gs_agtp_tot</title>
+                            <line>
+                                <style>solid</style>
+                                <width>3</width>
+                                <color>#edb120</color>
+                            </line>
+                            <symbol>
+                                <style>none</style>
+                                <size>8</size>
+                                <color>#edb120</color>
+                                <filled>true</filled>
+                                <fillColor>#ffffff</fillColor>
+                            </symbol>
+                        </properties>
+                    </annotation>
+                </curve>
+                <curve id="curve2_4" logX="false" logY="false" xDataReference="xDataGenerator2_4" yDataReference="yDataGenerator2_4">
+                    <annotation>
+                        <properties xmlns="http://www.opencor.ws/">
+                            <selected>true</selected>
+                            <title>Gs_bg</title>
+                            <line>
+                                <style>solid</style>
+                                <width>3</width>
+                                <color>#7e2f8e</color>
+                            </line>
+                            <symbol>
+                                <style>none</style>
+                                <size>8</size>
+                                <color>#7e2f8e</color>
+                                <filled>true</filled>
+                                <fillColor>#ffffff</fillColor>
+                            </symbol>
+                        </properties>
+                    </annotation>
+                </curve>
+            </listOfCurves>
+        </plot2D>
+        <plot2D id="plot3">
+            <annotation>
+                <properties version="2" xmlns="http://www.opencor.ws/">
+                    <backgroundColor>#ffffff</backgroundColor>
+                    <fontSize>10</fontSize>
+                    <foregroundColor>#000000</foregroundColor>
+                    <height>1</height>
+                    <gridLines>
+                        <style>dot</style>
+                        <width>1</width>
+                        <color>#a0a0a4</color>
+                    </gridLines>
+                    <legend>
+                        <fontSize>10</fontSize>
+                        <visible>true</visible>
+                    </legend>
+                    <pointCoordinates>
+                        <style>dash</style>
+                        <width>1</width>
+                        <color>#b0008080</color>
+                        <fontColor>#ffffff</fontColor>
+                        <fontSize>10</fontSize>
+                    </pointCoordinates>
+                    <surroundingArea>
+                        <backgroundColor>#f0f0f0</backgroundColor>
+                        <foregroundColor>#000000</foregroundColor>
+                    </surroundingArea>
+                    <title/>
+                    <xAxis>
+                        <fontSize>10</fontSize>
+                        <logarithmicScale>false</logarithmicScale>
+                        <title/>
+                    </xAxis>
+                    <yAxis>
+                        <fontSize>10</fontSize>
+                        <logarithmicScale>false</logarithmicScale>
+                        <title/>
+                    </yAxis>
+                    <zoomRegion>
+                        <style>solid</style>
+                        <width>1</width>
+                        <color>#b0800000</color>
+                        <fontColor>#ffffff</fontColor>
+                        <fontSize>10</fontSize>
+                        <filled>true</filled>
+                        <fillColor>#30ffff00</fillColor>
+                    </zoomRegion>
+                </properties>
+            </annotation>
+            <listOfCurves>
+                <curve id="curve3_1" logX="false" logY="false" xDataReference="xDataGenerator3_1" yDataReference="yDataGenerator3_1">
+                    <annotation>
+                        <properties xmlns="http://www.opencor.ws/">
+                            <selected>false</selected>
+                            <title>L</title>
+                            <line>
+                                <style>solid</style>
+                                <width>3</width>
+                                <color>#0072bd</color>
+                            </line>
+                            <symbol>
+                                <style>none</style>
+                                <size>8</size>
+                                <color>#0072bd</color>
+                                <filled>true</filled>
+                                <fillColor>#ffffff</fillColor>
+                            </symbol>
+                        </properties>
+                    </annotation>
+                </curve>
+                <curve id="curve3_2" logX="false" logY="false" xDataReference="xDataGenerator3_2" yDataReference="yDataGenerator3_2">
+                    <annotation>
+                        <properties xmlns="http://www.opencor.ws/">
+                            <selected>false</selected>
+                            <title>LR</title>
+                            <line>
+                                <style>solid</style>
+                                <width>3</width>
+                                <color>#d95319</color>
+                            </line>
+                            <symbol>
+                                <style>none</style>
+                                <size>8</size>
+                                <color>#d95319</color>
+                                <filled>true</filled>
+                                <fillColor>#ffffff</fillColor>
+                            </symbol>
+                        </properties>
+                    </annotation>
+                </curve>
+                <curve id="curve3_3" logX="false" logY="false" xDataReference="xDataGenerator3_3" yDataReference="yDataGenerator3_3">
+                    <annotation>
+                        <properties xmlns="http://www.opencor.ws/">
+                            <selected>false</selected>
+                            <title>LRG</title>
+                            <line>
+                                <style>solid</style>
+                                <width>3</width>
+                                <color>#edb120</color>
+                            </line>
+                            <symbol>
+                                <style>none</style>
+                                <size>8</size>
+                                <color>#edb120</color>
+                                <filled>true</filled>
+                                <fillColor>#ffffff</fillColor>
+                            </symbol>
+                        </properties>
+                    </annotation>
+                </curve>
+                <curve id="curve3_4" logX="false" logY="false" xDataReference="xDataGenerator3_4" yDataReference="yDataGenerator3_4">
+                    <annotation>
+                        <properties xmlns="http://www.opencor.ws/">
+                            <selected>false</selected>
+                            <title>RG</title>
+                            <line>
+                                <style>solid</style>
+                                <width>3</width>
+                                <color>#7e2f8e</color>
+                            </line>
+                            <symbol>
+                                <style>none</style>
+                                <size>8</size>
+                                <color>#7e2f8e</color>
+                                <filled>true</filled>
+                                <fillColor>#ffffff</fillColor>
+                            </symbol>
+                        </properties>
+                    </annotation>
+                </curve>
+                <curve id="curve3_5" logX="false" logY="false" xDataReference="xDataGenerator3_5" yDataReference="yDataGenerator3_5">
+                    <annotation>
+                        <properties xmlns="http://www.opencor.ws/">
+                            <selected>true</selected>
+                            <title>R</title>
+                            <line>
+                                <style>solid</style>
+                                <width>3</width>
+                                <color>#77ac30</color>
+                            </line>
+                            <symbol>
+                                <style>none</style>
+                                <size>8</size>
+                                <color>#77ac30</color>
+                                <filled>true</filled>
+                                <fillColor>#ffffff</fillColor>
+                            </symbol>
+                        </properties>
+                    </annotation>
+                </curve>
+            </listOfCurves>
+        </plot2D>
+    </listOfOutputs>
+</sedML>

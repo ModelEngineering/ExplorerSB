@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfModels>
+    <model id="model" name="Model" language="urn:sedml:language:xpp" source="IKs_Mar.ode">
+      <listOfChanges>
+        <changeAttribute target="C1" newValue="1.0"/>
+        <changeAttribute target="C2" newValue="0.0"/>
+        <changeAttribute target="C3" newValue="0.0"/>
+        <changeAttribute target="C4" newValue="0.0"/>
+        <changeAttribute target="C5" newValue="0.0"/>
+        <changeAttribute target="C6" newValue="0.0"/>
+        <changeAttribute target="C7" newValue="0.0"/>
+        <changeAttribute target="C8" newValue="0.0"/>
+        <changeAttribute target="C9" newValue="0.0"/>
+        <changeAttribute target="C10" newValue="0.0"/>
+        <changeAttribute target="C11" newValue="0.0"/>
+        <changeAttribute target="C12" newValue="0.0"/>
+        <changeAttribute target="C13" newValue="0.0"/>
+        <changeAttribute target="C14" newValue="0.0"/>
+        <changeAttribute target="C15" newValue="0.0"/>
+        <changeAttribute target="O1" newValue="0.0"/>
+        <changeAttribute target="O2" newValue="0.0"/>
+        <changeAttribute target="cai" newValue="7.9e-05"/>
+        <changeAttribute target="ki" newValue="136.89149"/>
+        <changeAttribute target="ko" newValue="4.5"/>
+        <changeAttribute target="nai" newValue="15.0"/>
+        <changeAttribute target="nao" newValue="140.0"/>
+        <changeAttribute target="scale" newValue="120.0"/>
+        <changeAttribute target="toff" newValue="4100.0"/>
+        <changeAttribute target="toff_r" newValue="5000.0"/>
+        <changeAttribute target="ton" newValue="100.0"/>
+        <changeAttribute target="vhold" newValue="-80.0"/>
+        <changeAttribute target="vtest_1" newValue="40.0"/>
+        <changeAttribute target="vtest_2" newValue="-50.0"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" name="Simulation" initialTime="0" outputStartTime="0" outputEndTime="4550" numberOfPoints="1000">
+      <algorithm kisaoID="KISAO:0000030">
+        <listOfAlgorithmParameters>
+          <algorithmParameter kisaoID="KISAO:0000483" value="0.455"/>
+        </listOfAlgorithmParameters>
+      </algorithm>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" name="Task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_T" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T" name="T" symbol="urn:sedml:symbol:time" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C1" name="C1">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C1" name="C1" target="C1" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C2" name="C2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C2" name="C2" target="C2" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C3" name="C3">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C3 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C3" name="C3" target="C3" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C4" name="C4">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C4 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C4" name="C4" target="C4" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C5" name="C5">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C5 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C5" name="C5" target="C5" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C6" name="C6">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C6 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C6" name="C6" target="C6" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C7" name="C7">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C7 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C7" name="C7" target="C7" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C8" name="C8">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C8 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C8" name="C8" target="C8" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C9" name="C9">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C9 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C9" name="C9" target="C9" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C10" name="C10">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C10 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C10" name="C10" target="C10" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C11" name="C11">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C11 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C11" name="C11" target="C11" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C12" name="C12">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C12 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C12" name="C12" target="C12" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C13" name="C13">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C13 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C13" name="C13" target="C13" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C14" name="C14">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C14 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C14" name="C14" target="C14" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_C15" name="C15">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_C15 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_C15" name="C15" target="C15" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_IKS" name="IKS">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_IKS </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_IKS" name="IKS" target="IKS" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_O1" name="O1">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_O1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_O1" name="O1" target="O1" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_O2" name="O2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_O2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_O2" name="O2" target="O2" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report" name="Report">
+      <listOfDataSets>
+        <dataSet id="data_set_T" name="T" label="T" dataReference="data_generator_T"/>
+        <dataSet id="data_set_C1" name="C1" label="C1" dataReference="data_generator_C1"/>
+        <dataSet id="data_set_C2" name="C2" label="C2" dataReference="data_generator_C2"/>
+        <dataSet id="data_set_C3" name="C3" label="C3" dataReference="data_generator_C3"/>
+        <dataSet id="data_set_C4" name="C4" label="C4" dataReference="data_generator_C4"/>
+        <dataSet id="data_set_C5" name="C5" label="C5" dataReference="data_generator_C5"/>
+        <dataSet id="data_set_C6" name="C6" label="C6" dataReference="data_generator_C6"/>
+        <dataSet id="data_set_C7" name="C7" label="C7" dataReference="data_generator_C7"/>
+        <dataSet id="data_set_C8" name="C8" label="C8" dataReference="data_generator_C8"/>
+        <dataSet id="data_set_C9" name="C9" label="C9" dataReference="data_generator_C9"/>
+        <dataSet id="data_set_C10" name="C10" label="C10" dataReference="data_generator_C10"/>
+        <dataSet id="data_set_C11" name="C11" label="C11" dataReference="data_generator_C11"/>
+        <dataSet id="data_set_C12" name="C12" label="C12" dataReference="data_generator_C12"/>
+        <dataSet id="data_set_C13" name="C13" label="C13" dataReference="data_generator_C13"/>
+        <dataSet id="data_set_C14" name="C14" label="C14" dataReference="data_generator_C14"/>
+        <dataSet id="data_set_C15" name="C15" label="C15" dataReference="data_generator_C15"/>
+        <dataSet id="data_set_IKS" name="IKS" label="IKS" dataReference="data_generator_IKS"/>
+        <dataSet id="data_set_O1" name="O1" label="O1" dataReference="data_generator_O1"/>
+        <dataSet id="data_set_O2" name="O2" label="O2" dataReference="data_generator_O2"/>
+      </listOfDataSets>
+    </report>
+    <plot2D id="plot">
+      <listOfCurves>
+        <curve id="curve_1" name="IKS vs T" logX="false" xDataReference="data_generator_T" logY="false" yDataReference="data_generator_IKS"/>
+      </listOfCurves>
+    </plot2D>
+  </listOfOutputs>
+</sedML>

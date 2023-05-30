@@ -1,0 +1,912 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="IBK_channel_states" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="units.cellml">
+        <units name="mM" units_ref="mM"/>
+        <units name="ms" units_ref="ms"/>
+        <units name="mV" units_ref="mV"/>
+        <units name="per_ms" units_ref="per_ms"/>
+        <units name="per_mV" units_ref="per_mV"/>
+        <units name="per_mM" units_ref="per_mM"/>
+        <units name="per_K" units_ref="per_K"/>
+    </import>
+    <component name="IBK_channel_states">
+        <variable name="BK_C0_init" public_interface="in" units="dimensionless"/>
+        <variable name="BK_C1_init" public_interface="in" units="dimensionless"/>
+        <variable name="BK_C2_init" public_interface="in" units="dimensionless"/>
+        <variable name="BK_C3_init" public_interface="in" units="dimensionless"/>
+        <variable name="BK_C4_init" public_interface="in" units="dimensionless"/>
+        <variable name="O0_init" public_interface="in" units="dimensionless"/>
+        <variable name="O1_init" public_interface="in" units="dimensionless"/>
+        <variable name="O2_init" public_interface="in" units="dimensionless"/>
+        <variable name="O3_init" public_interface="in" units="dimensionless"/>
+        <variable name="O4_init" public_interface="in" units="dimensionless"/>
+        <variable name="k_on" public_interface="in" units="per_ms"/>
+        <variable name="k_off_C" public_interface="in" units="per_ms"/>
+        <variable name="k_off_O" public_interface="in" units="per_ms"/>
+        <variable name="time" public_interface="in" units="ms"/>
+        <variable name="V" public_interface="in" units="mV"/>
+        <variable name="Cai" public_interface="in" units="mM"/>
+        <variable name="T" private_interface="out" public_interface="in" units="kelvin"/>
+        <variable initial_value="BK_C0_init" name="C0" units="dimensionless"/>
+        <variable initial_value="BK_C1_init" name="C1" units="dimensionless"/>
+        <variable initial_value="BK_C2_init" name="C2" units="dimensionless"/>
+        <variable initial_value="BK_C3_init" name="C3" units="dimensionless"/>
+        <variable initial_value="BK_C4_init" name="C4" units="dimensionless"/>
+        <variable initial_value="O0_init" name="O0" units="dimensionless"/>
+        <variable initial_value="O1_init" name="O1" units="dimensionless"/>
+        <variable initial_value="O2_init" name="O2" units="dimensionless"/>
+        <variable initial_value="O3_init" name="O3" units="dimensionless"/>
+        <variable initial_value="O4_init" name="O4" public_interface="out" units="dimensionless"/>
+        <variable name="alpha" units="per_ms"/>
+        <variable name="beta" units="per_ms"/>
+        <variable name="k_C0O0" units="per_ms"/>
+        <variable name="k_C1O1" units="per_ms"/>
+        <variable name="k_C2O2" units="per_ms"/>
+        <variable name="k_C3O3" units="per_ms"/>
+        <variable name="k_C4O4" units="per_ms"/>
+        <variable name="k_O0C0" units="per_ms"/>
+        <variable name="k_O1C1" units="per_ms"/>
+        <variable name="k_O2C2" units="per_ms"/>
+        <variable name="k_O3C3" units="per_ms"/>
+        <variable name="k_O4C4" units="per_ms"/>
+        <variable name="k_C0C1" units="per_ms"/>
+        <variable name="k_C1C2" units="per_ms"/>
+        <variable name="k_C2C3" units="per_ms"/>
+        <variable name="k_C3C4" units="per_ms"/>
+        <variable name="k_C4C3" units="per_ms"/>
+        <variable name="k_C3C2" units="per_ms"/>
+        <variable name="k_C2C1" units="per_ms"/>
+        <variable name="k_C1C0" units="per_ms"/>
+        <variable name="k_O0O1" units="per_ms"/>
+        <variable name="k_O1O2" units="per_ms"/>
+        <variable name="k_O2O3" units="per_ms"/>
+        <variable name="k_O3O4" units="per_ms"/>
+        <variable name="k_O4O3" units="per_ms"/>
+        <variable name="k_O3O2" units="per_ms"/>
+        <variable name="k_O2O1" units="per_ms"/>
+        <variable name="k_O1O0" units="per_ms"/>
+        <variable name="norm" public_interface="out" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>alpha</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="per_ms">1</cn>
+                    <apply>
+                        <exp/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <cn cellml:units="per_mV">8.47188</cn>
+                                <ci>V</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <cn cellml:units="per_K">1</cn>
+                                <ci>T</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>beta</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="per_ms">1</cn>
+                    <apply>
+                        <exp/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <minus/>
+                                    <cn cellml:units="per_mV">7.77556</cn>
+                                </apply>
+                                <ci>V</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <cn cellml:units="per_K">1</cn>
+                                <ci>T</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_C0O0</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">0.02162</cn>
+                    <ci>alpha</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_C1O1</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">0.000869</cn>
+                    <ci>alpha</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_C2O2</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">0.0000281</cn>
+                    <ci>alpha</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_C3O3</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">0.000781</cn>
+                    <ci>alpha</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_C4O4</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">0.044324</cn>
+                    <ci>alpha</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_O0C0</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">318.1084</cn>
+                    <ci>beta</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_O1C1</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">144.1736</cn>
+                    <ci>beta</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_O2C2</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">32.6594</cn>
+                    <ci>beta</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_O3C3</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">0.095312</cn>
+                    <ci>beta</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_O4C4</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">0.000106</cn>
+                    <ci>beta</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_C0C1</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="per_mM">4</cn>
+                    <ci>k_on</ci>
+                    <ci>Cai</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_C1C2</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="per_mM">3</cn>
+                    <ci>k_on</ci>
+                    <ci>Cai</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_C2C3</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="per_mM">2</cn>
+                    <ci>k_on</ci>
+                    <ci>Cai</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_C3C4</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="per_mM">1</cn>
+                    <ci>k_on</ci>
+                    <ci>Cai</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_C4C3</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">4</cn>
+                    <ci>k_off_C</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_C3C2</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">3</cn>
+                    <ci>k_off_C</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_C2C1</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">2</cn>
+                    <ci>k_off_C</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_C1C0</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">1</cn>
+                    <ci>k_off_C</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_O0O1</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="per_mM">4</cn>
+                    <ci>k_on</ci>
+                    <ci>Cai</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_O1O2</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="per_mM">3</cn>
+                    <ci>k_on</ci>
+                    <ci>Cai</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_O2O3</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="per_mM">2</cn>
+                    <ci>k_on</ci>
+                    <ci>Cai</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_O3O4</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="per_mM">1</cn>
+                    <ci>k_on</ci>
+                    <ci>Cai</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_O4O3</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">4</cn>
+                    <ci>k_off_O</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_O3O2</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">3</cn>
+                    <ci>k_off_O</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_O2O1</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">2</cn>
+                    <ci>k_off_O</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>k_O1O0</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">1</cn>
+                    <ci>k_off_O</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>norm</ci>
+                <apply>
+                    <plus/>
+                    <ci>C0</ci>
+                    <ci>C1</ci>
+                    <ci>C2</ci>
+                    <ci>C3</ci>
+                    <ci>C4</ci>
+                    <ci>O0</ci>
+                    <ci>O1</ci>
+                    <ci>O2</ci>
+                    <ci>O3</ci>
+                    <ci>O4</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>C4</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <apply>
+                                <minus/>
+                                <apply>
+                                    <plus/>
+                                    <ci>k_C4C3</ci>
+                                    <ci>k_C4O4</ci>
+                                </apply>
+                            </apply>
+                            <ci>C4</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_C3C4</ci>
+                            <ci>C3</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_O4C4</ci>
+                            <ci>O4</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>C3</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <apply>
+                                <minus/>
+                                <apply>
+                                    <plus/>
+                                    <ci>k_C3C2</ci>
+                                    <ci>k_C3O3</ci>
+                                    <ci>k_C3C4</ci>
+                                </apply>
+                            </apply>
+                            <ci>C3</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_C2C3</ci>
+                            <ci>C2</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_O3C3</ci>
+                            <ci>O3</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_C4C3</ci>
+                            <ci>C4</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>C2</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <apply>
+                                <minus/>
+                                <apply>
+                                    <plus/>
+                                    <ci>k_C2C1</ci>
+                                    <ci>k_C2O2</ci>
+                                    <ci>k_C2C3</ci>
+                                </apply>
+                            </apply>
+                            <ci>C2</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_C1C2</ci>
+                            <ci>C1</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_O2C2</ci>
+                            <ci>O2</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_C3C2</ci>
+                            <ci>C3</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>C1</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <apply>
+                                <minus/>
+                                <apply>
+                                    <plus/>
+                                    <ci>k_C1C0</ci>
+                                    <ci>k_C1O1</ci>
+                                    <ci>k_C1C2</ci>
+                                </apply>
+                            </apply>
+                            <ci>C1</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_C0C1</ci>
+                            <ci>C0</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_O1C1</ci>
+                            <ci>O1</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_C2C1</ci>
+                            <ci>C2</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>C0</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <apply>
+                                <minus/>
+                                <apply>
+                                    <plus/>
+                                    <ci>k_C0C1</ci>
+                                    <ci>k_C0O0</ci>
+                                </apply>
+                            </apply>
+                            <ci>C0</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_C1C0</ci>
+                            <ci>C1</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_O0C0</ci>
+                            <ci>O0</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>O4</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <apply>
+                                <minus/>
+                                <apply>
+                                    <plus/>
+                                    <ci>k_O4O3</ci>
+                                    <ci>k_O4C4</ci>
+                                </apply>
+                            </apply>
+                            <ci>O4</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_O3O4</ci>
+                            <ci>O3</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_C4O4</ci>
+                            <ci>C4</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>O3</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <apply>
+                                <minus/>
+                                <apply>
+                                    <plus/>
+                                    <ci>k_O3O2</ci>
+                                    <ci>k_O3C3</ci>
+                                    <ci>k_O3O4</ci>
+                                </apply>
+                            </apply>
+                            <ci>O3</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_O2O3</ci>
+                            <ci>O2</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_C3O3</ci>
+                            <ci>C3</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_O4O3</ci>
+                            <ci>O4</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>O2</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <apply>
+                                <minus/>
+                                <apply>
+                                    <plus/>
+                                    <ci>k_O2O1</ci>
+                                    <ci>k_O2C2</ci>
+                                    <ci>k_O2O3</ci>
+                                </apply>
+                            </apply>
+                            <ci>O2</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_O1O2</ci>
+                            <ci>O1</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_C2O2</ci>
+                            <ci>C2</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_O3O2</ci>
+                            <ci>O3</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>O1</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <apply>
+                                <minus/>
+                                <apply>
+                                    <plus/>
+                                    <ci>k_O1O0</ci>
+                                    <ci>k_O1C1</ci>
+                                    <ci>k_O1O2</ci>
+                                </apply>
+                            </apply>
+                            <ci>O1</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_O0O1</ci>
+                            <ci>O0</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_C1O1</ci>
+                            <ci>C1</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_O2O1</ci>
+                            <ci>O2</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>O0</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <apply>
+                                <minus/>
+                                <apply>
+                                    <plus/>
+                                    <ci>k_O0O1</ci>
+                                    <ci>k_O0C0</ci>
+                                </apply>
+                            </apply>
+                            <ci>O0</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_O1O0</ci>
+                            <ci>O1</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>k_C0O0</ci>
+                            <ci>C0</ci>
+                        </apply>
+                        <ci>norm</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

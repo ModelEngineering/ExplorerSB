@@ -26,6 +26,8 @@ body {
   flex-direction: column;
   gap: 1rem;
   padding-bottom: 1rem;
+  width: 100%;
+  height: 100%;
 }
 
 .flex-row {
@@ -56,7 +58,7 @@ body {
   justify-content: space-between;
   align-items: flex-start;
   margin: 1rem 1rem 0 1rem;
-  width: calc(100% - 3rem);
+  width: auto;
   height: 55px;
 }
 
@@ -84,7 +86,7 @@ body {
 
 #title {
   z-index: 1;
-  width: calc(100% - 3rem);
+  width: auto;
   padding: 1rem;
   margin: 0 1rem;
 }
@@ -100,7 +102,7 @@ body {
 }
 
 #summary-model-container {
-  width: calc(100% - 3rem);
+  width: auto;
   margin: 0 1rem;
 
 }
@@ -142,13 +144,14 @@ body {
 
 #model {
   padding: 1rem;
+  justify-content: flex-start;
   flex: 1 1 calc(50% - .5rem); 
 }
 
 #data-frame-container {
   margin: 0 1rem;
   padding: 1rem;
-  width: calc(100% - 3rem);
+  width: auto;
   height: 700px;
   border-radius: 10px;
 }
@@ -163,7 +166,7 @@ body {
 
 #viz-frame {
   width: 50%;
-  height: 100%;
+  height: 625px;
   gap: 0px;
 }
 
@@ -215,6 +218,7 @@ body {
   flex-grow: 1;
   padding: 1rem;
   height: 100%;
+  max-width: 95%;
 }
 
 #table-container {
@@ -230,7 +234,27 @@ body {
   padding: 1rem;
   height: 100%;
   width: 100%;
+  border-spacing: 0;
   border-collapse: separate;
+}
+
+#table-container th {
+  /* Apply both top and bottom borders to the <th> */
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+
+#table-container td {
+  /* For cells, apply the border to one of each side only (right but not left, bottom but not top) */
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+
+#table-container th:first-child,
+#table-container td:first-child {
+  /* Apply a left border on the first <td> or <th> in a row */
+  border-left: 2px solid;
 }
 
 #table-container tr {
@@ -241,12 +265,16 @@ body {
 #table-container th, td {
   background-color: white;
   padding: .7rem;
-  border: 2px solid;
 }
 
 #table-container th {
   position: sticky;
-  left: 0;
+  top: 0;
+}
+
+.rc-table {
+  width: 100%;
+  height: 100%;
 }
 
 #notfound-container {

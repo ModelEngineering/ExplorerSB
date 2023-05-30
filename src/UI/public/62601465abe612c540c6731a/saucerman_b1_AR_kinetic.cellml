@@ -1,0 +1,312 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="saucerman_b1_AR_kinetic" xmlns="http://www.cellml.org/cellml/1.0#" xmlns:cellml="http://www.cellml.org/cellml/1.0#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#">
+    <units name="uM">
+        <unit prefix="micro" units="mole"/>
+        <unit exponent="-1.0" units="liter"/>
+    </units>
+    <units name="per_sec">
+        <unit exponent="-1.0" units="second"/>
+    </units>
+    <units name="uM_per_sec">
+        <unit exponent="-1.0" units="second"/>
+        <unit units="uM"/>
+    </units>
+    <units name="per_uM_per_sec">
+        <unit exponent="-1.0" units="second"/>
+        <unit exponent="-1" units="uM"/>
+    </units>
+    <units name="mM">
+        <unit prefix="milli" units="mole"/>
+        <unit exponent="-1.0" units="liter"/>
+    </units>
+    <component name="b1_AR_module">
+        <variable name="time" units="second"/>
+        <variable initial_value="0.01" name="L_totmax" units="uM"/>
+        <variable initial_value="3.83" name="Gs_tot" units="uM"/>
+        <variable initial_value="0.285" name="Kl" units="uM"/>
+        <variable initial_value="0.062" name="Kr" units="uM"/>
+        <variable initial_value="33" name="Kc" units="uM"/>
+        <variable initial_value="1.1e-3" name="k_bar_kp" units="per_sec"/>
+        <variable initial_value="2.2e-3" name="k_bar_km" units="per_sec"/>
+        <variable initial_value="3.6e-3" name="k_p_kap" units="per_uM_per_sec"/>
+        <variable initial_value="2.2e-3" name="k_p_kam" units="per_sec"/>
+        <variable initial_value="16" name="k_g_act" units="per_sec"/>
+        <variable initial_value="0.8" name="k_hyd" units="per_sec"/>
+        <variable initial_value="1.21e3" name="k_reassoc" units="per_uM_per_sec"/>
+        <variable cmeta:id="LR" name="LR" public_interface="out" units="uM"/>
+        <variable cmeta:id="LRG" name="LRG" public_interface="out" units="uM"/>
+        <variable cmeta:id="RG" name="RG" public_interface="out" units="uM"/>
+        <variable cmeta:id="BARK_DESENS" name="BARK_DESENS" units="uM_per_sec"/>
+        <variable name="BARK_RESENS" units="uM_per_sec"/>
+        <variable cmeta:id="PKA_DESENS" name="PKA_DESENS" units="uM_per_sec"/>
+        <variable name="PKA_RESENS" units="uM_per_sec"/>
+        <variable cmeta:id="G_ACT" name="G_ACT" units="uM_per_sec"/>
+        <variable name="HYD" units="uM_per_sec"/>
+        <variable name="REASSOC" units="uM_per_sec"/>
+        <variable cmeta:id="L" name="L" public_interface="out" units="uM"/>
+        <variable cmeta:id="R" name="R" public_interface="out" units="uM"/>
+        <variable cmeta:id="Gs" name="Gs" public_interface="out" units="uM"/>
+        <variable initial_value="0.01205" name="b1_AR_tot" units="uM"/>
+        <variable initial_value="0" name="b1_AR_d" units="uM"/>
+        <variable initial_value="1.154e-3" name="b1_AR_p" units="uM"/>
+        <variable initial_value="0.02505" name="Gs_agtp_tot" units="uM"/>
+        <variable initial_value="6.446e-4" name="Gs_agdp" units="uM"/>
+        <variable initial_value="0.02569" name="Gs_bg" units="uM"/>
+        <variable initial_value="0.0587898478276673" name="PKAC_I" units="uM"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>LR</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>L</ci>
+                        <ci>R</ci>
+                    </apply>
+                    <ci>Kl</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>LRG</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>LR</ci>
+                        <ci>Gs</ci>
+                    </apply>
+                    <ci>Kr</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>RG</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>R</ci>
+                        <ci>Gs</ci>
+                    </apply>
+                    <ci>Kc</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>BARK_DESENS</ci>
+                <apply>
+                    <times/>
+                    <ci>k_bar_kp</ci>
+                    <apply>
+                        <plus/>
+                        <ci>LR</ci>
+                        <ci>LRG</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>BARK_RESENS</ci>
+                <apply>
+                    <times/>
+                    <ci>k_bar_km</ci>
+                    <ci>b1_AR_d</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>PKA_DESENS</ci>
+                <apply>
+                    <times/>
+                    <ci>k_p_kap</ci>
+                    <ci>PKAC_I</ci>
+                    <ci>b1_AR_tot</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>PKA_RESENS</ci>
+                <apply>
+                    <times/>
+                    <ci>k_p_kam</ci>
+                    <ci>b1_AR_p</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>G_ACT</ci>
+                <apply>
+                    <times/>
+                    <ci>k_g_act</ci>
+                    <apply>
+                        <plus/>
+                        <ci>RG</ci>
+                        <ci>LRG</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>HYD</ci>
+                <apply>
+                    <times/>
+                    <ci>k_hyd</ci>
+                    <ci>Gs_agtp_tot</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>REASSOC</ci>
+                <apply>
+                    <times/>
+                    <ci>k_reassoc</ci>
+                    <ci>Gs_agdp</ci>
+                    <ci>Gs_bg</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>L</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <minus/>
+                        <ci>L_totmax</ci>
+                        <ci>LR</ci>
+                    </apply>
+                    <ci>LRG</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <ci>b1_AR_tot</ci>
+                            <ci>LR</ci>
+                        </apply>
+                        <ci>LRG</ci>
+                    </apply>
+                    <ci>RG</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Gs</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <minus/>
+                        <ci>Gs_tot</ci>
+                        <ci>LRG</ci>
+                    </apply>
+                    <ci>RG</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>b1_AR_tot</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <minus/>
+                            <ci>BARK_RESENS</ci>
+                            <ci>BARK_DESENS</ci>
+                        </apply>
+                        <ci>PKA_RESENS</ci>
+                    </apply>
+                    <ci>PKA_DESENS</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>b1_AR_d</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>BARK_DESENS</ci>
+                    <ci>BARK_RESENS</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>b1_AR_p</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>PKA_DESENS</ci>
+                    <ci>PKA_RESENS</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>Gs_agtp_tot</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>G_ACT</ci>
+                    <ci>HYD</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>Gs_agdp</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>HYD</ci>
+                    <ci>REASSOC</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>Gs_bg</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>G_ACT</ci>
+                    <ci>REASSOC</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

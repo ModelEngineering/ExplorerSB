@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfModels>
+    <model id="model" name="Model" language="urn:sedml:language:xpp" source="NoisyRing.ode">
+      <listOfChanges>
+        <changeAttribute target="M11" newValue="0.0"/>
+        <changeAttribute target="M12" newValue="0.0"/>
+        <changeAttribute target="M13" newValue="0.0"/>
+        <changeAttribute target="M14" newValue="0.0"/>
+        <changeAttribute target="M15" newValue="0.0"/>
+        <changeAttribute target="M16" newValue="0.0"/>
+        <changeAttribute target="M17" newValue="0.0"/>
+        <changeAttribute target="M18" newValue="0.0"/>
+        <changeAttribute target="M19" newValue="0.0"/>
+        <changeAttribute target="M20" newValue="0.0"/>
+        <changeAttribute target="M21" newValue="0.0"/>
+        <changeAttribute target="M22" newValue="0.0"/>
+        <changeAttribute target="M23" newValue="0.0"/>
+        <changeAttribute target="M24" newValue="0.0"/>
+        <changeAttribute target="M25" newValue="0.0"/>
+        <changeAttribute target="M26" newValue="0.0"/>
+        <changeAttribute target="M27" newValue="0.0"/>
+        <changeAttribute target="M28" newValue="0.0"/>
+        <changeAttribute target="M29" newValue="0.0"/>
+        <changeAttribute target="M30" newValue="0.0"/>
+        <changeAttribute target="lambda" newValue="1.8"/>
+        <changeAttribute target="mu" newValue="1.0"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" name="Simulation" initialTime="0" outputStartTime="0" outputEndTime="1000" numberOfPoints="1000">
+      <algorithm kisaoID="KISAO:0000030">
+        <listOfAlgorithmParameters>
+          <algorithmParameter kisaoID="KISAO:0000483" value="0.05"/>
+        </listOfAlgorithmParameters>
+      </algorithm>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" name="Task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_T" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T" name="T" symbol="urn:sedml:symbol:time" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M11" name="M11">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M11 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M11" name="M11" target="M11" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M12" name="M12">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M12 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M12" name="M12" target="M12" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M13" name="M13">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M13 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M13" name="M13" target="M13" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M14" name="M14">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M14 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M14" name="M14" target="M14" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M15" name="M15">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M15 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M15" name="M15" target="M15" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M16" name="M16">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M16 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M16" name="M16" target="M16" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M17" name="M17">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M17 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M17" name="M17" target="M17" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M18" name="M18">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M18 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M18" name="M18" target="M18" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M19" name="M19">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M19 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M19" name="M19" target="M19" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M20" name="M20">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M20 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M20" name="M20" target="M20" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M21" name="M21">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M21 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M21" name="M21" target="M21" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M22" name="M22">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M22 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M22" name="M22" target="M22" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M23" name="M23">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M23 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M23" name="M23" target="M23" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M24" name="M24">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M24 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M24" name="M24" target="M24" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M25" name="M25">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M25 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M25" name="M25" target="M25" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M26" name="M26">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M26 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M26" name="M26" target="M26" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M27" name="M27">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M27 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M27" name="M27" target="M27" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M28" name="M28">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M28 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M28" name="M28" target="M28" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M29" name="M29">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M29 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M29" name="M29" target="M29" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_M30" name="M30">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_M30 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_M30" name="M30" target="M30" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_PHIANG" name="PHIANG">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_PHIANG </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_PHIANG" name="PHIANG" target="PHIANG" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R0" name="R0">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R0 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R0" name="R0" target="R0" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_R1" name="R1">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_R1 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_R1" name="R1" target="R1" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report" name="Report">
+      <listOfDataSets>
+        <dataSet id="data_set_T" name="T" label="T" dataReference="data_generator_T"/>
+        <dataSet id="data_set_M11" name="M11" label="M11" dataReference="data_generator_M11"/>
+        <dataSet id="data_set_M12" name="M12" label="M12" dataReference="data_generator_M12"/>
+        <dataSet id="data_set_M13" name="M13" label="M13" dataReference="data_generator_M13"/>
+        <dataSet id="data_set_M14" name="M14" label="M14" dataReference="data_generator_M14"/>
+        <dataSet id="data_set_M15" name="M15" label="M15" dataReference="data_generator_M15"/>
+        <dataSet id="data_set_M16" name="M16" label="M16" dataReference="data_generator_M16"/>
+        <dataSet id="data_set_M17" name="M17" label="M17" dataReference="data_generator_M17"/>
+        <dataSet id="data_set_M18" name="M18" label="M18" dataReference="data_generator_M18"/>
+        <dataSet id="data_set_M19" name="M19" label="M19" dataReference="data_generator_M19"/>
+        <dataSet id="data_set_M20" name="M20" label="M20" dataReference="data_generator_M20"/>
+        <dataSet id="data_set_M21" name="M21" label="M21" dataReference="data_generator_M21"/>
+        <dataSet id="data_set_M22" name="M22" label="M22" dataReference="data_generator_M22"/>
+        <dataSet id="data_set_M23" name="M23" label="M23" dataReference="data_generator_M23"/>
+        <dataSet id="data_set_M24" name="M24" label="M24" dataReference="data_generator_M24"/>
+        <dataSet id="data_set_M25" name="M25" label="M25" dataReference="data_generator_M25"/>
+        <dataSet id="data_set_M26" name="M26" label="M26" dataReference="data_generator_M26"/>
+        <dataSet id="data_set_M27" name="M27" label="M27" dataReference="data_generator_M27"/>
+        <dataSet id="data_set_M28" name="M28" label="M28" dataReference="data_generator_M28"/>
+        <dataSet id="data_set_M29" name="M29" label="M29" dataReference="data_generator_M29"/>
+        <dataSet id="data_set_M30" name="M30" label="M30" dataReference="data_generator_M30"/>
+        <dataSet id="data_set_PHIANG" name="PHIANG" label="PHIANG" dataReference="data_generator_PHIANG"/>
+        <dataSet id="data_set_R0" name="R0" label="R0" dataReference="data_generator_R0"/>
+        <dataSet id="data_set_R1" name="R1" label="R1" dataReference="data_generator_R1"/>
+      </listOfDataSets>
+    </report>
+  </listOfOutputs>
+</sedML>

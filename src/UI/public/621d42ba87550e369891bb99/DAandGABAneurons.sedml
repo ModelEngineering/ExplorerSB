@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfModels>
+    <model id="model" name="Model" language="urn:sedml:language:xpp" source="DAandGABAneurons.ode">
+      <listOfChanges>
+        <changeAttribute target="CaConst" newValue="0.016"/>
+        <changeAttribute target="EAMPA" newValue="0.0"/>
+        <changeAttribute target="ECa" newValue="50.0"/>
+        <changeAttribute target="EK" newValue="-90.0"/>
+        <changeAttribute target="EL" newValue="-35.0"/>
+        <changeAttribute target="ENMDA" newValue="0.0"/>
+        <changeAttribute target="ENa" newValue="55.0"/>
+        <changeAttribute target="Egaba" newValue="-90.0"/>
+        <changeAttribute target="Eh" newValue="-20.0"/>
+        <changeAttribute target="GABA" newValue="0.0"/>
+        <changeAttribute target="H" newValue="0.0"/>
+        <changeAttribute target="HG" newValue="0.0"/>
+        <changeAttribute target="I" newValue="0.0"/>
+        <changeAttribute target="Iapp" newValue="0.0"/>
+        <changeAttribute target="Mg" newValue="0.5"/>
+        <changeAttribute target="N" newValue="0.0"/>
+        <changeAttribute target="NG" newValue="0.0"/>
+        <changeAttribute target="Q" newValue="0.0"/>
+        <changeAttribute target="Sca" newValue="3.0"/>
+        <changeAttribute target="U" newValue="50.0"/>
+        <changeAttribute target="V" newValue="-60.0"/>
+        <changeAttribute target="VGABA" newValue="-40.0"/>
+        <changeAttribute target="Vcah" newValue="-52.0"/>
+        <changeAttribute target="Vdrh" newValue="-5.0"/>
+        <changeAttribute target="as" newValue="12.0"/>
+        <changeAttribute target="bs" newValue="0.1"/>
+        <changeAttribute target="buf" newValue="0.00023"/>
+        <changeAttribute target="caLeak" newValue="0.1"/>
+        <changeAttribute target="caNMDA" newValue="0.0"/>
+        <changeAttribute target="dg" newValue="0.0"/>
+        <changeAttribute target="gL" newValue="0.18"/>
+        <changeAttribute target="gSNa" newValue="0.13"/>
+        <changeAttribute target="gampa" newValue="0.0"/>
+        <changeAttribute target="gampag" newValue="0.0"/>
+        <changeAttribute target="gbarCa" newValue="2.5"/>
+        <changeAttribute target="gbarDR" newValue="2.0"/>
+        <changeAttribute target="gbarK" newValue="1.0"/>
+        <changeAttribute target="gbarKCa" newValue="7.8"/>
+        <changeAttribute target="gbarNa" newValue="50.0"/>
+        <changeAttribute target="gbardrg" newValue="7.0"/>
+        <changeAttribute target="gbarh" newValue="2.0"/>
+        <changeAttribute target="gbarnag" newValue="22.0"/>
+        <changeAttribute target="gbarnmda" newValue="0.0"/>
+        <changeAttribute target="ggaba" newValue="0.0"/>
+        <changeAttribute target="glg" newValue="0.05"/>
+        <changeAttribute target="gnmdabarg" newValue="0.0"/>
+        <changeAttribute target="k" newValue="160.0"/>
+        <changeAttribute target="me" newValue="0.062"/>
+        <changeAttribute target="r" newValue="0.2"/>
+        <changeAttribute target="slh" newValue="8.0"/>
+        <changeAttribute target="slna" newValue="5.0"/>
+        <changeAttribute target="tbn" newValue="0.7"/>
+        <changeAttribute target="tc" newValue="0.52"/>
+        <changeAttribute target="th" newValue="0.05"/>
+        <changeAttribute target="th0" newValue="625.0"/>
+        <changeAttribute target="thg" newValue="5.0"/>
+        <changeAttribute target="tk" newValue="1.0"/>
+        <changeAttribute target="tng" newValue="1.0"/>
+        <changeAttribute target="vHk" newValue="-10.0"/>
+        <changeAttribute target="vSk" newValue="7.0"/>
+        <changeAttribute target="vgnz" newValue="0.0"/>
+        <changeAttribute target="vhh" newValue="-95.0"/>
+        <changeAttribute target="vhna" newValue="-50.0"/>
+        <changeAttribute target="vtauh" newValue="-112.0"/>
+        <changeAttribute target="zF" newValue="0.019298"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" name="Simulation" initialTime="0" outputStartTime="0" outputEndTime="1000" numberOfPoints="1000">
+      <algorithm kisaoID="KISAO:0000668"/>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" name="Task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_T" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T" name="T" symbol="urn:sedml:symbol:time" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_GABA" name="GABA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_GABA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_GABA" name="GABA" target="GABA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_H" name="H">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_H </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_H" name="H" target="H" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_HG" name="HG">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_HG </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_HG" name="HG" target="HG" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_N" name="N">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_N </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_N" name="N" target="N" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_NG" name="NG">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_NG </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_NG" name="NG" target="NG" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_NMDA" name="NMDA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_NMDA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_NMDA" name="NMDA" target="NMDA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_Q" name="Q">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_Q </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_Q" name="Q" target="Q" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_U" name="U">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_U </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_U" name="U" target="U" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_V" name="V">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_V </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_V" name="V" target="V" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_VGABA" name="VGABA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_VGABA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_VGABA" name="VGABA" target="VGABA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report" name="Report">
+      <listOfDataSets>
+        <dataSet id="data_set_T" name="T" label="T" dataReference="data_generator_T"/>
+        <dataSet id="data_set_GABA" name="GABA" label="GABA" dataReference="data_generator_GABA"/>
+        <dataSet id="data_set_H" name="H" label="H" dataReference="data_generator_H"/>
+        <dataSet id="data_set_HG" name="HG" label="HG" dataReference="data_generator_HG"/>
+        <dataSet id="data_set_N" name="N" label="N" dataReference="data_generator_N"/>
+        <dataSet id="data_set_NG" name="NG" label="NG" dataReference="data_generator_NG"/>
+        <dataSet id="data_set_NMDA" name="NMDA" label="NMDA" dataReference="data_generator_NMDA"/>
+        <dataSet id="data_set_Q" name="Q" label="Q" dataReference="data_generator_Q"/>
+        <dataSet id="data_set_U" name="U" label="U" dataReference="data_generator_U"/>
+        <dataSet id="data_set_V" name="V" label="V" dataReference="data_generator_V"/>
+        <dataSet id="data_set_VGABA" name="VGABA" label="VGABA" dataReference="data_generator_VGABA"/>
+      </listOfDataSets>
+    </report>
+    <plot2D id="plot">
+      <listOfCurves>
+        <curve id="curve_1" name="U vs V" logX="false" xDataReference="data_generator_V" logY="false" yDataReference="data_generator_U"/>
+      </listOfCurves>
+    </plot2D>
+  </listOfOutputs>
+</sedML>

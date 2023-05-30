@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="hh_gating_variable" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="units.cellml">
+        <units name="ms" units_ref="ms"/>
+        <units name="per_ms" units_ref="per_ms"/>
+    </import>
+    <import xlink:href="phiT.cellml">
+        <component component_ref="phiT" name="phiT"/>
+    </import>
+    <component name="hh_gating_variable">
+        <variable name="time" private_interface="out" public_interface="in" units="ms"/>
+        <variable initial_value="X_initial" name="X" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable name="X_initial" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="alpha_X" private_interface="out" public_interface="in" units="per_ms"/>
+        <variable name="beta_X" private_interface="out" public_interface="in" units="per_ms"/>
+        <variable name="Q_10" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="T" private_interface="out" public_interface="in" units="kelvin"/>
+        <variable name="T_0" private_interface="out" public_interface="in" units="kelvin"/>
+        <variable name="phi_T" private_interface="in" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>X</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <times/>
+                        <ci>alpha_X</ci>
+                        <ci>phi_T</ci>
+                        <apply>
+                            <minus/>
+                            <cn cellml:units="dimensionless">1.0</cn>
+                            <ci>X</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>beta_X</ci>
+                        <ci>phi_T</ci>
+                        <ci>X</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <group>
+        <relationship_ref relationship="encapsulation"/>
+        <component_ref component="hh_gating_variable">
+            <component_ref component="phiT"/>
+        </component_ref>
+    </group>
+    <connection>
+        <map_components component_1="hh_gating_variable" component_2="phiT"/>
+        <map_variables variable_1="T" variable_2="T"/>
+        <map_variables variable_1="T_0" variable_2="T_0"/>
+        <map_variables variable_1="Q_10" variable_2="Q_10"/>
+        <map_variables variable_1="phi_T" variable_2="phi_T"/>
+    </connection>
+</model>

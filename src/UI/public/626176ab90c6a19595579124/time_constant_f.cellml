@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="time_constant_f" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="units.cellml">
+        <units name="ms" units_ref="ms"/>
+        <units name="mV" units_ref="mV"/>
+    </import>
+    <component name="tau_f">
+        <variable name="tau" public_interface="out" units="ms"/>
+        <variable name="V" public_interface="in" units="mV"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>tau</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="ms">0.38117</cn>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">8.6</cn>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">14.7</cn>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <minus/>
+                                        <apply>
+                                            <power/>
+                                            <apply>
+                                                <plus/>
+                                                <ci>V</ci>
+                                                <cn cellml:units="mV">50</cn>
+                                            </apply>
+                                            <cn cellml:units="dimensionless">2</cn>
+                                        </apply>
+                                    </apply>
+                                    <apply>
+                                        <times/>
+                                        <cn cellml:units="mV">900</cn>
+                                        <cn cellml:units="mV">1</cn>
+                                    </apply>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

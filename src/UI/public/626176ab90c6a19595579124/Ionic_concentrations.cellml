@@ -1,0 +1,298 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="Ionic_concentrations" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="units.cellml">
+        <units name="pA" units_ref="pA"/>
+        <units name="C_per_mmol" units_ref="C_per_mmol"/>
+        <units name="mM" units_ref="mM"/>
+        <units name="mM4" units_ref="mM4"/>
+        <units name="ms" units_ref="ms"/>
+        <units name="mM_per_ms" units_ref="mM_per_ms"/>
+        <units name="fM_per_s2mM_per_ms" units_ref="fM_per_s2mM_per_ms"/>
+    </import>
+    <component name="Cai">
+        <variable name="F" public_interface="in" units="C_per_mmol"/>
+        <variable name="n_CRT" public_interface="in" units="dimensionless"/>
+        <variable name="n_CaM" public_interface="in" units="dimensionless"/>
+        <variable name="CRT_total" public_interface="in" units="mM"/>
+        <variable name="CaM_total" public_interface="in" units="mM"/>
+        <variable name="K_D_CRT" public_interface="in" units="mM"/>
+        <variable name="K_D_CaM" public_interface="in" units="mM4"/>
+        <variable name="I_CaL" public_interface="in" units="pA"/>
+        <variable name="I_CaT" public_interface="in" units="pA"/>
+        <variable name="I_NCX" public_interface="in" units="pA"/>
+        <variable name="V_cell" public_interface="in" units="litre"/>
+        <variable name="time" public_interface="in" units="ms"/>
+        <variable name="Cai_total_init" public_interface="in" units="mM"/>
+        <variable name="Cai_init" public_interface="in" units="mM"/>
+        <variable initial_value="Cai_total_init" name="Cai_total" public_interface="out" units="mM"/>
+        <variable initial_value="Cai_init" name="Cai" public_interface="out" units="mM"/>
+        <variable name="Cai_total_rate" units="mM_per_ms"/>
+        <variable initial_value="1e-15" name="Cvt" units="fM_per_s2mM_per_ms"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>Cai_total_rate</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <apply>
+                                    <plus/>
+                                    <ci>I_CaL</ci>
+                                    <ci>I_CaT</ci>
+                                </apply>
+                                <apply>
+                                    <times/>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                    <ci>I_NCX</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <ci>Cvt</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <ci>F</ci>
+                        <ci>V_cell</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>Cai_total</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <apply>
+                                    <plus/>
+                                    <ci>I_CaL</ci>
+                                    <ci>I_CaT</ci>
+                                </apply>
+                                <apply>
+                                    <times/>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                    <ci>I_NCX</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <ci>Cvt</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <ci>F</ci>
+                        <ci>V_cell</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>Cai</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <ci>Cai_total_rate</ci>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">1</cn>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>n_CRT</ci>
+                                <ci>CRT_total</ci>
+                                <ci>K_D_CRT</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>Cai</ci>
+                                    <apply>
+                                        <minus/>
+                                        <ci>n_CRT</ci>
+                                        <cn cellml:units="dimensionless">1</cn>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <apply>
+                                <power/>
+                                <apply>
+                                    <plus/>
+                                    <apply>
+                                        <power/>
+                                        <ci>Cai</ci>
+                                        <ci>n_CRT</ci>
+                                    </apply>
+                                    <ci>K_D_CRT</ci>
+                                </apply>
+                                <cn cellml:units="dimensionless">2</cn>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>n_CaM</ci>
+                                <ci>CaM_total</ci>
+                                <ci>K_D_CaM</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>Cai</ci>
+                                    <apply>
+                                        <minus/>
+                                        <ci>n_CaM</ci>
+                                        <cn cellml:units="dimensionless">1</cn>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <apply>
+                                <power/>
+                                <apply>
+                                    <plus/>
+                                    <apply>
+                                        <power/>
+                                        <ci>Cai</ci>
+                                        <ci>n_CaM</ci>
+                                    </apply>
+                                    <ci>K_D_CaM</ci>
+                                </apply>
+                                <cn cellml:units="dimensionless">2</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <component name="Nai">
+        <variable name="F" public_interface="in" units="C_per_mmol"/>
+        <variable name="I_Na" public_interface="in" units="pA"/>
+        <variable name="I_NaK" public_interface="in" units="pA"/>
+        <variable name="I_NCX" public_interface="in" units="pA"/>
+        <variable name="I_NsNa" public_interface="in" units="pA"/>
+        <variable name="V_cell" public_interface="in" units="litre"/>
+        <variable name="time" public_interface="in" units="ms"/>
+        <variable name="Nai_init" public_interface="in" units="mM"/>
+        <variable initial_value="Nai_init" name="Nai" public_interface="out" units="mM"/>
+        <variable initial_value="1e-15" name="Cvt" units="fM_per_s2mM_per_ms"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>Nai</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <plus/>
+                                <ci>I_Na</ci>
+                                <apply>
+                                    <times/>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                    <ci>I_NaK</ci>
+                                </apply>
+                                <apply>
+                                    <times/>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                    <ci>I_NCX</ci>
+                                </apply>
+                                <ci>I_NsNa</ci>
+                            </apply>
+                        </apply>
+                        <ci>Cvt</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>F</ci>
+                        <ci>V_cell</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <component name="Ki">
+        <variable name="F" public_interface="in" units="C_per_mmol"/>
+        <variable name="I_Kv" public_interface="in" units="pA"/>
+        <variable name="I_BK" public_interface="in" units="pA"/>
+        <variable name="I_stim" public_interface="in" units="pA"/>
+        <variable name="I_NaK" public_interface="in" units="pA"/>
+        <variable name="I_NsK" public_interface="in" units="pA"/>
+        <variable name="V_cell" public_interface="in" units="litre"/>
+        <variable name="time" public_interface="in" units="ms"/>
+        <variable name="Ki_init" public_interface="in" units="mM"/>
+        <variable initial_value="Ki_init" name="Ki" public_interface="out" units="mM"/>
+        <variable initial_value="1e-15" name="Cvt" units="fM_per_s2mM_per_ms"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>Ki</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <plus/>
+                                <apply>
+                                    <minus/>
+                                    <apply>
+                                        <plus/>
+                                        <ci>I_Kv</ci>
+                                        <ci>I_BK</ci>
+                                        <ci>I_stim</ci>
+                                    </apply>
+                                    <apply>
+                                        <times/>
+                                        <cn cellml:units="dimensionless">2</cn>
+                                        <ci>I_NaK</ci>
+                                    </apply>
+                                </apply>
+                                <ci>I_NsK</ci>
+                            </apply>
+                        </apply>
+                        <ci>Cvt</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>F</ci>
+                        <ci>V_cell</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

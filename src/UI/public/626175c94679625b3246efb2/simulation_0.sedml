@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" xmlns:cellml="http://www.cellml.org/cellml/1.0#" level="1" version="3">
+  <listOfModels>
+    <model id="model" language="urn:sedml:language:cellml" source="koivumaki_takalo_korhonen_tavi_weckstrom_2009_standalone.cellml">
+      <listOfChanges>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;general_parameters&apos;]/cellml:variable[@name=&apos;Ca_cyt&apos;]/@initial_value" newValue="0.25"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;general_parameters&apos;]/cellml:variable[@name=&apos;Ca_NSR&apos;]/@initial_value" newValue="760"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;general_parameters&apos;]/cellml:variable[@name=&apos;CaMKII_reg&apos;]/@initial_value" newValue="0"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;serca_parameters&apos;]/cellml:variable[@name=&apos;SERCA_TOT&apos;]/@initial_value" newValue="47"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;serca_parameters&apos;]/cellml:variable[@name=&apos;PSR&apos;]/@initial_value" newValue="1"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;serca_parameters&apos;]/cellml:variable[@name=&apos;Kmf_PLBKO&apos;]/@initial_value" newValue="0.15"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;serca_parameters&apos;]/cellml:variable[@name=&apos;Kmf_PLB&apos;]/@initial_value" newValue="0.15"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;serca_parameters&apos;]/cellml:variable[@name=&apos;Kmr_PLBKO&apos;]/@initial_value" newValue="2500"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;serca_parameters&apos;]/cellml:variable[@name=&apos;Kmr_PLB&apos;]/@initial_value" newValue="1110"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;transition_parameters&apos;]/cellml:variable[@name=&apos;br_serca_sr&apos;]/@initial_value" newValue="0.00625"/>
+        <changeAttribute target="/cellml:model/cellml:component[@name=&apos;calcium_bound_serca&apos;]/cellml:variable[@name=&apos;Ca_serca&apos;]/@initial_value" newValue="12"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" initialTime="0" outputStartTime="0" outputEndTime="1" numberOfPoints="10">
+      <algorithm kisaoID="KISAO:0000019"/>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_value_component_environment_variable_time" name="Value of variable &quot;time&quot; of component &quot;environment&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_environment_variable_time </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_environment_variable_time" name="Value of variable &quot;time&quot; of component &quot;environment&quot;" target="/cellml:model/cellml:component[@name=&apos;environment&apos;]/cellml:variable[@name=&apos;time&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_general_parameters_variable_Ca_cyt" name="Value of variable &quot;Ca_cyt&quot; of component &quot;general_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_general_parameters_variable_Ca_cyt </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_general_parameters_variable_Ca_cyt" name="Value of variable &quot;Ca_cyt&quot; of component &quot;general_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;general_parameters&apos;]/cellml:variable[@name=&apos;Ca_cyt&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_general_parameters_variable_Ca_NSR" name="Value of variable &quot;Ca_NSR&quot; of component &quot;general_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_general_parameters_variable_Ca_NSR </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_general_parameters_variable_Ca_NSR" name="Value of variable &quot;Ca_NSR&quot; of component &quot;general_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;general_parameters&apos;]/cellml:variable[@name=&apos;Ca_NSR&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_general_parameters_variable_CaMKII_reg" name="Value of variable &quot;CaMKII_reg&quot; of component &quot;general_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_general_parameters_variable_CaMKII_reg </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_general_parameters_variable_CaMKII_reg" name="Value of variable &quot;CaMKII_reg&quot; of component &quot;general_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;general_parameters&apos;]/cellml:variable[@name=&apos;CaMKII_reg&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_serca_parameters_variable_SERCA_TOT" name="Value of variable &quot;SERCA_TOT&quot; of component &quot;serca_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_serca_parameters_variable_SERCA_TOT </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_serca_parameters_variable_SERCA_TOT" name="Value of variable &quot;SERCA_TOT&quot; of component &quot;serca_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;serca_parameters&apos;]/cellml:variable[@name=&apos;SERCA_TOT&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_serca_parameters_variable_PSR" name="Value of variable &quot;PSR&quot; of component &quot;serca_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_serca_parameters_variable_PSR </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_serca_parameters_variable_PSR" name="Value of variable &quot;PSR&quot; of component &quot;serca_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;serca_parameters&apos;]/cellml:variable[@name=&apos;PSR&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_serca_parameters_variable_Kmf_PLBKO" name="Value of variable &quot;Kmf_PLBKO&quot; of component &quot;serca_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_serca_parameters_variable_Kmf_PLBKO </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_serca_parameters_variable_Kmf_PLBKO" name="Value of variable &quot;Kmf_PLBKO&quot; of component &quot;serca_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;serca_parameters&apos;]/cellml:variable[@name=&apos;Kmf_PLBKO&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_serca_parameters_variable_Kmf_PLB" name="Value of variable &quot;Kmf_PLB&quot; of component &quot;serca_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_serca_parameters_variable_Kmf_PLB </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_serca_parameters_variable_Kmf_PLB" name="Value of variable &quot;Kmf_PLB&quot; of component &quot;serca_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;serca_parameters&apos;]/cellml:variable[@name=&apos;Kmf_PLB&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_serca_parameters_variable_Kmr_PLBKO" name="Value of variable &quot;Kmr_PLBKO&quot; of component &quot;serca_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_serca_parameters_variable_Kmr_PLBKO </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_serca_parameters_variable_Kmr_PLBKO" name="Value of variable &quot;Kmr_PLBKO&quot; of component &quot;serca_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;serca_parameters&apos;]/cellml:variable[@name=&apos;Kmr_PLBKO&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_serca_parameters_variable_Kmr_PLB" name="Value of variable &quot;Kmr_PLB&quot; of component &quot;serca_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_serca_parameters_variable_Kmr_PLB </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_serca_parameters_variable_Kmr_PLB" name="Value of variable &quot;Kmr_PLB&quot; of component &quot;serca_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;serca_parameters&apos;]/cellml:variable[@name=&apos;Kmr_PLB&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_serca_parameters_variable_EC_50_fwd" name="Value of variable &quot;EC_50_fwd&quot; of component &quot;serca_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_serca_parameters_variable_EC_50_fwd </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_serca_parameters_variable_EC_50_fwd" name="Value of variable &quot;EC_50_fwd&quot; of component &quot;serca_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;serca_parameters&apos;]/cellml:variable[@name=&apos;EC_50_fwd&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_serca_parameters_variable_EC_50_rev" name="Value of variable &quot;EC_50_rev&quot; of component &quot;serca_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_serca_parameters_variable_EC_50_rev </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_serca_parameters_variable_EC_50_rev" name="Value of variable &quot;EC_50_rev&quot; of component &quot;serca_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;serca_parameters&apos;]/cellml:variable[@name=&apos;EC_50_rev&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_transition_parameters_variable_k_cyt_serca" name="Value of variable &quot;k_cyt_serca&quot; of component &quot;transition_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_transition_parameters_variable_k_cyt_serca </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_transition_parameters_variable_k_cyt_serca" name="Value of variable &quot;k_cyt_serca&quot; of component &quot;transition_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;transition_parameters&apos;]/cellml:variable[@name=&apos;k_cyt_serca&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_transition_parameters_variable_k_serca_cyt" name="Value of variable &quot;k_serca_cyt&quot; of component &quot;transition_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_transition_parameters_variable_k_serca_cyt </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_transition_parameters_variable_k_serca_cyt" name="Value of variable &quot;k_serca_cyt&quot; of component &quot;transition_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;transition_parameters&apos;]/cellml:variable[@name=&apos;k_serca_cyt&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_transition_parameters_variable_k_serca_sr" name="Value of variable &quot;k_serca_sr&quot; of component &quot;transition_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_transition_parameters_variable_k_serca_sr </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_transition_parameters_variable_k_serca_sr" name="Value of variable &quot;k_serca_sr&quot; of component &quot;transition_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;transition_parameters&apos;]/cellml:variable[@name=&apos;k_serca_sr&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_transition_parameters_variable_k_sr_serca" name="Value of variable &quot;k_sr_serca&quot; of component &quot;transition_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_transition_parameters_variable_k_sr_serca </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_transition_parameters_variable_k_sr_serca" name="Value of variable &quot;k_sr_serca&quot; of component &quot;transition_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;transition_parameters&apos;]/cellml:variable[@name=&apos;k_sr_serca&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_transition_parameters_variable_br_cyt_serca" name="Value of variable &quot;br_cyt_serca&quot; of component &quot;transition_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_transition_parameters_variable_br_cyt_serca </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_transition_parameters_variable_br_cyt_serca" name="Value of variable &quot;br_cyt_serca&quot; of component &quot;transition_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;transition_parameters&apos;]/cellml:variable[@name=&apos;br_cyt_serca&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_transition_parameters_variable_br_serca_sr" name="Value of variable &quot;br_serca_sr&quot; of component &quot;transition_parameters&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_transition_parameters_variable_br_serca_sr </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_transition_parameters_variable_br_serca_sr" name="Value of variable &quot;br_serca_sr&quot; of component &quot;transition_parameters&quot;" target="/cellml:model/cellml:component[@name=&apos;transition_parameters&apos;]/cellml:variable[@name=&apos;br_serca_sr&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_calcium_fluxes_variable_J_cyt_serca" name="Value of variable &quot;J_cyt_serca&quot; of component &quot;calcium_fluxes&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_calcium_fluxes_variable_J_cyt_serca </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_calcium_fluxes_variable_J_cyt_serca" name="Value of variable &quot;J_cyt_serca&quot; of component &quot;calcium_fluxes&quot;" target="/cellml:model/cellml:component[@name=&apos;calcium_fluxes&apos;]/cellml:variable[@name=&apos;J_cyt_serca&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_calcium_fluxes_variable_J_serca_sr" name="Value of variable &quot;J_serca_sr&quot; of component &quot;calcium_fluxes&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_calcium_fluxes_variable_J_serca_sr </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_calcium_fluxes_variable_J_serca_sr" name="Value of variable &quot;J_serca_sr&quot; of component &quot;calcium_fluxes&quot;" target="/cellml:model/cellml:component[@name=&apos;calcium_fluxes&apos;]/cellml:variable[@name=&apos;J_serca_sr&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_value_component_calcium_bound_serca_variable_Ca_serca" name="Value of variable &quot;Ca_serca&quot; of component &quot;calcium_bound_serca&quot;">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> value_component_calcium_bound_serca_variable_Ca_serca </ci>
+      </math>
+      <listOfVariables>
+        <variable id="value_component_calcium_bound_serca_variable_Ca_serca" name="Value of variable &quot;Ca_serca&quot; of component &quot;calcium_bound_serca&quot;" target="/cellml:model/cellml:component[@name=&apos;calcium_bound_serca&apos;]/cellml:variable[@name=&apos;Ca_serca&apos;]" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report">
+      <listOfDataSets>
+        <dataSet id="data_set_value_component_environment_variable_time" name="Value of variable &quot;time&quot; of component &quot;environment&quot;" label="value_component_environment_variable_time" dataReference="data_generator_value_component_environment_variable_time"/>
+        <dataSet id="data_set_value_component_general_parameters_variable_Ca_cyt" name="Value of variable &quot;Ca_cyt&quot; of component &quot;general_parameters&quot;" label="value_component_general_parameters_variable_Ca_cyt" dataReference="data_generator_value_component_general_parameters_variable_Ca_cyt"/>
+        <dataSet id="data_set_value_component_general_parameters_variable_Ca_NSR" name="Value of variable &quot;Ca_NSR&quot; of component &quot;general_parameters&quot;" label="value_component_general_parameters_variable_Ca_NSR" dataReference="data_generator_value_component_general_parameters_variable_Ca_NSR"/>
+        <dataSet id="data_set_value_component_general_parameters_variable_CaMKII_reg" name="Value of variable &quot;CaMKII_reg&quot; of component &quot;general_parameters&quot;" label="value_component_general_parameters_variable_CaMKII_reg" dataReference="data_generator_value_component_general_parameters_variable_CaMKII_reg"/>
+        <dataSet id="data_set_value_component_serca_parameters_variable_SERCA_TOT" name="Value of variable &quot;SERCA_TOT&quot; of component &quot;serca_parameters&quot;" label="value_component_serca_parameters_variable_SERCA_TOT" dataReference="data_generator_value_component_serca_parameters_variable_SERCA_TOT"/>
+        <dataSet id="data_set_value_component_serca_parameters_variable_PSR" name="Value of variable &quot;PSR&quot; of component &quot;serca_parameters&quot;" label="value_component_serca_parameters_variable_PSR" dataReference="data_generator_value_component_serca_parameters_variable_PSR"/>
+        <dataSet id="data_set_value_component_serca_parameters_variable_Kmf_PLBKO" name="Value of variable &quot;Kmf_PLBKO&quot; of component &quot;serca_parameters&quot;" label="value_component_serca_parameters_variable_Kmf_PLBKO" dataReference="data_generator_value_component_serca_parameters_variable_Kmf_PLBKO"/>
+        <dataSet id="data_set_value_component_serca_parameters_variable_Kmf_PLB" name="Value of variable &quot;Kmf_PLB&quot; of component &quot;serca_parameters&quot;" label="value_component_serca_parameters_variable_Kmf_PLB" dataReference="data_generator_value_component_serca_parameters_variable_Kmf_PLB"/>
+        <dataSet id="data_set_value_component_serca_parameters_variable_Kmr_PLBKO" name="Value of variable &quot;Kmr_PLBKO&quot; of component &quot;serca_parameters&quot;" label="value_component_serca_parameters_variable_Kmr_PLBKO" dataReference="data_generator_value_component_serca_parameters_variable_Kmr_PLBKO"/>
+        <dataSet id="data_set_value_component_serca_parameters_variable_Kmr_PLB" name="Value of variable &quot;Kmr_PLB&quot; of component &quot;serca_parameters&quot;" label="value_component_serca_parameters_variable_Kmr_PLB" dataReference="data_generator_value_component_serca_parameters_variable_Kmr_PLB"/>
+        <dataSet id="data_set_value_component_serca_parameters_variable_EC_50_fwd" name="Value of variable &quot;EC_50_fwd&quot; of component &quot;serca_parameters&quot;" label="value_component_serca_parameters_variable_EC_50_fwd" dataReference="data_generator_value_component_serca_parameters_variable_EC_50_fwd"/>
+        <dataSet id="data_set_value_component_serca_parameters_variable_EC_50_rev" name="Value of variable &quot;EC_50_rev&quot; of component &quot;serca_parameters&quot;" label="value_component_serca_parameters_variable_EC_50_rev" dataReference="data_generator_value_component_serca_parameters_variable_EC_50_rev"/>
+        <dataSet id="data_set_value_component_transition_parameters_variable_k_cyt_serca" name="Value of variable &quot;k_cyt_serca&quot; of component &quot;transition_parameters&quot;" label="value_component_transition_parameters_variable_k_cyt_serca" dataReference="data_generator_value_component_transition_parameters_variable_k_cyt_serca"/>
+        <dataSet id="data_set_value_component_transition_parameters_variable_k_serca_cyt" name="Value of variable &quot;k_serca_cyt&quot; of component &quot;transition_parameters&quot;" label="value_component_transition_parameters_variable_k_serca_cyt" dataReference="data_generator_value_component_transition_parameters_variable_k_serca_cyt"/>
+        <dataSet id="data_set_value_component_transition_parameters_variable_k_serca_sr" name="Value of variable &quot;k_serca_sr&quot; of component &quot;transition_parameters&quot;" label="value_component_transition_parameters_variable_k_serca_sr" dataReference="data_generator_value_component_transition_parameters_variable_k_serca_sr"/>
+        <dataSet id="data_set_value_component_transition_parameters_variable_k_sr_serca" name="Value of variable &quot;k_sr_serca&quot; of component &quot;transition_parameters&quot;" label="value_component_transition_parameters_variable_k_sr_serca" dataReference="data_generator_value_component_transition_parameters_variable_k_sr_serca"/>
+        <dataSet id="data_set_value_component_transition_parameters_variable_br_cyt_serca" name="Value of variable &quot;br_cyt_serca&quot; of component &quot;transition_parameters&quot;" label="value_component_transition_parameters_variable_br_cyt_serca" dataReference="data_generator_value_component_transition_parameters_variable_br_cyt_serca"/>
+        <dataSet id="data_set_value_component_transition_parameters_variable_br_serca_sr" name="Value of variable &quot;br_serca_sr&quot; of component &quot;transition_parameters&quot;" label="value_component_transition_parameters_variable_br_serca_sr" dataReference="data_generator_value_component_transition_parameters_variable_br_serca_sr"/>
+        <dataSet id="data_set_value_component_calcium_fluxes_variable_J_cyt_serca" name="Value of variable &quot;J_cyt_serca&quot; of component &quot;calcium_fluxes&quot;" label="value_component_calcium_fluxes_variable_J_cyt_serca" dataReference="data_generator_value_component_calcium_fluxes_variable_J_cyt_serca"/>
+        <dataSet id="data_set_value_component_calcium_fluxes_variable_J_serca_sr" name="Value of variable &quot;J_serca_sr&quot; of component &quot;calcium_fluxes&quot;" label="value_component_calcium_fluxes_variable_J_serca_sr" dataReference="data_generator_value_component_calcium_fluxes_variable_J_serca_sr"/>
+        <dataSet id="data_set_value_component_calcium_bound_serca_variable_Ca_serca" name="Value of variable &quot;Ca_serca&quot; of component &quot;calcium_bound_serca&quot;" label="value_component_calcium_bound_serca_variable_Ca_serca" dataReference="data_generator_value_component_calcium_bound_serca_variable_Ca_serca"/>
+      </listOfDataSets>
+    </report>
+  </listOfOutputs>
+</sedML>

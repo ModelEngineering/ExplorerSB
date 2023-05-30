@@ -7,7 +7,7 @@ import SearchDisplay from "./Searchbar/SearchDisplay";
 import useSearchFocus from "./Searchbar/useSearchFocus";
 const data = contextJson;
 
-const Searchbar = ({ setSelected, landing }: { setSelected: Function, landing?: boolean}) => {
+const Searchbar = ({ landing }: { landing?: boolean}) => {
   const [query, setQuery] = useState<string>("");
   const [results, setResults] = useState<ContextWithSnippets[]>([]);
   const [displayResults, setDisplayResults] = useState<boolean>(false);
@@ -17,11 +17,6 @@ const Searchbar = ({ setSelected, landing }: { setSelected: Function, landing?: 
   const onQueryUpdate = (query: string) => {
     setQuery(query);
     setDisplayResults(true);
-  }
-
-  const onResultSelect = (result: Context) => {
-    setSelected(result);
-    setDisplayResults(false);
   }
   
   return (
@@ -35,7 +30,6 @@ const Searchbar = ({ setSelected, landing }: { setSelected: Function, landing?: 
       <SearchDisplay
         display={displayResults}
         results={results}
-        setSelected={onResultSelect}
       />
     </div>
   );

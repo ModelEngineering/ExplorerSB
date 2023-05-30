@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version3" level="1" version="3">
+  <listOfModels>
+    <model id="model" name="Model" language="urn:sedml:language:xpp" source="TC_RT_CT_twodelaymodel.ode">
+      <listOfChanges>
+        <changeAttribute target="DTC_T" newValue="0.797047"/>
+        <changeAttribute target="FTC_H" newValue="0.009892"/>
+        <changeAttribute target="GGB_GABAB" newValue="4.956731"/>
+        <changeAttribute target="HCT_NA" newValue="0.043372"/>
+        <changeAttribute target="HRE_NA" newValue="0.997481"/>
+        <changeAttribute target="HRE_TS" newValue="0.211499"/>
+        <changeAttribute target="HTC_K21" newValue="0.653917"/>
+        <changeAttribute target="HTC_K22" newValue="0.574974"/>
+        <changeAttribute target="HTC_NA" newValue="0.996066"/>
+        <changeAttribute target="HTC_T" newValue="0.039649"/>
+        <changeAttribute target="Ict_ext_c" newValue="0.0"/>
+        <changeAttribute target="Ire_ext_c" newValue="0.0"/>
+        <changeAttribute target="Itc_ext_c" newValue="5.0"/>
+        <changeAttribute target="Itc_pert" newValue="0.0"/>
+        <changeAttribute target="Itc_pert2" newValue="0.0"/>
+        <changeAttribute target="MA_AMPA" newValue="0.06724"/>
+        <changeAttribute target="MB_GABAA" newValue="0.099191"/>
+        <changeAttribute target="MCT_K" newValue="0.707094"/>
+        <changeAttribute target="MCT_M" newValue="0.351102"/>
+        <changeAttribute target="MCT_NA" newValue="0.753983"/>
+        <changeAttribute target="MC_GABAA" newValue="0.099191"/>
+        <changeAttribute target="MD_AMPA" newValue="0.551634"/>
+        <changeAttribute target="ME_AMPA" newValue="0.111337"/>
+        <changeAttribute target="MF_AMPA" newValue="0.551634"/>
+        <changeAttribute target="MRE_K" newValue="0.007907"/>
+        <changeAttribute target="MRE_NA" newValue="0.001998"/>
+        <changeAttribute target="MRE_TS" newValue="0.072676"/>
+        <changeAttribute target="MTC_K" newValue="0.038305"/>
+        <changeAttribute target="MTC_K2" newValue="0.214079"/>
+        <changeAttribute target="MTC_NA" newValue="0.02507"/>
+        <changeAttribute target="MTC_T" newValue="0.546136"/>
+        <changeAttribute target="RB_GABAB" newValue="0.943453"/>
+        <changeAttribute target="STC_H" newValue="0.643802"/>
+        <changeAttribute target="VCT" newValue="-70.56288"/>
+        <changeAttribute target="VRE" newValue="-89.44752"/>
+        <changeAttribute target="VTC" newValue="-76.74557"/>
+        <changeAttribute target="ga_AMPA" newValue="1.428"/>
+        <changeAttribute target="gb_GABAA" newValue="0.5"/>
+        <changeAttribute target="gb_GABAB" newValue="0.13793"/>
+        <changeAttribute target="gc_GABAA" newValue="6.0"/>
+        <changeAttribute target="gd_AMPA" newValue="0.1"/>
+        <changeAttribute target="ge_AMPA" newValue="4.138"/>
+        <changeAttribute target="gf_AMPA" newValue="0.0"/>
+        <changeAttribute target="offtime" newValue="1600.0"/>
+        <changeAttribute target="offtime2" newValue="3100.0"/>
+        <changeAttribute target="ontime" newValue="1500.0"/>
+        <changeAttribute target="ontime2" newValue="3000.0"/>
+        <changeAttribute target="tau" newValue="0.0"/>
+        <changeAttribute target="tau1" newValue="8.0"/>
+        <changeAttribute target="tau2" newValue="2.8"/>
+      </listOfChanges>
+    </model>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="simulation" name="Simulation" initialTime="0" outputStartTime="0" outputEndTime="5000" numberOfPoints="1000">
+      <algorithm kisaoID="KISAO:0000032">
+        <listOfAlgorithmParameters>
+          <algorithmParameter kisaoID="KISAO:0000483" value="0.005"/>
+        </listOfAlgorithmParameters>
+      </algorithm>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task" name="Task" modelReference="model" simulationReference="simulation"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="data_generator_T" name="T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_T" name="T" symbol="urn:sedml:symbol:time" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_DTC_T" name="DTC_T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_DTC_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_DTC_T" name="DTC_T" target="DTC_T" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_FTC_H" name="FTC_H">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_FTC_H </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_FTC_H" name="FTC_H" target="FTC_H" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_GGB_GABAB" name="GGB_GABAB">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_GGB_GABAB </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_GGB_GABAB" name="GGB_GABAB" target="GGB_GABAB" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_HCT_NA" name="HCT_NA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_HCT_NA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_HCT_NA" name="HCT_NA" target="HCT_NA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_HRE_NA" name="HRE_NA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_HRE_NA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_HRE_NA" name="HRE_NA" target="HRE_NA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_HRE_TS" name="HRE_TS">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_HRE_TS </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_HRE_TS" name="HRE_TS" target="HRE_TS" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_HTC_K21" name="HTC_K21">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_HTC_K21 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_HTC_K21" name="HTC_K21" target="HTC_K21" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_HTC_K22" name="HTC_K22">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_HTC_K22 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_HTC_K22" name="HTC_K22" target="HTC_K22" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_HTC_NA" name="HTC_NA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_HTC_NA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_HTC_NA" name="HTC_NA" target="HTC_NA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_HTC_T" name="HTC_T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_HTC_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_HTC_T" name="HTC_T" target="HTC_T" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MA_AMPA" name="MA_AMPA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MA_AMPA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MA_AMPA" name="MA_AMPA" target="MA_AMPA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MB_GABAA" name="MB_GABAA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MB_GABAA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MB_GABAA" name="MB_GABAA" target="MB_GABAA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MCT_K" name="MCT_K">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MCT_K </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MCT_K" name="MCT_K" target="MCT_K" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MCT_M" name="MCT_M">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MCT_M </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MCT_M" name="MCT_M" target="MCT_M" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MCT_NA" name="MCT_NA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MCT_NA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MCT_NA" name="MCT_NA" target="MCT_NA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MC_GABAA" name="MC_GABAA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MC_GABAA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MC_GABAA" name="MC_GABAA" target="MC_GABAA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MD_AMPA" name="MD_AMPA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MD_AMPA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MD_AMPA" name="MD_AMPA" target="MD_AMPA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_ME_AMPA" name="ME_AMPA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_ME_AMPA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_ME_AMPA" name="ME_AMPA" target="ME_AMPA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MF_AMPA" name="MF_AMPA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MF_AMPA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MF_AMPA" name="MF_AMPA" target="MF_AMPA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MRE_K" name="MRE_K">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MRE_K </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MRE_K" name="MRE_K" target="MRE_K" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MRE_NA" name="MRE_NA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MRE_NA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MRE_NA" name="MRE_NA" target="MRE_NA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MRE_TS" name="MRE_TS">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MRE_TS </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MRE_TS" name="MRE_TS" target="MRE_TS" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MTC_K" name="MTC_K">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MTC_K </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MTC_K" name="MTC_K" target="MTC_K" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MTC_K2" name="MTC_K2">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MTC_K2 </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MTC_K2" name="MTC_K2" target="MTC_K2" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MTC_NA" name="MTC_NA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MTC_NA </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MTC_NA" name="MTC_NA" target="MTC_NA" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_MTC_T" name="MTC_T">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_MTC_T </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_MTC_T" name="MTC_T" target="MTC_T" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_RB_GABAB" name="RB_GABAB">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_RB_GABAB </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_RB_GABAB" name="RB_GABAB" target="RB_GABAB" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_STC_H" name="STC_H">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_STC_H </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_STC_H" name="STC_H" target="STC_H" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_VCT" name="VCT">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_VCT </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_VCT" name="VCT" target="VCT" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_VRE" name="VRE">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_VRE </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_VRE" name="VRE" target="VRE" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="data_generator_VTC" name="VTC">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> variable_VTC </ci>
+      </math>
+      <listOfVariables>
+        <variable id="variable_VTC" name="VTC" target="VTC" taskReference="task"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="report" name="Report">
+      <listOfDataSets>
+        <dataSet id="data_set_T" name="T" label="T" dataReference="data_generator_T"/>
+        <dataSet id="data_set_DTC_T" name="DTC_T" label="DTC_T" dataReference="data_generator_DTC_T"/>
+        <dataSet id="data_set_FTC_H" name="FTC_H" label="FTC_H" dataReference="data_generator_FTC_H"/>
+        <dataSet id="data_set_GGB_GABAB" name="GGB_GABAB" label="GGB_GABAB" dataReference="data_generator_GGB_GABAB"/>
+        <dataSet id="data_set_HCT_NA" name="HCT_NA" label="HCT_NA" dataReference="data_generator_HCT_NA"/>
+        <dataSet id="data_set_HRE_NA" name="HRE_NA" label="HRE_NA" dataReference="data_generator_HRE_NA"/>
+        <dataSet id="data_set_HRE_TS" name="HRE_TS" label="HRE_TS" dataReference="data_generator_HRE_TS"/>
+        <dataSet id="data_set_HTC_K21" name="HTC_K21" label="HTC_K21" dataReference="data_generator_HTC_K21"/>
+        <dataSet id="data_set_HTC_K22" name="HTC_K22" label="HTC_K22" dataReference="data_generator_HTC_K22"/>
+        <dataSet id="data_set_HTC_NA" name="HTC_NA" label="HTC_NA" dataReference="data_generator_HTC_NA"/>
+        <dataSet id="data_set_HTC_T" name="HTC_T" label="HTC_T" dataReference="data_generator_HTC_T"/>
+        <dataSet id="data_set_MA_AMPA" name="MA_AMPA" label="MA_AMPA" dataReference="data_generator_MA_AMPA"/>
+        <dataSet id="data_set_MB_GABAA" name="MB_GABAA" label="MB_GABAA" dataReference="data_generator_MB_GABAA"/>
+        <dataSet id="data_set_MCT_K" name="MCT_K" label="MCT_K" dataReference="data_generator_MCT_K"/>
+        <dataSet id="data_set_MCT_M" name="MCT_M" label="MCT_M" dataReference="data_generator_MCT_M"/>
+        <dataSet id="data_set_MCT_NA" name="MCT_NA" label="MCT_NA" dataReference="data_generator_MCT_NA"/>
+        <dataSet id="data_set_MC_GABAA" name="MC_GABAA" label="MC_GABAA" dataReference="data_generator_MC_GABAA"/>
+        <dataSet id="data_set_MD_AMPA" name="MD_AMPA" label="MD_AMPA" dataReference="data_generator_MD_AMPA"/>
+        <dataSet id="data_set_ME_AMPA" name="ME_AMPA" label="ME_AMPA" dataReference="data_generator_ME_AMPA"/>
+        <dataSet id="data_set_MF_AMPA" name="MF_AMPA" label="MF_AMPA" dataReference="data_generator_MF_AMPA"/>
+        <dataSet id="data_set_MRE_K" name="MRE_K" label="MRE_K" dataReference="data_generator_MRE_K"/>
+        <dataSet id="data_set_MRE_NA" name="MRE_NA" label="MRE_NA" dataReference="data_generator_MRE_NA"/>
+        <dataSet id="data_set_MRE_TS" name="MRE_TS" label="MRE_TS" dataReference="data_generator_MRE_TS"/>
+        <dataSet id="data_set_MTC_K" name="MTC_K" label="MTC_K" dataReference="data_generator_MTC_K"/>
+        <dataSet id="data_set_MTC_K2" name="MTC_K2" label="MTC_K2" dataReference="data_generator_MTC_K2"/>
+        <dataSet id="data_set_MTC_NA" name="MTC_NA" label="MTC_NA" dataReference="data_generator_MTC_NA"/>
+        <dataSet id="data_set_MTC_T" name="MTC_T" label="MTC_T" dataReference="data_generator_MTC_T"/>
+        <dataSet id="data_set_RB_GABAB" name="RB_GABAB" label="RB_GABAB" dataReference="data_generator_RB_GABAB"/>
+        <dataSet id="data_set_STC_H" name="STC_H" label="STC_H" dataReference="data_generator_STC_H"/>
+        <dataSet id="data_set_VCT" name="VCT" label="VCT" dataReference="data_generator_VCT"/>
+        <dataSet id="data_set_VRE" name="VRE" label="VRE" dataReference="data_generator_VRE"/>
+        <dataSet id="data_set_VTC" name="VTC" label="VTC" dataReference="data_generator_VTC"/>
+      </listOfDataSets>
+    </report>
+    <plot2D id="plot">
+      <listOfCurves>
+        <curve id="curve_1" name="VRE vs T" logX="false" xDataReference="data_generator_T" logY="false" yDataReference="data_generator_VRE"/>
+        <curve id="curve_2" name="VTC vs T" logX="false" xDataReference="data_generator_T" logY="false" yDataReference="data_generator_VTC"/>
+        <curve id="curve_3" name="VCT vs T" logX="false" xDataReference="data_generator_T" logY="false" yDataReference="data_generator_VCT"/>
+      </listOfCurves>
+    </plot2D>
+  </listOfOutputs>
+</sedML>

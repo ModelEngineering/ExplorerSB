@@ -1,0 +1,641 @@
+<?xml version='1.0'?>
+<!-- This CellML file was generated from:
+ Weinstein, Alan M. "A mathematical model of the outer medullary collecting duct of the rat." American Journal of Physiology-Renal Physiology 279.1 (2000): F24-F45.-->
+<model cmeta:id="Weinstein_2000_AE1" name="Weinstein_2000_AE1" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+		xmlns:bqs="http://www.cellml.org/bqs/1.0#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+		<rdf:Description rdf:about="">
+			<dc:title>A kinetic model of Cl-/HCO3- exchanger (AE1)</dc:title>
+		</rdf:Description>
+		<rdf:Description rdf:about="#Weinstein_2000_AE1">
+			<bqs:reference rdf:parseType="Resource">
+				<dc:subject rdf:parseType="Resource">
+					<bqs:subject_type>keyword</bqs:subject_type>
+					<rdf:value>
+						<rdf:Bag>
+							<rdf:li>protein module</rdf:li>
+						</rdf:Bag>
+					</rdf:value>
+				</dc:subject>
+			</bqs:reference>
+		</rdf:Description>
+	</rdf:RDF>
+
+    <import xlink:href="Units/Units.cellml">
+        <units name="mM" units_ref="mM"/>
+        <units name="mM_per_s" units_ref="mM_per_s"/>
+        <units name="per_s" units_ref="per_s"/>
+    </import>
+    <component name="AE1">
+        <variable name="HCO3_int" public_interface="in" units="mM"/>
+        <variable name="HCO3_ext" public_interface="in" units="mM"/>
+        <variable name="Cl_int" public_interface="in" units="mM"/>
+        <variable name="Cl_ext" public_interface="in" units="mM"/>
+        <variable name="J_AE1_HCO3" public_interface="out" units="mM_per_s"/>
+        <variable name="J_AE1_Cl" public_interface="out" units="mM_per_s"/>
+        <variable name="J_HCO3_influx" public_interface="out" units="mM_per_s"/>
+        <variable name="J_Cl_influx" public_interface="out" units="mM_per_s"/>
+        <variable initial_value="198" name="K_HCO3_ext" units="mM"/>
+        <variable initial_value="198" name="K_HCO3_int" units="mM"/>
+        <variable initial_value="50" name="K_Cl_ext" units="mM"/>
+        <variable initial_value="50" name="K_Cl_int" units="mM"/>
+        <variable initial_value="1247" name="P_HCO3_ext" units="per_s"/>
+        <variable initial_value="135" name="P_HCO3_int" units="per_s"/>
+        <variable initial_value="562" name="P_Cl_ext" units="per_s"/>
+        <variable initial_value="61" name="P_Cl_int" units="per_s"/>
+        <variable name="beta_ext" units="dimensionless"/>
+        <variable name="beta_int" units="dimensionless"/>
+        <variable name="gamma_ext" units="dimensionless"/>
+        <variable name="gamma_int" units="dimensionless"/>
+        <variable name="sigma" units="per_s"/>
+        <variable initial_value="1" name="x_Tmax" units="mM"/>
+        <variable initial_value="172" name="K_I" units="mM"/>
+        <variable name="x_T" units="mM"/>
+        <variable name="x_ext" units="mM"/>
+        <variable name="x_int" units="mM"/>
+        <variable name="Jo_bm" units="mM_per_s"/>
+        <variable name="Ji_bm" units="mM_per_s"/>
+        <variable name="Js_bm" units="mM_per_s"/>
+        <variable name="Jo_cm" units="mM_per_s"/>
+        <variable name="Ji_cm" units="mM_per_s"/>
+        <variable name="Js_cm" units="mM_per_s"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>x_T</ci>
+                <apply>
+                    <divide/>
+                    <ci>x_Tmax</ci>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">1</cn>
+                        <apply>
+                            <divide/>
+                            <ci>HCO3_int</ci>
+                            <ci>K_I</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>beta_ext</ci>
+                <apply>
+                    <divide/>
+                    <ci>HCO3_ext</ci>
+                    <ci>K_HCO3_ext</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>beta_int</ci>
+                <apply>
+                    <divide/>
+                    <ci>HCO3_int</ci>
+                    <ci>K_HCO3_int</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>gamma_ext</ci>
+                <apply>
+                    <divide/>
+                    <ci>Cl_ext</ci>
+                    <ci>K_Cl_ext</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>gamma_int</ci>
+                <apply>
+                    <divide/>
+                    <ci>Cl_int</ci>
+                    <ci>K_Cl_int</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>sigma</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <plus/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <ci>beta_ext</ci>
+                            <ci>gamma_ext</ci>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>P_HCO3_int</ci>
+                                <ci>beta_int</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>P_Cl_int</ci>
+                                <ci>gamma_int</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <plus/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <ci>beta_int</ci>
+                            <ci>gamma_int</ci>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>P_HCO3_ext</ci>
+                                <ci>beta_ext</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>P_Cl_ext</ci>
+                                <ci>gamma_ext</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J_AE1_HCO3</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <ci>x_T</ci>
+                        <ci>sigma</ci>
+                    </apply>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <times/>
+                            <ci>P_HCO3_int</ci>
+                            <ci>beta_int</ci>
+                            <ci>P_Cl_ext</ci>
+                            <ci>gamma_ext</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>P_HCO3_ext</ci>
+                            <ci>beta_ext</ci>
+                            <ci>P_Cl_int</ci>
+                            <ci>gamma_int</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J_AE1_Cl</ci>
+                <apply>
+                    <minus/>
+                    <ci>J_AE1_HCO3</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x_ext</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>x_T</ci>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>P_HCO3_int</ci>
+                                <ci>beta_int</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>P_Cl_int</ci>
+                                <ci>gamma_int</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>sigma</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>x_int</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>x_T</ci>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>P_HCO3_ext</ci>
+                                <ci>beta_ext</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>P_Cl_ext</ci>
+                                <ci>gamma_ext</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>sigma</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J_HCO3_influx</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <ci>x_T</ci>
+                        <ci>sigma</ci>
+                    </apply>
+                    <ci>P_HCO3_ext</ci>
+                    <ci>beta_ext</ci>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>P_HCO3_int</ci>
+                            <ci>beta_int</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>P_Cl_int</ci>
+                            <ci>gamma_int</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J_Cl_influx</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <ci>x_T</ci>
+                        <ci>sigma</ci>
+                    </apply>
+                    <ci>P_Cl_ext</ci>
+                    <ci>gamma_ext</ci>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>P_HCO3_int</ci>
+                            <ci>beta_int</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>P_Cl_int</ci>
+                            <ci>gamma_int</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Jo_bm</ci>
+                <apply>
+                    <power/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <ci>x_T</ci>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <divide/>
+                                <cn cellml:units="dimensionless">1</cn>
+                                <ci>P_HCO3_ext</ci>
+                            </apply>
+                            <apply>
+                                <divide/>
+                                <cn cellml:units="dimensionless">1</cn>
+                                <ci>P_HCO3_int</ci>
+                            </apply>
+                            <apply>
+                                <divide/>
+                                <ci>K_HCO3_int</ci>
+                                <apply>
+                                    <times/>
+                                    <ci>P_HCO3_int</ci>
+                                    <ci>HCO3_int</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <minus/>
+                        <cn cellml:units="dimensionless">1</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Ji_bm</ci>
+                <apply>
+                    <power/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <ci>x_T</ci>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <divide/>
+                                <cn cellml:units="dimensionless">1</cn>
+                                <ci>P_HCO3_ext</ci>
+                            </apply>
+                            <apply>
+                                <divide/>
+                                <cn cellml:units="dimensionless">1</cn>
+                                <ci>P_HCO3_int</ci>
+                            </apply>
+                            <apply>
+                                <divide/>
+                                <ci>K_HCO3_ext</ci>
+                                <apply>
+                                    <times/>
+                                    <ci>P_HCO3_ext</ci>
+                                    <ci>HCO3_ext</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <minus/>
+                        <cn cellml:units="dimensionless">1</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Js_bm</ci>
+                <apply>
+                    <power/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <ci>x_T</ci>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <divide/>
+                                <cn cellml:units="dimensionless">1</cn>
+                                <ci>P_HCO3_ext</ci>
+                            </apply>
+                            <apply>
+                                <divide/>
+                                <cn cellml:units="dimensionless">1</cn>
+                                <ci>P_HCO3_int</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <minus/>
+                        <cn cellml:units="dimensionless">1</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Jo_cm</ci>
+                <apply>
+                    <power/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <ci>x_T</ci>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <divide/>
+                                <cn cellml:units="dimensionless">1</cn>
+                                <ci>P_Cl_ext</ci>
+                            </apply>
+                            <apply>
+                                <divide/>
+                                <cn cellml:units="dimensionless">1</cn>
+                                <ci>P_Cl_int</ci>
+                            </apply>
+                            <apply>
+                                <divide/>
+                                <ci>K_Cl_int</ci>
+                                <apply>
+                                    <times/>
+                                    <ci>P_Cl_int</ci>
+                                    <ci>Cl_int</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <minus/>
+                        <cn cellml:units="dimensionless">1</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Ji_cm</ci>
+                <apply>
+                    <power/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <ci>x_T</ci>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <divide/>
+                                <cn cellml:units="dimensionless">1</cn>
+                                <ci>P_Cl_ext</ci>
+                            </apply>
+                            <apply>
+                                <divide/>
+                                <cn cellml:units="dimensionless">1</cn>
+                                <ci>P_Cl_int</ci>
+                            </apply>
+                            <apply>
+                                <divide/>
+                                <ci>K_Cl_ext</ci>
+                                <apply>
+                                    <times/>
+                                    <ci>P_Cl_ext</ci>
+                                    <ci>Cl_ext</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <minus/>
+                        <cn cellml:units="dimensionless">1</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Js_cm</ci>
+                <apply>
+                    <power/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <ci>x_T</ci>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <divide/>
+                                <cn cellml:units="dimensionless">1</cn>
+                                <ci>P_Cl_ext</ci>
+                            </apply>
+                            <apply>
+                                <divide/>
+                                <cn cellml:units="dimensionless">1</cn>
+                                <ci>P_Cl_int</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <minus/>
+                        <cn cellml:units="dimensionless">1</cn>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <!--
+      The following RDF block contains metadata that applies to this document
+      as a whole, as indicated by the empty about attribute on the 
+      <rdf:Description> element.
+    -->
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="">
+            <!--
+        The Model Builder Metadata.  The Dublin Core "creator" element is used  
+        to indicate the person who translated the model into CellML.
+      -->
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:parseType="Resource" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <vCard:N xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" rdf:parseType="Resource" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                    <vCard:Family xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#">Terkildsen</vCard:Family>
+                    <vCard:Given xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#">Jonna</vCard:Given>
+                </vCard:N>
+                <vCard:EMAIL xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" rdf:parseType="Resource" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                    <rdf:value xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">j.terkildsen@auckland.ac.nz</rdf:value>
+                    <rdf:type xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:resource="http://imc.org/vCard/3.0#internet"/>
+                </vCard:EMAIL>
+                <vCard:ORG xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" rdf:parseType="Resource" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                    <vCard:Orgname xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#">Auckland Bioengineering Institute</vCard:Orgname>
+                </vCard:ORG>
+            </dc:creator>
+            <!--
+        The Creation Date metadata. This is the date on which the model
+        was translated into CellML.
+      -->
+            <dcterms:created xmlns:dcterms="http://purl.org/dc/terms/" rdf:parseType="Resource" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <dcterms:W3CDTF xmlns:dcterms="http://purl.org/dc/terms/">2009-11-11</dcterms:W3CDTF>
+            </dcterms:created>
+            <!--
+        The Modification History metadata. This lists the changes that have been
+        made to the document, who made the changes, and when they were made.
+      -->
+        </rdf:Description>
+        <!--
+      The following metadata refers to the model itself, as indicated by the
+      reference to the ID "weinstein_2000_AE1", which is    
+      declared on the <model> element.
+    -->
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#weinstein_2000_AE1">
+            <!-- A human readable name for the model. -->
+            <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">&#xd;
+        The Weinstein 2000 quantitative model of AE1 (Cl/HCO3 exchanger).&#xd;
+      </dc:title>
+            <!-- A comment regarding the model. -->
+            <cmeta:comment xmlns:cmeta="http://www.cellml.org/metadata/1.0#" rdf:parseType="Resource" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <rdf:value xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">&#xd;
+          This is the CellML description of the Weinstein 2000 quantitative model of AE1 (Cl/HCO3 exchanger)&#xd;
+        </rdf:value>
+                <!-- The creator of the comment. -->
+                <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:parseType="Resource" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                    <vCard:FN xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#">Jonna Terkildsen</vCard:FN>
+                </dc:creator>
+            </cmeta:comment>
+            <!--  Keyword(s) -->
+            <bqs:reference xmlns:bqs="http://www.cellml.org/bqs/1.0#" rdf:parseType="Resource" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <dc:subject xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:parseType="Resource" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                    <bqs:subject_type xmlns:bqs="http://www.cellml.org/bqs/1.0#">keyword</bqs:subject_type>
+                    <rdf:value xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                        <rdf:Bag xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                            <rdf:li xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">renal</rdf:li>
+                            <rdf:li xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">ion transport</rdf:li>
+                            <rdf:li xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">kidney</rdf:li>
+                            <rdf:li xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">medullary collecting duct</rdf:li>
+                        </rdf:Bag>
+                    </rdf:value>
+                </dc:subject>
+            </bqs:reference>
+            <bqs:reference xmlns:bqs="http://www.cellml.org/bqs/1.0#" rdf:parseType="Resource" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <bqs:Pubmed_id xmlns:bqs="http://www.cellml.org/bqs/1.0#">10894785</bqs:Pubmed_id>
+                <bqs:JournalArticle xmlns:bqs="http://www.cellml.org/bqs/1.0#" rdf:parseType="Resource" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                    <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">
+                        <rdf:Seq xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                            <rdf:li xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:parseType="Resource">
+                                <bqs:Person xmlns:bqs="http://www.cellml.org/bqs/1.0#" rdf:parseType="Resource" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                                    <vCard:N xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" rdf:parseType="Resource" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                                        <vCard:Family xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#">Weinstein</vCard:Family>
+                                        <vCard:Given xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#">A</vCard:Given>
+                                        <vCard:Other xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#">M</vCard:Other>
+                                    </vCard:N>
+                                </bqs:Person>
+                            </rdf:li>
+                        </rdf:Seq>
+                    </dc:creator>
+                    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">&#xd;
+           A mathematical model of the outer medullary collecting duct of the rat&#xd;
+          </dc:title>
+                    <dcterms:issued xmlns:dcterms="http://purl.org/dc/terms/" rdf:parseType="Resource" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                        <dcterms:W3CDTF xmlns:dcterms="http://purl.org/dc/terms/">2000-07</dcterms:W3CDTF>
+                    </dcterms:issued>
+                    <bqs:Journal xmlns:bqs="http://www.cellml.org/bqs/1.0#" rdf:parseType="Resource" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                        <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">American Journal of Physiology</dc:title>
+                    </bqs:Journal>
+                    <bqs:volume xmlns:bqs="http://www.cellml.org/bqs/1.0#">279</bqs:volume>
+                    <bqs:first_page xmlns:bqs="http://www.cellml.org/bqs/1.0#">24</bqs:first_page>
+                    <bqs:last_page xmlns:bqs="http://www.cellml.org/bqs/1.0#">45</bqs:last_page>
+                </bqs:JournalArticle>
+            </bqs:reference>
+        </rdf:Description>
+    </rdf:RDF>
+</model>
