@@ -17,7 +17,6 @@ const Table = ({data, xVariable, variables, displayMode}: {data: Object[], xVari
       key: variable.name,
     })
   })
-  console.log(columns)
   return (
   <div id="table-container" className={displayMode === DisplayMode.Table ? "" : "hidden"}>
     {data.length === 0 ? 
