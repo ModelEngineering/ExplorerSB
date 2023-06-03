@@ -78,8 +78,6 @@ class SummaryParser(object):
         self.project_id = project_id
         self.is_report = is_report
         #
-        self.summary_response = None
-        self.summary_str = None
         self.summary_dct = None
         #
         self.title = None
@@ -87,14 +85,7 @@ class SummaryParser(object):
         self.citation = None
         self.doi = None
         self.paper_url = None
-
-    def _initialize(self):
-        """
-        Acquires the summary description from BioSimulations
-        """
-        url = "%s/projects/%s/summary" % (cn.API_URL, self.project_id)
-        self.summary_response, self.summary_str, self.summary_dct = util.readBiosimulations(url)
-
+    
     def _check(self):
         if self.summary_str is None:
             raise RuntimeError("Must call _initialize before running this method.")
@@ -110,7 +101,7 @@ class SummaryParser(object):
         error_strs += error_str
         self.citation, error_str = self._extractCitation()
         error_strs += error_str
-        self.title, error_str = self._extractTitle(self.citation)
+        self.title, error_str = self._extractTitle()
         error_strs += error_str
         self.paper_url, error_str = self._getPaperUrl()
         error_strs += error_str
@@ -118,7 +109,43 @@ class SummaryParser(object):
         if len(error_str) > 0:
             print("***%s" % error_str)
 
+    def _extractDOI(self):
+        raise NotImplementedError("Must be implemented by subclass")
     
+    def _extractCitation(self):
+        raise NotImplementedError("Must be implemented by subclass")
+    
+    def _extractTitle(self):
+        raise NotImplementedError("Must be implemented by subclass")
+    
+    def _getPaperUrl(self):
+        raise NotImplementedError("Must be implemented by subclass")
+    
+    def _getAbstract(self, *pargs):
+        raise NotImplementedError("Must be implemented by subclass")
+
+
+class BiosimulationsSummaryParser(SummaryParser):
+
+    def __init__(self, project_id, is_report=True):
+        """
+        Parameters
+        ----------
+        Args:
+            project_id (str)
+            is_report (bool): report an error, don't raise an exception
+        """
+        super(BiosimulationsSummaryParser, self).__init__(project_id, is_report-is_report)
+        self.summary_response = None
+        self.summary_str = None
+
+    def _initialize(self):
+        """
+        Acquires the summary description from BioSimulations
+        """
+        url = "%s/projects/%s/summary" % (cn.API_URL, self.project_id)
+        self.summary_response, self.summary_str, self.summary_dct = util.readBiosimulations(url)
+
     def _extractDOI(self)->typing.Tuple[str, str]:
         """
         Extracts the DOI from the response to a summary REST call.
@@ -179,7 +206,11 @@ class SummaryParser(object):
             raise RuntimeError(error_str)
         return citation, error_str
     
-    def _extractTitle(self, citation)->list[str]:
+    # FIXME: Implement _getAuthors
+    def _getAuthors(self)->typing.Tuple[str, str]:
+        return "", ""
+    
+    def _extractTitle(self)->list[str]:
         """
         Extracts the title from the citation.
 
@@ -188,7 +219,7 @@ class SummaryParser(object):
             str: error message if null
         """
         self._check()
-        text = citation
+        text = self.citation
         if text is None:
             return "", "Citation not found; cannot calculate title."
         is_error = False
@@ -279,3 +310,67 @@ class SummaryParser(object):
             abstract = searcher.get(citation)
             abstract = cn.CHATGPT_HEADER + abstract
         return abstract
+    
+
+class BiomodelsSummaryParser(SummaryParser):
+
+    def _initialize(self):
+        """
+        Acquires the summary description from BioSimulations
+        """
+        self.summary_dct = util.getBiomodelInfo(self.project_id)
+
+    def _extractDOI(self)->typing.Tuple[str, str]:
+        """
+        Extracts the DOI from the response to a summary REST call.
+
+        Returns:
+            str: citation
+            str: error string
+        """
+        self._check()
+        
+    def _extractCitation(self)->list[str]:
+        """
+        Calculates the citation
+
+        Args:
+            summary_dct (dcit): _description_
+
+        Returns:
+            str: citation string
+            str: error message if citation is empty
+        """
+    
+    def _extractTitle(self)->list[str]:
+        """
+        Extracts the title from the citation.
+
+        Returns:
+            str: citation
+            str: error message if null
+        """
+        self._check()
+    
+    def _getPaperUrl(self)->str:
+        """
+        Extracts the paper URL.
+
+        Returns:
+            str
+        """
+        self._check()
+
+    def _getAbstract(self, *pargs) ->list[str]:
+        """
+        Obtains the abstract for the article. Abstract may be obtained from:
+            (1) inside the summary
+            (2) PubMed
+            (3) ChatGPT
+
+        Args:
+            doi: str
+            citation: str
+        Returns:
+            list-str
+        """

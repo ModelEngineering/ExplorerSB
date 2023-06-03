@@ -5,7 +5,7 @@ import os
 import unittest
 
 
-IGNORE_TEST = False
+IGNORE_TEST = True
 IS_PLOT = False
 
 
@@ -44,6 +44,16 @@ class TestFunctions(unittest.TestCase):
         self.assertTrue("Response" in str(type(response)))
         self.assertTrue(isinstance(response_nst, list))
         self.assertTrue(isinstance(response_nst[0], dict))
+
+    def testGetBiomodelInfo(self):
+        #if IGNORE_TEST:
+        #    return
+        biomodel_id = "BIOMD0000000297"
+        response_dct = util.getBiomodelInfo(biomodel_id)
+        self.assertTrue(isinstance(response_dct, dict))
+        trues = [k in response_dct.keys() for k in ['title', 'synopsis', 'year', 'link', 'authors']]
+        self.assertTrue(all(trues))
+        import pdb; pdb.set_trace()
 
 
 

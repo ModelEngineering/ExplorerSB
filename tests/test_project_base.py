@@ -49,7 +49,7 @@ class TestProject(unittest.TestCase):
     def testGetProjectCacheDirectory(self):
         if IGNORE_TEST:
             return
-        path = self.project.getProjectCacheDirectory(is_create=True)
+        path = self.project.getProjectDir(is_create=True)
         self.assertTrue(os.path.isdir(path))
      
     def testGetFilePaths(self):

@@ -1,4 +1,4 @@
-'''Builds context data used for the Project class'''
+'''Builds a single project. Constructs context data. Downloads files into staging area. Copies selected files to data directory.'''
 
 """
 Project context:
@@ -21,29 +21,21 @@ Notes
 
 import src.ExplorerSB.constants as cn
 import src.ExplorerSB.util as util
-from src.ExplorerSB.summary_parser import SummaryParser
+from src.ExplorerSB.summary_parser import BiosimulationsSummaryParser
 from src.ExplorerSB.project_base import ProjectBase
 
 import h5py
 import os
 import pandas as pd
-import requests
 import shutil
 import tellurium as te
-import time
 import typing
 import zipfile
-
-MAX_TITLE_LENGTH = 100
 
 
 class ProjectBuilder(ProjectBase):
 
-    # Class attributes
-    PROJECT_DCT = None
-    PROJECT_IDS = None  # List of project IDs
-
-    def __init__(self, project_id: str, data_dir:str=cn.DATA_DIR):
+    def __init__(self, project_id: str, runid: str, data_dir:str=cn.DATA_DIR, stage_dir:str=cn.STAGING_DIR):
         """
         Creates the context entry for a project.
 
@@ -52,21 +44,9 @@ class ProjectBuilder(ProjectBase):
             data_dir: directory in which project context is stored
         """
         super().__init__(project_id, data_dir=data_dir)
+        self.stage_dir = stage_dir
+        self.runid = runid
     
-    @classmethod
-    def initializeClass(cls):
-        """
-        Initializes values of the project ids
-        """
-        response = requests.get(cn.PROJECT_URL)
-        project_descs = response.json()
-        cls.PROJECT_DCT = {d["id"]: d for d in project_descs}
-        cls.PROJECT_IDS = list(cls.PROJECT_DCT.keys())
-
-    def getOutputsDirectory(self):
-        project_cache_dir = self.getProjectCacheDirectory()
-        return os.path.join(project_cache_dir, "outputs")
-
     def buildProject(self):
         """
         Constructs the context entry for a project
@@ -74,46 +54,50 @@ class ProjectBuilder(ProjectBase):
         Returns:
             dict: key, value for each context entry
         """
-        # Handle class initialization
-        if self.PROJECT_DCT is None:
-            self.initializeClass()
-        #
-        summary_parser = SummaryParser(self.project_id)
+        summary_parser = BiosimulationsSummaryParser(self.project_id)
         summary_parser.do()
+        # Create the context information
         self.abstract = summary_parser.abstract
         self.citation = summary_parser.citation
         self.title = summary_parser.title
         self.doi = summary_parser.doi
         self.paper_url = summary_parser.paper_url
-        self.runid = self._getRunid()
-        # Get the files for the project
-        _ = self._copyUrlFiles()  # Download the output files
-        self.makeReadableModel()
+        # Construct and populate the staging directory
+        _ = self._makeStagingData()  # Download the output files
+        _ = self._makeCSVFiles()  # Create CSV files from the HDF5 files
+        self._makeReadableModel()
+        # Create the output data
+        self._makeOutputData()
 
-    def _copyUrlFiles(self)->typing.List[str]:
+    def _makeOutputData(self):
         """
-        Copies the files to the Cache
+        Creates the output data directory once the project has been staged.
+        """
+        data_dir = self.getProjectDir(self.data_dir)
+        if os.path.isdir(data_dir):
+            shutil.rmtree(data_dir)
+        shutil.copytree(self.getProjectDir(self.stage_dir), data_dir)
+        # Remove the JSON files
+        self._removeJsonFiles(data_dir)
 
-        Args:
-            cache_dir: path to the parent directory destination directory
+    def _makeStagingData(self)->typing.List[str]:
+        """
+        Copies the files to the staging directory, creates CSV files from HDF5, and creates Antimony models.
 
         Returns:
             list of paths copied
         """
         copied_paths = []
-        project_cache_dir = self.getProjectCacheDirectory(is_create=True)
+        project_dir = self.getProjectDir(is_create=True,
+                                                          dest_dir=self.stage_dir)
         file_urls = self._getUrlFileList()
         for file_url in file_urls:
-            path = self._copyUrlFile(file_url, project_cache_dir)
+            path = self._copyUrlFile(file_url, project_dir)
             if path.endswith(cn.JSON):
                 continue
             if path is not None:
                 copied_paths.append(path)
         return copied_paths
-            
-    def _getRunid(self)->str:
-        dct = self.PROJECT_DCT[self.project_id]
-        return dct["simulationRun"]
     
     def _getUrlFileList(self)->typing.List[str]:
         """
@@ -143,11 +127,11 @@ class ProjectBuilder(ProjectBase):
         """
         LOCAL_FILENAME = "output.zip"
         url = "%s/results/%s/download" % (cn.API_URL, self.runid)
-        project_cache_dir = self.getProjectCacheDirectory()
+        project_cache_dir = self.getProjectDir()
         _ = self._copyUrlFile(url, project_cache_dir, local_filename=LOCAL_FILENAME)
         zip_path = os.path.join(project_cache_dir, LOCAL_FILENAME)
         # Unzip the file
-        output_dir = self.getOutputsDirectory()
+        output_dir = self.getProjectDir(self.stage_dir, is_create=True)
         if os.path.isdir(output_dir):
             shutil.rmtree(output_dir)
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
@@ -155,7 +139,7 @@ class ProjectBuilder(ProjectBase):
         self._removeJsonFiles(output_dir)
         #
         return output_dir
-
+    
     @staticmethod 
     def _removeJsonFiles(directory:str):
         """
@@ -187,69 +171,11 @@ class ProjectBuilder(ProjectBase):
         if local_filename is None:
             local_filename = util.getFilenameFromUrl(file_url)
         output_path = os.path.join(dir_path, local_filename)
-        try:
-            with open(output_path, 'wb') as fd:
-                fd.write(response.content)
-        except Exception as exp:
-            import pdb; pdb.set_trace()
-            pass
+        with open(output_path, 'wb') as fd:
+            fd.write(response.content)
         return output_path
 
-    @classmethod
-    def buildContext(cls, context_file_path:str=cn.CONTEXT_FILE, data_dir:str=cn.DATA_DIR, report_interval:int=5,
-                     first:int=0, last:int=None, sleep_sec:float=2):
-        """
-        Builds context for all projects. Writes the result to the context file
-
-        Args:
-            context_file_path: path for the output csv file
-            data_dir: path to where local files are cached
-            report_interval: projects processed between prints
-            first: first project to process
-            last: last project to proces
-            sleep_sec: delay between each iteration
-        Returns:
-            pd.DataFrame
-        """
-        if cls.PROJECT_DCT is None:
-            cls.initializeClass()
-        if last is None:
-            last = 1e6
-        # Check for an existing file
-        if os.path.isfile(context_file_path):
-            context_df = pd.read_csv(context_file_path, index_col=0)
-            completed_project_ids = list(context_df.index)
-        else:
-            completed_project_ids = []
-            context_df = pd.DataFrame()
-        #
-        dct = {k: [] for k in cn.CONTEXT_KEYS}
-        for idx, pid in enumerate(cls.PROJECT_IDS):
-            if (idx < first) or (idx > last):
-                continue
-            if pid in completed_project_ids:
-                continue
-            builder = ProjectBuilder(pid, data_dir=data_dir)
-            builder.buildProject()
-            for key in cn.CONTEXT_KEYS:
-                dct[key].append(builder.__getattribute__(key))
-            # Add to the output DataFrame
-            df = pd.DataFrame(dct)
-            df = df.set_index(cn.PROJECT_ID)
-            df = pd.concat([context_df, df])
-            df.to_csv(context_file_path, index=True)
-            completed_project_ids.append(pid)
-            # Report if required
-            if idx % report_interval == 0:
-                print("** Processed %d projects." % (idx + 1))
-            # Don't go too fast for ChatGPT
-            if sleep_sec > 0:
-                if cn.CHATGPT_HEADER in builder.abstract:
-                    time.sleep(sleep_sec)
-        #
-        return df
-
-    def getH5Data(self, is_write:bool=True):
+    def _makeCSVFiles(self, is_write:bool=True):
         """
         Recursively searches a Biosimulations HDF5 file for datasets.
 
@@ -275,8 +201,8 @@ class ProjectBuilder(ProjectBase):
             names = list(group_names)
             if "Dataset" in str(type(item)):
                 # Encountered a leaf in the container graph
-                if "sedmlDataSetIds" in item.attrs.keys():
-                    index = list(item.attrs["sedmlDataSetIds"])
+                if "sedmlDataSetLabels" in item.attrs.keys():
+                    index = list(item.attrs["sedmlDataSetLabels"])
                     if len(item.shape) != 2:
                         print("** Ignored item with strange shape %s" % str(item.shape))
                         return []
@@ -296,8 +222,8 @@ class ProjectBuilder(ProjectBase):
                 result_dfs.extend(new_dfs)
                 return result_dfs
         #
-        h5_path = self.getH5FilePath()
-        cache_path = self.getProjectCacheDirectory()
+        h5_path = self._getH5FilePath()
+        cache_path = self.getProjectDir()
         with h5py.File(h5_path, 'r') as fd:
             dfs = findDataframes(fd, [], [])
         if is_write:
@@ -308,14 +234,14 @@ class ProjectBuilder(ProjectBase):
                 df.to_csv(path, index=False)
         return dfs
     
-    def getH5FilePath(self)->str:
+    def _getH5FilePath(self)->str:
         """
         Provide the path to the HDF5 output file.
 
         Returns:
             path to file (or None)
         """
-        outdir = self.getOutputsDirectory()
+        outdir = self.getProjectDir(self.stage_dir)
         ffiles = [f for f in os.listdir(outdir) if ".h5" in f]
         if len(ffiles) == 0:
             print("*** No output directory for project %" % self.project_id)
@@ -330,7 +256,7 @@ class ProjectBuilder(ProjectBase):
         else:
             return None
     
-    def makeReadableModel(self, is_write:bool=True, is_replace:bool=False)->str:
+    def _makeReadableModel(self, is_write:bool=True, is_replace:bool=False)->str:
         """
         Converts a model to human readable text, if possible. Currently only
         supports conversion to Antimony. 
@@ -343,7 +269,7 @@ class ProjectBuilder(ProjectBase):
             str: antimony model
         """
         # Get path to the antimony file
-        project_cache_dir = self.getProjectCacheDirectory()
+        project_cache_dir = self.getProjectDir()
         filename = "%s.ant" % self.project_id
         ant_path = os.path.join(project_cache_dir, filename)
         # Handle existing Antimony file

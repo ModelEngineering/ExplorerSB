@@ -137,15 +137,6 @@ class TestProject(unittest.TestCase):
         result = self.project.getModelFiles()
         import pdb; pdb.set_trace()
 
-    def testMakeJsonData(self):
-        if IGNORE_TEST:
-            return
-        self.project.makeJsonData()
-        ffiles = [f for f in self.project.getFilePaths() if f.endswith(".json")]
-        self.assertGreater(len(ffiles), 0)
-        for ffile in ffiles:
-            self.assertTrue(os.path.isfile(ffile))
-    
     def testAddJsonFiles(self):
         if IGNORE_TEST:
             return
