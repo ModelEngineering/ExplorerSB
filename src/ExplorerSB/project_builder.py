@@ -64,7 +64,8 @@ class ProjectBuilder(ProjectBase):
         self.paper_url = summary_parser.paper_url
         # Construct and populate the staging directory
         _ = self._makeStagingData()  # Download the output files
-        _ = self._makeCSVFiles()  # Create CSV files from the HDF5 files
+        _ = self._downloadOutput()  # Download the output files
+        _ = self._makeDfFromH5()  # Create CSV files from the HDF5 files
         self._makeReadableModel()
         # Create the output data
         self._makeOutputData()
@@ -88,8 +89,7 @@ class ProjectBuilder(ProjectBase):
             list of paths copied
         """
         copied_paths = []
-        project_dir = self.getProjectDir(is_create=True,
-                                                          dest_dir=self.stage_dir)
+        project_dir = self.getProjectDir(self.stage_dir, is_create=True)
         file_urls = self._getUrlFileList()
         for file_url in file_urls:
             path = self._copyUrlFile(file_url, project_dir)
@@ -120,23 +120,27 @@ class ProjectBuilder(ProjectBase):
     
     def _downloadOutput(self)->str:
         """
-        Downloads the output file and unzips it.
+        Downloads the output file and unzips it. Moves selected files to the
+        project's staging directory.
 
         Returns:
             path to the directory
         """
         LOCAL_FILENAME = "output.zip"
         url = "%s/results/%s/download" % (cn.API_URL, self.runid)
-        project_cache_dir = self.getProjectDir()
-        _ = self._copyUrlFile(url, project_cache_dir, local_filename=LOCAL_FILENAME)
-        zip_path = os.path.join(project_cache_dir, LOCAL_FILENAME)
+        project_dir = self.getProjectDir(self.stage_dir, is_create=True)
+        zip_path = self._copyUrlFile(url, project_dir, local_filename=LOCAL_FILENAME)
         # Unzip the file
-        output_dir = self.getProjectDir(self.stage_dir, is_create=True)
+        output_dir = os.path.join(project_dir, "outputs")
         if os.path.isdir(output_dir):
             shutil.rmtree(output_dir)
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-            zip_ref.extractall(project_cache_dir)
+            zip_ref.extractall(project_dir)
         self._removeJsonFiles(output_dir)
+        # Move the HDF5 files to the staging directory
+        ffiles = [f for f in os.listdir(output_dir) if f.endswith(".h5") or f.endswith(".xml")]
+        for ffile in ffiles:
+            shutil.move(os.path.join(output_dir, ffile), project_dir) 
         #
         return output_dir
     
@@ -175,9 +179,10 @@ class ProjectBuilder(ProjectBase):
             fd.write(response.content)
         return output_path
 
-    def _makeCSVFiles(self, is_write:bool=True):
+    def _makeDfFromH5(self, is_write:bool=True):
         """
-        Recursively searches a Biosimulations HDF5 file for datasets.
+        Recursively searches a Biosimulations HDF5 file for datasets and creates dataframes.
+        Optionally writes the dataframes to CSV files.
 
         Args:
             is_write: write CSV files for the data 
@@ -223,14 +228,14 @@ class ProjectBuilder(ProjectBase):
                 return result_dfs
         #
         h5_path = self._getH5FilePath()
-        cache_path = self.getProjectDir()
+        stage_path = self.getProjectDir(self.stage_dir)
         with h5py.File(h5_path, 'r') as fd:
             dfs = findDataframes(fd, [], [])
         if is_write:
             for df in dfs:
                 splits = df.name.split(cn.NAME_SEPARATOR)
                 filename = splits[-1] + ".csv"
-                path = os.path.join(cache_path, filename)
+                path = os.path.join(stage_path, filename)
                 df.to_csv(path, index=False)
         return dfs
     
@@ -244,7 +249,7 @@ class ProjectBuilder(ProjectBase):
         outdir = self.getProjectDir(self.stage_dir)
         ffiles = [f for f in os.listdir(outdir) if ".h5" in f]
         if len(ffiles) == 0:
-            print("*** No output directory for project %" % self.project_id)
+            print("*** No output directory for project %s" % self.project_id)
             ffile = None
         elif len(ffiles) > 1:
             print ("*** Multile h5 files. Using the first.")
@@ -269,7 +274,7 @@ class ProjectBuilder(ProjectBase):
             str: antimony model
         """
         # Get path to the antimony file
-        project_cache_dir = self.getProjectDir()
+        project_cache_dir = self.getProjectDir(self.stage_dir)
         filename = "%s.ant" % self.project_id
         ant_path = os.path.join(project_cache_dir, filename)
         # Handle existing Antimony file
@@ -280,7 +285,7 @@ class ProjectBuilder(ProjectBase):
         # No existing Antimony file
         else:
             # See if there is an SBML file
-            paths = self.getFilePaths()
+            paths = self.getFilePaths(self.stage_dir)
             sbml_path = None
             for path in paths:
                 splits = os.path.splitext(path)
