@@ -25,10 +25,11 @@ const Searchbar = ({ landing }: { landing?: boolean}) => {
       id="searchbar"
       className={landing ? "flex-col landing-search" : "flex-col"}
     >
-      <SearchInput setQuery={onQueryUpdate} query={query} />
+      <SearchInput setQuery={onQueryUpdate} query={query} numResults={results.length}/>
       <SearchIndex data={data} query={query} setResult={setResults} />
       <SearchDisplay
         display={displayResults}
+        query={query}
         results={results}
       />
     </div>

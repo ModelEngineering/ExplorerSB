@@ -45,12 +45,12 @@ const VizDataLoader = ({
       });
       setAllVariables(
         keys.map((key) => {
-          return { name: key };
+          return { name: key, label: key, value: key};
         })
       );
       setDisplayedVariables(
         keys.slice(0, 10).map((key) => {
-          return { name: key };
+          return { name: key, label: key, value: key};
         })
       );
     });
