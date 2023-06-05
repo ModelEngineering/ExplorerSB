@@ -9,17 +9,14 @@ declare global {
     title: string | null,
   }
 
-  interface Position {
-    position: number[][]
-  }
-
-  interface Snippet {
-    title?: Position,
-    abstract?: Position,
-  }
-
   interface ContextWithSnippets extends Context {
     snippet: string,
+  }
+
+  interface SelectOption {
+    label: string,
+    value: string,
+    [x: string]: any,
   }
 }
 
