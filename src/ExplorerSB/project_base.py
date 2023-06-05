@@ -36,6 +36,7 @@ class ProjectBase(object):
         self.paper_url = None
         self.runid = None
         self.title = None
+        self.is_biomodels = "BIOMD" in project_id.upper()
 
     @property
     def short_title(self):
@@ -46,33 +47,32 @@ class ProjectBase(object):
                 return self.title[:MAX_TITLE_LENGTH] + "..."
         return None
   
-    def getProjectCacheDirectory(self, is_create:bool=False)->str:
+    def getProjectDir(self, dest_dir:str, is_create:bool=False)->str:
         """
         Finds the path to the file cache for this project.
 
         Args:
             is_create: create the directory if it does not exist
+            dest_dir: directory in which project cache is stored
 
         Returns:
             file path
         """
-        if self.runid is None:
-            raise RuntimeError("Project is not initialized!")
-        if (not os.path.isdir(self.data_dir)) and is_create:
-            os.mkdir(self.data_dir)
-        project_cache_dir = os.path.join(self.data_dir, self.runid)
-        if (not os.path.isdir(project_cache_dir)) and (is_create):
-            os.mkdir(project_cache_dir)
-        return project_cache_dir
+        if (not os.path.isdir(dest_dir)) and is_create:
+            os.mkdir(dest_dir)
+        project_dir = os.path.join(dest_dir, self.runid)
+        if (not os.path.isdir(project_dir)) and (is_create):
+            os.mkdir(project_dir)
+        return project_dir
     
-    def getFilePaths(self, **kwargs:dict)->typing.List[str]:
+    def getFilePaths(self, dest_dir)->typing.List[str]:
         """
         Lists all locally stored files for the project
 
         Args:
-            kwargs: arguments to getProjectCacheDirectory
+            dest_dir: directory to search
         """
-        path_dir = self.getProjectCacheDirectory(**kwargs)
+        path_dir = self.getProjectDir(dest_dir)
         ffiles = []
         if not os.path.isdir(path_dir):
             return ffiles
@@ -81,18 +81,3 @@ class ProjectBase(object):
             if os.path.isfile(file_path):
                 ffiles.append(file_path)
         return ffiles
-    
-    def makeJsonData(self):
-        """
-        Creates JSON files from the CSV files.
-        """
-        paths = self.getFilePaths()
-        for path in paths:
-            if path.endswith(cn.CSV):
-                try:
-                    df = pd.read_csv(path)
-                except Exception as exp:
-                    print("** Could not process file as CSV: %s" % path)
-                    continue
-                path = path.replace(cn.CSV, cn.JSON)
-                df.to_json(path, orient="records")

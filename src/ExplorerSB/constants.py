@@ -16,6 +16,7 @@ else:
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.dirname(PROJECT_DIR)
 LOCAL_DIR = os.path.join(PROJECT_DIR, "local")
+STAGING_DIR = os.path.join(PROJECT_DIR, "staging")
 TEST_DIR = os.path.join(PROJECT_DIR, "tests")
 DATA_DIR = os.path.join(PROJECT_DIR, "data")
 INDEX_DIR = os.path.join(DATA_DIR, "indexdir")
@@ -23,6 +24,8 @@ ABSTRACT_FILE = os.path.join(INDEX_DIR, "abstracts.csv")
 APIKEY_FILE = os.path.join(LOCAL_DIR, "apikey.txt")
 CONTEXT_FILE = os.path.join(DATA_DIR, "context.csv")
 CONTEXT_FILE_JSON = os.path.join(DATA_DIR, "context.json")
+PROJECTS_CSV = os.path.join(DATA_DIR, "projects.csv")
+BUILT_PROJECT_CSV = os.path.join(DATA_DIR, "built_projects.csv")
 # File extensions
 ANT = "ant"
 CELLML = "cellml"
@@ -45,16 +48,19 @@ ZIP_DCT = {CSV: CSV_ZIP,
 # URLs
 API_URL = "https://api.biosimulations.org"
 PROJECT_URL = "%s/projects" % API_URL
+BIOMODELS_URL_PAT = "https://www.ebi.ac.uk/biomodels/%s?format=json"
 
-# Fields in context.csv
+# Column names
 ABSTRACT = "abstract"
+BIOMODEL_ID = "biomodel_id"
 CITATION = "citation"
 DOI = "doi"
+IS_BIOMODELS = "is_biomodels"
 PAPER_URL = "paper_url"
 PROJECT_ID = "project_id"
 TITLE = "title"
 RUNID = "runid"
-CONTEXT_KEYS = [ABSTRACT, CITATION, DOI, PAPER_URL, PROJECT_ID, RUNID, TITLE]
+CONTEXT_KEYS = [ABSTRACT, CITATION, DOI, PAPER_URL, PROJECT_ID, RUNID, TITLE, IS_BIOMODELS]
 
 #
 CHATGPT_HEADER = """

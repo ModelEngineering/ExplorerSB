@@ -124,3 +124,40 @@ def readBiosimulations(url:str, **kwargs):
     except:
         response_nst = None # Could not interpret the structure
     return response, response_str, response_nst
+
+def getBiomodelInfo(biomodel_id):
+    """
+    Issues REST command to BioModels
+
+    Args:
+        url (str):
+        kwargs: keyword arguments passed to requests.get
+    Returns:
+        dict
+    """
+    url = cn.BIOMODELS_URL_PAT % biomodel_id
+    response = requests.get(url)
+    try:
+        response_str = response.content.decode()
+    except:
+        response_str = None
+    null = None
+    false = False
+    true = True
+    try:
+        response_dct = eval(response_str)
+    except:
+        response_dct = None # Could not interpret the structure
+    if response_dct is not None:
+        response_dct.update(response_dct['publication'])
+    # Format the authors
+    authors = ""
+    if 'authors' in response_dct.keys():
+        authors = ""
+        for item in response_dct['authors']:
+            if "name" in item.keys():
+                authors += item['name'] + ", "
+    else:
+        authors = "None"
+    response_dct['authors'] = authors
+    return response_dct

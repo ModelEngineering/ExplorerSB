@@ -28,10 +28,10 @@ for ffile in TEST_FILES:
 #############################
 # Tests
 #############################
-class TestSummaryParser(unittest.TestCase):
+class TestBiosimulationsSummaryParser(unittest.TestCase):
 
     def setUp(self):
-        self.parsers = [sp.SummaryParser(id, is_report=False) for id in PROJECT_IDS]
+        self.parsers = [sp.BiosimulationsSummaryParser(id, is_report=False) for id in PROJECT_IDS]
         [p._initialize() for p in self.parsers]
 
     def testConstructor(self):
@@ -76,7 +76,7 @@ class TestSummaryParser(unittest.TestCase):
         if IGNORE_TEST:
             return
         def test(project_id):
-            parser = sp.SummaryParser(project_id, is_report=True)
+            parser = sp.BiosimulationsSummaryParser(project_id, is_report=True)
             parser._initialize()
             doi, _ = parser._extractDOI()
             citation, _ = parser._extractCitation()
