@@ -17,8 +17,8 @@ const VizDataLoader = ({
   runid: string;
   setData: Dispatch<SetStateAction<Object[]>>;
   setXVariable: Dispatch<SetStateAction<string | undefined>>;
-  setAllVariables: Dispatch<SetStateAction<{name: string}[]>>;
-  setDisplayedVariables: Dispatch<SetStateAction<{name: string}[]>>;
+  setAllVariables: Dispatch<SetStateAction<SelectOption[]>>;
+  setDisplayedVariables: Dispatch<SetStateAction<SelectOption[]>>;
 }) => {
   useEffect(() => {
     const getDataset = async () => {
@@ -45,12 +45,12 @@ const VizDataLoader = ({
       });
       setAllVariables(
         keys.map((key) => {
-          return { name: key, label: key, value: key};
+          return {name: key, label: key, value: key};
         })
       );
       setDisplayedVariables(
         keys.slice(0, 10).map((key) => {
-          return { name: key, label: key, value: key};
+          return {name: key, label: key, value: key};
         })
       );
     });
