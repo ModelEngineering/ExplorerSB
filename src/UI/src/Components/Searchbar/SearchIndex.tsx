@@ -8,7 +8,7 @@ const createIndex = (data: Context[]) =>
   lunr(function () {
     this.field("title");
     this.field("abstract");
-    this.field("authors");
+    this.field("citation");
     this.ref("runid");
     this.metadataWhitelist = ["position"];
 
