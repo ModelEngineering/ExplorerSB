@@ -20,5 +20,12 @@ is used in the on-line application. This information includes: information about
 the quantiative model (e.g., SBML), and data produced from the model (as CSV files).
 The on-line application uses this information to allow users to find articles, view models, and explore model predictions.
 
+## Off-line application
+* ``builder.py`` controls the overall workflow. It makes use of a staging directory where files are downloaded and
+a data directory that is zipped.
+*  ``project_builder.py`` builds a single project
+*  ``project_base.py`` provides common codes for the on-line and off-line applications
+*  ``summary_parser.py`` parses the summary JSON provided by BioSimulations.
+
 # Data
 Data created by the off-line application are in the ``data`` folder. The zip files have the directory structure ``local/cache/<runid>``.

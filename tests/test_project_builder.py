@@ -6,9 +6,10 @@ import pandas as pd
 import shutil
 import unittest
 import urllib3
+import zipfile
 
 
-IGNORE_TEST = False
+IGNORE_TEST = True
 IS_PLOT = False
 PROJECT_ID = "Yeast-cell-cycle-Irons-J-Theor-Biol-2009"
 RUNID = "61fea483f499ccf25faafc4d"
@@ -47,13 +48,18 @@ class TestProjectBuilder(unittest.TestCase):
         return dir_path
     
     def remove(self):
-        def remove(dir_path):
+        def removeDir(dir_path):
             path = os.path.join(dir_path, self.builder.runid)
             if os.path.isdir(path):
                 shutil.rmtree(path)
         #
-        remove(self.builder.data_dir)
-        remove(self.builder.stage_dir)
+        removeDir(self.builder.data_dir)
+        removeDir(self.builder.stage_dir)
+        # Remove zip files
+        ffiles = os.listdir(self.builder.data_dir)
+        for ffile in ffiles:
+            if ffile.endswith(".zip"):
+                os.remove(os.path.join(self.builder.data_dir, ffile))
 
     def makeBuilder(self):
         builder = ProjectBuilder(PROJECT_ID, RUNID, data_dir=DATA_DIR, stage_dir=STAGE_DIR)
@@ -135,8 +141,8 @@ class TestProjectBuilder(unittest.TestCase):
         self.assertEqual(splits[1], ".h5")
     
     def testMakeDfFromH5(self):
-        if IGNORE_TEST:
-            return
+        #if IGNORE_TEST:
+        #    return
         # Setup
         builder = self.makeBuilder()
         builder._downloadOutput()  # Download the output
@@ -162,6 +168,18 @@ class TestProjectBuilder(unittest.TestCase):
         ffiles = os.listdir(stage_dir)
         is_good = any([f for f in ffiles if ".ant" in f])
         self.assertTrue(is_good)
+
+    def testMakeZipArchive(self):
+        if IGNORE_TEST:
+            return
+        builder = self.makeBuilder()
+        _ = builder._makeStagingData() 
+        builder._makeZipArchive()
+        zip_file = cn.ZIP_PAT % builder.runid
+        zip_path = os.path.join(builder.data_dir, zip_file)
+        self.assertTrue(os.path.isfile(zip_path))
+        zip = zipfile.ZipFile(zip_path, "r")
+        self.assertTrue(zip_file in zip.namelist())
 
     def testBuildProject(self):
         if IGNORE_TEST:

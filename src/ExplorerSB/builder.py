@@ -31,9 +31,10 @@ To Do
 
 class Builder(object):
 
-    def __init__(self, project_specification_csv:str=None, stage_dir:str=cn.STAGING_DIR, data_dir:str=cn.DATA_DIR, 
-                 context_path:str=cn.CONTEXT_FILE, first:int=0, last:int=None,
-                 report_interval:int=5, sleep_sec:float=2):
+    def __init__(self, project_specification_csv:str=None, stage_dir:str=cn.STAGE_DIR, data_dir:str=cn.DATA_DIR, 
+                 context_path:str=cn.CONTEXT_FILE,
+                 first:int=0, last:int=None,
+                 report_interval:int=5, sleep_sec:float=2, is_reset=True):
         """Constructor.
 
         Args:
@@ -49,7 +50,7 @@ class Builder(object):
         self.project_specification_csv = project_specification_csv
         self.stage_dir = stage_dir
         self.data_dir = data_dir
-        self.context_path = context_path    
+        self.context_path = context_path
         self.first = first 
         self.last = last
         if self.last is None:
@@ -59,78 +60,55 @@ class Builder(object):
         #
         self.project_ids = None
         self.runid_dct = None
-        self.builders = []
-
-    def build(self):
-        """Workflow for building project data and creating zip files."""
-        self._initialize()  # Get the project Ids and runids
-        for project_id, runid in self.runid_dct.items():
-            if project_id in self.builders:
-                continue 
-            print("** Processing %s" % project_id)
-            builder = ProjectBuilder(project_id, runid, stage_dir=self.stage_dir, data_dir=self.data_dir)
-            # Stage the project, create needed files, create the final project in the data directory
-            builder.buildProject()
-            self.builders.append(builder)
-            df = pd.DataFrame({cn.PROJECT_ID: [project_id]})
-            df.to_csv(self.cn.BUILT_PROJECT_CSV, index=False)
-        self._makeContext()  # Create the context files
+        #
+        if is_reset:
+            if os.path.isfile(self.context_path):
+                os.remove(ffile)
 
     def _initialize(self):
         """
         Called after constructor to initialize the project ids and runids.
         """
-        if os.path.isfile(self.cn.BUILT_PROJECT_CSV):
-            df = pd.read_csv(self.cn.BUILT_PROJECT_CSV)
-            self.builders = df[cn.PROJECT_ID].tolist()
-            msg = "***%d projects already built (from %s).\n" % (len(self.builders), self.cn.BUILT_PROJECT_CSV)
-            print(msg)
         if self.project_specification_csv is not None:
             df = pd.read_csv(self.project_specification_csv)
             self.project_ids = df[cn.PROJECT_ID].tolist()
-            self.runid_dct = {k: v for k, v in zip(self.project_ids, df[cn.RUNID]).tolist()}
+            self.runid_dct = {k: v for k, v in zip(self.project_ids, df[cn.RUNID].tolist())}
         else:
             response = requests.get(cn.PROJECT_URL)
             project_descs = response.json()
             dct = {d["id"]: d for d in project_descs}
             self.project_ids = list(dct.keys())
+            # FIXME: Are these runids?
             self.runid_dct = {k: dct[k]["simulationRun"] for k in self.project_ids}
 
-    def _makeContext(self):
+    def build(self):
         """
-        Builds context for all projects. Writes the result to the context file
-
-        Returns:
-            pd.DataFrame
+        Workflow for building project directories, context file, and creating zip files.
+        The context file is built incrementally so that the process can be restarted, continuing from where it left off.
         """
-        # Check for an existing file
-        if os.path.isfile(self.context_file_path):
-            context_df = pd.read_csv(self.context_file_path, index_col=0)
-            completed_project_ids = list(context_df.index)
+        self._initialize()  # Get the project Ids and runids
+        import pdb; pdb.set_trace()
+        if os.path.isfile(self.context_path):
+            context_df = pd.read_csv(self.context_path, index_col=0)
+            context_dct = {k: context_df[k].tolist() for k in cn.CONTEXT_KEYS}
+            context_df = context_df.set_index(cn.PROJECT_ID)
+            msg = "***%d projects already built. See %s.\n" % (len(context_df), self.context_path)
+            print(msg)
         else:
-            completed_project_ids = []
-            context_df = pd.DataFrame()
-        #
-        dct = {k: [] for k in cn.CONTEXT_KEYS}
-        for idx, pid in enumerate(self.project_ids):
-            if (idx < first) or (idx > last):
-                continue
-            if pid in completed_project_ids:
-                continue
-            builder = ProjectBuilder(pid, data_dir=data_dir)
+            context_dct = {k: [] for k in cn.CONTEXT_KEYS}
+            context_df = pd.DataFrame(context_dct)
+        for project_id, runid in self.runid_dct.items():
+            if project_id in context_df.index:
+                continue 
+            print("** Processing %s" % project_id)
+            builder = ProjectBuilder(project_id, runid, stage_dir=self.stage_dir, data_dir=self.data_dir)
+            # Stage the project, create needed files, create the final project in the data directory
             builder.buildProject()
+            # Get the context information
             for key in cn.CONTEXT_KEYS:
-                dct[key].append(builder.__getattribute__(key))
-            # Add to the output DataFrame
-            df = pd.DataFrame(dct)
+                context_dct[key].append(builder.__getattribute__(key))
+            # Save context information
+            df = pd.DataFrame(context_dct)
             df = df.set_index(cn.PROJECT_ID)
             df = pd.concat([context_df, df])
-            df.to_csv(context_file_path, index=True)
-            completed_project_ids.append(pid)
-            # Report if required
-            # Don't go too fast for ChatGPT
-            if sleep_sec > 0:
-                if cn.CHATGPT_HEADER in builder.abstract:
-                    time.sleep(sleep_sec)
-        #
-        return df
+            df.to_csv(self.context_path, index=True)

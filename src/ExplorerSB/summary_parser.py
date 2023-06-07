@@ -5,9 +5,8 @@ import src.ExplorerSB.constants as cn
 import src.ExplorerSB.util as util
 from src.ExplorerSB.searcher import Searcher
 
-from htmldom import htmldom
+import collections
 from html.parser import HTMLParser
-from requests_html import HTMLSession
 import numpy as np
 import os
 import requests
@@ -26,6 +25,31 @@ TEST_DOI = "10.1093/bioinformatics/btaa720"
 
 MINIMUM_TITLE_LENGTH = 40
 MAXIMUM_COMMA_IN_TITLE = 3
+
+TextCoordinate = collections.namedtuple("TextCoordinate", "line char")
+
+def extractText(text, start_coord, end_coord):
+    """Extracts text from the specified coordinates
+
+    Args:
+        text (str):
+        start_coord (TextCoordinate)
+        end_coord (TextCoordinate)
+
+    Returns:
+        str
+    """
+    def findTextPosition(coord):
+        """Finds the position of the text in the string"""
+        pos = 0
+        for i in range(coord.line):
+            pos = text.index("\n", pos) + 1
+        pos += coord.char
+        return pos
+    #
+    start_pos = findTextPosition(start_coord)
+    end_pos = findTextPosition(end_coord)
+    return text[start_pos:end_pos]
 
 
 ######################################################################
@@ -65,9 +89,30 @@ class DataParser(HTMLParser):
         self.data.append(data)
 
 
+class AbstractParser(HTMLParser):
+# Parses for abstracts in the descriptions key
+    def init(self):
+        self.data = []  # List of data
+        self.start_coord = None
+        self.end_coord = None
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "div":
+            if "abstract" in self.get_starttag_text():
+                self.start_coord = TextCoordinate(self.getpos()[0], self.getpos()[1])
+
+    def handle_endtag(self, tag):
+        if tag == "div":
+            if (self.start_coord is not None) and (self.end_coord is None):
+                self.end_coord = TextCoordinate(self.getpos()[0], self.getpos()[1]) 
+
+    def handle_data(self, data):
+        self.data.append(data)
+
+
 class SummaryParser(object):
 
-    def __init__(self, project_id, is_report=True):
+    def __init__(self, project_id, is_report=True, is_chatgpt=False):
         """
         Parameters
         ----------
@@ -77,6 +122,7 @@ class SummaryParser(object):
         """
         self.project_id = project_id
         self.is_report = is_report
+        self.is_chatgpt = is_chatgpt
         #
         self.summary_dct = None
         #
@@ -138,6 +184,7 @@ class BiosimulationsSummaryParser(SummaryParser):
         super(BiosimulationsSummaryParser, self).__init__(project_id, is_report-is_report)
         self.summary_response = None
         self.summary_str = None
+        self.description_html = None
 
     def _initialize(self):
         """
@@ -145,6 +192,7 @@ class BiosimulationsSummaryParser(SummaryParser):
         """
         url = "%s/projects/%s/summary" % (cn.API_URL, self.project_id)
         self.summary_response, self.summary_str, self.summary_dct = util.readBiosimulations(url)
+        self.description_html = self.summary_dct["simulationRun"]["metadata"][0]['description']
 
     def _extractDOI(self)->typing.Tuple[str, str]:
         """
@@ -171,8 +219,6 @@ class BiosimulationsSummaryParser(SummaryParser):
                 return  doi, ""
         #
         error_str = "DOI not found"
-        if not self.is_report:
-            raise RuntimeError(error_str)
         return "", error_str
         
     def _extractCitation(self)->list[str]:
@@ -205,10 +251,6 @@ class BiosimulationsSummaryParser(SummaryParser):
         if (len(error_str) > 0) and (not self.is_report):
             raise RuntimeError(error_str)
         return citation, error_str
-    
-    # FIXME: Implement _getAuthors
-    def _getAuthors(self)->typing.Tuple[str, str]:
-        return "", ""
     
     def _extractTitle(self)->list[str]:
         """
@@ -262,8 +304,7 @@ class BiosimulationsSummaryParser(SummaryParser):
             return paper_url, ""
 
     # FIXME: Find abstract inside the summary; handle no DOI
-    @staticmethod
-    def _getAbstract(doi: str, citation: str) ->list[str]:
+    def _getAbstract(self, doi: str, citation: str) ->list[str]:
         """
         Obtains the abstract for the article. Abstract may be obtained from:
             (1) inside the summary
@@ -306,60 +347,36 @@ class BiosimulationsSummaryParser(SummaryParser):
             data = sorted(parser.data, key=lambda d: len(d), reverse=True)
             abstract = data[0]
         else:
-            searcher = Searcher()
-            abstract = searcher.get(citation)
-            abstract = cn.CHATGPT_HEADER + abstract
+            if self.is_chatgpt:
+                searcher = Searcher()
+                abstract = searcher.get(citation)
+                abstract = cn.CHATGPT_HEADER + abstract
+            else:
+                parser = AbstractParser()
+                parser.init()
+                parser.feed(self.description_html)
+                if parser.start_coord is None:
+                    abstract = ""
+                    print ("***Abstract not found for %s" % self.project_id)
+                else:
+                    abstract = extractText(self.description_html, parser.start_coord, parser.end_coord)
+                    abstract = abstract.replace("<p>", "")
+                    abstract = abstract.replace("</p>", "")
+                    abstract = abstract.replace("<div>", "")
+                    abstract = abstract.replace("</div>", "")
         return abstract
     
 
-class BiomodelsSummaryParser(SummaryParser):
+class BiomodelsSummaryParser(BiosimulationsSummaryParser):
 
     def _initialize(self):
         """
         Acquires the summary description from BioSimulations
         """
-        self.summary_dct = util.getBiomodelInfo(self.project_id)
-
-    def _extractDOI(self)->typing.Tuple[str, str]:
-        """
-        Extracts the DOI from the response to a summary REST call.
-
-        Returns:
-            str: citation
-            str: error string
-        """
-        self._check()
-        
-    def _extractCitation(self)->list[str]:
-        """
-        Calculates the citation
-
-        Args:
-            summary_dct (dcit): _description_
-
-        Returns:
-            str: citation string
-            str: error message if citation is empty
-        """
-    
-    def _extractTitle(self)->list[str]:
-        """
-        Extracts the title from the citation.
-
-        Returns:
-            str: citation
-            str: error message if null
-        """
-        self._check()
-    
-    def _getPaperUrl(self)->str:
-        """
-        Extracts the paper URL.
-
-        Returns:
-            str
-        """
-        self._check()
+        super(BiomodelsSummaryParser, self)._initialize()
+        pos = self.project_id.index("_")
+        self.biomodels_name = self.project_id[:pos] 
+        self.summary_dct = util.getBiomodelInfo(self.biomodels_name)
 
     def _getAbstract(self, *pargs) ->list[str]:
         """
@@ -374,3 +391,43 @@ class BiomodelsSummaryParser(SummaryParser):
         Returns:
             list-str
         """
+        abstract = self.summary_dct["synopsis"]
+        if abstract == "":
+            import pdb; pdb.set_trace()
+        return abstract
+        
+    def _extractCitation(self)->list[str]:
+        """
+        Calculates the citation
+
+        Args:
+            summary_dct (dcit): _description_
+
+        Returns:
+            str: citation string
+            str: error message if citation is empty
+        """
+        citation = ""
+        for key in ['authors', 'title', 'journal', 'year']:
+            if key in self.summary_dct.keys():
+                citation += str(self.summary_dct[key]) + " "
+        return citation, ""
+
+    def _extractTitle(self)->list[str]:
+        """
+        Extracts the title from the citation.
+
+        Returns:
+            str: citation
+            str: error message if null
+        """
+        return self.summary_dct["title"], ""
+    
+    def _getPaperUrl(self)->str:
+        """
+        Extracts the paper URL.
+
+        Returns:
+            str
+        """
+        return self.summary_dct["link"], ""

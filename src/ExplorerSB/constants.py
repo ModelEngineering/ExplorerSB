@@ -16,7 +16,7 @@ else:
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.dirname(PROJECT_DIR)
 LOCAL_DIR = os.path.join(PROJECT_DIR, "local")
-STAGING_DIR = os.path.join(PROJECT_DIR, "staging")
+STAGE_DIR = os.path.join(PROJECT_DIR, "staging")
 TEST_DIR = os.path.join(PROJECT_DIR, "tests")
 DATA_DIR = os.path.join(PROJECT_DIR, "data")
 INDEX_DIR = os.path.join(DATA_DIR, "indexdir")
@@ -25,7 +25,8 @@ APIKEY_FILE = os.path.join(LOCAL_DIR, "apikey.txt")
 CONTEXT_FILE = os.path.join(DATA_DIR, "context.csv")
 CONTEXT_FILE_JSON = os.path.join(DATA_DIR, "context.json")
 PROJECTS_CSV = os.path.join(DATA_DIR, "projects.csv")
-BUILT_PROJECT_CSV = os.path.join(DATA_DIR, "built_projects.csv")
+DIRECTORY_FILE = "directory.json"
+ZIP_PAT = "%s.zip"  # RUNID
 # File extensions
 ANT = "ant"
 CELLML = "cellml"

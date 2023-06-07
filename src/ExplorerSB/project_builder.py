@@ -21,10 +21,12 @@ Notes
 
 import src.ExplorerSB.constants as cn
 import src.ExplorerSB.util as util
-from src.ExplorerSB.summary_parser import BiosimulationsSummaryParser
+from src.ExplorerSB.summary_parser import BiosimulationsSummaryParser, BiomodelsSummaryParser
 from src.ExplorerSB.project_base import ProjectBase
 
+import collections
 import h5py
+import json
 import os
 import pandas as pd
 import shutil
@@ -32,10 +34,13 @@ import tellurium as te
 import typing
 import zipfile
 
+# The following extensions are removed from the output directory
+EXCLUDED_EXTENSIONS = ["ode", "m", "vcml", "rdf", "owl", "txt", "sci", "zip", "json", "h5", "xml"]
+
 
 class ProjectBuilder(ProjectBase):
 
-    def __init__(self, project_id: str, runid: str, data_dir:str=cn.DATA_DIR, stage_dir:str=cn.STAGING_DIR):
+    def __init__(self, project_id: str, runid: str, data_dir:str=cn.DATA_DIR, stage_dir:str=cn.STAGE_DIR):
         """
         Creates the context entry for a project.
 
@@ -54,10 +59,15 @@ class ProjectBuilder(ProjectBase):
         Returns:
             dict: key, value for each context entry
         """
-        summary_parser = BiosimulationsSummaryParser(self.project_id)
+        if self.is_biomodels:
+            summary_parser = BiomodelsSummaryParser(self.project_id)
+        else:
+            summary_parser = BiosimulationsSummaryParser(self.project_id)
         summary_parser.do()
         # Create the context information
         self.abstract = summary_parser.abstract
+        if self.abstract == "":
+            print("No abstract for %s" % self.project_id)
         self.citation = summary_parser.citation
         self.title = summary_parser.title
         self.doi = summary_parser.doi
@@ -68,18 +78,38 @@ class ProjectBuilder(ProjectBase):
         _ = self._makeDfFromH5()  # Create CSV files from the HDF5 files
         self._makeReadableModel()
         # Create the output data
-        self._makeOutputData()
+        self._makeZipArchive()
 
-    def _makeOutputData(self):
+    def _makeZipArchive(self):
         """
-        Creates the output data directory once the project has been staged.
+        Creates a zip archive of the stage files, including a
+        JSON file with the names of the files in the directory.
         """
-        data_dir = self.getProjectDir(self.data_dir)
-        if os.path.isdir(data_dir):
-            shutil.rmtree(data_dir)
-        shutil.copytree(self.getProjectDir(self.stage_dir), data_dir)
-        # Remove the JSON files
-        self._removeJsonFiles(data_dir)
+        project_data_dir = self.getProjectDir(self.data_dir)
+        if os.path.isdir(project_data_dir):
+            shutil.rmtree(project_data_dir)
+        shutil.copytree(self.getProjectDir(self.stage_dir), project_data_dir)
+        # Prune unnecessary files
+        _ = [self._removeFiles(project_data_dir, e) for e in EXCLUDED_EXTENSIONS]
+        # Remove all subdirectories
+        for ffile in os.listdir(project_data_dir):
+            path = os.path.join(project_data_dir, ffile)
+            if os.path.isdir(path):
+                shutil.rmtree(path)
+        # Create the directory of files
+        ffiles = os.listdir(project_data_dir)
+        ffiles = [f for f in ffiles if not f in [".", ".."]]
+        ffile_json = json.dumps([{"file": f} for f in ffiles])
+        path = os.path.join(project_data_dir, cn.DIRECTORY_FILE)
+        with open(path, "w") as fd:
+            fd.write(ffile_json)
+        # Create the zip archive
+        output_filename = cn.ZIP_PAT % self.runid
+        output_filename = output_filename.replace(".zip", "")
+        output_filename = os.path.join(self.data_dir, output_filename)
+        path = shutil.make_archive(output_filename, "zip", self.data_dir)
+        # Eliminate the data directory
+        shutil.rmtree(project_data_dir)
 
     def _makeStagingData(self)->typing.List[str]:
         """
@@ -136,23 +166,25 @@ class ProjectBuilder(ProjectBase):
             shutil.rmtree(output_dir)
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
             zip_ref.extractall(project_dir)
-        self._removeJsonFiles(output_dir)
         # Move the HDF5 files to the staging directory
         ffiles = [f for f in os.listdir(output_dir) if f.endswith(".h5") or f.endswith(".xml")]
         for ffile in ffiles:
+            if os.path.isfile(os.path.join(project_dir, ffile)):
+                os.remove(os.path.join(project_dir, ffile))
             shutil.move(os.path.join(output_dir, ffile), project_dir) 
         #
         return output_dir
     
     @staticmethod 
-    def _removeJsonFiles(directory:str):
+    def _removeFiles(directory:str, extension:str):
         """
-        Removes JSON files from the directory
+        Removes files with the designated extension.
 
         Args:
             directory: directory to clean
+            extension:
         """
-        ffiles = [f for f in os.listdir(directory) if f.endswith(cn.JSON)]
+        ffiles = [f for f in os.listdir(directory) if f.endswith(extension)]
         for ffile in ffiles:
             os.remove(os.path.join(directory, ffile))
 
@@ -192,16 +224,18 @@ class ProjectBuilder(ProjectBase):
             name (str): name of the dataset
             columns (list-str): variables
         """
-        def findDataframes(item, group_names, dfs):
+        Label = collections.namedtuple("Label", "dataset ids labels df")
+        labels = []
+        def findDataframes(item, group_names, df_dct ):
             """
             Recursively searches groups for datasets with sedmlDataSetIds.
             
             Args:
                 item: Group/Dataset
                 group_names: list-str
-                dfs: list-DataFrame
+                df_dct: key: name, value: DataFrame
             Returns:
-                list-DataFrame
+                dict
             """
             names = list(group_names)
             if "Dataset" in str(type(item)):
@@ -213,31 +247,48 @@ class ProjectBuilder(ProjectBase):
                         return []
                     df = pd.DataFrame(item[:,:], index=index)
                     df = df.T
-                    df.name = cn.NAME_SEPARATOR.join(names)
-                    dfs.append(df)
-                    return dfs
+                    df.name = label.dataset
+                    df_dct[df.name] = df
+                    label = Label(dataset=item.attrs["sedmlId"], ids=item.attrs["sedmlDataSetIds"],
+                                labels=item.attrs["sedmlDataSetLabels"], df=df)
+                    labels.append(label)
+                    return df_dct
             else:
-                new_dfs = []
+                new_df_dct = {}
                 for key in item.keys():
                     new_names = list(names)
                     new_names.append(key)
-                    this_dfs = findDataframes(item[key], new_names, [])
-                    new_dfs.extend(this_dfs)
-                result_dfs = list(dfs)
-                result_dfs.extend(new_dfs)
-                return result_dfs
+                    this_df_dct = findDataframes(item[key], new_names, {})
+                    new_df_dct.update(this_df_dct)
+                result_df_dct = dict(df_dct)
+                result_df_dct.extend(new_df_dct)
+                return result_df_dct
         #
         h5_path = self._getH5FilePath()
         stage_path = self.getProjectDir(self.stage_dir)
         with h5py.File(h5_path, 'r') as fd:
-            dfs = findDataframes(fd, [], [])
+            df_dct = findDataframes(fd, [], {})
+        # Transform the labels
+        label_dct = {l.dataset: l for l in labels}
+        for label in labels:
+            # Find the 'report' dataset to match plot dataset
+            if "plot" in label.dataset:
+                plot_df = label.df
+                report_dataset = label.dataset.replace("plot", "report")
+                if report_dataset in label_dct.keys():
+                    # Construct the conversion dictionary
+                    id_dct = {k: v for k, v in zip(label_dct[report_dataset].ids, label_dct[report_dataset].labels)}
+                    # Convert the ids. Have to consider the position of the labels.
+                    df_dct[label.dataset] = plot_df.rename(columns={k: id_dct[k] for k in df_dct.columns})
+                    
+        # Write the CSV files
         if is_write:
-            for df in dfs:
+            for df in df_dct.values():
                 splits = df.name.split(cn.NAME_SEPARATOR)
                 filename = splits[-1] + ".csv"
                 path = os.path.join(stage_path, filename)
                 df.to_csv(path, index=False)
-        return dfs
+        return list(df_dct.values())
     
     def _getH5FilePath(self)->str:
         """
@@ -307,7 +358,6 @@ class ProjectBuilder(ProjectBase):
                     pass
             # Write the file
             if is_write and (model_str is not None):
-                
                 with open(ant_path, 'w') as fd:
                     fd.writelines(model_str)
         #
