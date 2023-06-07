@@ -26,7 +26,7 @@ const ChromaticScale = [
 ];
 
 const Graph = forwardRef(function Graph(
-  { data, xVariable, variables, displayMode}: { data: Object[]; xVariable: string | undefined; variables: { name: string }[]; displayMode: DisplayMode},
+  { data, xVariable, variables, displayMode}: { data: Object[]; xVariable: string | undefined; variables: SelectOption[]; displayMode: DisplayMode},
   ref: any
   ) {
   const [localVariables, setLocalVariables] = useState<string[]>([]);

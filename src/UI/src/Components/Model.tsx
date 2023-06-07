@@ -1,8 +1,9 @@
 import Multiselect from "multiselect-react-dropdown";
+import {BiChevronDown as ChevronDown} from "react-icons/bi";
 
 const Model = ({ runid }: { runid: string }) => {
-  const displayedVariables = [{ name: `${runid}.xml` }];
-  const options = [{name: `${runid}.xml`}, {name: "b.png"}, {name: "c.jpg"}, {name: "d.pdf"}];
+  const displayedVariables = [{ name: `${runid}.ant` }];
+  const options = [{name: `${runid}.ant`}, {name: "b.png"}, {name: "c.ant"}, {name: "d.png"}];
   const onChange = (value: Object[]) => {
     console.log(value);
   };
@@ -10,13 +11,13 @@ const Model = ({ runid }: { runid: string }) => {
     <div id="model" className="box-style glassmorphism flex-col">
       <h2>Model</h2>
       <Multiselect
-        style={{ backgroundColor: "white" }}
         options={options} // Options to display in the dropdown
         selectedValues={displayedVariables} // Preselected value to persist in dropdown
         displayValue="name"
         onSelect={onChange}
-        onRemove={onChange}
+        onRemove={onChange} 
         singleSelect
+        customArrow={<ChevronDown className="select-dropdown-arrow"/>}
       />
     </div>
   );

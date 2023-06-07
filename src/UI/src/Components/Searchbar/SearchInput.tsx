@@ -6,9 +6,11 @@ import {
 const SearchInput = ({
   setQuery,
   query,
+  numResults,
 }: {
   setQuery: Function;
   query: string;
+  numResults: number;
 }) => {
   return (
     <div
@@ -24,9 +26,12 @@ const SearchInput = ({
         onChange={(event) => setQuery(event.target.value)}
         onFocus={() => setQuery(query)}
       />
+      <p id="num-results" className={query === "" ? "display-none" : ""}>
+        {numResults} results
+      </p>
       <ClearIcon
         id="clear-icon"
-        className={query === "" && "display-none"}
+        className={query === "" ? "display-none" : ""}
         onClick={() => setQuery("")}
       />
     </div>

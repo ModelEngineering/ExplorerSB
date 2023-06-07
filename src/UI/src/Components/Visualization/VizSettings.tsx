@@ -1,27 +1,24 @@
-import Multiselect from "multiselect-react-dropdown";
+import { MultiSelect } from "react-multi-select-component";
 
 const VizSettings = ({
   onChange,
   allVariables,
   displayedVariables,
 }: {
-  onChange(value: Object[]): void;
-  allVariables: Object[];
-  displayedVariables: Object[];
+  onChange(value: SelectOption[]): void;
+  allVariables: SelectOption[];
+  displayedVariables: SelectOption[];
 }) => {
   return (
     <div id="viz-settings-container" className="flex-col">
       <h3>Settings</h3>
-      <Multiselect
-        style={{ backgroundColor: "white" }}
-        options={allVariables} // Options to display in the dropdown
-        selectedValues={displayedVariables} // Preselected value to persist in dropdown
-        displayValue="name"
-        onSelect={onChange}
-        onRemove={onChange}
-        selectionLimit={10}
-        placeholder="Select up to 10 variables"
-        showCheckbox
+      <MultiSelect
+        options={allVariables}
+        value={displayedVariables}
+        onChange={onChange}
+        labelledBy={"Select Variable"}
+        hasSelectAll={false}
+        overrideStrings={{ "selectSomeItems": "Select variables to display..."}}
       />
     </div>
   )

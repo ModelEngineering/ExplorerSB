@@ -20,8 +20,8 @@ const Visualization = ({ runid }: { runid: string }) => {
   );
   const [data, setData] = useState<Object[]>([]);
   const [xVariable, setXVariable] = useState<string>();
-  const [allVariables, setAllVariables] = useState<{name: string}[]>([]);
-  const [displayedVariables, setDisplayedVariables] = useState<{name: string}[]>([]);
+  const [allVariables, setAllVariables] = useState<SelectOption[]>([]);
+  const [displayedVariables, setDisplayedVariables] = useState<SelectOption[]>([]);
 
   const [getPng, { ref }] = useCurrentPng();
 
@@ -35,7 +35,7 @@ const Visualization = ({ runid }: { runid: string }) => {
     }
   }, [xVariable]);
 
-  const onChange = (selectedList: {name: string}[]): void => {
+  const onChange = (selectedList: SelectOption[]): void => {
     setDisplayedVariables(selectedList);
   };
 
