@@ -93,9 +93,15 @@ class Builder(object):
             context_dct = {k: [] for k in cn.CONTEXT_KEYS}
             context_df = pd.DataFrame(context_dct)
         util.trace("Completed setup", 1)
+        zip_files = [f for f in os.listdir(self.data_dir) if f.endswith(".zip")]
+        # Do not re-process projects for which there are already a zip file 
         for project_id, runid in self.runid_dct.items():
-            if project_id in context_df.index:
-                continue 
+            zip_file = "%s.zip" % runid
+            if zip_file in zip_files:
+                print("Skipping %s" % project_id)
+                continue
+            #if project_id in context_df.index:
+            #    continue 
             print("** Processing %s" % project_id)
             builder = ProjectBuilder(project_id, runid, stage_dir=self.stage_dir, data_dir=self.data_dir)
             util.trace("Constructed builder", 1)
