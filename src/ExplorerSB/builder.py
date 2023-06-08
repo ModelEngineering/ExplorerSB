@@ -97,11 +97,9 @@ class Builder(object):
         # Do not re-process projects for which there are already a zip file 
         for project_id, runid in self.runid_dct.items():
             zip_file = "%s.zip" % runid
-            if zip_file in zip_files:
+            if (zip_file in zip_files) and (project_id in context_df.index):
                 print("Skipping %s" % project_id)
                 continue
-            #if project_id in context_df.index:
-            #    continue 
             print("** Processing %s" % project_id)
             builder = ProjectBuilder(project_id, runid, stage_dir=self.stage_dir, data_dir=self.data_dir)
             util.trace("Constructed builder", 1)
