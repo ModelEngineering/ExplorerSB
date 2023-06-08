@@ -28,4 +28,4 @@ a data directory that is zipped.
 *  ``summary_parser.py`` parses the summary JSON provided by BioSimulations.
 
 # Data
-Data created by the off-line application are in the ``data`` folder. The zip files have the directory structure ``local/cache/<runid>``.
+Data are staged in the ``staging`` folder and zip files are created by in the ``data`` folder.
