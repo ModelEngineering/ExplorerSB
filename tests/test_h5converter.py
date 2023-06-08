@@ -31,6 +31,8 @@ class TestProjectBuilder(unittest.TestCase):
         for ffile in ffiles:
             path = os.path.join(CSV_DIR, ffile)
             if os.path.isfile(path):
+                if "README" in ffile:
+                    continue
                 os.remove(path)
 
     def testConstructor(self):
