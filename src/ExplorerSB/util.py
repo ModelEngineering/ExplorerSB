@@ -4,6 +4,8 @@ import copy
 import os
 import pandas as pd
 import requests
+import time
+
 
 
 def cleanDF(df):
@@ -161,3 +163,14 @@ def getBiomodelInfo(biomodel_id):
         authors = "None"
     response_dct['authors'] = authors
     return response_dct
+
+global LAST_TIME
+LAST_TIME = time.time()
+def trace(msg, level):
+    global LAST_TIME
+    if LAST_TIME is None:
+        LAST_TIME = time.time()
+    elapsed = time.time() - LAST_TIME
+    LAST_TIME = time.time()
+    if level <= cn.TRACE_LEVEL:
+        print("  " + msg + " (%.2f sec)" % elapsed)

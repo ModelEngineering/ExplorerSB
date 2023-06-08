@@ -3,7 +3,7 @@
 
 import src.ExplorerSB.constants as cn
 import src.ExplorerSB.util as util
-from src.ExplorerSB.searcher import Searcher
+#from src.ExplorerSB.searcher import Searcher
 
 import collections
 from html.parser import HTMLParser
@@ -12,6 +12,7 @@ import os
 import requests
 import typing
 
+MINIMUM_DESCRIPTION_LENGTH = 50
 
 
 ######## Constants #######
@@ -122,7 +123,8 @@ class SummaryParser(object):
         """
         self.project_id = project_id
         self.is_report = is_report
-        self.is_chatgpt = is_chatgpt
+        if is_chatgpt:
+            raise NotImplementedError("ChatGPT usage is not implemented")
         #
         self.summary_dct = None
         #
@@ -347,17 +349,22 @@ class BiosimulationsSummaryParser(SummaryParser):
             data = sorted(parser.data, key=lambda d: len(d), reverse=True)
             abstract = data[0]
         else:
-            if self.is_chatgpt:
-                searcher = Searcher()
-                abstract = searcher.get(citation)
-                abstract = cn.CHATGPT_HEADER + abstract
+            if False:
+                pass
+                # if self.is_chatgpt:
+                #     searcher = Searcher()
+                #     abstract = searcher.get(citation)
+                #     abstract = cn.CHATGPT_HEADER + abstract
             else:
                 parser = AbstractParser()
                 parser.init()
                 parser.feed(self.description_html)
                 if parser.start_coord is None:
-                    abstract = ""
-                    print ("***Abstract not found for %s" % self.project_id)
+                    if len(self.description_html) > MINIMUM_DESCRIPTION_LENGTH:
+                        abstract = self.description_html
+                    else:
+                        abstract = ""
+                        print ("***Abstract not found for %s" % self.project_id)
                 else:
                     abstract = extractText(self.description_html, parser.start_coord, parser.end_coord)
                     abstract = abstract.replace("<p>", "")

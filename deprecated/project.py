@@ -65,7 +65,6 @@ class Project(ProjectBase):
                 try:
                     self.__setattr__(key, cls.PROJECT_DF.loc[self.project_id, key])
                 except Exception as exp:
-                    import pdb; pdb.set_trace()
                     pass
 
     def _getZipDirPath(self):

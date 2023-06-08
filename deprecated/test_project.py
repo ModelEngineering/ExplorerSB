@@ -13,19 +13,13 @@ PROJECT_ID = "Yeast-cell-cycle-Irons-J-Theor-Biol-2009"
 PROJECT_RUNID = "61fea483f499ccf25faafc4d"
 DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(DATA_DIR, "test_data")
-CONTEXT_FILE = os.path.join(DATA_DIR, "context.csv")
+CONTEXT_FILE = os.path.join(DATA_DIR, "test_context.csv")
 
 
 #############################
 # Tests
 #############################
 class TestProject(unittest.TestCase):
-
-    @classmethod
-    def setUpClass(cls) -> None:
-        if not os.path.isfile(CONTEXT_FILE):
-            _ = ProjectBuilder.buildContext(context_file_path=CONTEXT_FILE, data_dir=DATA_DIR, first=0, last=2)
-        return super().setUpClass() 
 
     def setUp(self):
         self.project = self.makeProject()
@@ -39,13 +33,6 @@ class TestProject(unittest.TestCase):
         if IGNORE_TEST:
             return
         self.assertIsNotNone(self.project.project_id)
-
-    def testInitializeClass(self):
-        if IGNORE_TEST:
-            return
-        project = Project(PROJECT_ID)
-        project.initializeClass()
-        self.assertIsNotNone(project.PROJECT_DCT)
 
     def testInitialize(self):
         if IGNORE_TEST:
@@ -73,22 +60,6 @@ class TestProject(unittest.TestCase):
         projects = [p for p in 
                     Project.iterateProjects(ignored_project_ids=ignored_project_ids)]
         test(projects, 0)
-
-    def testInitializeClass(self):
-        if IGNORE_TEST:
-            return
-        class_attrs = ["PROJECT_IDS", "PROJECT_DF", "INV_TITLE_DCT", "INV_SHORT_TITLE_DCT"]
-        def test():
-            for attr in class_attrs:
-                value = Project.__dict__[attr]
-                self.assertIsNone(value)
-        Project.resetClassAttributes()
-        test()
-        Project.initializeClass()
-        self.assertEqual(len(Project.PROJECT_DF), len(Project.INV_SHORT_TITLE_DCT))
-        self.assertEqual(len(Project.PROJECT_DF), len(Project.INV_TITLE_DCT))
-        Project.resetClassAttributes()
-        test()
 
     def testFindProjectByShortTitle(self):
         if IGNORE_TEST:

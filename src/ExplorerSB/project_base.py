@@ -49,11 +49,11 @@ class ProjectBase(object):
   
     def getProjectDir(self, dest_dir:str, is_create:bool=False)->str:
         """
-        Finds the path to the file cache for this project.
+        Finds the path to the project files.
 
         Args:
-            is_create: create the directory if it does not exist
             dest_dir: directory in which project cache is stored
+            is_create: create the directory if it does not exist
 
         Returns:
             file path

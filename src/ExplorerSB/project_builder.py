@@ -65,6 +65,7 @@ class ProjectBuilder(ProjectBase):
         else:
             summary_parser = BiosimulationsSummaryParser(self.project_id)
         summary_parser.do()
+        util.trace("Executed summary parser", 2)
         # Create the context information
         self.abstract = summary_parser.abstract
         if self.abstract == "":
@@ -73,13 +74,19 @@ class ProjectBuilder(ProjectBase):
         self.title = summary_parser.title
         self.doi = summary_parser.doi
         self.paper_url = summary_parser.paper_url
+        util.trace("Acquired fields from summary parser", 2)
         # Construct and populate the staging directory
         _ = self._makeStagingData()  # Download the output files
+        util.trace("Acquired staging data", 2)
         _ = self._downloadOutput()  # Download the output files
+        util.trace("Downloaded output files.", 2)
         self._makeCsvFromH5()  # Create CSV files from the HDF5 files
+        util.trace("Constructed CSV files from HDF5 file.", 2)
         self._makeReadableModel()
+        util.trace("Constructed readable model.", 2)
         # Create the output data
         self._makeZipArchive()
+        util.trace("Created zip archive.", 2)
 
     def _makeZipArchive(self):
         """
@@ -108,7 +115,7 @@ class ProjectBuilder(ProjectBase):
         output_filename = cn.ZIP_PAT % self.runid
         output_filename = output_filename.replace(".zip", "")
         output_filename = os.path.join(self.data_dir, output_filename)
-        path = shutil.make_archive(output_filename, "zip", self.data_dir)
+        path = shutil.make_archive(output_filename, "zip", project_data_dir)
         # Eliminate the data directory
         shutil.rmtree(project_data_dir)
 

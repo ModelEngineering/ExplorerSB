@@ -11,6 +11,7 @@ else:
     IS_GITHUB = False
 
 
+TRACE_LEVEL = 0  # 0: no trace, 1: major steps, 2: trace minor steps
 
 # Directories
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

@@ -14,8 +14,8 @@ RUNID = "runid"
 DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(DATA_DIR, "test_data")
 RUNID = "runid"
-PROJECT_CACHE_DIR = os.path.join(DATA_DIR, RUNID)
-PROJECT_FILE = os.path.join(PROJECT_CACHE_DIR, "dummy.txt")
+PROJECT_STAGING_DIR = os.path.join(DATA_DIR, RUNID)
+PROJECT_FILE = os.path.join(PROJECT_STAGING_DIR, "dummy.txt")
 
 
 #############################
@@ -55,13 +55,13 @@ class TestProject(unittest.TestCase):
     def testGetFilePaths(self):
         if IGNORE_TEST:
             return
-        ffiles = self.project.getFilePaths(is_create=False)
+        path = self.project.getProjectDir(self.project.data_dir, is_create=True)
+        ffiles = self.project.getFilePaths(self.project.data_dir)
         self.assertEqual(len(ffiles), 0)
         #
-        ffiles = self.project.getFilePaths(is_create=True)
         with open(PROJECT_FILE, "w") as fd:
             fd.writelines("testing")
-        ffiles = self.project.getFilePaths(is_create=False)
+        ffiles = self.project.getFilePaths(self.project.data_dir)
         self.assertTrue(PROJECT_FILE in ffiles)
 
 

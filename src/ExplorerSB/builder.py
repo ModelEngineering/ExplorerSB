@@ -13,6 +13,7 @@ Builds the projects for the ExplorerSB project.
 """
 
 import src.ExplorerSB.constants as cn
+import src.ExplorerSB.util as util
 from src.ExplorerSB.project_builder import ProjectBuilder
 
 import os
@@ -22,12 +23,6 @@ import time
 import typing
 import zipfile
 
-"""
-To Do
-
-1. Subset the files copied to the data directory
-2. Tests
-"""
 
 class Builder(object):
 
@@ -63,7 +58,7 @@ class Builder(object):
         #
         if is_reset:
             if os.path.isfile(self.context_path):
-                os.remove(ffile)
+                os.remove(self.context_path)
 
     def _initialize(self):
         """
@@ -87,7 +82,6 @@ class Builder(object):
         The context file is built incrementally so that the process can be restarted, continuing from where it left off.
         """
         self._initialize()  # Get the project Ids and runids
-        import pdb; pdb.set_trace()
         if os.path.isfile(self.context_path):
             context_df = pd.read_csv(self.context_path, index_col=0)
             context_dct = {k: context_df[k].tolist() for k in cn.CONTEXT_KEYS}
@@ -97,13 +91,16 @@ class Builder(object):
         else:
             context_dct = {k: [] for k in cn.CONTEXT_KEYS}
             context_df = pd.DataFrame(context_dct)
+        util.trace("Completed setup", 1)
         for project_id, runid in self.runid_dct.items():
             if project_id in context_df.index:
                 continue 
             print("** Processing %s" % project_id)
             builder = ProjectBuilder(project_id, runid, stage_dir=self.stage_dir, data_dir=self.data_dir)
+            util.trace("Constructed builder", 1)
             # Stage the project, create needed files, create the final project in the data directory
             builder.buildProject()
+            util.trace("Built project", 1)
             # Get the context information
             for key in cn.CONTEXT_KEYS:
                 context_dct[key].append(builder.__getattribute__(key))
@@ -112,3 +109,4 @@ class Builder(object):
             df = df.set_index(cn.PROJECT_ID)
             df = pd.concat([context_df, df])
             df.to_csv(self.context_path, index=True)
+            util.trace("Saved context information", 2)
