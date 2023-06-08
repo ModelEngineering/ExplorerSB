@@ -13,8 +13,9 @@ TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 TEST_PROJECTS_CSV = os.path.join(TEST_DIR, "test_projects.csv")
 DATA_DIR = os.path.join(TEST_DIR, "test_data")
 STAGE_DIR = os.path.join(TEST_DIR, "stage_data")
-CONTEXT_FILE = os.path.join(DATA_DIR, "test_context.csv")
-REMOVE_FILES = [CONTEXT_FILE]
+CSV_CONTEXT_FILE = os.path.join(DATA_DIR, "context.csv")
+JSON_CONTEXT_FILE = os.path.join(DATA_DIR, "context.json")
+REMOVE_FILES = [CSV_CONTEXT_FILE, JSON_CONTEXT_FILE]
 
 ############################
 # Tests
@@ -25,7 +26,7 @@ class TestBuilder(unittest.TestCase):
         self.builder =  Builder(project_specification_csv=TEST_PROJECTS_CSV,
                                 stage_dir=STAGE_DIR, 
                                 data_dir=DATA_DIR, 
-                                context_path=CONTEXT_FILE)
+                                )
         self.remove_subdirectories()
     
     def tearDown(self):
@@ -65,8 +66,9 @@ class TestBuilder(unittest.TestCase):
         if IGNORE_TEST:
             return
         self.builder.build()
-        self.assertTrue(os.path.isfile(CONTEXT_FILE))
-        df = pd.read_csv(CONTEXT_FILE)
+        self.assertTrue(os.path.isfile(CSV_CONTEXT_FILE))
+        self.assertTrue(os.path.isfile(JSON_CONTEXT_FILE))
+        df = pd.read_csv(CSV_CONTEXT_FILE)
         self.assertGreater(len(df), 0)
         trues = [c in df.columns for c in cn.CONTEXT_KEYS]
         self.assertTrue(all(trues))

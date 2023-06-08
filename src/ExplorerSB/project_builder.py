@@ -36,7 +36,7 @@ import typing
 import zipfile
 
 # The following extensions are removed from the output directory
-EXCLUDED_EXTENSIONS = ["ode", "m", "vcml", "rdf", "owl", "txt", "sci", "zip", "json", "h5", "xml"]
+EXCLUDED_EXTENSIONS = ["ode", "m", "vcml", "rdf", "owl", "txt", "sci", "zip", "json", "h5", "xml", "nml"]
 
 
 class ProjectBuilder(ProjectBase):

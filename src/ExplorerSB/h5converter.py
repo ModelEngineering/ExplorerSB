@@ -172,9 +172,8 @@ class H5Converter(object):
         """
         # Find the 'report' dataset to match plot dataset
         for name, descriptor in self.descriptor_dct.items():
-            if "plot" in name:
-                plot_name = name
-                self.result_dct[plot_name] = descriptor.df
+            plot_name = name
+            self.result_dct[plot_name] = descriptor.df
         
     def _writeCsv(self):
         # Writes the dataframes to CSV files
