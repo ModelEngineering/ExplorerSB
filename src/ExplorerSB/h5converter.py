@@ -85,7 +85,8 @@ class H5Converter(object):
     def convert(self):
         """Converts the HDF5 file to DataFrames."""
         self._makeDescriptorDct()
-        self._renamePlotColumns(self)
+        self._renamePlotColumns()
+        self._createResult()
         if self.csv_dir is not None:
             self._writeCsv()
 

@@ -5,7 +5,7 @@ import os
 import unittest
 
 
-IGNORE_TEST = True
+IGNORE_TEST = False
 IS_PLOT = False
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 H5_PATH = os.path.join(TEST_DIR, "test_reports.h5")
@@ -72,12 +72,19 @@ class TestProjectBuilder(unittest.TestCase):
         self.assertTrue(all(trues))
 
     def testWriteCsv(self):
-        #if IGNORE_TEST:
-        #    return
+        if IGNORE_TEST:
+            return
         self.converter._makeDescriptorDct()
         self.converter._renamePlotColumns()
         self.converter._createResult()
         self.converter._writeCsv()
+        true = DATASET_FILE in os.listdir(CSV_DIR)
+        self.assertTrue(true)
+
+    def testConvert(self):
+        if IGNORE_TEST:
+            return
+        self.converter.convert()
         true = DATASET_FILE in os.listdir(CSV_DIR)
         self.assertTrue(true)
 

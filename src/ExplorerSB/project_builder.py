@@ -20,6 +20,7 @@ Notes
 
 
 import src.ExplorerSB.constants as cn
+from src.ExplorerSB.h5converter import H5Converter
 import src.ExplorerSB.util as util
 from src.ExplorerSB.summary_parser import BiosimulationsSummaryParser, BiomodelsSummaryParser
 from src.ExplorerSB.project_base import ProjectBase
@@ -75,7 +76,7 @@ class ProjectBuilder(ProjectBase):
         # Construct and populate the staging directory
         _ = self._makeStagingData()  # Download the output files
         _ = self._downloadOutput()  # Download the output files
-        _ = self._makeDfFromH5()  # Create CSV files from the HDF5 files
+        self._makeCsvFromH5()  # Create CSV files from the HDF5 files
         self._makeReadableModel()
         # Create the output data
         self._makeZipArchive()
@@ -211,84 +212,18 @@ class ProjectBuilder(ProjectBase):
             fd.write(response.content)
         return output_path
 
-    def _makeDfFromH5(self, is_write:bool=True):
+    def _makeCsvFromH5(self):
         """
-        Recursively searches a Biosimulations HDF5 file for datasets and creates dataframes.
-        Optionally writes the dataframes to CSV files.
-
-        Args:
-            is_write: write CSV files for the data 
+        Creates CSV files from the HDF5 files.
+        """
         
-        Returns:
-            DataFrame properties
-            name (str): name of the dataset
-            columns (list-str): variables
-        """
-        Label = collections.namedtuple("Label", "dataset ids labels df")
-        labels = []
-        def findDataframes(item, group_names, df_dct ):
-            """
-            Recursively searches groups for datasets with sedmlDataSetIds.
-            
-            Args:
-                item: Group/Dataset
-                group_names: list-str
-                df_dct: key: name, value: DataFrame
-            Returns:
-                dict
-            """
-            names = list(group_names)
-            if "Dataset" in str(type(item)):
-                # Encountered a leaf in the container graph
-                if "sedmlDataSetLabels" in item.attrs.keys():
-                    index = list(item.attrs["sedmlDataSetLabels"])
-                    if len(item.shape) != 2:
-                        print("** Ignored item with strange shape %s" % str(item.shape))
-                        return []
-                    df = pd.DataFrame(item[:,:], index=index)
-                    df = df.T
-                    df.name = label.dataset
-                    df_dct[df.name] = df
-                    label = Label(dataset=item.attrs["sedmlId"], ids=item.attrs["sedmlDataSetIds"],
-                                labels=item.attrs["sedmlDataSetLabels"], df=df)
-                    labels.append(label)
-                    return df_dct
-            else:
-                new_df_dct = {}
-                for key in item.keys():
-                    new_names = list(names)
-                    new_names.append(key)
-                    this_df_dct = findDataframes(item[key], new_names, {})
-                    new_df_dct.update(this_df_dct)
-                result_df_dct = dict(df_dct)
-                result_df_dct.extend(new_df_dct)
-                return result_df_dct
-        #
         h5_path = self._getH5FilePath()
-        stage_path = self.getProjectDir(self.stage_dir)
-        with h5py.File(h5_path, 'r') as fd:
-            df_dct = findDataframes(fd, [], {})
-        # Transform the labels
-        label_dct = {l.dataset: l for l in labels}
-        for label in labels:
-            # Find the 'report' dataset to match plot dataset
-            if "plot" in label.dataset:
-                plot_df = label.df
-                report_dataset = label.dataset.replace("plot", "report")
-                if report_dataset in label_dct.keys():
-                    # Construct the conversion dictionary
-                    id_dct = {k: v for k, v in zip(label_dct[report_dataset].ids, label_dct[report_dataset].labels)}
-                    # Convert the ids. Have to consider the position of the labels.
-                    df_dct[label.dataset] = plot_df.rename(columns={k: id_dct[k] for k in df_dct.columns})
-                    
-        # Write the CSV files
-        if is_write:
-            for df in df_dct.values():
-                splits = df.name.split(cn.NAME_SEPARATOR)
-                filename = splits[-1] + ".csv"
-                path = os.path.join(stage_path, filename)
-                df.to_csv(path, index=False)
-        return list(df_dct.values())
+        if self.stage_dir is not None:
+            csv_dir = self.getProjectDir(self.stage_dir)
+        else:
+            csv_dir = None
+        converter = H5Converter(h5_path, csv_dir=csv_dir)
+        _ = converter.convert()
     
     def _getH5FilePath(self)->str:
         """

@@ -5,7 +5,7 @@ import os
 import unittest
 
 
-IGNORE_TEST = True
+IGNORE_TEST = False
 IS_PLOT = False
 
 
@@ -53,7 +53,6 @@ class TestFunctions(unittest.TestCase):
         self.assertTrue(isinstance(response_dct, dict))
         trues = [k in response_dct.keys() for k in ['title', 'synopsis', 'year', 'link', 'authors']]
         self.assertTrue(all(trues))
-        import pdb; pdb.set_trace()
 
 
 

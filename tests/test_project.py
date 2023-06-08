@@ -135,7 +135,6 @@ class TestProject(unittest.TestCase):
             return
         return
         result = self.project.getModelFiles()
-        import pdb; pdb.set_trace()
 
     def testAddJsonFiles(self):
         if IGNORE_TEST:

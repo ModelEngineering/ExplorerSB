@@ -9,7 +9,7 @@ import urllib3
 import zipfile
 
 
-IGNORE_TEST = True
+IGNORE_TEST = False
 IS_PLOT = False
 PROJECT_ID = "Yeast-cell-cycle-Irons-J-Theor-Biol-2009"
 RUNID = "61fea483f499ccf25faafc4d"
@@ -140,19 +140,17 @@ class TestProjectBuilder(unittest.TestCase):
         splits = os.path.splitext(path)
         self.assertEqual(splits[1], ".h5")
     
-    def testMakeDfFromH5(self):
-        #if IGNORE_TEST:
-        #    return
+    def testMakeCsvFromH5(self):
+        if IGNORE_TEST:
+            return
         # Setup
         builder = self.makeBuilder()
         builder._downloadOutput()  # Download the output
         # Test
-        dfs = builder._makeDfFromH5()
-        self.assertGreater(len(dfs), 0)
-        self.assertTrue(isinstance(dfs[0], pd.DataFrame))
+        builder._makeCsvFromH5()
         path = builder.getProjectDir(builder.stage_dir)
         csv_files = [p for p in os.listdir(path) if ".csv" in p]
-        self.assertEqual(len(dfs), len(csv_files))
+        self.assertGreater(len(csv_files), 0)
 
     def testMakeReadableModel(self):
         if IGNORE_TEST:
