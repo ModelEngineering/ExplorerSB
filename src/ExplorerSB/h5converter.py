@@ -154,7 +154,9 @@ class H5Converter(object):
                     # Convert the ids. Have to consider the position of the labels.
                     plot_rename_dct = {}
                     for label in plot_df.columns:
-                        plot_rename_dct[label] = report_id_dct[plot_label_dct[label]]
+                        plot_id = plot_label_dct[label]
+                        if plot_id in report_id_dct.keys():
+                            plot_rename_dct[label] = report_id_dct[plot_id]
                     plot_df = plot_df.rename(columns=plot_rename_dct)
                     plot_df.name = plot_name
                     plot_descriptor.df = plot_df

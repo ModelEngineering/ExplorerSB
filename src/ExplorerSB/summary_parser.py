@@ -183,10 +183,10 @@ class BiosimulationsSummaryParser(SummaryParser):
             project_id (str)
             is_report (bool): report an error, don't raise an exception
         """
-        super(BiosimulationsSummaryParser, self).__init__(project_id, is_report-is_report)
+        super(BiosimulationsSummaryParser, self).__init__(project_id, is_report=is_report)
         self.summary_response = None
         self.summary_str = None
-        self.description_html = None
+        self.description_html = ""
 
     def _initialize(self):
         """
@@ -195,6 +195,8 @@ class BiosimulationsSummaryParser(SummaryParser):
         url = "%s/projects/%s/summary" % (cn.API_URL, self.project_id)
         self.summary_response, self.summary_str, self.summary_dct = util.readBiosimulations(url)
         self.description_html = self.summary_dct["simulationRun"]["metadata"][0]['description']
+        if self.description_html is None:
+            self.description_html = ""
 
     def _extractDOI(self)->typing.Tuple[str, str]:
         """
