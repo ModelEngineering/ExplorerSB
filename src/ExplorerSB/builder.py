@@ -84,21 +84,19 @@ class Builder(object):
         """
         self._initialize()  # Get the project Ids and runids
         if os.path.isfile(self.csv_context_path):
-            context_df = pd.read_csv(self.csv_context_path, index_col=0)
-            context_df[cn.PROJECT_ID] = context_df.index
+            context_df = pd.read_csv(self.csv_context_path)
+            context_df = context_df.drop_duplicates()
             context_dct = {k: context_df[k].tolist() for k in cn.CONTEXT_KEYS}
-            context_df = context_df.set_index(cn.PROJECT_ID)
-            msg = "***%d projects already built. See %s.\n" % (len(context_df), self.csv_context_path)
+            msg = "\n\n***%d projects already built. See %s.\n" % (len(context_df), self.csv_context_path)
             print(msg)
         else:
             context_dct = {k: [] for k in cn.CONTEXT_KEYS}
-            context_df = pd.DataFrame(context_dct)
         util.trace("Completed setup", 1)
         zip_files = [f for f in os.listdir(self.data_dir) if f.endswith(".zip")]
         # Do not re-process projects for which there are already a zip file 
         for project_id, runid in self.runid_dct.items():
             zip_file = "%s.zip" % runid
-            if (zip_file in zip_files) and (project_id in context_df.index):
+            if (zip_file in zip_files) and (project_id in context_dct[cn.PROJECT_ID]):
                 print("***Skipping %s" % project_id)
                 continue
             print("** Processing %s" % project_id)
@@ -116,6 +114,5 @@ class Builder(object):
             with open(self.json_context_path, "w") as fd:
                 fd.write(ffile_json)
             df = df.set_index(cn.PROJECT_ID)
-            df = pd.concat([context_df, df])
             df.to_csv(self.csv_context_path, index=True)
             util.trace("Saved context information", 2)

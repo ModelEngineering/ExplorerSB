@@ -78,12 +78,15 @@ class ProjectBuilder(ProjectBase):
         # Construct and populate the staging directory
         _ = self._makeStagingData()  # Download the output files
         util.trace("Acquired staging data", 2)
-        _ = self._downloadOutput()  # Download the output files
-        util.trace("Downloaded output files.", 2)
-        self._makeCsvFromH5()  # Create CSV files from the HDF5 files
-        util.trace("Constructed CSV files from HDF5 file.", 2)
-        self._makeReadableModel()
-        util.trace("Constructed readable model.", 2)
+        output_dir_path = self._downloadOutput()  # Download the output files
+        if output_dir_path is None:
+            util.trace("No output files found.", 2)
+        else:
+            util.trace("Downloaded output files.", 2)
+            self._makeCsvFromH5()  # Create CSV files from the HDF5 files
+            util.trace("Constructed CSV files from HDF5 file.", 2)
+            self._makeReadableModel()
+            util.trace("Constructed readable model.", 2)
         # Create the output data
         self._makeZipArchive()
         util.trace("Created zip archive.", 2)
@@ -173,6 +176,8 @@ class ProjectBuilder(ProjectBase):
         output_dir = os.path.join(project_dir, "outputs")
         if os.path.isdir(output_dir):
             shutil.rmtree(output_dir)
+        if not os.path.isfile(zip_path):
+            return None
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
             zip_ref.extractall(project_dir)
         # Move the HDF5 files to the staging directory
