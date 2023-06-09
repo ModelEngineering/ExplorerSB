@@ -97,7 +97,10 @@ class Builder(object):
         for project_id, runid in self.runid_dct.items():
             zip_file = "%s.zip" % runid
             if (zip_file in zip_files) and (project_id in context_dct[cn.PROJECT_ID]):
-                print("***Skipping %s" % project_id)
+                print("***Skipping %s because it already exists." % project_id)
+                continue
+            if project_id cn.SKIP_PROJECT_IDS:
+                print("***Skipping %s in constants.SKIP_PROJECT_IDS." % project_id)
                 continue
             print("** Processing %s" % project_id)
             builder = ProjectBuilder(project_id, runid, stage_dir=self.stage_dir, data_dir=self.data_dir)
