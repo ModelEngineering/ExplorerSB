@@ -131,10 +131,11 @@ class ProjectBuilder(ProjectBase):
         file_urls = self._getUrlFileList()
         for file_url in file_urls:
             path = self._copyUrlFile(file_url, project_dir)
+            if path is None:
+                continue
             if path.endswith(cn.JSON):
                 continue
-            if path is not None:
-                copied_paths.append(path)
+            copied_paths.append(path)
         return copied_paths
     
     def _getUrlFileList(self)->typing.List[str]:

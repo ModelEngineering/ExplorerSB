@@ -85,6 +85,7 @@ class Builder(object):
         self._initialize()  # Get the project Ids and runids
         if os.path.isfile(self.csv_context_path):
             context_df = pd.read_csv(self.csv_context_path, index_col=0)
+            context_df[cn.PROJECT_ID] = context_df.index
             context_dct = {k: context_df[k].tolist() for k in cn.CONTEXT_KEYS}
             context_df = context_df.set_index(cn.PROJECT_ID)
             msg = "***%d projects already built. See %s.\n" % (len(context_df), self.csv_context_path)
@@ -98,7 +99,7 @@ class Builder(object):
         for project_id, runid in self.runid_dct.items():
             zip_file = "%s.zip" % runid
             if (zip_file in zip_files) and (project_id in context_df.index):
-                print("Skipping %s" % project_id)
+                print("***Skipping %s" % project_id)
                 continue
             print("** Processing %s" % project_id)
             builder = ProjectBuilder(project_id, runid, stage_dir=self.stage_dir, data_dir=self.data_dir)
