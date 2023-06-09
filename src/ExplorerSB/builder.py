@@ -102,6 +102,9 @@ class Builder(object):
             print("** Processing %s" % project_id)
             builder = ProjectBuilder(project_id, runid, stage_dir=self.stage_dir, data_dir=self.data_dir)
             util.trace("Constructed builder", 1)
+            if not builder.is_biomodels:
+                print("***Skipping %s. Not BIOMODELS." % project_id)
+                continue
             # Stage the project, create needed files, create the final project in the data directory
             builder.buildProject()
             util.trace("Built project", 1)

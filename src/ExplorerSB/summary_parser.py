@@ -400,9 +400,10 @@ class BiomodelsSummaryParser(BiosimulationsSummaryParser):
         Returns:
             list-str
         """
-        abstract = self.summary_dct["synopsis"]
-        if abstract == "":
-            import pdb; pdb.set_trace()
+        KEY = "synopsis"
+        abstract = ""
+        if KEY in self.summary_dct.keys():
+            abstract = self.summary_dct["synopsis"]
         return abstract
         
     def _extractCitation(self)->list[str]:
