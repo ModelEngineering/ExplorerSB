@@ -232,10 +232,10 @@ class ProjectBuilder(ProjectBase):
         
         h5_path = self._getH5FilePath()
         if self.stage_dir is not None:
-            csv_dir = self.getProjectDir(self.stage_dir)
+            project_stage_dir = self.getProjectDir(self.stage_dir)
         else:
-            csv_dir = None
-        converter = H5Converter(h5_path, csv_dir=csv_dir)
+            project_stage_dir = None
+        converter = H5Converter(h5_path, csv_dir=project_stage_dir)
         _ = converter.convert()
     
     def _getH5FilePath(self)->str:
@@ -245,8 +245,8 @@ class ProjectBuilder(ProjectBase):
         Returns:
             path to file (or None)
         """
-        outdir = self.getProjectDir(self.stage_dir)
-        ffiles = [f for f in os.listdir(outdir) if ".h5" in f]
+        project_stage_dir = self.getProjectDir(self.stage_dir)
+        ffiles = [f for f in os.listdir(project_stage_dir) if ".h5" in f]
         if len(ffiles) == 0:
             print("*** No output directory for project %s" % self.project_id)
             ffile = None
@@ -256,7 +256,7 @@ class ProjectBuilder(ProjectBase):
         else:
             ffile = ffiles[0]
         if ffile is not None:
-            return os.path.join(outdir, ffile)
+            return os.path.join(project_stage_dir, ffile)
         else:
             return None
     
@@ -273,9 +273,9 @@ class ProjectBuilder(ProjectBase):
             str: antimony model
         """
         # Get path to the antimony file
-        project_cache_dir = self.getProjectDir(self.stage_dir)
+        project_stage_dir = self.getProjectDir(self.stage_dir)
         filename = "%s.ant" % self.project_id
-        ant_path = os.path.join(project_cache_dir, filename)
+        ant_path = os.path.join(project_stage_dir, filename)
         # Handle existing Antimony file
         if (not is_replace) and (os.path.isfile(ant_path)):
             with open(ant_path, "r") as fd:
