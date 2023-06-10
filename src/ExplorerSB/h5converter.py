@@ -47,16 +47,14 @@ class _Descriptor(object):
             return
         new_labels = []
         for label in labels:
+            new_label = label
             if "auto" in label:
                 pos = label.find("task")
-                if pos == -1:
-                    raise RuntimeError("Could not find 'task' in %s" % label)
-                new_label = label[pos:]
-                # Time is structured differently from the other labels.
-                if not "_" in new_label:
-                    new_label = "time"
-            else:
-                new_label = label
+                if pos >= 0:
+                    new_label = label[pos:]
+                    # Time is structured differently from the other labels.
+                    if not "_" in new_label:
+                        new_label = "time"
             new_labels.append(new_label)
         return new_labels
 

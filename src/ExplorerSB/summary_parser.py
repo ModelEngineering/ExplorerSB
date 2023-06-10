@@ -303,7 +303,7 @@ class BiosimulationsSummaryParser(SummaryParser):
         paper_url = util.setValue(util.indexNested(self.summary_dct,
           ["simulationRun", "metadata", 0, "citations", 0, "uri"]), None)
         if paper_url is None:
-            return "", "No URI found."
+            return "", "No paper URI found."
         else:
             return paper_url, ""
 

@@ -70,4 +70,7 @@ Abstract not found in PubMed. The following is obtained from ChatGPT.
 """
 NAME_SEPARATOR = "--"
 TIME = "time"
-SKIP_PROJECT_IDS = []
+SKIP_PROJECT_IDS = ["iECW_1372", "iEcolC_1368", "iSBO_1134",
+      "An-encoding-of-the-human-ORd-model-by-Steve-Neiderer",
+      "The-ORd-human-ventricular-action-potential-model",
+      ]

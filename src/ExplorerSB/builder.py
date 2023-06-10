@@ -99,15 +99,12 @@ class Builder(object):
             if (zip_file in zip_files) and (project_id in context_dct[cn.PROJECT_ID]):
                 print("***Skipping %s because it already exists." % project_id)
                 continue
-            if project_id cn.SKIP_PROJECT_IDS:
+            if project_id in cn.SKIP_PROJECT_IDS:
                 print("***Skipping %s in constants.SKIP_PROJECT_IDS." % project_id)
                 continue
             print("** Processing %s" % project_id)
             builder = ProjectBuilder(project_id, runid, stage_dir=self.stage_dir, data_dir=self.data_dir)
             util.trace("Constructed builder", 1)
-            if not builder.is_biomodels:
-                print("***Skipping %s. Not BIOMODELS." % project_id)
-                continue
             # Stage the project, create needed files, create the final project in the data directory
             builder.buildProject()
             util.trace("Built project", 1)
