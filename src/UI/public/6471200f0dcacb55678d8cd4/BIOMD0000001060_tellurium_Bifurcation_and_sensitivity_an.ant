@@ -1,0 +1,136 @@
+// Created by libAntimony v2.13.2
+function Constant_flux__irreversible(v)
+  v;
+end
+
+Constant_flux__irreversible is "Constant flux (irreversible)"
+
+function function_1(a1, Hplus_x1, S1, Hmin_x2)
+  (a1*Hplus_x1 + S1)*Hmin_x2;
+end
+
+function_1 is "function 1"
+
+function function_3(S_i, H_minx_j)
+  S_i*H_minx_j;
+end
+
+function_3 is "function 3"
+
+function function_2(a2, Hplus_x2)
+  a2*Hplus_x2;
+end
+
+function_2 is "function 2"
+
+
+model *Frank2021___Macrophage_polarization()
+
+  // Compartments and Species:
+  compartment Macrophage;
+  species x1 in Macrophage, x2 in Macrophage;
+
+  // Assignment Rules:
+  H_plus_x1 := x1^n1/(x1^n1 + k1^n1);
+  H_min_x_1 := p1^l1/(p1^l1 + x1^l1);
+  H_plus_x2 := x2^n2/(x2^n2 + k2^n2);
+  H_min_x2 := p2^l2/(p2^l2 + x2^l2);
+
+  // Reactions:
+  _1:  => x1; Macrophage*function_1(a1, H_plus_x1, S1, H_min_x2);
+  _2:  => x1; Macrophage*Constant_flux__irreversible(b1);
+  _3: x1 => ; Macrophage*q1*x1;
+  _4:  => x2; Macrophage*function_2(a2, H_plus_x2);
+  _5:  => x2; Macrophage*function_3(S2, H_min_x_1);
+  _6:  => x2; Macrophage*Constant_flux__irreversible(b2);
+  _7: x2 => ; Macrophage*q2*x2;
+
+  // Species initializations:
+  x1 = 1.2;
+  x2 = 2;
+
+  // Compartment initializations:
+  Macrophage = 1;
+
+  // Variable initializations:
+  n1 = 6;
+  k1 = 1;
+  p1 = 0.5;
+  l1 = 1;
+  a1 = 5;
+  a2 = 5;
+  b1 = 0.05;
+  b2 = 0.05;
+  n2 = 6;
+  k2 = 1;
+  l2 = 1;
+  p2 = 1;
+  q1 = 5;
+  q2 = 5;
+  S1 = 3.75;
+  S2 = 3.75;
+
+  // Other declarations:
+  var H_plus_x1, H_min_x_1, H_plus_x2, H_min_x2;
+  const Macrophage, n1, k1, p1, l1, a1, a2, b1, b2, n2, k2, l2, p2, q1, q2;
+  const S1, S2;
+
+  // Unit definitions:
+  unit length = metre;
+  unit area = metre^2;
+  unit volume = 1 / dimensionless^-0;
+  unit time_unit = 1 / dimensionless^-0;
+  unit substance = item;
+
+  // Display Names:
+  time_unit is "time";
+  _1 is "1";
+  _2 is "2";
+  _3 is "3";
+  _4 is "4";
+  _5 is "5";
+  _6 is "6";
+  _7 is "7";
+
+  // CV terms:
+  Macrophage identity "http://identifiers.org/bto/BTO:0000801"
+  x1 identity "http://identifiers.org/uniprot/P42224"
+  x2 identity "http://identifiers.org/uniprot/P42226"
+  H_plus_x1 hypernym "http://identifiers.org/sbo/SBO:0000195"
+  n1 hypernym "http://identifiers.org/ncit/C48923"
+  k1 hypernym "http://identifiers.org/sbo/C48228"
+  H_min_x_1 hypernym "http://identifiers.org/sbo/SBO:0000195"
+  p1 hypernym "http://identifiers.org/ncit/C48228"
+  l1 hypernym "http://identifiers.org/ncit/C48923"
+  a1 hypernym "http://identifiers.org/sbo/SBO:0000170"
+  a2 hypernym "http://identifiers.org/sbo/SBO:0000170"
+  b1 hypernym "http://identifiers.org/sbo/SBO:0000485"
+  b2 hypernym "http://identifiers.org/sbo/SBO:0000485"
+  n2 hypernym "http://identifiers.org/ncit/C48923"
+  k2 hypernym "http://identifiers.org/sbo/C48228"
+  l2 hypernym "http://identifiers.org/ncit/C48923"
+  p2 hypernym "http://identifiers.org/ncit/C48228"
+  q1 hypernym "http://identifiers.org/sbo/SBO:0000349"
+  q2 hypernym "http://identifiers.org/sbo/SBO:0000349"
+  S1 hypernym "http://identifiers.org/chebi/CHEBI:5939"
+  S2 hypernym "http://identifiers.org/ncit/C20508"
+  H_plus_x2 hypernym "http://identifiers.org/sbo/SBO:0000195"
+  H_min_x2 hypernym "http://identifiers.org/sbo/SBO:0000195"
+  _1 hypernym "http://identifiers.org/sbo/SBO:0000170"
+  _2 hypernym "http://identifiers.org/ncit/C90067"
+  _3 hypernym "http://identifiers.org/sbo/SBO:0000665"
+  _4 hypernym "http://identifiers.org/sbo/SBO:0000170"
+  _5 hypernym "http://identifiers.org/sbo/SBO:0000169"
+  _6 hypernym "http://identifiers.org/ncit/C90067"
+  _7 hypernym "http://identifiers.org/sbo/SBO:0000665"
+end
+
+Frank2021___Macrophage_polarization is "Frank2021 - Macrophage polarization"
+
+Frank2021___Macrophage_polarization model_entity_is "http://identifiers.org/biomodels.db/MODEL2205230001",
+                                                    "http://identifiers.org/biomodels.db/BIOMD0000001060"
+Frank2021___Macrophage_polarization container "http://identifiers.org/bto/BTO:0000801"
+Frank2021___Macrophage_polarization taxon "http://identifiers.org/taxonomy/9606"
+Frank2021___Macrophage_polarization description "http://identifiers.org/doi/10.1016/j.jtbi.2020.110511"
+Frank2021___Macrophage_polarization property "http://identifiers.org/go/GO:0042116",
+                                             "http://identifiers.org/mamo/MAMO_0000046"

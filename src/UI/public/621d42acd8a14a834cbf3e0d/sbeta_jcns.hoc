@@ -1,0 +1,202 @@
+
+
+// myelinated axon with soma (Jay Coggan)
+ 
+//***********************************************************************
+ 
+
+naxonseg = 80
+create node[naxonseg],myelin[naxonseg]
+create soma
+create hill
+create iseg
+
+soma {
+	nseg = 3
+	L = 15	 
+	diam = 15		
+	
+
+	
+	insert nax
+	insert HT
+	gnabar_nax = 0.08	
+	gl_nax = 0.003		
+	gbar_HT = .79		
+	gnapbar_nax = 0.0003	
+	
+	insert kaccum2
+	insert naaccum2
+	insert nadifus
+	insert kdifus
+	
+	
+}
+
+
+ hill { 		
+    L = 8
+    nseg = 4
+    diam(0:1) = 4:1    
+
+	insert nax
+	insert HT
+	gnabar_nax = 0.08	
+	gl_nax = 0.003	
+	gbar_HT = 0.79 	
+	gnapbar_nax = 0.0002	
+	
+	
+
+	insert kaccum2
+	insert naaccum2
+	insert nadifus
+	insert kdifus
+	
+	
+ }
+
+
+  iseg {			
+     L = 10
+     nseg = 5
+     diam = 1				
+
+
+	insert nax
+	insert HT
+	gnabar_nax = 0.08		
+	gl_nax = 0.003				
+	gbar_HT = 0.79 			
+	gnapbar_nax = 0.0002	
+
+	
+
+	insert kaccum2
+	insert naaccum2
+	insert nadifus
+	insert kdifus
+	
+	
+ }
+
+
+proc createAxon() {
+
+
+create myelin[naxonseg],node[naxonseg]
+
+  for i=0,naxonseg-1 {
+    myelin[i] {         
+     nseg = 20 
+      L = 200							 
+      diam = 1						         
+    }
+}
+    for i=0,naxonseg-1{
+ node[i] {          
+      nseg = 1 
+      L = 1					         
+      diam = 1					
+ 	} 
+}   
+
+// connections
+
+//connect soma(1), myelin[0](0)
+
+
+connect soma(1), hill(0)		
+connect hill(1), iseg(0)
+connect iseg(1), myelin[0](0)
+
+
+  for i=0,naxonseg-1  {   
+    
+    
+    connect node[i](0), myelin[i](1)
+    
+  }
+
+  for i=0,naxonseg-2  { 
+   connect myelin[i+1](0), node[i](1)
+	}
+}
+
+
+//************************************************************************
+
+proc setRacm() {
+
+for i=0,naxonseg-1{
+ 	node[i] {      
+    		nseg = 1	
+     		cm = 2.0		
+
+		} 
+	}   
+		
+	
+ for i=0,naxonseg-1 {
+    	myelin[i] {  
+       
+    		cm = 0.05    
+ 	  
+ 		
+			insert kaccum2
+			insert naaccum2
+			insert nadifus
+			insert kdifus
+ 		}
+	}
+
+	soma	{
+		cm = 2.0
+
+	}
+
+
+iseg	{
+		cm = 2.0
+
+	}
+
+hill	{
+		cm = 2.0
+
+	}
+
+
+	forall {
+		Ra = 150.0	
+		
+	}
+}
+
+proc addchannels() {
+
+
+	for ii = 0, naxonseg-1 {
+		node[ii] {
+			
+
+
+			insert nax
+			insert HT
+			gnabar_nax = 1.5
+			gl_nax = 0.07		
+			gbar_HT = 1.6		
+			gnapbar_nax = 0.0019
+			
+			
+
+			insert kaccum2
+			insert naaccum2
+			insert nadifus
+			insert kdifus
+			
+			
+		}
+	}
+}
+

@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version4" xmlns:sbml="http://www.sbml.org/sbml/level2/version4" level="1" version="4">
+  <listOfModels>
+    <model id="BIOMD0000000301_url" language="urn:sedml:language:sbml" source="BIOMD0000000301_url.xml"/>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="auto_ten_seconds" initialTime="0" outputStartTime="0" outputEndTime="10" numberOfSteps="1000">
+      <algorithm name="CVODE" kisaoID="KISAO:0000019"/>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task1" modelReference="BIOMD0000000301_url" simulationReference="auto_ten_seconds"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="auto_time_for_task1" name="Time">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_time_for_task1_var </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_time_for_task1_var" symbol="urn:sedml:symbol:time" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_taRNA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_taRNA__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_taRNA__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;taRNA&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_mT7cr">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_mT7cr__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_mT7cr__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;mT7cr&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_mGFPcr">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_mGFPcr__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_mGFPcr__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;mGFPcr&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_pT7">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_pT7__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_pT7__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;pT7&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_pGFP">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_pGFP__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_pGFP__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;pGFP&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_ara">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_ara__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_ara__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;ara&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_pT3">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_pT3__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_pT3__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;pT3&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_mT3cr">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_mT3cr__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_mT3cr__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;mT3cr&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_cAra">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_cAra__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_cAra__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;cAra&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_pulse_flag">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_pulse_flag__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_pulse_flag__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;pulse_flag&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_dAra">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_dAra__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_dAra__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;dAra&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_sT">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_sT__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_sT__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;sT&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_k_ara">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_k_ara__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_k_ara__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;k_ara&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_s0_taRNA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_s0_taRNA__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_s0_taRNA__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;s0_taRNA&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_d_taRNA">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_d_taRNA__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_d_taRNA__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;d_taRNA&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_s0_mT7cr">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_s0_mT7cr__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_s0_mT7cr__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;s0_mT7cr&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_d_mT7">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_d_mT7__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_d_mT7__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;d_mT7&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_s0_mGFPcr">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_s0_mGFPcr__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_s0_mGFPcr__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;s0_mGFPcr&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_k_pT3">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_k_pT3__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_k_pT3__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;k_pT3&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_n3">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_n3__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_n3__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;n3&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_km3">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_km3__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_km3__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;km3&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_d_mGFP">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_d_mGFP__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_d_mGFP__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;d_mGFP&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_s0_pT7">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_s0_pT7__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_s0_pT7__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;s0_pT7&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_s_pT7k">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_s_pT7k__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_s_pT7k__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;s_pT7k&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_s0_pGFP">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_s0_pGFP__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_s0_pGFP__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;s0_pGFP&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_s_pGFPk">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_s_pGFPk__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_s_pGFPk__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;s_pGFPk&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_d_pT7">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_d_pT7__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_d_pT7__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;d_pT7&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_d_pGFP">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_d_pGFP__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_d_pGFP__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;d_pGFP&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_s0_mT3cr">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_s0_mT3cr__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_s0_mT3cr__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;s0_mT3cr&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_k_pT7">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_k_pT7__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_k_pT7__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;k_pT7&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_n7">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_n7__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_n7__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;n7&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_km7">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_km7__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_km7__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;km7&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_d_mT3">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_d_mT3__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_d_mT3__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;d_mT3&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_s0_pT3">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_s0_pT3__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_s0_pT3__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;s0_pT3&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_s_pT3k">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_s_pT3k__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_s_pT3k__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;s_pT3k&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_d_pT3">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_d_pT3__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_d_pT3__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;d_pT3&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_pulse_interval">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_pulse_interval__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_pulse_interval__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;pulse_interval&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_pulse1_start">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_pulse1_start__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_pulse1_start__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;pulse1_start&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_pulse1_length">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_pulse1_length__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_pulse1_length__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;pulse1_length&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_pulse_conc">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_pulse_conc__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_pulse_conc__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;pulse_conc&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_pulse2_start">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_pulse2_start__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_pulse2_start__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;pulse2_start&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_pulse2_length">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_pulse2_length__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_pulse2_length__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;pulse2_length&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_pulse3_start">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_pulse3_start__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_pulse3_start__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;pulse3_start&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_pulse3_length">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_pulse3_length__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_pulse3_length__x" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id=&apos;pulse3_length&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_cell">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_cell__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_cell__x" target="/sbml:sbml/sbml:model/sbml:listOfCompartments/sbml:compartment[@id=&apos;cell&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_r0">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_r0__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_r0__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;r0&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_r1a">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_r1a__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_r1a__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;r1a&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_r1b">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_r1b__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_r1b__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;r1b&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_r2a">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_r2a__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_r2a__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;r2a&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_r2b">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_r2b__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_r2b__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;r2b&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_r3a">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_r3a__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_r3a__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;r3a&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_r3b">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_r3b__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_r3b__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;r3b&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_r6">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_r6__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_r6__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;r6&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_r7">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_r7__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_r7__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;r7&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_r8">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_r8__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_r8__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;r8&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_r9">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_r9__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_r9__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;r9&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_r10a">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_r10a__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_r10a__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;r10a&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_r10b">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_r10b__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_r10b__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;r10b&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_r11">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_r11__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_r11__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;r11&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_r12">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_r12__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_r12__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;r12&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="autogen_report_for_task1" name="Auto-generated report for task1, including all symbols in SBML with mathematical meaning, both constant and variable.">
+      <listOfDataSets>
+        <dataSet id="autogen_time_for_task1" label="Time" dataReference="auto_time_for_task1"/>
+        <dataSet id="autogen_task1_taRNA" label="taRNA" dataReference="auto_dg_for_task1_taRNA"/>
+        <dataSet id="autogen_task1_mT7cr" label="mT7cr" dataReference="auto_dg_for_task1_mT7cr"/>
+        <dataSet id="autogen_task1_mGFPcr" label="mGFPcr" dataReference="auto_dg_for_task1_mGFPcr"/>
+        <dataSet id="autogen_task1_pT7" label="pT7" dataReference="auto_dg_for_task1_pT7"/>
+        <dataSet id="autogen_task1_pGFP" label="pGFP" dataReference="auto_dg_for_task1_pGFP"/>
+        <dataSet id="autogen_task1_ara" label="ara" dataReference="auto_dg_for_task1_ara"/>
+        <dataSet id="autogen_task1_pT3" label="pT3" dataReference="auto_dg_for_task1_pT3"/>
+        <dataSet id="autogen_task1_mT3cr" label="mT3cr" dataReference="auto_dg_for_task1_mT3cr"/>
+        <dataSet id="autogen_task1_cAra" label="cAra" dataReference="auto_dg_for_task1_cAra"/>
+        <dataSet id="autogen_task1_pulse_flag" label="pulse_flag" dataReference="auto_dg_for_task1_pulse_flag"/>
+        <dataSet id="autogen_task1_dAra" label="dAra" dataReference="auto_dg_for_task1_dAra"/>
+        <dataSet id="autogen_task1_sT" label="sT" dataReference="auto_dg_for_task1_sT"/>
+        <dataSet id="autogen_task1_k_ara" label="k_ara" dataReference="auto_dg_for_task1_k_ara"/>
+        <dataSet id="autogen_task1_s0_taRNA" label="s0_taRNA" dataReference="auto_dg_for_task1_s0_taRNA"/>
+        <dataSet id="autogen_task1_d_taRNA" label="d_taRNA" dataReference="auto_dg_for_task1_d_taRNA"/>
+        <dataSet id="autogen_task1_s0_mT7cr" label="s0_mT7cr" dataReference="auto_dg_for_task1_s0_mT7cr"/>
+        <dataSet id="autogen_task1_d_mT7" label="d_mT7" dataReference="auto_dg_for_task1_d_mT7"/>
+        <dataSet id="autogen_task1_s0_mGFPcr" label="s0_mGFPcr" dataReference="auto_dg_for_task1_s0_mGFPcr"/>
+        <dataSet id="autogen_task1_k_pT3" label="k_pT3" dataReference="auto_dg_for_task1_k_pT3"/>
+        <dataSet id="autogen_task1_n3" label="n3" dataReference="auto_dg_for_task1_n3"/>
+        <dataSet id="autogen_task1_km3" label="km3" dataReference="auto_dg_for_task1_km3"/>
+        <dataSet id="autogen_task1_d_mGFP" label="d_mGFP" dataReference="auto_dg_for_task1_d_mGFP"/>
+        <dataSet id="autogen_task1_s0_pT7" label="s0_pT7" dataReference="auto_dg_for_task1_s0_pT7"/>
+        <dataSet id="autogen_task1_s_pT7k" label="s_pT7k" dataReference="auto_dg_for_task1_s_pT7k"/>
+        <dataSet id="autogen_task1_s0_pGFP" label="s0_pGFP" dataReference="auto_dg_for_task1_s0_pGFP"/>
+        <dataSet id="autogen_task1_s_pGFPk" label="s_pGFPk" dataReference="auto_dg_for_task1_s_pGFPk"/>
+        <dataSet id="autogen_task1_d_pT7" label="d_pT7" dataReference="auto_dg_for_task1_d_pT7"/>
+        <dataSet id="autogen_task1_d_pGFP" label="d_pGFP" dataReference="auto_dg_for_task1_d_pGFP"/>
+        <dataSet id="autogen_task1_s0_mT3cr" label="s0_mT3cr" dataReference="auto_dg_for_task1_s0_mT3cr"/>
+        <dataSet id="autogen_task1_k_pT7" label="k_pT7" dataReference="auto_dg_for_task1_k_pT7"/>
+        <dataSet id="autogen_task1_n7" label="n7" dataReference="auto_dg_for_task1_n7"/>
+        <dataSet id="autogen_task1_km7" label="km7" dataReference="auto_dg_for_task1_km7"/>
+        <dataSet id="autogen_task1_d_mT3" label="d_mT3" dataReference="auto_dg_for_task1_d_mT3"/>
+        <dataSet id="autogen_task1_s0_pT3" label="s0_pT3" dataReference="auto_dg_for_task1_s0_pT3"/>
+        <dataSet id="autogen_task1_s_pT3k" label="s_pT3k" dataReference="auto_dg_for_task1_s_pT3k"/>
+        <dataSet id="autogen_task1_d_pT3" label="d_pT3" dataReference="auto_dg_for_task1_d_pT3"/>
+        <dataSet id="autogen_task1_pulse_interval" label="pulse_interval" dataReference="auto_dg_for_task1_pulse_interval"/>
+        <dataSet id="autogen_task1_pulse1_start" label="pulse1_start" dataReference="auto_dg_for_task1_pulse1_start"/>
+        <dataSet id="autogen_task1_pulse1_length" label="pulse1_length" dataReference="auto_dg_for_task1_pulse1_length"/>
+        <dataSet id="autogen_task1_pulse_conc" label="pulse_conc" dataReference="auto_dg_for_task1_pulse_conc"/>
+        <dataSet id="autogen_task1_pulse2_start" label="pulse2_start" dataReference="auto_dg_for_task1_pulse2_start"/>
+        <dataSet id="autogen_task1_pulse2_length" label="pulse2_length" dataReference="auto_dg_for_task1_pulse2_length"/>
+        <dataSet id="autogen_task1_pulse3_start" label="pulse3_start" dataReference="auto_dg_for_task1_pulse3_start"/>
+        <dataSet id="autogen_task1_pulse3_length" label="pulse3_length" dataReference="auto_dg_for_task1_pulse3_length"/>
+        <dataSet id="autogen_task1_cell" label="cell" dataReference="auto_dg_for_task1_cell"/>
+        <dataSet id="autogen_task1_r0" label="r0" dataReference="auto_dg_for_task1_r0"/>
+        <dataSet id="autogen_task1_r1a" label="r1a" dataReference="auto_dg_for_task1_r1a"/>
+        <dataSet id="autogen_task1_r1b" label="r1b" dataReference="auto_dg_for_task1_r1b"/>
+        <dataSet id="autogen_task1_r2a" label="r2a" dataReference="auto_dg_for_task1_r2a"/>
+        <dataSet id="autogen_task1_r2b" label="r2b" dataReference="auto_dg_for_task1_r2b"/>
+        <dataSet id="autogen_task1_r3a" label="r3a" dataReference="auto_dg_for_task1_r3a"/>
+        <dataSet id="autogen_task1_r3b" label="r3b" dataReference="auto_dg_for_task1_r3b"/>
+        <dataSet id="autogen_task1_r6" label="r6" dataReference="auto_dg_for_task1_r6"/>
+        <dataSet id="autogen_task1_r7" label="r7" dataReference="auto_dg_for_task1_r7"/>
+        <dataSet id="autogen_task1_r8" label="r8" dataReference="auto_dg_for_task1_r8"/>
+        <dataSet id="autogen_task1_r9" label="r9" dataReference="auto_dg_for_task1_r9"/>
+        <dataSet id="autogen_task1_r10a" label="r10a" dataReference="auto_dg_for_task1_r10a"/>
+        <dataSet id="autogen_task1_r10b" label="r10b" dataReference="auto_dg_for_task1_r10b"/>
+        <dataSet id="autogen_task1_r11" label="r11" dataReference="auto_dg_for_task1_r11"/>
+        <dataSet id="autogen_task1_r12" label="r12" dataReference="auto_dg_for_task1_r12"/>
+      </listOfDataSets>
+    </report>
+    <plot2D id="autogen_plot_for_task1" name="Auto-generated plot for task1, including all species.">
+      <xAxis name="Time" type="linear"/>
+      <yAxis name="Species" type="linear"/>
+      <listOfCurves>
+        <curve id="autogen_curve_task1_taRNA" name="taRNA" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_taRNA"/>
+        <curve id="autogen_curve_task1_mT7cr" name="mT7cr" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_mT7cr"/>
+        <curve id="autogen_curve_task1_mGFPcr" name="mGFPcr" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_mGFPcr"/>
+        <curve id="autogen_curve_task1_pT7" name="pT7" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_pT7"/>
+        <curve id="autogen_curve_task1_pGFP" name="pGFP" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_pGFP"/>
+        <curve id="autogen_curve_task1_ara" name="ara" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_ara"/>
+        <curve id="autogen_curve_task1_pT3" name="pT3" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_pT3"/>
+        <curve id="autogen_curve_task1_mT3cr" name="mT3cr" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_mT3cr"/>
+      </listOfCurves>
+    </plot2D>
+  </listOfOutputs>
+</sedML>

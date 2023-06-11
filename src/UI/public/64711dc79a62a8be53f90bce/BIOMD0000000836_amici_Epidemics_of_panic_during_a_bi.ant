@@ -1,0 +1,43 @@
+// Created by libAntimony v2.13.2
+model *model01()
+
+  // Compartments and Species:
+  compartment compartment_;
+  species $S in compartment_, $P in compartment_;
+
+  // Rate Rules:
+  S' = (alpha*(1 - S/C) - beta*P)*S;
+  P' = (-gamma_ + delta*S)*P;
+
+  // Species initializations:
+  S = 0.01;
+  P = 0.01;
+
+  // Compartment initializations:
+  compartment_ = 1;
+
+  // Variable initializations:
+  alpha = 4;
+  C = 10;
+  beta = 3.8;
+  gamma_ = 1;
+  delta = 1;
+
+  // Other declarations:
+  const compartment_, alpha, C, beta, gamma_, delta;
+
+  // Display Names:
+  compartment_ is "compartment";
+  S is "panic_intensity";
+  C is "whole_population";
+  P is "protection+prevention_intensity";
+  gamma_ is "gamma";
+end
+
+model01 is "Radosavljevic2009_BioterroristAttack_PanicProtection"
+
+model01 model_entity_is "http://identifiers.org/biomodels.db/MODEL1203070000"
+model01 description "http://identifiers.org/pubmed/19423234"
+model01 taxon "http://identifiers.org/taxonomy/9606"
+model01 hypernym "http://identifiers.org/efo/0004262",
+                 "http://identifiers.org/go/GO:0042596"

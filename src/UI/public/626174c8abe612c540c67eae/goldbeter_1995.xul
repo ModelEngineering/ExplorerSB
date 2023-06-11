@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<window id="layout-diagram" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" style="overflow: auto" onload="setupDocument()">
+
+<script>
+<![CDATA[
+window.model_entities =
+  {
+
+			
+	M: {
+		id: "permRNA",
+		y: "M/M",
+		x: "environment/time",
+		graph: "Graph: Clickable Elements against Time (hour)",
+		colour: "#99ffff",
+		linestyle: "none"
+	},
+
+	P2: {
+		id: "PER2",
+		y: "P2/P2",
+		x: "environment/time",
+		graph: "Graph: Clickable Elements against Time (hour)",
+		colour: "#3333ff",
+		linestyle: "none"
+	},
+
+	PN: {
+		id: "nuclearPER",
+		y: "PN/PN",
+		x: "environment/time",
+		graph: "Graph: Clickable Elements against Time (hour)",
+		colour: "#33ccff",
+		linestyle: "none"
+	}
+	
+			
+ // Repeat the above section for each controllable graph trace.
+ // Remember to add a comma to each repeat after the final },
+ // except for the final one!
+ 
+};
+
+function flushVisibilityInformation(entity_id, entity_colour)
+{
+	var message = "";
+	var entity;
+
+	if (typeof pcenv != "undefined")
+	{
+		for (var i in window.model_entities)
+		{
+			entity = window.model_entities[i];
+			if (typeof entity_id == "undefined" || entity_id == window.model_entities[i].id)
+			{
+				pcenv.selectTrace
+				(
+					entity.graph,
+					entity.x,
+					entity.y,
+					typeof entity_colour == "undefined" ? "" : entity_colour,
+					entity.linestyle
+				);
+			}
+			if (entity.linestyle != "none")
+				message += i + ", ";
+		}
+		pcenv.status(message == "" ? "No fluxes displayed" : "Displaying flux of " + message.slice(0, -2));
+	}
+}
+
+function processSelectEntity(event)
+{
+	if (typeof pcenv != "undefined")
+		pcenv.status("In processSelectEntity");
+
+	var entity = window.model_entities[window.svgIdToName[event.currentTarget.id]];
+
+	switch(entity.linestyle)
+	{
+	case "none":
+		entity.linestyle = "lines";
+		highlightEntity(event.currentTarget.id);
+		break;
+	case "lines":
+		entity.linestyle = "none";
+		unlightEntity(event.currentTarget.id);
+		break;
+	}
+
+	flushVisibilityInformation(entity.id);
+}
+
+function processContext(event)
+{
+	// if (event.button != 2)
+	//   return true;
+
+	var entity = window.model_entities[window.svgIdToName[event.currentTarget.id]];
+
+	if (entity.context == null)
+		return true;
+
+	var menu = document.getElementById("entityContextMenu");
+
+	for (var c = menu.firstChild, x = null; c != null; c = x)
+	{
+		x = c.nextSibling;
+		menu.removeChild(c);
+	}
+
+	for (var i in entity.context)
+	{
+		var item = entity.context[i];
+
+		var mitem = document.createElementNS
+		(
+			"http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul",
+			"menuitem"
+		);
+
+		mitem.setAttribute("label", item.label);
+		mitem.setAttribute("url", item.url);
+		mitem.addEventListener("command", processShowEntityURL, false);
+		menu.appendChild(mitem);
+	}
+
+	menu.showPopup(window.diagram, event.screenX, event.screenY, "context");
+
+	event.stopPropagation;
+	return false;
+}
+
+function processShowEntityURL(event)
+{
+	url = event.target.getAttribute("url");
+
+	window.open(url);
+
+	var hl = document.getElementById("hidden-link");
+	hl.href = url;
+
+	// This is ugly, but it is one way to force everything through the proper
+	// external handler...
+	var evt = document.createEvent("HTMLEvents");
+	evt.initEvent("click", true, true);
+	hl.dispatchEvent(evt);
+}
+
+function highlightEntity(id)
+{
+	for (var path = document.getElementById(id + "_path1"), i = 1; path != null; path = document.getElementById(id + "_path" + ++i))
+	{
+		if (!(i in window.model_entities[window.svgIdToName[id]].path_colours))
+			window.model_entities[window.svgIdToName[id]].path_colours[i] = path.attributes.getNamedItem("stroke").value;
+		path.attributes.getNamedItem("stroke").value = "#ff0000";
+	}
+}
+
+function highlightEntityOnRollover(event) {
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].colour)
+		flushVisibilityInformation(event.currentTarget.id, "#ffffff");
+
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].linestyle == "none")
+		highlightEntity(event.currentTarget.id);
+}
+
+function unlightEntity(id)
+{
+	for (var path = document.getElementById(id + "_path1"), i = 1; path != null; path = document.getElementById(id + "_path" + ++i))
+		path.attributes.getNamedItem("stroke").value = window.model_entities[window.svgIdToName[id]].path_colours[i];
+}
+
+function unlightEntityOnRollover(event) {
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].colour)
+		flushVisibilityInformation(event.currentTarget.id, window.model_entities[window.svgIdToName[event.currentTarget.id]].colour);
+
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].linestyle == "none")
+		unlightEntity(event.currentTarget.id);
+}
+
+var mouseDown = false;
+var initial_x;
+var initial_y;
+var viewBox;
+
+function startDrag(event)
+{
+	if (event.button)
+		return true;
+
+	mouseDown = true;
+
+	initial_x = parseInt(currentZoom * event.pageX + parseInt(viewBox.value.match(/^-?\d+/)[0]));
+	initial_y = parseInt(currentZoom * event.pageY + parseInt(viewBox.value.match(/^-?\d+\s+(-?(\d+))/)[1]));
+}
+
+function stopDrag(event)
+{
+	if (!event.button)
+		mouseDown = false;
+}
+
+function moveDrag(event)
+{
+	if (mouseDown == true)
+		viewBox.value = viewBox.value.replace(/^-?\d+\s+-?\d+/, parseInt(initial_x - currentZoom * event.pageX) + " " + parseInt(initial_y - currentZoom * event.pageY));
+}
+
+function reset()
+{
+	var zoom_scale = document.getElementById("zoom_scale")
+	zoom_scale.value = zoom_scale.originalValue;
+	viewBox.value = viewBox.originalValue;
+}
+
+var initialZoom;
+var currentZoom = 1;
+var initialHeight;
+var initialWidth;
+
+function zoomDiagram(event)
+{
+	currentZoom = initialZoom / event.currentTarget.value;
+	viewBox.value = viewBox.value.replace(/\d+\s+\d+$/, parseInt(initialHeight * currentZoom) + " " + parseInt(initialWidth * currentZoom));
+}
+
+function setupDocument()
+{
+	flushVisibilityInformation();
+
+	window.diagram = document.getElementById("sachse");
+
+	window.svgIdToName = {};
+
+	for (var name in window.model_entities)
+	{
+		var id = window.model_entities[name].id;
+		window.model_entities[name].path_colours = [];
+
+		var svg = document.getElementById(id);
+		window.svgIdToName[id] = name;
+
+		svg.addEventListener("click", processSelectEntity, false);
+		svg.addEventListener("contextmenu", processContext, false);
+		svg.addEventListener("mouseover", highlightEntityOnRollover ,false);
+		svg.addEventListener("mouseout", unlightEntityOnRollover, false);
+	}
+
+	document.getElementsByTagName("svg")[0].addEventListener("mousedown", startDrag, false);
+	document.addEventListener("mouseup", stopDrag, false);
+	document.addEventListener("mousemove", moveDrag, false);
+	document.getElementById("reset_button").addEventListener("click", reset, false);
+
+	document.getElementById("zoom_scale").addEventListener("change", zoomDiagram, false);
+	document.getElementById("zoom_scale").originalValue = document.getElementById("zoom_scale").value;
+
+	viewBox = document.getElementsByTagName("svg")[0].attributes.getNamedItem("viewBox");
+	viewBox.originalValue = viewBox.value;
+
+	initialZoom = document.getElementById("zoom_scale").value;
+	initialHeight = parseInt(viewBox.value.match(/(\d+)\s+\d+$/)[1]);
+	initialWidth = parseInt(viewBox.value.match(/\d+$/)[0]);
+}
+
+]]>
+</script>
+
+<popupset>
+  <menupopup id="entityContextMenu" />
+</popupset>
+
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="461.333px" height="298.667px" viewBox="0 0 461.333 298.667" enable-background="new 0 0 461.333 298.667"
+	 xml:space="preserve">
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="43.351" y1="273.833" x2="43.351" y2="217.645"/>
+		<polygon points="39.648,271.024 43.351,272.597 47.055,271.024 43.351,279.802 		"/>
+	</g>
+</g>
+<path id="path11218" fill="#BFDDFF" stroke="#0092DF" stroke-width="4.6459" d="
+	M412.511,95.47c0,42.504-51.012,76.959-113.936,76.959c-62.925,0-113.936-34.455-113.936-76.959l0,0
+	c0-42.504,51.011-76.96,113.936-76.96C361.5,18.51,412.511,52.966,412.511,95.47z"/>
+<text transform="matrix(1 0 0 1 194.3315 95.7314)" font-family="'Myriad-Roman'" font-size="10">per transcription</text>
+<g id="PER0" transform="translate(17.17704,243.1136)">
+	
+		<radialGradient id="PER0_path1_1_" cx="-73.6609" cy="-425.2479" r="16.1855" gradientTransform="matrix(0.9269 0 0 0.6352 224.1156 244.155)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#A2FF5F"/>
+		<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+		<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+		<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+		<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+		<stop  offset="0.8174" style="stop-color:#67F35D"/>
+		<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+		<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+		<stop  offset="0.9915" style="stop-color:#07E05A"/>
+		<stop  offset="1" style="stop-color:#00DF5A"/>
+	</radialGradient>
+	<path id="PER0_path1" fill="url(#PER0_path1_1_)" stroke="#000000" d="M170.567-25.963c0,5.78-6.596,10.467-14.727,10.467
+		c-8.134,0-14.728-4.685-14.728-10.467s6.594-10.466,14.728-10.466C163.971-36.428,170.567-31.744,170.567-25.963z"/>
+	<text transform="matrix(1 0 0 1 146.0241 -22.5276)" font-family="'Myriad-Roman'" font-size="10">PER</text>
+	<text transform="matrix(0.583 0 0 0.583 161.6438 -19.1976)" font-family="'Myriad-Roman'" font-size="10">0</text>
+</g>
+<g id="PER1" transform="translate(115.3315,243.1136)">
+	
+		<radialGradient id="PER1_path1_1_" cx="-171.8139" cy="-425.2479" r="16.1858" gradientTransform="matrix(0.9269 0 0 0.6352 315.0953 244.155)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#A2FF5F"/>
+		<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+		<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+		<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+		<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+		<stop  offset="0.8174" style="stop-color:#67F35D"/>
+		<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+		<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+		<stop  offset="0.9915" style="stop-color:#07E05A"/>
+		<stop  offset="1" style="stop-color:#00DF5A"/>
+	</radialGradient>
+	<path id="PER1_path1" fill="url(#PER1_path1_1_)" stroke="#000000" d="M170.568-25.963c0,5.78-6.596,10.467-14.729,10.467
+		s-14.727-4.685-14.727-10.467s6.594-10.466,14.727-10.466C163.973-36.428,170.568-31.744,170.568-25.963z"/>
+	<text transform="matrix(1 0 0 1 146.0245 -22.5276)" font-family="'Myriad-Roman'" font-size="10">PER</text>
+	<text transform="matrix(0.583 0 0 0.583 161.6446 -19.1976)" font-family="'Myriad-Roman'" font-size="10">1</text>
+</g>
+<g id="PER2" transform="translate(213.4860,243.1136)">
+	
+		<radialGradient id="PER2_path1_1_" cx="-273.2057" cy="-425.2479" r="16.1855" gradientTransform="matrix(0.9269 0 0 0.6352 406.075 244.155)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#A2FF5F"/>
+		<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+		<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+		<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+		<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+		<stop  offset="0.8174" style="stop-color:#67F35D"/>
+		<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+		<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+		<stop  offset="0.9915" style="stop-color:#07E05A"/>
+		<stop  offset="1" style="stop-color:#00DF5A"/>
+	</radialGradient>
+	<path id="PER2_path1" fill="url(#PER2_path1_1_)" stroke="#000000" d="M167.568-25.963c0,5.78-6.596,10.467-14.729,10.467
+		s-14.727-4.685-14.727-10.467s6.594-10.466,14.727-10.466C160.973-36.428,167.568-31.744,167.568-25.963z"/>
+	<text transform="matrix(1 0 0 1 143.0243 -22.5276)" font-family="'Myriad-Roman'" font-size="10">PER</text>
+	<text transform="matrix(0.583 0 0 0.583 158.6444 -19.1976)" font-family="'Myriad-Roman'" font-size="10">2</text>
+</g>
+<path id="path3270"  d="M257.533,215.11"/>
+<path id="path3276"  d="M184.652,194.305"/>
+<g>
+	<g>
+		<g>
+			<path fill="none" stroke="#000000" d="M364.765,227.196c-22.877,29.042-61.215,31.351-86.986,4.942"/>
+			<polygon points="282.391,231.562 278.642,233.023 277.089,236.735 273.61,227.866 			"/>
+		</g>
+	</g>
+	<g>
+		<g>
+			<path fill="none" stroke="#000000" d="M273.734,206.942c23.238-27.796,61.521-30.348,86.959-4.659"/>
+			<polygon points="356.085,202.894 359.824,201.405 361.349,197.682 364.893,206.524 			"/>
+		</g>
+	</g>
+</g>
+<g>
+	<g>
+		<g>
+			<path fill="none" stroke="#000000" d="M267.611,227.196c-22.877,29.042-61.216,31.351-86.987,4.942"/>
+			<polygon points="185.236,231.562 181.487,233.023 179.934,236.735 176.455,227.866 			"/>
+		</g>
+	</g>
+	<g>
+		<g>
+			<path fill="none" stroke="#000000" d="M176.579,206.942c23.238-27.796,61.522-30.348,86.96-4.659"/>
+			<polygon points="258.931,202.894 262.669,201.405 264.195,197.682 267.739,206.524 			"/>
+		</g>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="432.013" y1="217.025" x2="384.013" y2="217.025"/>
+		<polygon points="429.205,220.729 430.777,217.025 429.205,213.321 437.982,217.025 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="152.04" y1="217.508" x2="70" y2="217.508"/>
+		<polygon points="149.231,221.211 150.804,217.508 149.231,213.804 158.009,217.508 		"/>
+	</g>
+</g>
+<g id="permRNA" transform="translate(17.66781,-104.7056)">
+	
+		<radialGradient id="permRNA_path1_1_" cx="-52.6483" cy="-76.561" r="16.186" gradientTransform="matrix(1.5933 0 0 0.6358 110.2779 370.891)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#A2FF5F"/>
+		<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+		<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+		<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+		<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+		<stop  offset="0.8174" style="stop-color:#67F35D"/>
+		<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+		<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+		<stop  offset="0.9915" style="stop-color:#07E05A"/>
+		<stop  offset="1" style="stop-color:#00DF5A"/>
+	</radialGradient>
+	<path id="permRNA_path1" fill="url(#permRNA_path1_1_)" stroke="#000000" d="M51.709,322.212c0,5.786-11.338,10.478-25.316,10.478
+		c-13.981,0-25.315-4.689-25.315-10.478s11.334-10.476,25.315-10.476C40.37,311.738,51.709,316.425,51.709,322.212z"/>
+	<text transform="matrix(1 0 0 1 5.946 325.2964)" font-family="'Myriad-Roman'" font-size="10">per mRNA</text>
+</g>
+<g id="nuclearPER">
+	
+		<radialGradient id="nuclearPER_path1_1_" cx="247.1324" cy="-432.2207" r="18.2635" gradientTransform="matrix(1.5933 0 0 0.6358 -26.2484 367.6019)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#A2FF5F"/>
+		<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+		<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+		<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+		<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+		<stop  offset="0.8174" style="stop-color:#67F35D"/>
+		<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+		<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+		<stop  offset="0.9915" style="stop-color:#07E05A"/>
+		<stop  offset="1" style="stop-color:#00DF5A"/>
+	</radialGradient>
+	<path id="nuclearPER_path1" fill="url(#nuclearPER_path1_1_)" stroke="#000000" d="M396.072,92.795
+		c0,6.529-12.793,11.823-28.566,11.823c-15.775,0-28.564-5.292-28.564-11.823s12.789-11.82,28.564-11.82
+		C383.279,80.976,396.072,86.265,396.072,92.795z"/>
+	<text transform="matrix(1 0 0 1 343.146 95.731)" font-family="'Myriad-Roman'" font-size="10">nuclear PER</text>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="368.667" y1="200.5" x2="368.667" y2="111.114"/>
+		<polygon points="372.37,113.923 368.667,112.35 364.962,113.923 368.667,105.145 		"/>
+		<polygon points="364.963,197.691 368.667,199.265 372.371,197.691 368.667,206.47 		"/>
+	</g>
+</g>
+<text transform="matrix(1 0 0 1 277.9693 40.7559)" font-family="'Myriad-Roman'" font-size="10">Nucleus</text>
+<text transform="matrix(1 0 0 1 101.4995 40.7559)" font-family="'Myriad-Roman'" font-size="10">Cytoplasm</text>
+<path d="M190,92.5"/>
+<g>
+	<g>
+		<g>
+			<line fill="none" stroke="#000000" x1="43.429" y1="201" x2="43.429" y2="92.5"/>
+			<polygon points="39.726,198.191 43.429,199.765 47.133,198.191 43.429,206.97 			"/>
+		</g>
+	</g>
+	<g>
+		<g>
+			<line fill="none" stroke="#000000" x1="43.063" y1="92.5" x2="192.001" y2="92.5"/>
+		</g>
+	</g>
+</g>
+<line fill="#FF0000" stroke="#FF0000" x1="266.5" y1="92.578" x2="336" y2="92.578"/>
+<path id="path33139_1_" fill="none" stroke="#000000" d="M266.397,94.839l0.024-4.521"/>
+</svg>
+</window>

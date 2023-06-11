@@ -1,0 +1,125 @@
+// Created by libAntimony v2.13.2
+function inf_(b, S, V, T)
+  b*S*V/T;
+end
+
+inf_ is "inf"
+
+function tg(r, L, S)
+  r*S*ln(L/S);
+end
+
+tg is "tg"
+
+function burst(a, di, I)
+  a*di*I;
+end
+
+burst is "burst"
+
+
+model *Jenner2018___treatment_of_oncolytic_virus()
+
+  // Compartments and Species:
+  compartment tme;
+  species V in tme, S in tme, I in tme, $T in tme;
+
+  // Assignment Rules:
+  T := I + S;
+
+  // Reactions:
+  virus_burst:  => V; tme*burst(a, di, I);
+  virus_decay: V => ; tme*dv*V;
+  tumor_growth:  => S; tme*tg(r, L, S);
+  tumor_infection: S => I; tme*inf_(b, S, V, T);
+  infected_tumor_death: I => ; tme*di*I;
+
+  // Events:
+  virus_treatment_1: at time >= 2, persistent=false, fromTrigger=false: V = V0;
+  virus_treatment_2: at time >= 4, persistent=false, fromTrigger=false: V = V0;
+
+  // Species initializations:
+  V = V0;
+  V has substance_per_volume;
+  S = S0;
+  S has substance_per_volume;
+  I = 0;
+  I has substance_per_volume;
+  T has substance_per_volume;
+
+  // Compartment initializations:
+  tme = 1;
+  tme has volume;
+
+  // Variable initializations:
+  V0 = 0;
+  V0 has unit_0;
+  S0 = 251000000;
+  S0 has unit_0;
+  dv = 0;
+  dv has unit_1;
+  a = 0;
+  a has unit_0;
+  di = 0;
+  di has unit_1;
+  r = 0.037;
+  r has unit_1;
+  L = 3490000000;
+  L has unit_0;
+  b = 0;
+  b has unit_1;
+
+  // Other declarations:
+  const tme, V0, S0, dv, a, di, r, L, b;
+
+  // Unit definitions:
+  unit length = metre;
+  unit area = metre^2;
+  unit volume = 1 / dimensionless^-0;
+  unit time_unit = time_unit;
+  unit substance = 1e-3 mole;
+  unit unit_0 = 1 / dimensionless^-0;
+  unit unit_1 = 1 / 86400 second;
+  unit extent = substance;
+  unit substance_per_volume = 1e-3 mole / dimensionless^0;
+
+  // Display Names:
+  time_unit is "time";
+  unit_0 is "1";
+  unit_1 is "1/d";
+  virus_treatment_1 is "virus treatment 1";
+  virus_treatment_2 is "virus treatment 2";
+  virus_burst is "virus burst";
+  virus_decay is "virus decay";
+  tumor_growth is "tumor growth";
+  tumor_infection is "tumor infection";
+  infected_tumor_death is "infected tumor death";
+
+  // CV terms:
+  tme hypernym "http://identifiers.org/ncit/C94498"
+  V hypernym "http://identifiers.org/ncit/C717"
+  V0 hypernym "http://identifiers.org/ncit/C717"
+  S hypernym "http://identifiers.org/cl/CL:0001063"
+  S0 hypernym "http://identifiers.org/cl/CL:0001063"
+  I hypernym "http://identifiers.org/cl/CL:0001063"
+  T hypernym "http://identifiers.org/cl/CL:0001063"
+  dv hypernym "http://identifiers.org/ncit/C25636"
+  a hypernym "http://identifiers.org/ncit/C84380"
+  di hypernym "http://identifiers.org/ncit/C25636"
+  r hypernym "http://identifiers.org/sbo/SBO:0000610"
+  L hypernym "http://identifiers.org/sbo/SBO:0000661"
+  b hypernym "http://identifiers.org/ncit/C25636"
+  virus_burst hypernym "http://identifiers.org/sbo/SBO:0000393"
+  virus_decay hypernym "http://identifiers.org/sbo/SBO:0000179"
+  tumor_growth hypernym "http://identifiers.org/go/GO:0008283"
+  tumor_growth hypernym "http://identifiers.org/sbo/SBO:0000393"
+  infected_tumor_death hypernym "http://identifiers.org/sbo/SBO:0000179"
+  infected_tumor_death hypernym "http://identifiers.org/go/GO:0000821"
+end
+
+Jenner2018___treatment_of_oncolytic_virus is "Jenner2018 - treatment of oncolytic virus"
+
+Jenner2018___treatment_of_oncolytic_virus description "http://identifiers.org/pubmed/29644518"
+Jenner2018___treatment_of_oncolytic_virus taxon "http://identifiers.org/taxonomy/9606"
+Jenner2018___treatment_of_oncolytic_virus property "http://identifiers.org/ncit/C62713",
+                                                   "http://identifiers.org/mamo/MAMO_0000046"

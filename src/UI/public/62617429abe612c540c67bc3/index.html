@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>Cell viability models for tissue exposed to ablative temperatures.</title>
+</head>
+<body>
+
+<p>
+Cell viability models for tissue exposed to ablative temperatures can be broadly split into two classes: mechanistic lumped parameters models based on observations of the response of individual cells; and statistical models. Several of the mechanistic models are presented here as they can be captured by CellML.
+</p>
+
+<p>
+The lumped parameter models of cell viability are based on observations that cells exposed to thermal insult can either recover or die. For this reason the models have a minimum of two compartments representing dead or alive cells, and a potentially infinite number of compartments representing the states between alive and dead. This can be represented schematically, as in Figure 1.
+</p>
+
+<table class="tmp-doc-informalfigure">
+ <tr class="tmp-doc-informalfigure">
+   <td class="tmp-doc-informalfigure">
+     <img class="tmp-doc-informalfigure" alt="" src="cell-death-schem.png" height="500"/>
+   </td>
+ </tr>
+ <tr class="tmp-doc-informalfigure">
+   <td class="tmp-doc-informalfigure-caption">
+     Figure 1: Schematic of the available lumped parameter models of cell death. The minimum number of compartments is two, alive and dead. In this case cells can only go in one direction alive to dead. The rest of the models involve three or more compartments, where the extra compartments represent intermediate (vulnerable) states. The number of intermediate states and the rate of transmission between the compartments are the unique features of each of the models.
+   </td>
+ </tr>
+</table>
+
+<p>
+The four models presented here are:
+<ul>
+<li>Arrhenius - 2 x compartments,</li>
+<li>Moussa1979 - 3 x compartments,</li>
+<li>Jung1986 - &infin; x compartments,</li>
+<li>O'Neill2011 - 3 x compartments, nonlinear.</li>
+</ul>
+</p>
+
+</html>

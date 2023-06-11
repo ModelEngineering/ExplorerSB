@@ -1,7 +1,7 @@
 import { DisplayMode } from "../Visualization";
 import DataTable from 'rc-table';
 
-const Table = ({data, xVariable, variables, displayMode}: {data: Object[], xVariable: string | undefined, variables: SelectOption[], displayMode: DisplayMode}) => {
+const Table = ({data, xVariable, variables, displayMode}: {data: Object[], xVariable: string | undefined, variables: VariableSelectOption[], displayMode: DisplayMode}) => {
   const columns : Record<string, any>[] = []
   if(xVariable !== undefined) {
     columns.push({

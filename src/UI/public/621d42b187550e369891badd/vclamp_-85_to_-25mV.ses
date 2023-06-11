@@ -1,0 +1,49 @@
+objectvar save_window_, rvp_
+objectvar scene_vector_[6]
+objectvar ocbox_, ocbox_list_, scene_, scene_list_
+{ocbox_list_ = new List()  scene_list_ = new List()}
+
+//Begin PointProcessManager
+{
+load_file("pointman.hoc")
+}
+{
+electrode ocbox_ = new PointProcessManager(0)
+}
+{object_push(ocbox_)}
+{
+mt.select("IClamp") i = mt.selected()
+ms[i] = new MechanismStandard("IClamp")
+ms[i].set("del", 50, 0)
+ms[i].set("dur", 500, 0)
+ms[i].set("amp", 0.05, 0)
+mt.select("VClamp") i = mt.selected()
+ms[i] = new MechanismStandard("VClamp")
+ms[i].set("dur", 50, 0)
+ms[i].set("dur", 50, 1)
+ms[i].set("dur", 10, 2)
+ms[i].set("amp", -85, 0)
+ms[i].set("amp", -25, 1)
+ms[i].set("amp", -85, 2)
+ms[i].set("gain", 1000, 0)
+ms[i].set("rstim", 1, 0)
+ms[i].set("tau1", 0.002, 0)
+ms[i].set("tau2", 23, 0)
+ms[i].set("e0", 0.059965, 0)
+ms[i].set("vo0", -59.969, 0)
+ms[i].set("vi0", -59.88, 0)
+ms[i].set("fac", 0, 0)
+mt.select("VClamp") i = mt.selected() maction(i)
+hoc_ac_ = 1
+sec.sec move() d1.flip_to(0)
+}
+{object_pop() doNotify()}
+{
+ocbox_ = ocbox_.v1
+ocbox_.map("PointProcessManager", 20, 262, 284.16, 701.76)
+}
+objref ocbox_
+//End PointProcessManager
+
+objectvar scene_vector_[1]
+{doNotify()}

@@ -1,0 +1,105 @@
+objectvar save_window_, rvp_
+objectvar scene_vector_[7]
+objectvar ocbox_, ocbox_list_, scene_, scene_list_
+{ocbox_list_ = new List()  scene_list_ = new List()}
+
+//Begin PointProcessGroupManager
+{
+load_file("pointgrp.hoc")
+}
+{
+ocbox_ = new PointProcessGroupManager(0)
+}
+{object_push(ocbox_)}
+{
+ms = new MechanismStandard("AlphaSynapse")
+ms.set("onset", 0, 0)
+ms.set("tau", 0.1, 0)
+ms.set("gmax", 0, 0)
+ms.set("e", 0, 0)
+mnews("AlphaSynapse", ms)
+select(0)
+execute("dendrite[685] ocbox_.move(0.5)")
+ms = new MechanismStandard("AlphaSynapse")
+ms.set("onset", 0, 0)
+ms.set("tau", 0.1, 0)
+ms.set("gmax", 0, 0)
+ms.set("e", 0, 0)
+mnews("AlphaSynapse", ms)
+select(1)
+execute("dendrite[524] ocbox_.move(0.5)")
+ms = new MechanismStandard("AlphaSynapse")
+ms.set("onset", 0, 0)
+ms.set("tau", 0.1, 0)
+ms.set("gmax", 0, 0)
+ms.set("e", 0, 0)
+mnews("AlphaSynapse", ms)
+select(2)
+execute("dendrite[520] ocbox_.move(0.5)")
+ms = new MechanismStandard("AlphaSynapse")
+ms.set("onset", 0, 0)
+ms.set("tau", 0.1, 0)
+ms.set("gmax", 0, 0)
+ms.set("e", 0, 0)
+mnews("AlphaSynapse", ms)
+select(3)
+execute("dendrite[626] ocbox_.move(0.5)")
+ms = new MechanismStandard("AlphaSynapse")
+ms.set("onset", 0, 0)
+ms.set("tau", 0.1, 0)
+ms.set("gmax", 0, 0)
+ms.set("e", 0, 0)
+mnews("AlphaSynapse", ms)
+select(4)
+execute("dendrite[205] ocbox_.move(1)")
+ms = new MechanismStandard("AlphaSynapse")
+ms.set("onset", 0, 0)
+ms.set("tau", 0.1, 0)
+ms.set("gmax", 0, 0)
+ms.set("e", 0, 0)
+mnews("AlphaSynapse", ms)
+select(5)
+execute("dendrite[357] ocbox_.move(1)")
+ms = new MechanismStandard("AlphaSynapse")
+ms.set("onset", 0, 0)
+ms.set("tau", 0.1, 0)
+ms.set("gmax", 0, 0)
+ms.set("e", 0, 0)
+mnews("AlphaSynapse", ms)
+select(6)
+execute("dendrite[464] ocbox_.move(1)")
+ms = new MechanismStandard("AlphaSynapse")
+ms.set("onset", 0, 0)
+ms.set("tau", 0.1, 0)
+ms.set("gmax", 0, 0)
+ms.set("e", 0, 0)
+mnews("AlphaSynapse", ms)
+select(7)
+execute("dendrite[588] ocbox_.move(0.5)")
+ms = new MechanismStandard("AlphaSynapse")
+ms.set("onset", 0, 0)
+ms.set("tau", 0.1, 0)
+ms.set("gmax", 0, 0)
+ms.set("e", 0, 0)
+mnews("AlphaSynapse", ms)
+select(8)
+execute("dendrite[513] ocbox_.move(0)")
+ms = new MechanismStandard("AlphaSynapse")
+ms.set("onset", 0, 0)
+ms.set("tau", 0.1, 0)
+ms.set("gmax", 0, 0)
+ms.set("e", 0, 0)
+mnews("AlphaSynapse", ms)
+select(9)
+execute("dendrite[48] ocbox_.move(0.5)")
+}
+{object_pop() doNotify()}
+{
+ocbox_ = ocbox_.v1
+ocbox_.map("PointProcessGroupManager", 693, 54, 624, 348.48)
+}
+objref ocbox_
+//End PointProcessGroupManager
+
+objectvar scene_vector_[1]
+{doNotify()}

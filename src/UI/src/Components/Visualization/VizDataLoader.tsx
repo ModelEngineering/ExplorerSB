@@ -1,66 +1,89 @@
 import { Dispatch, SetStateAction, useEffect } from "react";
 import Papa from "papaparse";
 
-const timeData = [
-  "data_set_time",
-  "data_set_T",
-  "data_set_value_component_environment_variable_time",
-];
-
 const VizDataLoader = ({
   runid,
+  fileName,
   setData,
   setXVariable,
   setAllVariables,
-  setDisplayedVariables
+  setDisplayedVariables,
+  setCSVs,
 }: {
   runid: string;
+  fileName: string | undefined;
   setData: Dispatch<SetStateAction<Object[]>>;
   setXVariable: Dispatch<SetStateAction<string | undefined>>;
-  setAllVariables: Dispatch<SetStateAction<SelectOption[]>>;
-  setDisplayedVariables: Dispatch<SetStateAction<SelectOption[]>>;
+  setAllVariables: Dispatch<SetStateAction<VariableSelectOption[]>>;
+  setDisplayedVariables: Dispatch<SetStateAction<VariableSelectOption[]>>;
+  setCSVs: (csvs: { name: string, label: string, value: string }[]) => void;
 }) => {
   useEffect(() => {
-    const getDataset = async () => {
-      const response = await fetch(`/${runid}/report.csv`)
-        .then(response => response.text())
-        .then(v => Papa.parse(v, { delimiter: "," , newline: "\n", header: true, skipEmptyLines: true, dynamicTyping: true}))
-        .then(v => v.data)
-        .catch(err => console.log(err))
-        return response
-    }
-    getDataset().then((data) => {
-      if (data === undefined) {
-        return;
-      }
-      const keys = Object.keys(data[0] as Object);
-      setData(data as Object[]);
-      timeData.some((name) => {
-        let index = keys.indexOf(name);
-        if (index !== -1) {
-          setXVariable(name);
-          keys.splice(index, 1);
-          return true;
+    const getDirectory = async () => {
+      const response = await fetch(`/${runid}/directory.json`)
+        .then((response) => response.json())
+        .then((v) => v)
+        .catch((err) => console.log(err));
+      return response;
+    };
+    getDirectory().then((dirData: { file: string }[]) => {
+      let csvs: string[] = [];
+      dirData.forEach(({ file }) => {
+        if (file.endsWith(".csv")) {
+          csvs.push(file);
         }
       });
-      setAllVariables(
-        keys.map((key) => {
-          return {name: key, label: key, value: key};
-        })
-      );
-      setDisplayedVariables(
-        keys.slice(0, 10).map((key) => {
-          return {name: key, label: key, value: key};
-        })
-      );
+      setCSVs(csvs.map((key) => {
+        return { name: key, label: key, value: key };
+      }));
     });
-    setData([]);
-    setXVariable(undefined);
-    setAllVariables([]);
-    setDisplayedVariables([]);
   }, [runid]);
 
-  return <></>
-}
+  useEffect(() => {
+    const getDataset = async () => {
+      const response = await fetch(`/${runid}/${fileName}`)
+        .then((response) => response.text())
+        .then((v) =>
+          Papa.parse(v, {
+            delimiter: ",",
+            newline: "\n",
+            header: true,
+            skipEmptyLines: true,
+            dynamicTyping: true,
+          })
+        )
+        .then((v) => v.data)
+        .catch((err) => console.log(err));
+      return response;
+    };
+    if (fileName !== undefined && fileName.endsWith(".csv")) {
+      getDataset().then((CSVdata) => {
+        if (CSVdata === undefined) {
+          return;
+        }
+        const keys = Object.keys(CSVdata[0] as Object);
+        setData(CSVdata as Object[]);
+        let timeSeries = keys[0];
+        setXVariable(timeSeries);
+        keys.splice(0, 1);
+        setAllVariables(
+          keys.map((key) => {
+            return { name: key, label: key, value: key };
+          })
+        );
+        setDisplayedVariables(
+          keys.slice(0, 10).map((key) => {
+            return { name: key, label: key, value: key };
+          })
+        );
+      });
+      setData([]);
+      setXVariable(undefined);
+      setAllVariables([]);
+      setDisplayedVariables([]);
+    }
+  }, [runid, fileName]);
+  return <></>;
+};
 
 export default VizDataLoader;

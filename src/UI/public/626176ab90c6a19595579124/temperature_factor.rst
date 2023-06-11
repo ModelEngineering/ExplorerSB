@@ -1,0 +1,3 @@
+Temperature component
+---------------------
+The equations (S-13, S-14), (S-23,..., S-28), (S-36, S-37), (S-43, S-44), and (S-80,..., S-91) have been multiplied by corresponding temperature factors :math:`\phi`. The :math:`\phi` equation is defined in `temperature_factor.cellml <../components/temperature_factor.cellml>`_. The reference temperature :math:`T_{0}` for :math:`I_{CaL}` is :math:`310` K, while :math:`I_{CaT}` is constructed based on :math:`297` K. The reference temperatures :math:`T_{0}` for other currents are :math:`297` K. The :math:`Q_{10}` coefficients for calcium, potassium and sodium channels are :math:`2.1`, :math:`3.1` and :math:`2.45` respectively.

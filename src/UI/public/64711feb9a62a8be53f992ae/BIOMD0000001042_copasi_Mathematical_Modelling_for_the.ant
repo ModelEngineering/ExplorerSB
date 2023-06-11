@@ -1,0 +1,239 @@
+// Created by libAntimony v2.13.2
+function Constant_flux__irreversible(v)
+  v;
+end
+
+Constant_flux__irreversible is "Constant flux (irreversible)"
+
+function Rate_Law_for_Tumour_growth(a, T, b)
+  a*T*(1 - b*T);
+end
+
+Rate_Law_for_Tumour_growth is "Rate Law for Tumour_growth"
+
+function Rate_Law_for_CD4_T_cell_production(beta_1, T, alpha_1, I)
+  (beta_1*T/(alpha_1 + T))*I;
+end
+
+Rate_Law_for_CD4_T_cell_production is "Rate Law for CD4_T_cell_production"
+
+function Rate_Law_for_NK_cell_production(e, C, g, T, h, N)
+  e*C + (g*T^2/(h + T^2))*N;
+end
+
+Rate_Law_for_NK_cell_production is "Rate Law for NK_cell_production"
+
+function Rate_Law_for_IL_2_production(beta_2, T, alpha_2, Y)
+  (beta_2*T/(alpha_2 + T))*Y;
+end
+
+Rate_Law_for_IL_2_production is "Rate Law for IL-2_production"
+
+function Rate_Law_for_CD8_T_cell_production(j, D, T, k, L, r_1, N, r_2, C, p_i, I, g_i)
+  (j*D^2*T^2/(k + D^2*T^2))*L + (r_1*N + r_2*C)*T + (p_i*I/(g_i + I))*L;
+end
+
+Rate_Law_for_CD8_T_cell_production is "Rate Law for CD8_T_cell_production"
+
+function Rate_Law_for_NK_cell_depletion(f, N, p, T)
+  f*N + p*N*T;
+end
+
+Rate_Law_for_NK_cell_depletion is "Rate Law for NK_cell_depletion"
+
+function Rate_Law_for_CD4_T_cell_depletion(mu_1, Y, delta_2, T)
+  mu_1*Y + delta_2*T*Y;
+end
+
+Rate_Law_for_CD4_T_cell_depletion is "Rate Law for CD4_T_cell_depletion"
+
+function Rate_Law_for_CD8_T_cell_depletion(m, L, q, T, u, N)
+  m*L + q*L*T + u*N*L^2;
+end
+
+Rate_Law_for_CD8_T_cell_depletion is "Rate Law for CD8_T_cell_depletion"
+
+function Rate_Law_for_Tumour_death(c, N, T, D, c_1, a_1, I)
+  c*N*T + D*T + (c_1*T/(a_1 + T))*I;
+end
+
+Rate_Law_for_Tumour_death is "Rate Law for Tumour_death"
+
+
+model *Makhlouf2020___No_treatment_model_of_the_role_of_CD4_T_cells_in_tumor_immune_interactions()
+
+  // Compartments and Species:
+  compartment Tumor_microenvironment;
+  species Tumor_cells in Tumor_microenvironment, NK_cells in Tumor_microenvironment;
+  species CD8_T_cells in Tumor_microenvironment, CD4_T_cells in Tumor_microenvironment;
+  species Circulating_lymphocytes in Tumor_microenvironment, IL_2 in Tumor_microenvironment;
+
+  // Assignment Rules:
+  D := d*((CD8_T_cells/(Tumor_cells + 1e-10))^l/(s + (CD8_T_cells/(Tumor_cells + 1e-10))^l));
+
+  // Reactions:
+  Tumour_growth:  => Tumor_cells; Tumor_microenvironment*Rate_Law_for_Tumour_growth(a, Tumor_cells, b);
+  Tumour_death: Tumor_cells => ; Tumor_microenvironment*Rate_Law_for_Tumour_death(c, NK_cells, Tumor_cells, D, c_1, a_1, IL_2);
+  NK_cell_production:  => NK_cells; Tumor_microenvironment*Rate_Law_for_NK_cell_production(e, Circulating_lymphocytes, g, Tumor_cells, h, NK_cells);
+  NK_cell_depletion: NK_cells => ; Tumor_microenvironment*Rate_Law_for_NK_cell_depletion(f, NK_cells, p, Tumor_cells);
+  CD8_T_cell_production:  => CD8_T_cells; Tumor_microenvironment*Rate_Law_for_CD8_T_cell_production(j, D, Tumor_cells, k, CD8_T_cells, r_1, NK_cells, r_2, Circulating_lymphocytes, p_i, IL_2, g_i);
+  CD8_T_cell_depletion: CD8_T_cells => ; Tumor_microenvironment*Rate_Law_for_CD8_T_cell_depletion(m, CD8_T_cells, q, Tumor_cells, u, NK_cells);
+  CD4_T_cell_production:  => CD4_T_cells; Tumor_microenvironment*Rate_Law_for_CD4_T_cell_production(beta_1, Tumor_cells, alpha_1, IL_2);
+  CD4_T_cell_depletion: CD4_T_cells => ; Tumor_microenvironment*Rate_Law_for_CD4_T_cell_depletion(mu_1, CD4_T_cells, delta_2, Tumor_cells);
+  Circulating_lymphocyte_production:  => Circulating_lymphocytes; Tumor_microenvironment*Constant_flux__irreversible(alpha);
+  Circulating_lymphocyte_depletion: Circulating_lymphocytes => ; Tumor_microenvironment*beta*Circulating_lymphocytes;
+  IL_2_production:  => IL_2; Tumor_microenvironment*Rate_Law_for_IL_2_production(beta_2, Tumor_cells, alpha_2, CD4_T_cells);
+  IL_2_depletion: IL_2 => ; Tumor_microenvironment*mu_i*IL_2;
+
+  // Species initializations:
+  Tumor_cells = 10000000;
+  NK_cells = 1000;
+  CD8_T_cells = 100;
+  CD4_T_cells = 1000000;
+  Circulating_lymphocytes = 60000000000;
+  IL_2 = 100000;
+
+  // Compartment initializations:
+  Tumor_microenvironment = 1;
+
+  // Variable initializations:
+  a = 0.431;
+  a has unit_0;
+  a_1 = 100000;
+  a_1 has unit_1;
+  b = 1.02e-09;
+  b has unit_2;
+  c = 6.41e-11;
+  c has unit_3;
+  c_1 = 0.2;
+  c_1 has unit_4;
+  d = 2.34;
+  d has unit_0;
+  e = 2.08e-07;
+  e has unit_0;
+  f = 0.0412;
+  f has unit_0;
+  g = 0.0125;
+  g has unit_0;
+  g_i = 20000000;
+  g_i has unit_5;
+  h = 20200000;
+  h has unit_5;
+  j = 0.0249;
+  j has unit_0;
+  k = 36600000;
+  k has unit_5;
+  l = 2.09;
+  m = 0.204;
+  m has unit_0;
+  p = 3.42e-06;
+  p has unit_6;
+  p_i = 0.125;
+  p_i has unit_0;
+  q = 1.42e-06;
+  q has unit_3;
+  r_1 = 1.1e-07;
+  r_1 has unit_3;
+  r_2 = 6.5e-11;
+  r_2 has unit_6;
+  s = 0.0839;
+  u = 3e-10;
+  u has unit_7;
+  alpha = 750000000;
+  alpha has unit_4;
+  alpha_1 = 1000;
+  alpha_1 has unit_1;
+  alpha_2 = 1000;
+  alpha_2 has unit_1;
+  beta = 0.012;
+  beta has unit_0;
+  beta_1 = 0.835;
+  beta_1 has unit_4;
+  beta_2 = 5.4;
+  beta_2 has unit_6;
+  mu_1 = 0.1;
+  mu_1 has unit_0;
+  mu_i = 10;
+  mu_i has unit_0;
+  delta_2 = 1e-07;
+  delta_2 has unit_6;
+
+  // Other declarations:
+  var D;
+  const Tumor_microenvironment, a, a_1, b, c, c_1, d, e, f, g, g_i, h, j;
+  const k, l, m, p, p_i, q, r_1, r_2, s, u, alpha, alpha_1, alpha_2, beta;
+  const beta_1, beta_2, mu_1, mu_i, delta_2;
+
+  // Unit definitions:
+  unit length = metre;
+  unit area = metre^2;
+  unit volume = litre;
+  unit time_unit = 86400 second;
+  unit substance = item;
+  unit unit_0 = 1 / 86400 second;
+  unit unit_1 = item;
+  unit unit_2 = 1 / item;
+  unit unit_3 = item / 86400 second;
+  unit unit_4 = item / 86400 second;
+  unit unit_5 = item^2;
+  unit unit_6 = 86400 second / item;
+  unit unit_7 = 86400 second / item^2;
+
+  // Display Names:
+  time_unit is "time";
+  unit_0 is "1/d";
+  unit_1 is "#";
+  unit_2 is "1/#";
+  unit_3 is "1/d*#";
+  unit_4 is "#/d";
+  unit_5 is "#^2";
+  unit_6 is "1/#*d";
+  unit_7 is "1/#^2*d";
+  IL_2 is "IL-2";
+  IL_2_production is "IL-2_production";
+  IL_2_depletion is "IL-2_depletion";
+
+  // CV terms:
+  Tumor_microenvironment hypernym "http://identifiers.org/ncit/C94498"
+  Tumor_cells hypernym "http://identifiers.org/cl/CL:0001063"
+  NK_cells hypernym "http://identifiers.org/cl/CL:0000623"
+  CD8_T_cells hypernym "http://identifiers.org/cl/CL:0000625"
+  CD4_T_cells hypernym "http://identifiers.org/cl/CL:0000492"
+  Circulating_lymphocytes hypernym "http://identifiers.org/cl/CL:0000542"
+  Circulating_lymphocytes hypernym "http://identifiers.org/cl/CL:0000080"
+  IL_2 hypernym "http://identifiers.org/pr/PR:000001379"
+  Tumour_growth hypernym "http://identifiers.org/go/GO:0008283"
+  Tumour_growth hypernym "http://identifiers.org/sbo/SBO:0000393"
+  Tumour_death hypernym "http://identifiers.org/go/GO:0008219"
+  Tumour_death hypernym "http://identifiers.org/go/GO:0001906"
+  Tumour_death hypernym "http://identifiers.org/sbo/SBO:0000394"
+  NK_cell_production hypernym "http://identifiers.org/go/GO:0008283"
+  NK_cell_production hypernym "http://identifiers.org/sbo/SBO:0000393"
+  NK_cell_depletion hypernym "http://identifiers.org/sbo/SBO:0000394"
+  NK_cell_depletion hypernym "http://identifiers.org/go/GO:0008219"
+  CD8_T_cell_production hypernym "http://identifiers.org/sbo/SBO:0000393"
+  CD8_T_cell_production hypernym "http://identifiers.org/go/GO:0042098"
+  CD8_T_cell_depletion hypernym "http://identifiers.org/sbo/SBO:0000394"
+  CD8_T_cell_depletion hypernym "http://identifiers.org/go/GO:0008219"
+  CD4_T_cell_production hypernym "http://identifiers.org/sbo/SBO:0000393"
+  CD4_T_cell_production hypernym "http://identifiers.org/go/GO:0042098"
+  CD4_T_cell_depletion hypernym "http://identifiers.org/go/GO:0008219"
+  CD4_T_cell_depletion hypernym "http://identifiers.org/sbo/SBO:0000394"
+  Circulating_lymphocyte_production hypernym "http://identifiers.org/go/GO:0008283"
+  Circulating_lymphocyte_production hypernym "http://identifiers.org/sbo/SBO:0000393"
+  Circulating_lymphocyte_depletion hypernym "http://identifiers.org/go/GO:0008219"
+  Circulating_lymphocyte_depletion hypernym "http://identifiers.org/sbo/SBO:0000394"
+  IL_2_production hypernym "http://identifiers.org/sbo/SBO:0000393"
+  IL_2_depletion hypernym "http://identifiers.org/sbo/SBO:0000394"
+end
+
+Makhlouf2020___No_treatment_model_of_the_role_of_CD4_T_cells_in_tumor_immune_interactions is "Makhlouf2020 - No treatment model of the role of CD4 T cells in tumor-immune interactions"
+
+Makhlouf2020___No_treatment_model_of_the_role_of_CD4_T_cells_in_tumor_immune_interactions model_entity_is "http://identifiers.org/biomodels.db/MODEL2109060001",
+                                                                                                          "http://identifiers.org/biomodels.db/BIOMD0000001042"
+Makhlouf2020___No_treatment_model_of_the_role_of_CD4_T_cells_in_tumor_immune_interactions propertyBearer "http://identifiers.org/go/GO:0002418"
+Makhlouf2020___No_treatment_model_of_the_role_of_CD4_T_cells_in_tumor_immune_interactions propertyBearer "http://identifiers.org/doid/DOID:162"
+Makhlouf2020___No_treatment_model_of_the_role_of_CD4_T_cells_in_tumor_immune_interactions propertyBearer "http://identifiers.org/ncit/C18670"
+Makhlouf2020___No_treatment_model_of_the_role_of_CD4_T_cells_in_tumor_immune_interactions taxon "http://identifiers.org/taxonomy/9606"
+Makhlouf2020___No_treatment_model_of_the_role_of_CD4_T_cells_in_tumor_immune_interactions description "http://identifiers.org/pubmed/32148558"
+Makhlouf2020___No_treatment_model_of_the_role_of_CD4_T_cells_in_tumor_immune_interactions property "http://identifiers.org/mamo/MAMO_0000046"

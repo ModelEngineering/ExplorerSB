@@ -1,0 +1,17 @@
+<html>
+<head>
+<title>Spronck 2012</title>
+</head>
+<body>
+<h2>Model Status</h2>
+<p>The current CellML model implementation runs in OpenCell. The results have been validated against the original Matlab code.</p>
+<h2>Model Structure</h2>
+<p>The present model describes cerebral blood flow control including neurogenic, myogenic, metabolic, and shear stress based regulation. The cerebral vascular bed is modeled using a lumped parameter model, describing arterial, arteriolar and venous compartments. Arterial and venous compartments are modeled using linear components. The arteriolar vessel wall is described by Laplace's law, incorporating elastic, muscular and viscous components. The muscular (i.e., smooth muscle cells in the vessel wall) component's tension is actively regulated via the aforementioned regulatory mechanisms. For more information, the reader is referred to the paper by Spronck et al.</p>
+<p>Model code is currently configured to recreate Figure 7 of the paper which represents a NVC overshoot arising from neuronal-myogenic interaction. To simulate an eye opening, a piecewise function has been created to change the value of A_neuro from its baseline state of 0 to 1 at time=1 second. To recreate Figure 8 of the paper (representing a NVC overshoot from interaction of neurogenic, myogenic, and metabolic regulation), Tau_neuro should be changed from 5 seconds to 10 seconds and G_meta should be changed from 0 to -60.</p>
+<p>Model based on:</p>
+<p>Spronck B, Martens EGHJ, Gommer ED, van de Vosse FN.
+A lumped parameter model of cerebral blood flow control combining cerebral autoregulation
+and neurovascular coupling American Journal of Physiology - Heart and Circulatory Physiology (July 9, 2012).
+doi: 10.1152/ajpheart.00303.2012</p>
+</body>
+</html>

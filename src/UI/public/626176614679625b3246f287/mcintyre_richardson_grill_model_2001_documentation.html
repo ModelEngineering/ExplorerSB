@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title>Modeling the excitability of mammalian nerve fibers: influence of afterpotentials on the recovery cycle</title>
+  </head>
+  <body>
+    <p>Encoded in CellML by <a href="https://unidirectory.auckland.ac.nz/profile/a-garny">Alan Garny</a></p>
+    <p><a href="https://www.auckland.ac.nz/en/abi/our-research.html">Auckland Bioengineering Institute</a>, <a href="https://www.auckland.ac.nz/">University of Auckland</a></p>
+    <h3>Model Status</h3>
+    <p>
+      This model has been encoded using the information available in the <a href="https://doi.org/10.1152/jn.00353.2001">published article</a>.
+      Only the nodal part of the model has been implemented:
+    </p>
+    <ul>
+      <li>
+        No equation to compute the membrane potential is provided.
+        However, the model relies on the <a href="https://en.wikipedia.org/wiki/Hodgkin%E2%80%93Huxley_model#Voltage-gated_ion_channels">Hodgkin-Huxley formulation</a>, so we rely on that formulation to compute the membrane potential.
+        We use <code>C<sub>n</sub></code> as the capacitance and <code>i<sub>Naf</sub></code>, <code>i<sub>Nap</sub></code>, <code>i<sub>Ks</sub></code> and <code>i<sub>Lk</sub></code> as the currents involved in the membrane dynamics.
+        We also use <code>i<sub>Kf</sub></code>, but by default its conductance is set to <code>0 S/cm<sup>2</sup></code>.
+        The authors mention that, based on experimental data, the value for <code>g<sub>Kf</sub></code> should be about <code>0.02 S/cm<sup>2</sup></code>, hence they tested their model using a range of values between <code>0.01</code> and <code>0.04 S/cm<sup>2</sup></code>.
+      </li>
+      <li>
+        No initial values for the membrane potential (<code>V<sub>m</sub></code>) and the different gating variables (<code>m</code>, <code>h</code>, <code>p</code>, <code>s</code> and <code>n</code>) are provided.
+        So, we set <code>V<sub>m</sub></code> to <code>-80 mV</code> (i.e. the resting potential used in the internodal segments) and the different gating variables to <code>0</code>.
+        From there, the model was run without any stimulus and for several days worth of simulation to reach steady state.
+      </li>
+      <li>
+        No information about the kind of stimulus that should be applied to generate a default action potential is provided.
+        However, various stimulus durations are mentioned in the published article, varying between <code>0.1</code> and <code>3 ms</code>.
+        So, we arbitrarily went for <code>0.5 ms</code>.
+        As for the stimulus amplitude, we went for the smallest value that yields an action potential (actually, a series of action potentials), i.e. <code>0.05 mA/cm<sup>2</sup></code>.
+        (A stimulus amplitude of <code>0.04 mA/cm<sup>2</sup></code> will just result in a blip.)
+      </li>
+    </ul>
+    <table align="center">
+      <tr align="center">
+        <td>
+          <img src="mcintyre_richardson_grill_model_2001.png" width=640/>
+        </td>
+      </tr>
+      <tr align="center">
+        <td>
+          Output of running the SED-ML file in <a href="https://opencor.ws/">OpenCOR</a>.
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,123 @@
+// Created by libAntimony v2.13.2
+function Rate_Law_for_Normal_T_cell_population_growth(r_N, N, C, K_N)
+  -r_N*N*ln((N + C)/K_N);
+end
+
+Rate_Law_for_Normal_T_cell_population_growth is "Rate Law for Normal_T_cell_population_growth"
+
+function Rate_Law_for_Tumour_growth(r_B, B)
+  r_B*B;
+end
+
+Rate_Law_for_Tumour_growth is "Rate Law for Tumour_growth"
+
+function Rate_Law_for_Tumour_killing(gamma_B, B, C, k_B)
+  gamma_B*B*(C/(k_B + C));
+end
+
+Rate_Law_for_Tumour_killing is "Rate Law for Tumour_killing"
+
+function Rate_Law_for_CAR_T_cell_population_growth(r_C, C, N, K_C)
+  -r_C*C*ln((N + C)/K_C);
+end
+
+Rate_Law_for_CAR_T_cell_population_growth is "Rate Law for CAR_T_cell_population_growth"
+
+
+model *Kimmel2021___T_cell_competition_and_stochastic_extinction_events_in_CAR_T_cell_therapy()
+
+  // Compartments and Species:
+  compartment compartment_;
+  species Normal_T_cells in compartment_, CAR_T_cells in compartment_, Antigen_presenting_tumour_cells in compartment_;
+  species $Total_lymphocyte_count in compartment_;
+
+  // Assignment Rules:
+  Total_lymphocyte_count := Normal_T_cells + CAR_T_cells;
+  r_C := rho_C + b*(Total_lymphocyte_count - K_N)^2/(a*Total_lymphocyte_count^2 + (Total_lymphocyte_count - K_N)^2);
+
+  // Reactions:
+  Normal_T_cell_population_growth:  => Normal_T_cells; compartment_*Rate_Law_for_Normal_T_cell_population_growth(r_N, Normal_T_cells, CAR_T_cells, K_N);
+  CAR_T_cell_population_growth:  => CAR_T_cells; compartment_*Rate_Law_for_CAR_T_cell_population_growth(r_C, CAR_T_cells, Normal_T_cells, K_C);
+  Tumour_growth:  => Antigen_presenting_tumour_cells; compartment_*Rate_Law_for_Tumour_growth(r_B, Antigen_presenting_tumour_cells);
+  Tumour_killing: Antigen_presenting_tumour_cells => ; compartment_*Rate_Law_for_Tumour_killing(gamma_B, Antigen_presenting_tumour_cells, CAR_T_cells, k_B);
+
+  // Species initializations:
+  Normal_T_cells = 6;
+  CAR_T_cells = 0.36;
+  Antigen_presenting_tumour_cells = 94.86;
+
+  // Compartment initializations:
+  compartment_ = 1;
+
+  // Variable initializations:
+  K_N = 500;
+  K_N has unit_0;
+  K_C = 139;
+  K_C has unit_0;
+  r_N = 0.17;
+  r_N has unit_1;
+  rho_C = 0.0251;
+  rho_C has unit_1;
+  a = 0.423;
+  b = 0.525;
+  b has unit_2;
+  r_B = 0.01;
+  r_B has unit_1;
+  gamma_B = 1.15;
+  gamma_B has unit_1;
+  k_B = 4.05;
+  k_B has unit_0;
+
+  // Other declarations:
+  var r_C;
+  const compartment_, K_N, K_C, r_N, rho_C, a, b, r_B, gamma_B, k_B;
+
+  // Unit definitions:
+  unit length = metre;
+  unit area = metre^2;
+  unit volume = 1e-3 litre;
+  unit time_unit = 86400 second;
+  unit substance = item;
+  unit unit_0 = item / 1e-6 litre;
+  unit unit_1 = 1 / 86400 second;
+  unit unit_2 = 86400 second;
+
+  // Display Names:
+  time_unit is "time";
+  unit_0 is "#/ul";
+  unit_1 is "1/d";
+  unit_2 is "d";
+  compartment_ is "compartment";
+  Antigen_presenting_tumour_cells is "Antigen-presenting_tumour_cells";
+
+  // CV terms:
+  Normal_T_cells hypernym "http://identifiers.org/cl/CL:0000084"
+  CAR_T_cells hypernym "http://identifiers.org/cl/CL:0000084"
+  CAR_T_cells hypernym "http://identifiers.org/ncit/C137999"
+  Antigen_presenting_tumour_cells hypernym "http://identifiers.org/cl/CL:0001063"
+  Antigen_presenting_tumour_cells hypernym "http://identifiers.org/cl/CL:0001201"
+  Antigen_presenting_tumour_cells property "http://identifiers.org/chebi/CHEBI:144829"
+  Total_lymphocyte_count hypernym "http://identifiers.org/cl/CL:0000084"
+  Total_lymphocyte_count hypernym "http://identifiers.org/ncit/C122157"
+  Normal_T_cell_population_growth hypernym "http://identifiers.org/sbo/SBO:0000393"
+  Normal_T_cell_population_growth hypernym "http://identifiers.org/go/GO:0042098"
+  CAR_T_cell_population_growth hypernym "http://identifiers.org/sbo/SBO:0000393"
+  CAR_T_cell_population_growth hypernym "http://identifiers.org/go/GO:0042098"
+  Tumour_growth hypernym "http://identifiers.org/go/GO:0008283"
+  Tumour_growth hypernym "http://identifiers.org/sbo/SBO:0000393"
+  Tumour_killing hypernym "http://identifiers.org/go/GO:0001906"
+  Tumour_killing hypernym "http://identifiers.org/obi/OBI_1110204"
+  Tumour_killing hypernym "http://identifiers.org/sbo/SBO:0000394"
+end
+
+Kimmel2021___T_cell_competition_and_stochastic_extinction_events_in_CAR_T_cell_therapy is "Kimmel2021 - T cell competition and stochastic extinction events in CAR T cell therapy"
+
+Kimmel2021___T_cell_competition_and_stochastic_extinction_events_in_CAR_T_cell_therapy model_entity_is "http://identifiers.org/biomodels.db/MODEL2109010001",
+                                                                                                       "http://identifiers.org/biomodels.db/BIOMD0000001041"
+Kimmel2021___T_cell_competition_and_stochastic_extinction_events_in_CAR_T_cell_therapy propertyBearer "http://identifiers.org/ncit/C15438"
+Kimmel2021___T_cell_competition_and_stochastic_extinction_events_in_CAR_T_cell_therapy propertyBearer "http://identifiers.org/ncit/C126102"
+Kimmel2021___T_cell_competition_and_stochastic_extinction_events_in_CAR_T_cell_therapy taxon "http://identifiers.org/taxonomy/9606"
+Kimmel2021___T_cell_competition_and_stochastic_extinction_events_in_CAR_T_cell_therapy description "http://identifiers.org/pubmed/33757357"
+Kimmel2021___T_cell_competition_and_stochastic_extinction_events_in_CAR_T_cell_therapy property "http://identifiers.org/doid/DOID:0060060",
+                                                                                                "http://identifiers.org/go/GO:0002837",
+                                                                                                "http://identifiers.org/mamo/MAMO_0000046"

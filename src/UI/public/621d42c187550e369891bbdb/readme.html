@@ -1,0 +1,53 @@
+<HTML>
+
+
+The XPPAUT code for the paper:<br>
+
+<b>
+Y.Liu, J. Milton and S.A. Campbell (2019) </b> 
+Outgrowing seizures in Childhood Absence Epilepsy: time delays and bistability
+Journal of Computational Neuroscience, 
+<a href="https://doi.org/10.1007/s10827-019-00711-x">doi:10.1007/s10827-019-00711-x</a>.
+
+<p>
+Details on installing XPPAUT can be found on 
+<a href="http://www.math.pitt.edu/~bard/xpp/xpp.html">Bard Ermentrout's XPPAUT webpage</a>.
+</p>
+
+To reproduce figures in paper, all parameters can be left at default
+values: (Initialconds -> Go)<p/>
+   <img src="./screenshot.png" alt="screenshot 0" width="550"><p/>
+
+except as follows.
+<dl>
+<dt><b>Figure 2</b>: (use Parameters menu, type variable name, value) (type escape key "esc" when done/ready to run the model) gd_AMPA=0,ge_AMPA=0. 
+ <dd>Left: Itc_ext_c=5; 
+   <p/>
+   <img src="./screenshot1.png" alt="screenshot 1" width="550"><p/>
+Right: Itc_ext_c=6<p/> Top gb_GABAA=0.6;
+<dd>
+   <img src="./screenshot2.png" alt="screenshot 2" width="550"><p/>
+   Bottom: gb_GABAA=0.1
+<dd>   <img src="./screenshot3.png" alt="screenshot 3" width="550"><p/>
+   Middle gb_GABAA=0.3;
+<dd>   <img src="./screenshot4.png" alt="screenshot 4" width="550"><p/>
+<dt><b>Figure 3</b>: gd_AMPA=0,ge_AMPA=0. 
+ <dd>Itc_ext_c=5, Itc_pert=1.5, ontime=2000, offtime=2500
+ <dd>Left gb_GABAA=0.1; Middle gb_GABAA=0.4; Right: gb_GABAA=0.7
+
+<dt><b>Figure 4</b>: Itc_ext=5, tau1=9, tau2=2.8 
+ <dd>Top left gb_GABAA=0.6; Top right gb_GABAA=0.1; 
+ <dd> Bottom left: gb_GABAA=0.29; Bottom right: gb_GABAA=0.2;  
+
+<dt><b>Figure 5</b>: Itc_ext_c=5, tau2=2.8
+ <dd>Left  gb_GABAA=0.6, tau1=4.2  
+ <dd>Right gb_GABAA=0.5, tau1=8.4  
+
+<dt><b>Figure 6</b>: Itc_ext_c=5, tau2=2.8, Itc_pert=1, ontime=2000, offtime=2300
+ <dd>Left gb_GABAA=0.7; Right: gb_GABAA=0.4
+ <dd>Top tau1=8.4; Bottom: tau1=2.8
+</dl>
+
+To modify the initial conditions for Figure 6 as described on page 7
+of the paper, use the "delay ICs" window in XPPAUT.
+</html>

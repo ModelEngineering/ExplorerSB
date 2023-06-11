@@ -1,0 +1,272 @@
+## Set file for newdep+A.ode on Tue Jun  8 16:23:00 2004
+11   Number of equations and auxiliaries
+20   Number of parameters
+# Numerical stuff
+1    nout
+200    nullcline mesh
+9   Stiff
+5000  total
+1  DeltaT
+0  T0
+0  Transient
+10000  Bound
+1e-12  DtMin
+1  DtMax
+0.001  Tolerance
+0.001  Abs. Tolerance
+0  Max Delay
+100   Eigenvector iterates
+0.001  Eigenvector tolerance
+0.001  Newton tolerance
+0  Poincare plane
+1e-05  Boundary value tolerance
+1e-05  Boundary value epsilon
+20   Boundary value iterates
+0   Poincare None
+1   Poincare variable
+1   Poincare sign
+0   Stop on Section
+0   Delay flag
+5000  Current time
+5000  Last Time
+0   MyStart
+1   INFLAG
+# Delays
+0.0
+0.0
+1  
+0.0
+0.0
+0.0
+0.0
+0.0
+# Bndry conds
+0
+0
+0
+0
+0
+0
+0
+0
+# Old ICs
+-45.58413083089855  VF
+0.002323725319354741  WF
+0.3288899159330281  HA
+0.2692778015660057  D
+0.3641973436473382  S
+199.4999999999526  Y
+560.6297679549228  TF
+0  PERIOD
+# Ending  ICs
+-45.57977198419412  VF
+0.002323749093931422  WF
+0.3288888033418859  HA
+0.2692544539181648  D
+0.3641029018879464  S
+199.4999999999569  Y
+560.6230312878373  TF
+0  PERIOD
+# Parameters
+75  ipost
+15  v5
+10  k
+4  ga
+-6  vma
+0.5  kma
+4  ginh
+-7  vha
+0.1  kha
+500  tauhlo
+15  tauhhi
+700  tauhmed
+40  tauwflo
+10  tauwfhi
+600  taua
+5  taub
+300  tauk
+1  c1
+20  TA
+800  per
+# Graphics
+0.7071097251469876  rm
+-0.4999999999826661  rm
+0.4999958366025516  rm
+0.7071038372138505  rm
+0.5000041633974484  rm
+-0.4999999999826661  rm
+0  rm
+0.7071038372138505  rm
+0.7071097251469876  rm
+0    
+1    
+2    
+1    
+0    
+0    
+10    
+2    
+1    
+2    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+-1000   
+1000   
+0    
+0   3DFlag
+1   Timeflag
+0   Colorflag
+0   Type
+1  color scale
+0   minscale
+5000   xmax
+2500   xmin
+25.0543   ymax
+-69   ymin
+12   zmax
+-12   zmin
+3750   
+0.0008   
+-21.97285   
+0.02126431221113761   
+0   
+0.08333333333333333   
+45   Theta
+45   Phi
+0    xshft
+0    yshft
+0    zshft
+2500   xlo
+-69   ylo
+-60   
+-0.125   
+5000   xhi
+25.0543   yhi
+60   
+0.6   
+# Transpose variables etc
+VF
+2   n columns
+1   n rows
+1   row skip
+1   col skip
+1   row 0
+# Coupling stuff for H funs
+0
+0
+0
+0
+0
+0
+0
+0
+# Array plot stuff
+
+1   NCols
+0   Row 1
+50   NRows
+8   RowSkip
+0  Zmin
+1  Zmax
+# Torus information 
+0    Torus flag 1=ON
+6.283185307179586  Torus period
+# Range information
+ipost
+-1   eq-range stab col
+0   shoot flag 1=on
+10   eq-range steps
+0  eq_range low
+1  eq_range high
+VF
+VF
+20   Range steps
+0   Cycle color 1=on
+1   Reset data 1=on
+1   Use old I.C.s 1=yes
+0  Par1 low
+0  Par2 low
+1  Par1 high
+1  Par2 high
+ipost
+0   BVP side
+0   color cycle flag 1=on
+10   BVP range steps
+0  BVP range low
+1  BVP range high
+RHS etc ...
+dVF/dT=(IPOST-GCA*MINF(VF)*(VF-VCA)-GK*WF*(VF-VK)-GA*MAINF(VF)*HA*(VF-VK)-GL*(VF-VL)-GINH*S*(VF-VSYN))/C1
+dWF/dT=(WFINF(VF)-WF)/TAUW(VF)
+dHA/dT=(HAINF(VF)-HA)/TAUHA(VF)
+dD/dT=(1-D)*HEAV(VTHETA-V)/TAUA-D*HEAV(V-VTHETA)/TAUB
+dS/dT=-S*(HEAV(VTHETA-V)/TAUK+HEAV(V-VTHETA)*SDECAYUP)
+dY/dT=1
+dTF/dT=0
+dPERIOD/dT=0
+PHASE=TF/PER
+V=V
+WINDOW=HEAV(VF-VHA)-HEAV(VF-VMA-K)
+
+where ...
+V = -50+50*HEAV(TA-MOD(T,PER))   
+V1 = -1.2   
+V2 = 18   
+V3 = 0   
+V4 = 5   
+GK = 8   
+GL = 2   
+GCA = 4   
+VK = -84   
+VL = -60   
+VCA = 120   
+C = 40   
+VSYN = -80   
+VTHETA = -25   
+SDECAYUP = 0   
+
+User-defined functions:
+MINF(V) = .5*(1+TANH((V-V1)/V2))  
+WINF(V) = .5*(1+TANH((V-V3)/V4))  
+WFINF(V) = .5*(1+TANH((V-V5)/V4))  
+TAUW(V) = TAUWFLO+(TAUWFHI-TAUWFLO)*WINF(V)  
+HAINF(V) = 1/(1+EXP((V-VHA)/KHA))  
+MAINF(V) = 1/(1+EXP(-(V-VMA)/KMA))  
+TAUHA(V) = TAUHHI+(TAUHLO-TAUHHI)*HAINF(V) + (TAUHMED-TAUHHI)*(HEAV(V-VHA) - HEAV(V-VMA-K))  

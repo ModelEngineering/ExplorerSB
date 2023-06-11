@@ -1,0 +1,121 @@
+// Created by libAntimony v2.13.2
+function Rate_Law_for_CARTcell_proliferation(rho_c, L, B, C)
+  rho_c*(L + B)*C;
+end
+
+Rate_Law_for_CARTcell_proliferation is "Rate Law for CARTcell_proliferation"
+
+function Rate_Law_for_CARTcell_death(tao_c, C)
+  (1/tao_c)*C;
+end
+
+Rate_Law_for_CARTcell_death is "Rate Law for CARTcell_death"
+
+function Rate_Law_for_Leukaemia_death(alpha, L, C)
+  alpha*L*C;
+end
+
+Rate_Law_for_Leukaemia_death is "Rate Law for Leukaemia_death"
+
+function Rate_Law_for_Bcell_death(alpha, B, C, tao_B)
+  alpha*B*C + (1/tao_B)*B;
+end
+
+Rate_Law_for_Bcell_death is "Rate Law for Bcell_death"
+
+function Rate_Law_for_Leukaemia_proliferation(rho_L, L)
+  rho_L*L;
+end
+
+Rate_Law_for_Leukaemia_proliferation is "Rate Law for Leukaemia_proliferation"
+
+
+model *Leon_Triana2020___CAR_T_cell_therapy_in_B_cell_acute_lymphoblastic_leukaemia()
+
+  // Compartments and Species:
+  compartment compartment_;
+  species CAR_T_cells in compartment_, Leukaemic_B_cells in compartment_;
+  species B_cells_healthy in compartment_;
+
+  // Assignment Rules:
+  rho_C := 0.25*alpha;
+
+  // Reactions:
+  CARTcell_proliferation:  => CAR_T_cells; compartment_*Rate_Law_for_CARTcell_proliferation(rho_C, Leukaemic_B_cells, B_cells_healthy, CAR_T_cells);
+  CARTcell_death: CAR_T_cells => ; compartment_*Rate_Law_for_CARTcell_death(tao_C, CAR_T_cells);
+  Leukaemia_proliferation:  => Leukaemic_B_cells; compartment_*Rate_Law_for_Leukaemia_proliferation(rho_L, Leukaemic_B_cells);
+  Leukaemia_death: Leukaemic_B_cells => ; compartment_*Rate_Law_for_Leukaemia_death(alpha, Leukaemic_B_cells, CAR_T_cells);
+  Bcell_death: B_cells_healthy => ; compartment_*Rate_Law_for_Bcell_death(alpha, B_cells_healthy, CAR_T_cells, tao_B);
+
+  // Species initializations:
+  CAR_T_cells = 10000000;
+  Leukaemic_B_cells = 50000000000;
+  B_cells_healthy = 25000000000;
+
+  // Compartment initializations:
+  compartment_ = 1;
+
+  // Variable initializations:
+  tao_B = 60;
+  tao_B has unit_0;
+  rho_L = 0.03333333333;
+  rho_L has unit_1;
+  tao_C = 14;
+  tao_C has unit_0;
+  rho_C has unit_2;
+  alpha = 4.5e-11;
+  alpha has unit_1;
+
+  // Other declarations:
+  var rho_C;
+  const compartment_, tao_B, rho_L, tao_C, alpha;
+
+  // Unit definitions:
+  unit length = metre;
+  unit area = metre^2;
+  unit volume = litre;
+  unit time_unit = 86400 second;
+  unit substance = item;
+  unit unit_0 = 86400 second;
+  unit unit_1 = 1 / 86400 second;
+  unit unit_2 = 1 / 86400 second;
+
+  // Display Names:
+  time_unit is "time";
+  unit_0 is "d";
+  unit_1 is "1/(d)";
+  unit_2 is "1/d";
+  compartment_ is "Whole_organism_blood";
+  CAR_T_cells is "CAR_T-cells";
+
+  // CV terms:
+  compartment_ hypernym "http://identifiers.org/bto/BTO:0000089"
+  compartment_ hypernym "http://identifiers.org/ncit/C13413"
+  CAR_T_cells hypernym "http://identifiers.org/ncit/C137999"
+  CAR_T_cells hypernym "http://identifiers.org/cl/CL:0000084"
+  Leukaemic_B_cells hypernym "http://identifiers.org/ncit/C41073"
+  Leukaemic_B_cells property "http://identifiers.org/ncit/C18128"
+  B_cells_healthy hypernym "http://identifiers.org/cl/CL:0000785"
+  B_cells_healthy property "http://identifiers.org/ncit/C115935"
+  CARTcell_proliferation hypernym "http://identifiers.org/sbo/SBO:0000393"
+  CARTcell_proliferation hypernym "http://identifiers.org/go/GO:0042098"
+  CARTcell_death hypernym "http://identifiers.org/go/GO:0008219"
+  Leukaemia_proliferation hypernym "http://identifiers.org/sbo/SBO:0000393"
+  Leukaemia_proliferation hypernym "http://identifiers.org/ncit/C28378"
+  Leukaemia_death hypernym "http://identifiers.org/go/GO:0008219"
+  Bcell_death hypernym "http://identifiers.org/go/GO:0008219"
+end
+
+Leon_Triana2020___CAR_T_cell_therapy_in_B_cell_acute_lymphoblastic_leukaemia is "Leon-Triana2020 - CAR T-cell therapy in B-cell acute lymphoblastic leukaemia"
+
+Leon_Triana2020___CAR_T_cell_therapy_in_B_cell_acute_lymphoblastic_leukaemia model_entity_is "http://identifiers.org/biomodels.db/MODEL2107120001",
+                                                                                             "http://identifiers.org/biomodels.db/BIOMD0000001011"
+Leon_Triana2020___CAR_T_cell_therapy_in_B_cell_acute_lymphoblastic_leukaemia container "http://identifiers.org/bto/BTO:0000089"
+Leon_Triana2020___CAR_T_cell_therapy_in_B_cell_acute_lymphoblastic_leukaemia taxon "http://identifiers.org/taxonomy/9606"
+Leon_Triana2020___CAR_T_cell_therapy_in_B_cell_acute_lymphoblastic_leukaemia description "http://identifiers.org/doi/10.1016/j.cnsns.2020.105570"
+Leon_Triana2020___CAR_T_cell_therapy_in_B_cell_acute_lymphoblastic_leukaemia property "http://identifiers.org/doid/DOID:1037",
+                                                                                      "http://identifiers.org/hp/HP:0004812",
+                                                                                      "http://identifiers.org/go/GO:0002376",
+                                                                                      "http://identifiers.org/ncit/C126102",
+                                                                                      "http://identifiers.org/ncit/C15262",
+                                                                                      "http://identifiers.org/mamo/MAMO_0000046"

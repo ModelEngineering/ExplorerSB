@@ -1,0 +1,37 @@
+<html>
+<head>
+<title>AE1 Model</title>
+</head>
+<body>
+
+<h4>Mathematical Model</h4>
+<p align="justify">This is the general description of the mathematical model for the Weinstein AE1 model. See the various views available in the right hand column.</p>
+
+<h4>Introduction</h4>
+<p align="justify">Anion exchanger 1 (AE1) is a protein that is encoded by the SLC4A1 gene in humans. It is located in the collecting duct of the nephron in the kidney and in the erythrocyte cell membrane. AE1 is responsible for exchanging chloride (Cl<sup>-</sup>) with bicarbonate (HCO<sub>3</sub><sup>-</sup>) across plasma membranes. It plays an important role in returning bicarbonate to the blood in kidney.</p>
+
+<h4>AE Gene Family</h4>
+<p align="justify">AE1 is a member of anion exchanger family which is generally responsible for the transport of anions across cellular barriers (Vastermark et al., 2014). In humans, this family consists of 10 members (SLC4A1-5; SLC4A7-11) which eight of them are divided into two groups and the two others (AE4 or SLC4A9, BTR1 or SLC4A11) are not characterised. The two major groups are Cl<sup>-</sup>-HCO<sub>3</sub><sup>-</sup> exchangers (AE1-3) and Na<sup>+</sup>-coupled HCO<sub>3</sub><sup>-</sup> transporters (NBCe1 or SLC4A4, NBCe2 or SLC4A5, NBCn1 or SLC4A7, NDCBE or SLC4A8, NBCn2 or SLC4A10). Only NBCe1 and NBCe2 are electrogenic and the rest of them are electroneutral (Piermarini et al., 2007). These proteins are mainly responsible in transporting H<sup>+</sup> or HCO<sub>3</sub><sup>-</sup> by epithelia, also the regulation of cell volume and intracellular pH (Romero et al., 2013). AE2 and AE3 are two proteins that are functionally simillar to AE1. AE2 is primarily located in gastrointestinal tract and AE3 in heart and brain neurons. The activity of AE2 and AE3 are sensitive to pH.</p>
+
+<h4>Model Structure</h4>
+<p align="justify">This transporter mediates the one-for-one exchange of HCO<sub>3</sub><sup>-</sup> for Cl<sup>-</sup>. In this work, the AE1 model has been represented using a kinetic model developed based on transport studies obtained in red blood cells (Gasbjerg et al., 1996). This model consists of several parameters which are transporter density, HCO<sub>3</sub><sup>-</sup> and Cl<sup>-</sup> affinity and the HCO<sub>3</sub><sup>-</sup>:Cl<sup>-</sup> permeation rates (Weinstein et al., 2000).</p>
+
+<center><img align="center" width=65%, src="screenshots/weinstein_2000.png"/></center>
+
+<p align="justify">The figure above represents the kinetic scheme for AE1. The carrier, X, can be oriented toward the external (X<sub>ext</sub>) or internal (X<sub>int</sub>) side of the membrane and bound to one of two ions, HCO<sub>3</sub><sup>-</sup> or Cl<sup>-</sup>. It is assumed that anion binding is faster than translocation of the carrier-ion complex, therefore the concentration of the loaded carrier at each side is defined by equilibrium binding constants, K<sub>HCO3</sub><sup>ext</sup>, K<sub>HCO3</sub><sup>int</sup>, K<sub>Cl</sub><sup>ext</sup>, and K<sub>Cl</sub><sup>int</sup>. The carrier is assumed to be asymmetric, so the binding constants are not the same for both sides of the membrane. Translocation constant for the loaded carrier occurs based on rate coefficients, P<sub>HCO3</sub><sup>ext</sup>, P<sub>HCO3</sub><sup>int</sup>, P<sub>Cl</sub><sup>ext</sup>, and P<sub>Cl</sub><sup>int</sup>. Also translocation does not happen for empty carrier.</p> 
+
+<center><img align="center" src="screenshots/diagram.svg"/></center>
+
+<p align="justify">The figure above represents the CellML model of AE1. The input variables are extracellular and intracellular concentrations of the HCO<sub>3</sub><sup>-</sup> and Cl<sup>-</sup>. Permeation rates and equilibrium constants for the HCO<sub>3</sub><sup>-</sup> and Cl<sup>-</sup> are the constant parameters. The CellML model then give us the individual transmembrane solute fluxes for HCO<sub>3</sub><sup>-</sup> and Cl<sup>-</sup>.</p>
+
+<h4>Physiological Roles of AE1</h4>
+<p align="justify">&alpha;-intercalated cells of the collecting ducts in the nephron are the responsible cells for the acid-secreting in the kidney. They generate HCO<sub>3</sub><sup>-</sup> and H<sup>+</sup> from H<sub>2</sub>O and CO<sub>2</sub> using carbonic anhydrase. AE1 is present in the basolateral face of the &alpha;-intercalated cells and returns HCO<sub>3</sub><sup>-</sup> to the blood by exchanging HCO<sub>3</sub><sup>-</sup> for Cl<sup>-</sup> on the basolateral surface. H<sup>+</sup> also is pumped into the collecting duct tubule using HATPase on the apical face which then excretes acid into the urine.</p>
+
+<h4>References</h4>
+<p align="justify">1. Gasbjerg, Peder K., Philip A. Knauf, and Jesper Brahm. "Kinetics of bicarbonate transport in human red blood cell membranes at body temperature." The Journal of general physiology 108.6 (1996): 565-575.</p>
+<p align="justify">2. Piermarini, Peter M., Inyeong Choi, and Walter F. Boron. "Cloning and characterization of an electrogenic Na/HCO3- cotransporter from the squid giant fiber lobe." American Journal of Physiology-Cell Physiology 292.6 (2007): C2032-C2045.</p>
+<p align="justify">3. Romero, M. F., Chen, A. P., Parker, M. D., & Boron, W. F. " Molecular aspects of medicine 34.2 (2013): 159-182.</p>
+<p align="justify">4. Vastermark, Ake, Simon Wollwage, Michael E. Houle, Rita Rio, and Milton H. Saier. "Expansion of the APC superfamily of secondary carriers." Proteins: Structure, Function, and Bioinformatics 82.10 (2014): 2797-2811.</p>
+<p align="justify">5. Weinstein, Alan M. "A mathematical model of the outer medullary collecting duct of the rat." American Journal of Physiology-Renal Physiology 279.1 (2000): F24-F45.</p>
+</body>
+</html>

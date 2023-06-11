@@ -1,0 +1,65 @@
+// Calculate impedance of dendritic branches. Code taken from Neuron forum from post by Ted Carnevale:
+// http://www.neuron.yale.edu/phpbb/viewtopic.php?f=13&t=139
+
+//load_file("nrngui.hoc")
+
+// load Maarten's morphology file
+//load_file("aCC-L3-neuron.hoc")
+
+// specify reasonable values for nseg--see
+//   http://www.neuron.yale.edu/neuron/static/docs/d_lambda/d_lambda.html
+freq = 100      // Hz, frequency at which AC length constant will be computed
+d_lambda = 0.1
+func lambda_f() { // currently accessed section, $1 == frequency
+  return 1e5*sqrt(diam/(4*PI*$1*Ra*cm))
+}
+
+proc geom_nseg() {
+  soma area(0.5) // make sure diam reflects 3d points
+  forall { nseg = int((L/(d_lambda*lambda_f(freq))+0.9)/2)*2 + 1  }
+}
+
+geom_nseg()
+
+// prepare to use Impedance class
+
+// always a good idea to finitialize before computing impedance
+v_init=-65
+finitialize(v_init)
+
+// demonstrate use of impedance class
+objref zz
+zz = new Impedance()
+FREQ = 100 // Hz
+
+WHERE = 0.5 // location in the soma that is the reference point
+soma distance(0, WHERE)  // sets origin for distance calculations
+
+iterator mysections() { local i
+  for i = 2, numarg() {
+    $&1 = $i //soma[$i]
+    iterator_statement
+  }
+}
+
+proc calcZ() {
+  soma zz.loc(WHERE)  // sets origin for impedance calculations
+  
+    zz.compute()// assumes conductances depend only on v, i.e.
+    		// ignores the impedance contributions of gating state differential equations
+  
+  /*zz.compute(FREQ) // takes the impedance contributions of 
+                      // gating state differential equations into account
+                      // but requires mechanisms to be compatible with CVODE
+*/
+  // select some sections
+  print "x \tdistance(x) \tinput(x) \tinput_phase(x) \ttransfer(x) \ttransfer_phase(x) \tratio(x)"
+  for mysections(&x, 0, 1, 3, 551, 312) {
+    access soma[x]
+    print secname()
+    for (x) print x, "\t", distance(x), "\t", zz.input(x), "\t", zz.input_phase(x), "\t", zz.transfer(x), "\t", zz.transfer_phase(x), "\t", zz.ratio(x)
+  }
+}
+
+calcZ()
+

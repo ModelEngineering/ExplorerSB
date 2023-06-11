@@ -1,0 +1,217 @@
+// Created by libAntimony v2.13.2
+function Function_for_Open_to_Inactivated1(O, compartment_, k2)
+  k2*O/compartment_;
+end
+
+Function_for_Open_to_Inactivated1 is "Function for Open_to_Inactivated1"
+
+function Function_for_Inactivated1_to_Inactivated2(I1, compartment_, k4)
+  k4*I1/compartment_;
+end
+
+Function_for_Inactivated1_to_Inactivated2 is "Function for Inactivated1_to_Inactivated2"
+
+function Function_for_Jrel(O, compartment_, kflux)
+  kflux*O^4/compartment_;
+end
+
+Function_for_Jrel is "Function for Jrel"
+
+function Function_for_Inactivated1_to_Shut(I1, compartment_, k3)
+  k3*I1/compartment_;
+end
+
+Function_for_Inactivated1_to_Shut is "Function for Inactivated1_to_Shut"
+
+function Function_for_Jpump(Kp, Vp, c, compartment_)
+  Vp*c^2/(Kp^2 + c^2)/compartment_;
+end
+
+Function_for_Jpump is "Function for Jpump"
+
+function Function_for_Jinflux(Jleak, compartment_)
+  Jleak/compartment_;
+end
+
+Function_for_Jinflux is "Function for Jinflux"
+
+function Function_for_Inactivated2_to_Shut(I2, compartment_, k5)
+  k5*I2/compartment_;
+end
+
+Function_for_Inactivated2_to_Shut is "Function for Inactivated2_to_Shut"
+
+function Function_for_Shut_to_Open(O, S, compartment_, k1, kminus1, p)
+  (k1*p*S - kminus1*O)/compartment_;
+end
+
+Function_for_Shut_to_Open is "Function for Shut_to_Open"
+
+
+model *LeBeau1999___IP3_dependent_intracellular_calcium_oscillations_due_to_agonist_stimulation_from_Cholecytokinin()
+
+  // Compartments and Species:
+  compartment compartment_;
+  species $S in compartment_, O in compartment_, I1 in compartment_, I2 in compartment_;
+  species c in compartment_;
+
+  // Assignment Rules:
+  S := 1 - (O + I1 + I2);
+  k1 := alpha1*c^3/(beta1^3 + c^3);
+  k4 := alpha4*p/(beta4 + p);
+  p := 0.6*(1 - exp(-T/time_constant));
+
+  // Rate Rules:
+  T' = 1;
+
+  // Reactions:
+  Shut_to_Open: $S -> O; compartment_*Function_for_Shut_to_Open(O, S, compartment_, k1, k_1, p);
+  Open_to_Inactivated1: O => I1; compartment_*Function_for_Open_to_Inactivated1(O, compartment_, k2);
+  Inactivated1_to_Shut: I1 => $S; compartment_*Function_for_Inactivated1_to_Shut(I1, compartment_, k3);
+  Inactivated1_to_Inactivated2: I1 => I2; compartment_*Function_for_Inactivated1_to_Inactivated2(I1, compartment_, k4);
+  Inactivated2_to_Shut: I2 => $S; compartment_*Function_for_Inactivated2_to_Shut(I2, compartment_, k5);
+  Jrel:  => c; compartment_*Function_for_Jrel(O, compartment_, kflux);
+  Jpump: c => ; compartment_*Function_for_Jpump(Kp, Vp, c, compartment_);
+  Jinflux:  => c; compartment_*Function_for_Jinflux(Jinflux_0, compartment_);
+
+  // Species initializations:
+  O = 0;
+  I1 = 0;
+  I2 = 1;
+  c = 0;
+
+  // Compartment initializations:
+  compartment_ = 1;
+  k1 has unit_0;
+
+  // Variable initializations:
+  alpha1 = 40;
+  alpha1 has unit_0;
+  beta1 = 0.8;
+  beta1 has unit_1;
+  k4 has unit_2;
+  alpha4 = 0.06;
+  alpha4 has unit_2;
+  p has unit_3;
+  beta4 = 0.01;
+  beta4 has unit_1;
+  T = 0;
+  T has unit_4;
+  time_constant = 100;
+  time_constant has unit_4;
+  kflux = 22;
+  kflux has unit_0;
+  Vp = 0.2;
+  Vp has unit_0;
+  k3 = 0.5;
+  k3 has unit_2;
+  k2 = 0.5;
+  k2 has unit_2;
+  k_1 = 0.88;
+  k_1 has unit_2;
+  Jinflux_0 = 0.025;
+  Jinflux_0 has unit_0;
+  Kp = 0.54;
+  Kp has unit_3;
+  k5 = 0.02;
+  k5 has unit_2;
+
+  // Other declarations:
+  var k1, k4, p, T;
+  const compartment_, alpha1, beta1, alpha4, beta4, time_constant, kflux;
+  const Vp, k3, k2, k_1, Jinflux_0, Kp, k5;
+
+  // Unit definitions:
+  unit length = metre;
+  unit area = metre^2;
+  unit volume = litre;
+  unit time_unit = second;
+  unit substance = mole;
+  unit unit_0 = item / ((1e-6 dimensionless)^-0 * litre * second);
+  unit unit_1 = item / (1e-6 dimensionless)^-0;
+  unit unit_2 = 1 / second;
+  unit unit_3 = item / ((1e-6 dimensionless)^-0 * litre);
+  unit unit_4 = second;
+
+  // Display Names:
+  time_unit is "time";
+  unit_0 is "umol/(l*s)";
+  unit_1 is "umol";
+  unit_2 is "1/s";
+  unit_3 is "umol/l";
+  unit_4 is "s";
+  compartment_ is "compartment";
+  c is "Ca2+";
+  T is "time";
+  k_1 is "k-1";
+  Jinflux_0 is "Jinflux";
+
+  // SBO terms:
+  time_constant.sboTerm = 348
+
+  // CV terms:
+  compartment_ identity "http://identifiers.org/cl/CL:0002064"
+  S part "http://identifiers.org/chebi/CHEBI:139109"
+  S part "http://identifiers.org/ncit/C580"
+  S version "http://identifiers.org/pato/PATO:0000608"
+  S identity "http://identifiers.org/ncit/C47881"
+  O part "http://identifiers.org/ncit/C580"
+  O part "http://identifiers.org/chebi/CHEBI:139109"
+  O version "http://identifiers.org/pato/PATO:0000610"
+  O identity "http://identifiers.org/ncit/C47881"
+  I1 instance "http://identifiers.org/ncit/C580",
+              "http://identifiers.org/chebi/CHEBI:131186",
+              "http://identifiers.org/ncit/C47881",
+              "http://identifiers.org/ncit/C16983",
+              "http://identifiers.org/ncit/C14054"
+  I1 part "http://identifiers.org/ncit/C580"
+  I1 part "http://identifiers.org/chebi/CHEBI:131186"
+  I1 identity "http://identifiers.org/ncit/C47881"
+  I1 property "http://identifiers.org/ncit/C16983"
+  I2 part "http://identifiers.org/chebi/CHEBI:131186"
+  I2 part "http://identifiers.org/ncit/C580"
+  I2 identity "http://identifiers.org/ncit/C47881"
+  I2 property "http://identifiers.org/ncit/C20612"
+  c identity "http://identifiers.org/obi/OBI:0000003"
+  c property "http://identifiers.org/go/GO:0070679"
+  k1 identity "http://identifiers.org/ncit/C94967"
+  alpha1 identity "http://identifiers.org/ncit/C47906"
+  alpha1 property "http://identifiers.org/ncit/C25564"
+  beta1 identity "http://identifiers.org/ncit/C47823"
+  k4 identity "http://identifiers.org/ncit/C94967"
+  alpha4 identity "http://identifiers.org/ncit/C47906"
+  alpha4 property "http://identifiers.org/ncit/C25564"
+  p identity "http://identifiers.org/ncit/C41185"
+  beta4 identity "http://identifiers.org/ncit/C47823"
+  T identity "http://identifiers.org/ncit/C25207"
+  time_constant identity "http://identifiers.org/sbo/SBO:0000348"
+  kflux identity "http://identifiers.org/ncit/C72076"
+  kflux property "http://identifiers.org/ncit/C25564"
+  Vp identity "http://identifiers.org/ncit/C47906"
+  Vp property "http://identifiers.org/ncit/C25564"
+  k3 identity "http://identifiers.org/ncit/C94967"
+  k2 identity "http://identifiers.org/ncit/C94967"
+  k_1 identity "http://identifiers.org/ncit/C94967"
+  Jinflux_0 identity "http://identifiers.org/ncit/C47905"
+  Kp identity "http://identifiers.org/ncit/C47823"
+  k5 identity "http://identifiers.org/ncit/C94967"
+  Shut_to_Open part "http://identifiers.org/pato/PATO:0000608"
+  Shut_to_Open part "http://identifiers.org/pato/PATO:0000610"
+  Inactivated1_to_Shut identity "http://identifiers.org/bao/BAO:0000087"
+  Inactivated1_to_Inactivated2 identity "http://identifiers.org/mi/MI:0217"
+  Inactivated2_to_Shut identity "http://identifiers.org/mi/MI:0203"
+  Jrel identity "http://identifiers.org/go/GO:0005220"
+  Jpump identity "http://identifiers.org/ncit/C47906"
+  Jinflux identity "http://identifiers.org/ncit/C47905"
+end
+
+LeBeau1999___IP3_dependent_intracellular_calcium_oscillations_due_to_agonist_stimulation_from_Cholecytokinin is "LeBeau1999 - IP3-dependent intracellular calcium oscillations due to agonist stimulation from Cholecytokinin"
+
+LeBeau1999___IP3_dependent_intracellular_calcium_oscillations_due_to_agonist_stimulation_from_Cholecytokinin description "http://identifiers.org/pubmed/10352035"
+LeBeau1999___IP3_dependent_intracellular_calcium_oscillations_due_to_agonist_stimulation_from_Cholecytokinin model_entity_is "http://identifiers.org/biomodels.db/MODEL9200487367",
+                                                                                                                             "http://identifiers.org/biomodels.db/BIOMD0000000965"
+LeBeau1999___IP3_dependent_intracellular_calcium_oscillations_due_to_agonist_stimulation_from_Cholecytokinin identity "http://identifiers.org/biomodels.db/MODEL9200487367"
+LeBeau1999___IP3_dependent_intracellular_calcium_oscillations_due_to_agonist_stimulation_from_Cholecytokinin hypernym "http://identifiers.org/go/GO:0019722"
+LeBeau1999___IP3_dependent_intracellular_calcium_oscillations_due_to_agonist_stimulation_from_Cholecytokinin container "http://identifiers.org/bto/BTO:0000028"
+LeBeau1999___IP3_dependent_intracellular_calcium_oscillations_due_to_agonist_stimulation_from_Cholecytokinin taxon "http://identifiers.org/taxonomy/9606"
+LeBeau1999___IP3_dependent_intracellular_calcium_oscillations_due_to_agonist_stimulation_from_Cholecytokinin property "http://identifiers.org/mamo/MAMO_0000046"

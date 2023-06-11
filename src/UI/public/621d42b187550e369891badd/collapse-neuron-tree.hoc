@@ -1,0 +1,610 @@
+/* ---------------------------------------------------------------------
+
+	HOC CODE TO COLLAPSE A DENDRITIC TREE
+	=====================================
+
+   Collapse a dendritic tree into 3 compartments "proximal", "middle"
+   and "distal".  
+
+   The collapse is made such as the collapsed dendritic structure
+   preserves the axial resistance of the original structure. 
+   The algorithm works by merging successive pairs of dendritic 
+   branches into an equivalent branch (a branch that preserves the 
+   axial resistance of the two original branches).
+   This merging of branches can be done according to different methods
+   selectable in the present code:
+
+   AREABYLONG
+
+	The code rejects the smallest original branch if it is more than
+	5 times smaller than the long orginal branch.  If AREABYLONG is
+	set to 1, then the small branch is rescaled to the longest one 
+	(a new diameter is assigned such that the small branch conserves
+	its axial resistance).  This minimizes errors for dendritic 
+	structures where branches have a large range of possible lengths.
+	AREABYLONG = 0 is the default.
+
+
+   AVGLENGTH, AVGLENGTHWDIAM, AVGLENGTHWSURF
+
+	During the merging of two branches, the length of the equivalent 
+	branch is calculated by one out of three possible methods.  
+
+	First, a simple average of the two branch length:
+
+		L = (L1+L2)/2
+
+	This is the method originally used by Bush and Sejnowski
+	(J. Neurosci. Methods 46: 159-166, 1993).
+	It is selected by setting AVGLENGTH=1.
+
+	Second, by weighting this average with the diameters of each branch
+
+		L = (diam1*L1 + diam2*L2)/(diam1+diam2)
+
+	This algorithm produces more fair merging in the case two branches of
+	very different diameters are to be merged.  It is selected by setting
+	AVGLENGTHWDIAM=1.
+
+	Third, by weighting the average with membrane area:
+
+		L = (area1*L1 + area2*L2)/(area1+area2)
+
+	This algorithm is better in the case two branches of very different
+	areas are to be merged.  It is selected by setting AVGLENGTHWSURF=1.
+
+
+   CUTOFF1, CUTOFF2
+
+	The dendritic branches are assigned to one of the three compartments
+	("proximal", "middle" or "distal") based on their path axial 
+	resistance (in Meg-Ohms) to the soma.  The cutoff values (CUTOFF1
+	and CUTOFF2) determine these cut-offs.  For example, CUTOFF1=10 means
+	that all branches laying within 10 Meg-Ohm of axial resistance from 
+	the soma will be merged together into the same ("proximal") section.
+	
+
+   Written by M. Neubig & A. Destexhe
+   Laval University, 1997; CNRS 2000
+
+-----------------------------------------------------------------------*/
+
+CUTOFF1 = 7.3	// define the cutoff between "proximal" and "middle"
+CUTOFF2 = 71	// define the cutoff between "middle" and "distal"
+
+AVGLENGTH = 0		// if 1, merge based on ageraged length
+AVGLENGTHWDIAM = 1	// if 1, merge based on avg length, weighted by diam
+AVGLENGTHWSURF = 0	// if 1, merge based on avg length, weighted by area
+
+AREABYLONG = 0		// if 1, rescale the length before merging
+
+
+
+xopen("tc-cell.geo")		// read geometry file
+
+
+
+Lbysurf_areabyasis = 0
+Lbysurf_areabylong = 0
+Lbydiam_areabyasis = 0
+Lbydiam_areabylong = 0
+Lbyavg_areabyasis = 0
+Lbyavg_areabylong = 0
+
+Lbylong_areabylong = 0
+
+if(AREABYLONG==1) {
+  print "Merge by rescaling length"
+  if(AVGLENGTH == 1) {
+	Lbyavg__areabylong = 1
+	print "Merging method based on averaged length"
+  } else if(AVGLENGTHWDIAM == 1) {
+	Lbydiam_areabylong = 1
+	print "Merging method based on averaged length, weigthed by diameters"
+  } else if(AVGLENGTHWSURF == 1) {
+	Lbysurf_areabylong = 1
+  }
+} else {
+  print "Do not rescale length"
+  if(AVGLENGTH == 1) {
+	Lbyavg__areabyasis = 1
+	print "Merging method based on averaged length"
+  } else if(AVGLENGTHWDIAM == 1) {
+	Lbydiam_areabyasis = 1
+	print "Merging method based on averaged length, weigthed by diameters"
+  } else if(AVGLENGTHWSURF == 1) {
+	Lbysurf_areabyasis = 1
+  }
+}
+
+forall nseg=10
+forall Ra=260
+
+
+objectvar secaddress		
+objectvar paraddress		
+objectvar order			
+objectvar parsecndx		
+				
+objectvar secri			
+objectvar secpathri		
+objectvar secL			
+objectvar secRa			
+objectvar secCm			
+objectvar mrgL		
+objectvar mrgdiam	
+objectvar mrgri			
+				
+objectvar tosec			
+objectvar tocyc			
+				
+objectvar rvp			
+objectvar slsoma		
+objectvar slroot		
+
+objectvar cycL
+objectvar cycdiam
+objectvar cycnin
+
+
+
+
+
+proc initsec(){
+	secaddress=new Vector(NSEC,0)		//set/reset
+	paraddress=new Vector(NSEC,0)		//set/reset
+	order=new Vector(NSEC,0)		//set/reset
+	parsecndx=new Vector(NSEC,0)		//set/reset
+
+	secri=new Vector(NSEC,0)		//set/reset
+	secpathri=new Vector(NSEC,0.0)		//set/reset
+	secL=new Vector(NSEC,0)   		//set/reset
+	secRa=new Vector(NSEC,0)   		//set/reset
+	secCm=new Vector(NSEC,0)		//set/reset
+}
+proc initmrg(){
+	mrgL=new Vector(NSEC,0)   		//set/reset
+	mrgdiam=new Vector(NSEC,0)		//set/reset
+	mrgri=new Vector(NSEC,0)		//set/reset
+
+}
+proc initcyc(){
+	cycL=new Vector(4,0)
+	cycdiam=new Vector(4,0)
+	cycnin=new Vector(4,0)
+}
+proc initto(){
+	tosec=new Vector(NSEC,-999)		//set/reset
+	tocyc=new Vector(NSEC,-999)		//set/reset
+}
+proc initVectors(){
+	initto()
+	initsec()
+	initmrg()
+}
+													
+proc arborcharacterize(){local sec,sec1,sec2, aaa, x
+
+	{NSEC=0  forall NSEC=NSEC+1}		
+	initVectors()
+	initcyc()
+
+	sec=0
+	forall {
+		if(sec==0){
+	          secaddress.set(0, this_section())
+	          paraddress.set(0, parent_section(0))
+	          secRa.set(0,Ra)
+	          secL.set(0,L)
+
+	          secCm.set(0,cm)
+	          mrgL.set(0,L)
+	          {for(x) if(x>0) aaa=aaa+area(x)   mrgdiam.set(0,aaa/PI/L)}
+	          mrgri.set(0,secri.x(0))
+		}
+		if(sec!=0){
+		  secaddress.set(sec, this_section())
+		  paraddress.set(sec, parent_section(0))
+		  {slsoma=new SectionList() rvp=new RangeVarPlot("v")
+		   {soma  rvp.begin(.5)}  rvp.end(.5)  rvp.list(slsoma)}
+		  {slroot=new SectionList() rvp=new RangeVarPlot("v")
+		   {ss=0 forsec slsoma{ {if(ss==1) rvp.begin(.5)}  ss=ss+1}}
+		   rvp.end(.5)  rvp.list(slroot)}
+	  	  forsec slroot order.set(sec, order.x(sec)+1)
+		  for(x) if(x>0) secri.set(sec, secri.x(sec)+ri(x))
+		  if(secri.x(sec)>9999) secri.set(sec, -9999)
+		  forsec slroot for(x) if(x>0) secpathri.set(sec,secpathri.x(sec)+ri(x))
+	}sec=sec+1}
+	setsec()
+	setmrg()
+	for sec1=1,NSEC-1 {
+		for sec2=0,NSEC-1 {
+			if(secaddress.x(sec2)==paraddress.x(sec1)) {parsecndx.set(sec1,sec2)}
+			}
+		}
+}
+proc setsec(){
+	sec=0
+	forall {
+		if(sec!=0){
+		  secRa.set(sec,Ra)
+		  secL.set(sec,L)
+		  secCm.set(sec,cm)
+	}sec=sec+1}
+}
+proc setmrg(){
+	sec=0
+	forall {
+		if(sec!=0){
+		  mrgL.set(sec,L)
+		 
+mrgdiam.set(sec,sqrt(secRa.x(sec)*secL.x(sec)*4/secri.x(sec)/100/PI))
+		  mrgri.set(sec,secri.x(sec))
+	}sec=sec+1}
+}
+
+proc getnextABP(){local extent, sec
+	extent=$1
+	secA=0			
+	for sec=1,NSEC-1 {if(tosec.x(sec)==-999){			
+			    if(order.x(sec)>=order.x(secA)){	
+			      if(abs(tocyc.x(sec))==extent){		
+				secA=sec
+ 	}}}}
+	secB=0
+	for sec=1,NSEC-1 {if(parsecndx.x(sec)==parsecndx.x(secA)){	
+			    if(sec!=secA){
+			      if(tosec.x(sec)==-999){			
+				if(abs(tocyc.x(sec))==extent){		
+			          secB=sec
+	}}}}}
+	secP=0
+	if(abs(tocyc.x(parsecndx.x(secA)))==extent) secP=parsecndx.x(secA)
+}	
+proc shortnms(){
+	{AmRa=0 AmL=0 Amdiam=0 Amri=0}
+	{BmRa=0 BmL=0 Bmdiam=0 Bmri=0}
+	{PmRa=0 PmL=0 Pmdiam=0 Pmri=0}
+	if(secA>0) {
+		AmRa=secRa.x(secA)
+		AmL=mrgL.x(secA)  
+		Amdiam=mrgdiam.x(secA) 
+		Amri=(AmRa*AmL)/(PI*((Amdiam^2)/4)*100)
+	}
+	if(secB>0) {
+		BmRa=secRa.x(secB)
+		BmL=mrgL.x(secB)  
+		Bmdiam=mrgdiam.x(secB) 
+		Bmri=(BmRa*BmL)/(PI*((Bmdiam^2)/4)*100)
+	}
+	if(secP>0) {
+		PmRa=secRa.x(secP)
+		PmL=mrgL.x(secP)  
+		Pmdiam=mrgdiam.x(secP) 
+		Pmri=(PmRa*PmL)/(PI*((Pmdiam^2)/4)*100)
+	}
+	if(AREABYLONG==1){
+	  if(secA>0 && secB>0){
+	    if(AmL>BmL){
+	      {BmL=AmL  mrgL.set(secB,BmL)}
+	      {Bmdiam=sqrt((BmRa*BmL*4)/(Bmri*PI*100)) mrgdiam.set(secB,Bmdiam)}
+	    }
+	    if(BmL>AmL){
+	      {AmL=BmL  mrgL.set(secA,AmL)}
+	      {Amdiam=sqrt((AmRa*AmL*4)/(Amri*PI*100)) mrgdiam.set(secA,Amdiam)}
+	    }
+	  }
+	}
+}
+
+
+
+
+
+
+
+
+
+
+proc joinAP(){local newRa, newL, newri, newdiam
+		newRa=(AmRa+PmRa)/2
+		newL=AmL+PmL
+		newri=Amri+Pmri
+		newdiam=sqrt(newRa*newL*4/newri/PI/100)
+
+		mrgL.set(secP, newL)
+		mrgdiam.set(secP, newdiam)
+		mrgri.set(secP, newri)
+	tosec.set(secA, secP)
+}
+proc joinBP(){local newRa, newL, newri, newdiam
+		newRa=(BmRa+PmRa)/2
+		newL=BmL+PmL
+		newri=Bmri+Pmri
+		newdiam=sqrt(newRa*newL*4/newri/PI/100)
+
+		mrgL.set(secP, newL)
+		mrgdiam.set(secP, newdiam)
+		mrgri.set(secP, newri)
+	tosec.set(secB, secP)
+}
+proc joinABP(){local AmBmL,AmBmri,AmBmdiam, newRa,newL,newdiam
+
+	AmL2BmL=AmL/BmL
+	BmL2AmL=BmL/AmL
+	if(AmL2BmL>=5) {
+		joinAP()
+		tosec.set(secB, -997)
+	}
+	if(BmL2AmL>=5) {
+		joinBP()
+		tosec.set(secA, -997)
+	}
+	if(AmL2BmL<5 && BmL2AmL<5){
+		if(Lbysurf_areabyasis==1 || Lbysurf_areabylong==1) {
+			//Lbysurf_areabyasis BSC_Lbysurf_areabylong
+			Asurf=AmL*PI*Amdiam
+			Bsurf=BmL*PI*Bmdiam
+			AmBmL=(AmL*Asurf+BmL*Bsurf)/(Asurf+Bsurf)
+			AmBmdiam=sqrt(Amdiam^2+Bmdiam^2)
+
+			AmBmcross=PI*(AmBmdiam^2)/4	
+			AmBmRa=(AmRa+BmRa)/2
+			AmBmri=AmBmRa*AmBmL/AmBmcross/100	
+
+			newRa=(AmBmRa+PmRa)/2
+			newL=AmBmL+PmL
+			newri=AmBmri+Pmri
+			newdiam=sqrt(newRa*newL*4/newri/PI/100)
+		}
+		if(Lbydiam_areabyasis==1 || Lbydiam_areabylong==1){
+			//Lbydiam_areabyasis  Lbydiam_areabylong
+			AmBmL=(AmL*Amdiam+BmL*Bmdiam)/(Amdiam+Bmdiam)
+			AmBmdiam=sqrt(Amdiam^2+Bmdiam^2)
+			AmBmcross=PI*(AmBmdiam^2)/4	
+
+			AmBmRa=(AmRa+BmRa)/2
+			AmBmri=AmBmRa*AmBmL/AmBmcross/100	
+
+			newRa=(AmBmRa+PmRa)/2
+			newL=AmBmL+PmL
+			newri=AmBmri+Pmri
+			newdiam=sqrt(newRa*newL*4/newri/PI/100)
+		}
+		if(Lbyavg__areabyasis==1 || Lbyavg__areabylong==1 || Lbylong_areabylong==1) {
+			//Lbyavg__areabyasis Lbyavg__areabylong Lbylong_areabylong
+			AmBmL=(AmL+BmL)/2
+			AmBmdiam=sqrt(Amdiam^2+Bmdiam^2)
+			AmBmcross=PI*(AmBmdiam^2)/4	
+
+			AmBmRa=(AmRa+BmRa)/2
+			AmBmri=AmBmRa*AmBmL/AmBmcross/100	
+
+			newRa=(AmBmRa+PmRa)/2
+			newL=AmBmL+PmL
+			newri=AmBmri+Pmri
+			newdiam=sqrt(newRa*newL*4/newri/PI/100)
+		}
+		mrgL.set(secP, newL)
+		mrgri.set(secP, newri)
+		mrgdiam.set(secP, newdiam)
+
+		tosec.set(secA, secP)
+		tosec.set(secB, secP)
+	}
+	
+}
+proc tagAcyc(){
+	tosec.set(secA, -$1)
+	tocyc.set(secA, $1)
+}
+proc tagBcyc(){
+	tosec.set(secB, -$1)
+	tocyc.set(secB, $1)
+}
+proc tagABcyc(){
+	
+	tagAcyc($1)
+	tagBcyc($1)
+}
+proc cycmake(){local sec, extent
+	initto()
+	initcyc()
+	setmrg()
+
+	for sec=1,NSEC-1{
+		if(secpathri.x(sec)>=CUTOFF2 && secpathri.x(sec)< 1e10) {
+		  tocyc.set(sec, -1)
+		}
+	}
+	for sec=1,NSEC-1{
+		if(secpathri.x(sec)>=CUTOFF1 && secpathri.x(sec)< CUTOFF2) {
+		  tocyc.set(sec, -2)
+		}
+	}
+	for sec=1,NSEC-1{
+		if(secpathri.x(sec)>=0 && secpathri.x(sec)< CUTOFF1) {
+		  tocyc.set(sec, -3)
+		}
+	}
+	for extent=1,3 {
+		getnextABP(extent)
+		shortnms()
+		while(secA>0) {	
+			if (secB==0 && secP!=0) joinAP()
+			if (secB!=0 && secP!=0) joinABP()
+			if (secB==0 && secP==0) tagAcyc(extent)
+			if (secB!=0 && secP==0) tagABcyc(extent)
+
+			getnextABP(extent)
+			shortnms()
+		}
+	}
+
+	if(Lbylong_areabylong==1){
+		//Lbylong_areabylong
+	  for extent=1,3 {
+		maxL=0
+		for sec=1,NSEC-1{
+			if(tocyc.x(sec)==extent) {
+			  if(maxL<mrgL.x(sec)) maxL=mrgL.x(sec)
+			  cycnin.set(extent, cycnin.x(extent)+1)
+			}
+		}
+		for sec=1,NSEC-1{
+			if(tocyc.x(sec)==extent) {
+			  newdiam=sqrt((secRa.x(sec)*maxL*4)/(mrgri.x(sec)*PI*100))
+			  cycdiam.set(extent, cycdiam.x(extent)+newdiam^2)
+			}
+		}
+		if(cycnin.x(extent)!=0) cycL.set(extent, maxL)
+		if(cycnin.x(extent)==0) cycL.set(extent, 0)
+		cycdiam.set(extent, sqrt(cycdiam.x(extent)))
+	  }
+	}
+	if(Lbysurf_areabyasis==1){
+		//Lbysurf_areabyasis
+	  for extent=1,3 {
+		totsurf=0
+		for sec=1,NSEC-1{
+			if(tocyc.x(sec)==extent) {
+			  surf=mrgL.x(sec)*PI*mrgdiam.x(sec)
+			  totsurf=totsurf+surf
+			  cycnin.set(extent, cycnin.x(extent)+1)
+			}
+		}
+		for sec=1,NSEC-1{
+			if(tocyc.x(sec)==extent) {
+			  surf=mrgL.x(sec)*PI*mrgdiam.x(sec)
+			  cycL.set(extent, cycL.x(extent)+mrgL.x(sec)*surf)
+			  cycdiam.set(extent, cycdiam.x(extent)+mrgdiam.x(sec)^2)
+			}
+		}
+		if(cycnin.x(extent)!=0) cycL.set(extent, cycL.x(extent)/totsurf)
+		if(cycnin.x(extent)==0) cycL.set(extent, 0)
+		cycdiam.set(extent, sqrt(cycdiam.x(extent)))
+	  }
+	}
+	if(Lbysurf_areabylong==1){
+		//Lbysurf_areabylong
+	  for extent=1,3 {
+		totsurf=0
+		maxL=0
+		for sec=1,NSEC-1{
+			if(tocyc.x(sec)==extent) {
+			  if(maxL<mrgL.x(sec)) maxL=mrgL.x(sec)
+			  surf=mrgL.x(sec)*PI*mrgdiam.x(sec)
+			  totsurf=totsurf+surf
+			  cycnin.set(extent, cycnin.x(extent)+1)
+			}
+		}
+		for sec=1,NSEC-1{
+			if(tocyc.x(sec)==extent) {
+			  surf=mrgL.x(sec)*PI*mrgdiam.x(sec)
+			  cycL.set(extent, cycL.x(extent)+mrgL.x(sec)*surf)
+			  newdiam=sqrt((secRa.x(sec)*maxL*4)/(mrgri.x(sec)*PI*100))
+			  cycdiam.set(extent, cycdiam.x(extent)+newdiam^2)
+			}
+		}
+		if(cycnin.x(extent)!=0) cycL.set(extent, cycL.x(extent)/totsurf)
+		if(cycnin.x(extent)==0) cycL.set(extent, 0)
+		cycdiam.set(extent, sqrt(cycdiam.x(extent)))
+	  }
+	}
+	if(Lbydiam_areabyasis==1){
+		//Lbydiam_areabyasis
+	  for extent=1,3 {
+		totdiam=0
+		for sec=1,NSEC-1{
+			if(tocyc.x(sec)==extent) {
+			  totdiam=totdiam+mrgdiam.x(sec)
+			  cycnin.set(extent, cycnin.x(extent)+1)
+			}
+		}
+		for sec=1,NSEC-1{
+			if(tocyc.x(sec)==extent) {
+			  cycL.set(extent, cycL.x(extent)+mrgL.x(sec)*mrgdiam.x(sec))
+			  cycdiam.set(extent, cycdiam.x(extent)+mrgdiam.x(sec)^2)
+			}
+		}
+		if(cycnin.x(extent)!=0) cycL.set(extent, cycL.x(extent)/totdiam)
+		if(cycnin.x(extent)==0) cycL.set(extent, 0)
+		cycdiam.set(extent, sqrt(cycdiam.x(extent)))
+	  }
+	}
+	if(Lbydiam_areabylong==1){
+		//Lbydiam_areabylong
+	  for extent=1,3 {
+		maxL=0
+		totdiam=0
+		for sec=1,NSEC-1{
+			if(tocyc.x(sec)==extent) {
+			  if(maxL<mrgL.x(sec)) maxL=mrgL.x(sec)
+			  totdiam=totdiam+mrgdiam.x(sec)
+			  cycnin.set(extent, cycnin.x(extent)+1)
+			}
+		}
+		for sec=1,NSEC-1{
+			if(tocyc.x(sec)==extent) {
+			  cycL.set(extent, cycL.x(extent)+mrgL.x(sec)*mrgdiam.x(sec))
+			  newdiam=sqrt((secRa.x(sec)*maxL*4)/(mrgri.x(sec)*PI*100))
+			  cycdiam.set(extent, cycdiam.x(extent)+newdiam^2)
+			}
+		}
+		if(cycnin.x(extent)!=0) cycL.set(extent, cycL.x(extent)/totdiam)
+		if(cycnin.x(extent)==0) cycL.set(extent, 0)
+		cycdiam.set(extent, sqrt(cycdiam.x(extent)))
+	  }
+	}
+	if(Lbyavg_areabyasis==1){
+		//Lbyavg__areabyasis
+	  for extent=1,3 {
+		for sec=1,NSEC-1{
+			if(tocyc.x(sec)==extent) {
+			  cycnin.set(extent, cycnin.x(extent)+1)
+			}
+		}
+		for sec=1,NSEC-1{
+			if(tocyc.x(sec)==extent) {
+			  cycL.set(extent, cycL.x(extent)+mrgL.x(sec))
+			  cycdiam.set(extent, cycdiam.x(extent)+mrgdiam.x(sec)^2)
+			}
+		}
+		if(cycnin.x(extent)!=0) cycL.set(extent, cycL.x(extent)/cycnin.x(extent))
+		if(cycnin.x(extent)==0) cycL.set(extent, 0)
+		cycdiam.set(extent, sqrt(cycdiam.x(extent)))
+	  }
+	}
+	if(Lbyavg_areabylong==1){
+		//Lbyavg__areabylong
+	  for extent=1,3 {
+		maxL=0
+		for sec=1,NSEC-1{
+			if(tocyc.x(sec)==extent) {
+			  if(maxL<mrgL.x(sec)) maxL=mrgL.x(sec)
+			  cycnin.set(extent, cycnin.x(extent)+1)
+			}
+		}
+		for sec=1,NSEC-1{
+			if(tocyc.x(sec)==extent) {
+			  cycL.set(extent, cycL.x(extent)+mrgL.x(sec))
+			  newdiam=sqrt((secRa.x(sec)*maxL*4)/(mrgri.x(sec)*PI*100))
+			  cycdiam.set(extent, cycdiam.x(extent)+newdiam^2)
+			}
+		}
+		if(cycnin.x(extent)!=0) cycL.set(extent, cycL.x(extent)/cycnin.x(extent))
+		if(cycnin.x(extent)==0) cycL.set(extent, 0)
+		cycdiam.set(extent, sqrt(cycdiam.x(extent)))
+	  }
+	}
+
+}
+
+arborcharacterize()
+
+cycmake()
+
+print "Section\tLength (um)\tDiameter (um)"
+
+for ii=1,3 print ii, "\t", cycL.x(ii),"\t", cycdiam.x(ii)
+

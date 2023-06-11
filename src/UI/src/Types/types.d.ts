@@ -13,9 +13,19 @@ declare global {
     snippet: string,
   }
 
-  interface SelectOption {
+  interface VariableSelectOption {
     label: string,
     value: string,
+    [x: string]: any,
+  }
+
+  interface CSVSelectOption {
+    name: string,
+    [x: string]: any,
+  }
+
+  interface ModelFileSelectOption {
+    name: string,
     [x: string]: any,
   }
 }

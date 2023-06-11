@@ -1,0 +1,76 @@
+// multiple spikes
+
+// see prev mdbeta_s.hocs for alt codes
+
+load_file("nrngui.hoc")
+
+
+
+load_file("sbeta_jcns.hoc")
+
+///////////////////////////////////////////////////////
+
+
+createAxon()
+
+proc setupPhysiology() {
+	setRacm()
+	addchannels()
+}
+
+
+
+bursts = 1
+
+spikesperburst = 6
+
+
+//totalspikes = bursts*spikesperburst
+
+totalspikes = 20
+
+objref stim[totalspikes]
+
+spikeinterval= 9
+
+stimcounter = 1
+
+tdelay = 25
+
+burstinterval = 100
+
+proc setupStim() {
+
+for x = 1, bursts {
+	for y = 1, spikesperburst {
+	 
+	soma {
+
+		stim[stimcounter] = new IClamp(0.5)
+		stim[stimcounter].del = (x-1)*burstinterval + (y-1)*spikeinterval + tdelay
+		stim[stimcounter].amp = 1
+		stim[stimcounter].dur = 0.8
+                tstop = 300
+		stimcounter = stimcounter +1
+
+
+			}
+		}
+	}
+ }
+
+
+
+
+
+////////////////////////////////////////////////////////
+
+setupPhysiology()
+setupStim()
+
+////////////////////////////////////////////////////////
+
+access soma
+
+init()
+

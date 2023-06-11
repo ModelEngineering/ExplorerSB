@@ -1,0 +1,110 @@
+// Created by libAntimony v2.13.2
+function Rate_Law_for_Effector_cell_increase(c, T, p1, E, I_L, g1, s1)
+  c*T + p1*E*I_L/(g1 + I_L) + s1;
+end
+
+Rate_Law_for_Effector_cell_increase is "Rate Law for Effector_cell_increase"
+
+function Rate_Law_for_Tumor_cell_decrease(a, E, T, g2)
+  a*E*T/(g2 + T);
+end
+
+Rate_Law_for_Tumor_cell_decrease is "Rate Law for Tumor_cell_decrease"
+
+function Rate_Law_for_IL_2_increase(p2, E, T, g3, s2)
+  p2*E*T/(g3 + T) + s2;
+end
+
+Rate_Law_for_IL_2_increase is "Rate Law for IL-2_increase"
+
+function Rate_Law_for_Tumor_cell_increase(r2, T, b)
+  r2*T*(1 - b*T);
+end
+
+Rate_Law_for_Tumor_cell_increase is "Rate Law for Tumor_cell_increase"
+
+
+model *Cappuccio2007___Tumor_immune_system_interactions_and_determination_of_the_optimal_therapeutic_protocol_in_immunotherapy()
+
+  // Compartments and Species:
+  compartment Tumor_microenvironment;
+  species Effector_cells in Tumor_microenvironment, Tumor_cells in Tumor_microenvironment;
+  species IL_2 in Tumor_microenvironment;
+
+  // Reactions:
+  Effector_cell_stimulation:  => Effector_cells; Tumor_microenvironment*Rate_Law_for_Effector_cell_increase(c, Tumor_cells, p1, Effector_cells, IL_2, g1, s1);
+  Effector_cell_decay: Effector_cells => ; Tumor_microenvironment*mu2*Effector_cells;
+  Tumor_growth:  => Tumor_cells; Tumor_microenvironment*Rate_Law_for_Tumor_cell_increase(r2, Tumor_cells, b);
+  Tumor_killing: Tumor_cells => ; Tumor_microenvironment*Rate_Law_for_Tumor_cell_decrease(a, Effector_cells, Tumor_cells, g2);
+  IL_2_production:  => IL_2; Tumor_microenvironment*Rate_Law_for_IL_2_increase(p2, Effector_cells, Tumor_cells, g3, s2);
+  IL_2_decay: IL_2 => ; Tumor_microenvironment*mu3*IL_2;
+
+  // Species initializations:
+  Effector_cells = 1e-05;
+  Tumor_cells = 1e-05;
+  IL_2 = 1e-05;
+
+  // Compartment initializations:
+  Tumor_microenvironment = 1;
+
+  // Variable initializations:
+  c = 1.009;
+  mu2 = 0.0378;
+  p1 = 0.044;
+  g1 = 0.02;
+  s1 = 0;
+  r2 = 0.123;
+  b = 1;
+  a = 0.018;
+  g2 = 0.0001;
+  p2 = 0.9;
+  g3 = 1e-05;
+  mu3 = 1.8;
+  s2 = 0;
+
+  // Other declarations:
+  const Tumor_microenvironment, c, mu2, p1, g1, s1, r2, b, a, g2, p2, g3;
+  const mu3, s2;
+
+  // Unit definitions:
+  unit length = metre;
+  unit area = metre^2;
+  unit volume = litre;
+  unit time_unit = second;
+  unit substance = mole;
+
+  // Display Names:
+  time_unit is "time";
+  IL_2 is "IL-2";
+  IL_2_production is "IL-2_production";
+  IL_2_decay is "IL-2_decay";
+
+  // CV terms:
+  Tumor_microenvironment hypernym "http://identifiers.org/ncit/C94498"
+  Effector_cells hypernym "http://identifiers.org/ncit/C28241"
+  Effector_cells hypernym "http://identifiers.org/cl/CL:0000084"
+  Tumor_cells hypernym "http://identifiers.org/cl/CL:0001063"
+  IL_2 hypernym "http://identifiers.org/pr/PR:000001379"
+  Effector_cell_stimulation hypernym "http://identifiers.org/sbo/SBO:0000393"
+  Effector_cell_stimulation hypernym "http://identifiers.org/go/GO:0042098"
+  Effector_cell_decay hypernym "http://identifiers.org/sbo/SBO:0000394"
+  Tumor_growth hypernym "http://identifiers.org/go/GO:0008283"
+  Tumor_growth hypernym "http://identifiers.org/sbo/SBO:0000393"
+  Tumor_killing hypernym "http://identifiers.org/go/GO:0001906"
+  Tumor_killing hypernym "http://identifiers.org/sbo/SBO:0000394"
+  IL_2_production hypernym "http://identifiers.org/sbo/SBO:0000393"
+  IL_2_decay hypernym "http://identifiers.org/sbo/SBO:0000394"
+end
+
+Cappuccio2007___Tumor_immune_system_interactions_and_determination_of_the_optimal_therapeutic_protocol_in_immunotherapy is "Cappuccio2007 - Tumor-immune system interactions and determination of the optimal therapeutic protocol in immunotherapy"
+
+Cappuccio2007___Tumor_immune_system_interactions_and_determination_of_the_optimal_therapeutic_protocol_in_immunotherapy origin "http://identifiers.org/biomodels.db/BIOMD0000000732"
+Cappuccio2007___Tumor_immune_system_interactions_and_determination_of_the_optimal_therapeutic_protocol_in_immunotherapy origin "http://identifiers.org/biomodels.db/BIOMD0000000732",
+                                                                                                                               "http://identifiers.org/pubmed/9785481"
+Cappuccio2007___Tumor_immune_system_interactions_and_determination_of_the_optimal_therapeutic_protocol_in_immunotherapy model_entity_is "http://identifiers.org/biomodels.db/MODEL2108260001",
+                                                                                                                                        "http://identifiers.org/biomodels.db/BIOMD0000001036"
+Cappuccio2007___Tumor_immune_system_interactions_and_determination_of_the_optimal_therapeutic_protocol_in_immunotherapy propertyBearer "http://identifiers.org/ncit/C15438"
+Cappuccio2007___Tumor_immune_system_interactions_and_determination_of_the_optimal_therapeutic_protocol_in_immunotherapy taxon "http://identifiers.org/taxonomy/9606"
+Cappuccio2007___Tumor_immune_system_interactions_and_determination_of_the_optimal_therapeutic_protocol_in_immunotherapy description "http://identifiers.org/pubmed/17416392"
+Cappuccio2007___Tumor_immune_system_interactions_and_determination_of_the_optimal_therapeutic_protocol_in_immunotherapy property "http://identifiers.org/go/GO:0002837",
+                                                                                                                                 "http://identifiers.org/mamo/MAMO_0000046"

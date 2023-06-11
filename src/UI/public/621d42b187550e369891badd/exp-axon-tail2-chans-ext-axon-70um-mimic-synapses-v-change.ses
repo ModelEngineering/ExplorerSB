@@ -1,0 +1,97 @@
+// Experiment with 2-component axon extention tail, and Na-K channels
+// in all compartments
+
+// no VC, measure voltage response of mimicked synaptic events
+
+// nrngui stuff and ion chans
+load_file("inc-first.ses")
+
+strdef file_name, ses_file
+file_name = "ext-axon-70um-mimic-synapses-v-change"
+
+sprint(ses_file, "neuron-CB-ext-axon-2pieces-chans-%s.ses", file_name)
+
+//load CellBuilder
+{load_file(ses_file)}
+
+
+{
+xpanel("RunControl", 0)
+v_init = -60
+xvalue("Init","v_init", 1,"stdinit()", 1, 1 )
+xbutton("Init & Run","run()")
+xbutton("Stop","stoprun=1")
+runStopAt = 5
+xvalue("Continue til","runStopAt", 1,"{continuerun(runStopAt) stoprun=1}", 1, 1 )
+runStopIn = 1
+xvalue("Continue for","runStopIn", 1,"{continuerun(t + runStopIn) stoprun=1}", 1, 1 )
+xbutton("Single Step","steprun()")
+t = 200
+xvalue("t","t", 2 )
+tstop = 200
+xvalue("Tstop","tstop", 1,"tstop_changed()", 0, 1 )
+dt = 0.025
+xvalue("dt","dt", 1,"setdt()", 0, 1 )
+steps_per_ms = 40
+xvalue("Points plotted/ms","steps_per_ms", 1,"setdt()", 0, 1 )
+screen_update_invl = 0.1
+xvalue("Scrn update invl","screen_update_invl", 1,"", 0, 1 )
+realtime = 1.12
+xvalue("Real Time","realtime", 0,"", 0, 1 )
+xpanel(893,777)
+}
+
+// load common funcs
+load_file("fitfuncs.hoc")
+
+print_elec_cell()
+
+// calc morph stats
+load_file("stats.hoc")
+
+load_file("v-graph-bigger-axon-2pieces.ses")
+
+//load_file("neuron-PointProcessMgr-ext-axon-2pieces-chans-ext-axon-70um-10alphasynapses.ses")
+
+
+// save state in this file
+sprint(state_file_name, "state-neuron-CB+act+elec+ext-axon-2piece-chans-%s.bin", file_name)
+
+// small adjustments
+
+// loop and set random timing for synapses
+// use NetStim and NetCon
+
+// load state first because it overrides parameters
+strdef state_w_syn
+sprint(state_w_syn, "state-neuron-CB+act+elec+ext-axon-2piece-chans-%s-synapse-saved.bin", file_name)
+
+restoreStateFromFile(state_w_syn)
+
+// use ExpSyn object
+objref ns, nc, syn
+
+// set one synapse on a dendrite & 
+// hand-tune it to give ~6pA response at soma
+
+// try: (w in uS)
+// 685, w= 0.000150 => peak=-9.032 pA, APw=0.0034 (22.66)
+// 520, w= 0.000145 => peak=-9.032 pA, APw=0.0033 (22.75)
+// 357, w= 0.000175 => peak=-10.67 pA, APw=0.0028 (16.00)
+// 513, w= 0.000180 => peak=-11.01 pA, APw=0.0029 (16.11)
+dendrite[513] syn = new ExpSyn(0.5)
+
+nc = new NetStim(.5)
+ns = new NetCon(nc, syn)
+syn.tau = 5
+syn.e = 0
+nc.interval = 1
+nc.number = 1
+nc.start = 10
+nc.noise = 0
+ns.weight = .00018
+
+//load_file("vclamp_soma_-60mV_syni.ses")
+
+// use this to save the data:
+// saveLines(2, 1, 2, "data-syn-dend-520")

@@ -1,0 +1,267 @@
+#-- Attractor
+# Modeling Interactions Between Electrical Activity and
+# Second Messenger Cascades in Aplysia Neuron R15
+# Yu et al. 2004, J. Neurophysiol. 91: 2297-2311
+
+# Units: millivolts, milliseconds, nanoamps, microsiemens,
+#        nanofarads, millimoles
+
+init V=-38.8468481124207656
+init m=0.0196696802720699
+init h=0.9963480051353911
+init n=0.0504328903497288
+init d=0.0000026145195067
+init s=0.6584423516466250
+init l=0.4382633433755155
+init Ca=0.0003
+init f=0.9910842262233112
+init b=0.0342094859934714
+init CaM=0.008
+init CaCaM=0.0024
+init Ca2CaM=0.00072
+init Ca3CaM=0.0000864
+init Ca4CaM=0.0000104
+
+#init V=-53.11036793426285
+#init m=0.01354547030760796
+#init h=0.9999686638933726
+#init d=6.126186943402957e-008
+#init f=0.9997459538411338
+#init s=0.2318420535504265
+#init b=2.542904603595237e-006
+#init n=0.01934984486453077
+#init l=0.8439639705855201
+init msyn2=0
+init msyn=0
+#init Ca=0.0002581366654826358
+
+init cAMP=0.001
+
+#--Parameters--
+
+#--Stimulus Current
+
+p Astim1=0
+p Astim2=0
+p Ibias=0
+p ts1=0
+p te1=0
+p ts2=0
+p te2=0
+p tclamp=200000
+
+#--Conductances
+
+p gna=38
+p gca=17
+p gk=70
+p gns=0.2
+p gsi=0.65
+p gr=0.18
+p gl=0.075
+p gsyn=1.0
+
+#--Scaling Constants
+
+p Knaca=0.01
+p Dnaca=0.01
+p Icapmean=7
+p Inakmean=5.9
+p Dca=0.000150
+p Dsicamp=0.00035
+#p Dsicamp=0.000842
+p Drcamp=0.0004
+#p Drcamp=0.0009
+p Ksicamp=0.0042
+p KsiDA=5.5
+p Krcamp=0.001
+p Krmod=1.5
+p KmodHT=1.2
+p KmodCa=1.1
+p KmodPDE=0.8
+p lamda=0.6
+p alpha=0.45
+
+#--Synaptic Input Parameters
+
+p zeta=25
+p tau=0.5
+
+#--Reversal Potentials
+
+p Ena=54
+p Eca=65
+p Ek=-77
+p Ens=-22
+p El=10.3
+p Esyn=-25
+
+#--Michalis-Menten Constants
+
+p Kmsi=0.000025
+p Kmcap=0.001
+p Kmns=0.000150
+p Kpca=0.000350
+p Kpna=5.46
+p Kpk=0.621
+p Kca=0.0005
+p KDa=0.2
+p KHT=0.006
+p Kpde=0.003
+
+#--Reaction Rate Constants
+
+#(mM/ms)
+#p C0=0.000
+#p D0=0.001
+#p VmaxC=0.0005
+#p VmaxD=0.002
+#p VmaxHT=0.001
+#p VmaxCa=0.0009
+p Vadc=0.0000006
+p Vpde=0.0000024
+# from Tarra
+param k1f=2300, k1b=2.4, k2f=2300, k2b=2.4, k3f=160000, k3b=405, k4f=160000, k4b=405
+
+#(mM)
+p kCh=0.0000968
+p kCl=0.075
+p kD=0.0000968
+
+#--Cell Properties and Concentrations
+
+p Cm=17.5
+p Vol=4
+p Bi=0.10125
+p Na0=500
+p Na=50
+p K0=10
+p Ca0=10
+
+p DA=0
+p HT=0
+ 
+#--Physical Constants
+
+p Rgas=8314
+p Temp=295
+p Fc=96500
+p ku=100
+p kr=0.238
+p gamma=0.5
+p r=4
+p nn=4
+p Z=2
+p hill=1
+
+#--Time stuff
+
+p y=0
+p x=10000
+p puff=0.001
+p hyper=1000
+p cdelay=0
+p kclamp=0.1
+
+#--Overall Equation--
+
+Istim1=if (t<ts1 | t>=te1) then (0) else (Astim1)
+Istim2=if (t<ts2 | t>=te2) then (0) else (Astim2)
+Vnorm=-(Ina(m,h,V)+Ica(Ca,d,f,V)+Isi(cAMP,s,V,Ca)+Ins(b,V,Ca)+Ik(n,l,V)+Ir(cAMP,V)+Il(V)+Inaca(V,Ca)+Inak(V)+Icap(Ca)-Istim1-Istim2+Isyn(V)-Ibias)/Cm
+#Vclamp=-kclamp*(V + 75)
+#V'=0
+#V'=if(t>(x+cdelay))then(Vclamp)else(Vnorm)
+V'=Vnorm
+
+#-- Format for most currents
+
+#Tm(V)=1/(Am(V) + Bm(V))
+#m'=(minf(V)-m)/Tm(V)
+
+#--Inward Currents--
+
+m'=(1/(1+exp((-10.23-V)/10))-m)/(1/(0.4*(V+6)/(1-exp((-V-6)/4.09)) + 10.75*exp((-28-V)/4.01)))
+h'=(1/(1+exp((V+22)/3))-h)/(1/(0.112*exp((-30-V)/10) + 0.23/(exp((9.65-V)/23.9)+1)))
+
+Ina(m,h,V)=gna*m*m*m*h*(V-Ena)
+
+#--
+
+d'=(1/(1+exp((10-V)/3.8))-d)/(1/(0.0063*(V+10.81)/(1-exp((-10.81-V)/5.03)) + 0.01*exp((25-V)/10)))
+f'=(1/(1+exp((V+20)/4))-f)/(1/(0.00325*exp((10-V)/7.57) + 0.029/(exp((20.29-V)/5.4) + 1)))
+
+Ica(Ca,d,f,V)=gca*(1/(1+exp((Ca-Kca)/Dca)))*d*d*f*(V-Eca)
+
+#--
+
+s'=(1/(1+exp((-40-V)/11.5))-s)/(1/(0.0014*(V-54)/(1-exp((-V+54)/12.63)) + 0.00013*exp((-11.32-V)/16.8)))
+
+Isi(cAMP,s,V,Ca)=gsi*(KDa/(DA+KDa)*(1+KsiDA/(1+exp((-cAMP+Ksicamp)/Dsicamp))))*s*(V-Eca)*(Kmsi/(Kmsi+Ca))
+
+#--
+
+b'=((1/(1+exp((-15-V)/3)))-b)/(500*(0.8/(1+exp((10+V)/3))+0.2))
+
+Ins(b,V,Ca)=gns*b*(V-Ens)*(Ca/(Ca+Kmns))
+
+#--
+
+Il(V)=gl*(V-El)
+
+#--Outward Currents--
+
+n'=(1/(1+exp((3.65-V)/14.46))-n)/(1/(0.0035*(V+17)/(1-exp((-V-17)/3)) + 0.04*exp((-28-V)/10)))
+l'=(1/(1+exp((32.5+V)/12.7))-l)/(2000*(0.9/(1+exp((28+V)/3))+0.10))
+
+Ik(n,l,V)=gk*n*n*n*n*l*(V-Ek)
+
+#--
+
+Ir(cAMP,V)=gr*(1+Krmod/(1+exp((-cAMP+Krcamp)/Drcamp)))*(V-Ek+5.66)/(1+exp((V-Ek-15.3)*Z*Fc/Rgas/Temp))
+
+a EyeR=Ir(cAMP,V)
+
+#--Synaptic Current--
+
+msyn2'=(-msyn-2*zeta*tau*msyn)/tau*tau
+msyn'=msyn2
+Isyn(V)=gsyn*msyn*(V-Esyn)
+
+#--Pumps and Exchangers--
+
+Icap(Ca)=Icapmean*(Ca/(Ca+Kmcap))
+
+Inak(V)=Inakmean*(Na/(Na+Kpna)*K0/(K0+Kpk)*1.5/(1.5+exp((-V-60)/40)))
+
+Inaca(V,Ca)=Knaca*(exp((r-2)*gamma*(V*Fc/Rgas/Temp))*Ca0*Na**r-exp((r-2)*(gamma-1)*(V*Fc/Rgas/Temp))*Ca*Na0**r)/(1+Dnaca*(Ca*Na0**r+Ca0*Na**r))
+
+#--Internal calcium concentration--
+
+Oc'=ku*Ca*(1-Oc)-kr*Oc
+
+CaM'(CaM, CaCaM) = k1b*CaCaM - k1f*Ca*CaM
+CaCaM'(CaM, CaCaM, Ca2CaM) = k1f*Ca*CaM - k1b*CaCaM + k2b*Ca2CaM - k2f*Ca*CaCaM 
+Ca2CaM'(CaCaM, Ca2CaM, Ca3CaM) = k2f*Ca*CaCaM - k2b*Ca2CaM + k3b*Ca3CaM - k3f*Ca*Ca2CaM
+Ca3CaM'(Ca2CaM, Ca3CaM, Ca4CaM) = k3f*Ca*Ca2CaM - k3b*Ca3CaM + k4b*Ca4CaM - k4f*Ca3CaM*Ca
+Ca4CaM'(Ca3CaM, Ca4CaM) = k4f*Ca*Ca3CaM - k4b*Ca4CaM
+xy=(k1f*Ca*CaM - k1b*CaCaM + k2b*Ca2CaM - k2f*Ca*CaCaM) + 2*(k2f*Ca*CaCaM - k2b*Ca2CaM + k3b*Ca3CaM - k3f*Ca*Ca2CaM) + 3*(k3f*Ca*Ca2CaM - k3b*Ca3CaM + k4b*Ca4CaM - k4f*Ca3CaM*Ca) + 4*(k4f*Ca*Ca3CaM - k4b*Ca4CaM)
+Ca'=(Inaca(V,Ca)-Isi(cAMP,s,V,Ca)-Ica(Ca,d,f,V)-Icap(Ca)-0.197*((V-Eca)/(V-Ens))*Ins(b,V,Ca))/(2*Vol*Fc)- xy - nn*Bi*(ku*Ca*(1-Oc)-kr*Oc)
+
+#--Internal cAMP concentration--
+
+Ca34CaM=Ca3CaM+Ca4CaM
+Cycpos(Ca34CaM)=Ca34CaM**hill/(Ca34CaM**hill + kCh**hill)
+Cycneg(Ca)=kCl**hill/(Ca**hill + kCl**hill)
+Cycht=HT/(HT + KHT)
+
+CYCa(Ca34CaM)=Vadc*(alpha + KmodHT*Cycht + KmodCa*Cycpos(Ca34CaM)*Cycneg(Ca34CaM))
+
+PDEa(Ca34CaM)=Vpde*(lamda + KmodPDE*Ca34CaM**hill/(Ca34CaM**hill + kD**hill))
+
+#cAMP'=CYCa(Ca34CaM)-PDEa(Ca34CaM)*cAMP/(cAMP+Kpde)
+cAMP'=if(t>tclamp)then(0)else(CYCa(Ca34CaM)-PDEa(Ca34CaM)*cAMP/(cAMP+Kpde))
+
+@ TOTAL=80000,dt=0.2
+@ METHOD=cvode,BOUND=1e7,TOL=0.00001,ATOL=0.0000001,MAXSTOR=4000000
+
+d

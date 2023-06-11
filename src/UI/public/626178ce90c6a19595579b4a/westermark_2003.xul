@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<window id="layout-diagram" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" style="overflow: auto" onload="setupDocument()">
+<hbox>
+	<scale id="zoom_scale" value="10" min="7" max="14" flex="4"/>
+	<label value="Zoom" control="zoom_scale" flex="1"/>
+	<button id="reset_button" label="Reset View" flex="1"/>
+	<spacer flex="34"/>
+</hbox>
+<script>
+<![CDATA[
+window.model_entities =
+  {
+
+			
+	Glc: {
+		id: "Glc",
+		y: "Glc/Glc",
+		x: "environment/time",
+		graph: "Clickable elements against time (s)",
+		colour: "#ff9900",
+		linestyle: "none"
+	},
+
+	F6P: {
+		id: "F6P",
+		y: "F6P/F6P",
+		x: "environment/time",
+		graph: "Clickable elements against time (s)",
+		colour: "#ff00cc",
+		linestyle: "none"
+	},
+
+	G6P_F6P: {
+		id: "G6P_F6P",
+		y: "G6P_F6P/G6P_F6P",
+		x: "environment/time",
+		graph: "Clickable elements against time (s)",
+		colour: "#cc00ff",
+		linestyle: "none"
+	},
+
+
+	FBP: {
+		id: "FBP",
+		y: "FBP/FBP",
+		x: "environment/time",
+		graph: "Clickable elements against time (s)",
+		colour: "#3300ff",
+		linestyle: "none"
+	},
+
+
+	DHAP: {
+		id: "DHAP",
+		y: "DHAP/DHAP",
+		x: "environment/time",
+		graph: "Clickable elements against time (s)",
+		colour: "#66ff66",
+		linestyle: "none"
+	},
+
+
+	G3P: {
+		id: "G3P",
+		y: "G3P/G3P",
+		x: "environment/time",
+		graph: "Clickable elements against time (s)",
+		colour: "#6666ff",
+		linestyle: "none"
+	}
+
+	
+			
+ // Repeat the above section for each controllable graph trace.
+ // Remember to add a comma to each repeat after the final },
+ // except for the final one!
+ 
+};
+
+function flushVisibilityInformation(entity_id, entity_colour)
+{
+	var message = "";
+	var entity;
+
+	if (typeof pcenv != "undefined")
+	{
+		for (var i in window.model_entities)
+		{
+			entity = window.model_entities[i];
+			if (typeof entity_id == "undefined" || entity_id == window.model_entities[i].id)
+			{
+				pcenv.selectTrace
+				(
+					entity.graph,
+					entity.x,
+					entity.y,
+					typeof entity_colour == "undefined" ? "" : entity_colour,
+					entity.linestyle
+				);
+			}
+			if (entity.linestyle != "none")
+				message += i + ", ";
+		}
+		pcenv.status(message == "" ? "No fluxes displayed" : "Displaying flux of " + message.slice(0, -2));
+	}
+}
+
+function processSelectEntity(event)
+{
+	if (typeof pcenv != "undefined")
+		pcenv.status("In processSelectEntity");
+
+	var entity = window.model_entities[window.svgIdToName[event.currentTarget.id]];
+
+	switch(entity.linestyle)
+	{
+	case "none":
+		entity.linestyle = "lines";
+		highlightEntity(event.currentTarget.id);
+		break;
+	case "lines":
+		entity.linestyle = "none";
+		unlightEntity(event.currentTarget.id);
+		break;
+	}
+
+	flushVisibilityInformation(entity.id);
+}
+
+function processContext(event)
+{
+	// if (event.button != 2)
+	//   return true;
+
+	var entity = window.model_entities[window.svgIdToName[event.currentTarget.id]];
+
+	if (entity.context == null)
+		return true;
+
+	var menu = document.getElementById("entityContextMenu");
+
+	for (var c = menu.firstChild, x = null; c != null; c = x)
+	{
+		x = c.nextSibling;
+		menu.removeChild(c);
+	}
+
+	for (var i in entity.context)
+	{
+		var item = entity.context[i];
+
+		var mitem = document.createElementNS
+		(
+			"http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul",
+			"menuitem"
+		);
+
+		mitem.setAttribute("label", item.label);
+		mitem.setAttribute("url", item.url);
+		mitem.addEventListener("command", processShowEntityURL, false);
+		menu.appendChild(mitem);
+	}
+
+	menu.showPopup(window.diagram, event.screenX, event.screenY, "context");
+
+	event.stopPropagation;
+	return false;
+}
+
+function processShowEntityURL(event)
+{
+	url = event.target.getAttribute("url");
+
+	window.open(url);
+
+	var hl = document.getElementById("hidden-link");
+	hl.href = url;
+
+	// This is ugly, but it is one way to force everything through the proper
+	// external handler...
+	var evt = document.createEvent("HTMLEvents");
+	evt.initEvent("click", true, true);
+	hl.dispatchEvent(evt);
+}
+
+function highlightEntity(id)
+{
+	for (var path = document.getElementById(id + "_path1"), i = 1; path != null; path = document.getElementById(id + "_path" + ++i))
+	{
+		if (!(i in window.model_entities[window.svgIdToName[id]].path_colours))
+			window.model_entities[window.svgIdToName[id]].path_colours[i] = path.attributes.getNamedItem("stroke").value;
+		path.attributes.getNamedItem("stroke").value = "#ff0000";
+	}
+}
+
+function highlightEntityOnRollover(event) {
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].colour)
+		flushVisibilityInformation(event.currentTarget.id, "#ffffff");
+
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].linestyle == "none")
+		highlightEntity(event.currentTarget.id);
+}
+
+function unlightEntity(id)
+{
+	for (var path = document.getElementById(id + "_path1"), i = 1; path != null; path = document.getElementById(id + "_path" + ++i))
+		path.attributes.getNamedItem("stroke").value = window.model_entities[window.svgIdToName[id]].path_colours[i];
+}
+
+function unlightEntityOnRollover(event) {
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].colour)
+		flushVisibilityInformation(event.currentTarget.id, window.model_entities[window.svgIdToName[event.currentTarget.id]].colour);
+
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].linestyle == "none")
+		unlightEntity(event.currentTarget.id);
+}
+
+var mouseDown = false;
+var initial_x;
+var initial_y;
+var viewBox;
+
+function startDrag(event)
+{
+	if (event.button)
+		return true;
+
+	mouseDown = true;
+
+	initial_x = parseInt(currentZoom * event.pageX + parseInt(viewBox.value.match(/^-?\d+/)[0]));
+	initial_y = parseInt(currentZoom * event.pageY + parseInt(viewBox.value.match(/^-?\d+\s+(-?(\d+))/)[1]));
+}
+
+function stopDrag(event)
+{
+	if (!event.button)
+		mouseDown = false;
+}
+
+function moveDrag(event)
+{
+	if (mouseDown == true)
+		viewBox.value = viewBox.value.replace(/^-?\d+\s+-?\d+/, parseInt(initial_x - currentZoom * event.pageX) + " " + parseInt(initial_y - currentZoom * event.pageY));
+}
+
+function reset()
+{
+	var zoom_scale = document.getElementById("zoom_scale")
+	zoom_scale.value = zoom_scale.originalValue;
+	viewBox.value = viewBox.originalValue;
+}
+
+var initialZoom;
+var currentZoom = 1;
+var initialHeight;
+var initialWidth;
+
+function zoomDiagram(event)
+{
+	currentZoom = initialZoom / event.currentTarget.value;
+	viewBox.value = viewBox.value.replace(/\d+\s+\d+$/, parseInt(initialHeight * currentZoom) + " " + parseInt(initialWidth * currentZoom));
+}
+
+function setupDocument()
+{
+	flushVisibilityInformation();
+
+	window.diagram = document.getElementById("sachse");
+
+	window.svgIdToName = {};
+
+	for (var name in window.model_entities)
+	{
+		var id = window.model_entities[name].id;
+		window.model_entities[name].path_colours = [];
+
+		var svg = document.getElementById(id);
+		window.svgIdToName[id] = name;
+
+		svg.addEventListener("click", processSelectEntity, false);
+		svg.addEventListener("contextmenu", processContext, false);
+		svg.addEventListener("mouseover", highlightEntityOnRollover ,false);
+		svg.addEventListener("mouseout", unlightEntityOnRollover, false);
+	}
+
+	document.getElementsByTagName("svg")[0].addEventListener("mousedown", startDrag, false);
+	document.addEventListener("mouseup", stopDrag, false);
+	document.addEventListener("mousemove", moveDrag, false);
+	document.getElementById("reset_button").addEventListener("click", reset, false);
+
+	document.getElementById("zoom_scale").addEventListener("change", zoomDiagram, false);
+	document.getElementById("zoom_scale").originalValue = document.getElementById("zoom_scale").value;
+
+	viewBox = document.getElementsByTagName("svg")[0].attributes.getNamedItem("viewBox");
+	viewBox.originalValue = viewBox.value;
+
+	initialZoom = document.getElementById("zoom_scale").value;
+	initialHeight = parseInt(viewBox.value.match(/(\d+)\s+\d+$/)[1]);
+	initialWidth = parseInt(viewBox.value.match(/\d+$/)[0]);
+}
+
+]]>
+</script>
+
+<popupset>
+  <menupopup id="entityContextMenu" />
+</popupset>
+
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="423px" height="486px" viewBox="0 0 423 486" enable-background="new 0 0 423 486" xml:space="preserve">
+
+<g id="G6P_F6P">
+	
+		<radialGradient id="G6P_F6P_path1_1_" cx="18.7529" cy="-471.8149" r="16.1858" gradientTransform="matrix(1.5933 0 0 0.6358 102.498 389.0895)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#FCFAE0"/>
+		<stop  offset="0.1203" style="stop-color:#FDFADB"/>
+		<stop  offset="0.2662" style="stop-color:#FFF8CB"/>
+		<stop  offset="0.4255" style="stop-color:#FDF6B2"/>
+		<stop  offset="0.5943" style="stop-color:#FDEF90"/>
+		<stop  offset="0.7706" style="stop-color:#FFE963"/>
+		<stop  offset="0.9506" style="stop-color:#FFE22C"/>
+		<stop  offset="1" style="stop-color:#FFDF18"/>
+	</radialGradient>
+	<path id="G6P_F6P_path1" fill="url(#G6P_F6P_path1_1_)" stroke="#000000" d="M157.691,89.108c0,5.786-11.338,10.478-25.316,10.478
+		c-13.98,0-25.314-4.689-25.314-10.478s11.334-10.476,25.314-10.476C146.354,78.634,157.691,83.321,157.691,89.108z"/>
+	<text transform="matrix(1 0 0 1 124.3965 92.6318)" font-family="'MyriadPro-Regular'" font-size="12">G6P</text>
+</g>
+<g id="FBP">
+	
+		<radialGradient id="FBP_path1_1_" cx="18.7529" cy="-226.4546" r="16.1858" gradientTransform="matrix(1.5933 0 0 0.6358 102.498 389.0895)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#FCFAE0"/>
+		<stop  offset="0.1203" style="stop-color:#FDFADB"/>
+		<stop  offset="0.2662" style="stop-color:#FFF8CB"/>
+		<stop  offset="0.4255" style="stop-color:#FDF6B2"/>
+		<stop  offset="0.5943" style="stop-color:#FDEF90"/>
+		<stop  offset="0.7706" style="stop-color:#FFE963"/>
+		<stop  offset="0.9506" style="stop-color:#FFE22C"/>
+		<stop  offset="1" style="stop-color:#FFDF18"/>
+	</radialGradient>
+	<path id="FBP_path1" fill="url(#FBP_path1_1_)" stroke="#000000" d="M157.691,245.108c0,5.786-11.338,10.478-25.316,10.478
+		c-13.98,0-25.314-4.689-25.314-10.478s11.334-10.476,25.314-10.476C146.354,234.634,157.691,239.321,157.691,245.108z"/>
+	<text transform="matrix(1 0 0 1 124.3965 248.6318)" font-family="'MyriadPro-Regular'" font-size="12">FBP</text>
+</g>
+<g id="DHAP">
+	
+		<radialGradient id="DHAP_path1_1_" cx="-41.0586" cy="-117.1807" r="16.186" gradientTransform="matrix(1.5933 0 0 0.6358 102.498 389.0895)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#FCFAE0"/>
+		<stop  offset="0.1203" style="stop-color:#FDFADB"/>
+		<stop  offset="0.2662" style="stop-color:#FFF8CB"/>
+		<stop  offset="0.4255" style="stop-color:#FDF6B2"/>
+		<stop  offset="0.5943" style="stop-color:#FDEF90"/>
+		<stop  offset="0.7706" style="stop-color:#FFE963"/>
+		<stop  offset="0.9506" style="stop-color:#FFE22C"/>
+		<stop  offset="1" style="stop-color:#FFDF18"/>
+	</radialGradient>
+	<path id="DHAP_path1" fill="url(#DHAP_path1_1_)" stroke="#000000" d="M62.394,314.585c0,5.786-11.338,10.478-25.316,10.478
+		c-13.98,0-25.314-4.689-25.314-10.478s11.334-10.476,25.314-10.476C51.056,304.11,62.394,308.798,62.394,314.585z"/>
+	<text transform="matrix(1 0 0 1 22.3066 318.1084)" font-family="'MyriadPro-Regular'" font-size="12">DHAP</text>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="195.755" y1="314.586" x2="69" y2="314.586"/>
+		<polygon points="71.809,310.883 70.236,314.586 71.809,318.29 63.031,314.586 		"/>
+		<polygon points="192.946,318.289 194.52,314.586 192.946,310.882 201.725,314.586 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="62.394" y1="303.845" x2="133.181" y2="273.419"/>
+		<polygon points="63.512,299.333 63.529,303.356 66.437,306.139 56.909,306.202 		"/>
+	</g>
+</g>
+<line fill="none" stroke="#000000" x1="132.376" y1="255.586" x2="132.376" y2="273.545"/>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="203.431" y1="303.844" x2="132.644" y2="273.418"/>
+		<polygon points="199.388,306.137 202.295,303.355 202.312,299.332 208.915,306.201 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="132.376" y1="228.5" x2="132.376" y2="180.5"/>
+		<polygon points="128.673,225.691 132.376,227.264 136.08,225.691 132.376,234.469 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="132.342" y1="154.108" x2="132.41" y2="106.108"/>
+		<polygon points="136.109,108.922 132.408,107.344 128.702,108.911 132.419,100.139 		"/>
+		<polygon points="128.643,151.294 132.344,152.872 136.05,151.305 132.333,160.077 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="228.023" y1="356.064" x2="228.023" y2="308.064"/>
+		<polygon points="224.32,353.256 228.023,354.829 231.728,353.256 228.023,362.034 		"/>
+	</g>
+</g>
+<g id="G3P">
+	
+		<radialGradient id="G3P_path1_1_" cx="78.7842" cy="-117.1807" r="16.186" gradientTransform="matrix(1.5933 0 0 0.6358 102.498 389.0895)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#FCFAE0"/>
+		<stop  offset="0.1203" style="stop-color:#FDFADB"/>
+		<stop  offset="0.2662" style="stop-color:#FFF8CB"/>
+		<stop  offset="0.4255" style="stop-color:#FDF6B2"/>
+		<stop  offset="0.5943" style="stop-color:#FDEF90"/>
+		<stop  offset="0.7706" style="stop-color:#FFE963"/>
+		<stop  offset="0.9506" style="stop-color:#FFE22C"/>
+		<stop  offset="1" style="stop-color:#FFDF18"/>
+	</radialGradient>
+	<path id="G3P_path1" fill="url(#G3P_path1_1_)" stroke="#000000" d="M253.339,314.585c0,5.786-11.338,10.478-25.316,10.478
+		c-13.98,0-25.314-4.689-25.314-10.478s11.334-10.476,25.314-10.476C242.001,304.11,253.339,308.798,253.339,314.585z"/>
+	<text transform="matrix(1 0 0 1 220.043 318.1084)" font-family="'MyriadPro-Regular'" font-size="12">G3P</text>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="132.376" y1="74.083" x2="132.376" y2="26.083"/>
+		<polygon points="128.673,71.274 132.376,72.847 136.08,71.274 132.376,80.052 		"/>
+	</g>
+</g>
+<g id="Glc">
+	
+		<radialGradient id="Glc_path1_1_" cx="18.7529" cy="-581.2012" r="16.186" gradientTransform="matrix(1.5933 0 0 0.6358 102.498 389.0895)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#FCFAE0"/>
+		<stop  offset="0.1203" style="stop-color:#FDFADB"/>
+		<stop  offset="0.2662" style="stop-color:#FFF8CB"/>
+		<stop  offset="0.4255" style="stop-color:#FDF6B2"/>
+		<stop  offset="0.5943" style="stop-color:#FDEF90"/>
+		<stop  offset="0.7706" style="stop-color:#FFE963"/>
+		<stop  offset="0.9506" style="stop-color:#FFE22C"/>
+		<stop  offset="1" style="stop-color:#FFDF18"/>
+	</radialGradient>
+	<path id="Glc_path1" fill="url(#Glc_path1_1_)" stroke="#000000" d="M157.691,19.561c0,5.786-11.338,10.478-25.316,10.478
+		c-13.98,0-25.314-4.689-25.314-10.478s11.334-10.476,25.314-10.476C146.354,9.086,157.691,13.773,157.691,19.561z"/>
+	<text transform="matrix(1 0 0 1 124.3965 23.084)" font-family="'MyriadPro-Regular'" font-size="12">Glc</text>
+</g>
+<g id="F6P">
+	
+		<radialGradient id="F6P_path1_1_" cx="18.7529" cy="-341.3442" r="16.1858" gradientTransform="matrix(1.5933 0 0 0.6358 102.498 389.0895)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#FCFAE0"/>
+		<stop  offset="0.1203" style="stop-color:#FDFADB"/>
+		<stop  offset="0.2662" style="stop-color:#FFF8CB"/>
+		<stop  offset="0.4255" style="stop-color:#FDF6B2"/>
+		<stop  offset="0.5943" style="stop-color:#FDEF90"/>
+		<stop  offset="0.7706" style="stop-color:#FFE963"/>
+		<stop  offset="0.9506" style="stop-color:#FFE22C"/>
+		<stop  offset="1" style="stop-color:#FFDF18"/>
+	</radialGradient>
+	<path id="F6P_path1" fill="url(#F6P_path1_1_)" stroke="#000000" d="M157.691,172.062c0,5.786-11.338,10.477-25.316,10.477
+		c-13.98,0-25.314-4.689-25.314-10.477s11.334-10.476,25.314-10.476C146.354,161.587,157.691,166.275,157.691,172.062z"/>
+	<text transform="matrix(1 0 0 1 124.3965 175.5854)" font-family="'MyriadPro-Regular'" font-size="12">F6P</text>
+</g>
+<text transform="matrix(1 0 0 1 153.5527 60)" font-family="'MyriadPro-Regular'" font-size="12">vGK</text>
+<text transform="matrix(1 0 0 1 152.2383 137.478)" font-family="'MyriadPro-Regular'" font-size="12">vGPI</text>
+<text transform="matrix(1 0 0 1 151.3145 211.9561)" font-family="'MyriadPro-Regular'" font-size="12">vPFK</text>
+<text transform="matrix(1 0 0 1 150.8945 273.418)" font-family="'MyriadPro-Regular'" font-size="12">vFBA</text>
+<text transform="matrix(1 0 0 1 122.0625 336.9561)" font-family="'MyriadPro-Regular'" font-size="12">vTPI</text>
+<text transform="matrix(1 0 0 1 240.3359 343.4785)" font-family="'MyriadPro-Regular'" font-size="12">vGAPD</text>
+</svg>
+</window>

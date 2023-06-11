@@ -1,0 +1,112 @@
+<pre>
+This is the readme.txt for the models associated with the paper.
+
+Clancy CE, Rudy Y. Cellular consequences of HERG mutations in the long QT 
+syndrome:precursors to sudden cardiac death. Cardiovasc Res 2001;50:301-313.
+
+Abstract:
+BACKGROUND: A variety of mutations in HERG, the major subunit of the rapidly 
+activating component of the cardiac delayed rectifier I(Kr), have been found
+to underlie the congenital Long-QT syndrome, LQT2. LQT2 may give rise to 
+severe arrhythmogenic phenotypes leading to sudden cardiac death.
+OBJECTIVE: We attempt to elucidate the mechanisms by which heterogeneous LQT2
+genotypes can lead to prolongation  of the action potential duration (APD) 
+and consequently the QT interval on the ECG. 
+METHODS: We develop Markovian models of wild-type (WT) and mutant I(Kr)
+channels and incorporate these models into a comprehensive model of the 
+cardiac ventricular cell. RESULTS: Using this virtual transgenic cell model, 
+we describe the effects of HERG mutations on the cardiac ventricular action
+potential (AP) and provide insight into the mechanism by which each defect 
+results in a net loss of repolarizing current and prolongation of APD.
+CONCLUSIONS: This study demonstrates which mutations can prolong APD
+sufficiently to generate early afterdepolarizations (EADs), which may trigger
+life-threatening arrhythmias. The severity of the phenotype is shown to 
+depend on the specific kinetic changes and how they affect I(Kr) during the
+time course of the action potential. Clarifying how defects in HERG can lead
+to impaired cellular electrophysiology can improve our understanding of the 
+link between channel structure and cellular function.
+-------------------------------------
+
+<a href="http://rudylab.wustl.edu/research/cell/methodology/markov/clancy_herg.htm">
+Rudy lab site reference to model </a>
+
+Model:
+C1<==>C2<==>C3<==>O<==>I
+
+IKr   = G Kr * P(O) * (V m -E K ) 
+P(O) = open probability of I Kr 
+G Kr = 0.0135 * ([K + ] o ) 0.59 
+E K = (R*T/F) * ln([K + ] o /[K + ] i ) 
+Wild-type rate constants 
+C1 ==> O or C1 ==> I  
+aa =  65.5*e-3  * exp (0.05547153*(v-36)) 
+C2 ==> C1  
+a in =  2.172 
+C3 ==> C2  
+a =  55.5 *e-3 * exp (0.05547153*(v-12)) 
+C2 ==> C3 
+b =   2.357*e-3 * exp (-0.036588*(v))  
+C1 ==> C2 
+b in =  1.077 
+O ==> C1 
+bb =  2.9357*e-3 * exp (-0.02158*(v))  
+I ==> O 
+ai =  0.439 * exp (-0.02352*(v+25)) * 4.5/[K + ] o 
+O ==> I  
+bi =  0.656 * exp (0.000942*(v)) * (4.5/ [K + ] o ) 0.3 
+I ==> C1  
+mu =  (ai * bb * aa)/(aa *bi) 
+
+#T474I rates 
+#C1 ==> O  
+#aa =  65.5*e-3 * exp (0.05547153*(v+25))  
+#C3 ==> C2  
+#a =  55.5*e-3 * exp (0.05547153*(v+6)) 
+
+#R56Q rates 
+#C2 ==> C3  
+#b =  2.357*e-3 * exp (-0.036588*(v)) * 10.5  
+#O ==> C1 
+#bb =  2.9357*e-3 * exp (-0.02158*(v))* 6.3 
+
+#N629D rates 
+#O ==> I  
+#bi = 0.0 
+#N629D loss of selectivity 
+
+Na:K permeability (P Na /P K ) = 0.65 
+E K = 
+(R*T/F) * ln([K + ] o + P Na /P K * [Na + ] o / [K + ] i   + P Na /P K * [Na + ] i )
+
+Syntax note:     e-n is 10 -n      exp (n) is e n 
+---------------------------------------------------------------------
+To run the models:
+XPP: start with the command
+
+xppaut IERG_Mar.ode
+
+Mouse click on Initialconds, and then (G)o.
+This makes a trace similar to fig 4B (0mV) of the paper.
+To obtain the other traces in figure 4B you can press
+the Param button on the top of the XPP screen.  Enter
+a new vtest (e.g. one of -30, -20, ... 30, 40) and click
+Go.
+
+To run as a series of voltage-clamp studies, click Range over, 
+change to 'vtest', 
+and then select voltage protocol from 
+Steps (8) , Start (-30) and End (40).
+
+Regarding xpp program, please contact with 
+Bard Ermentrout's website http://www.pitt.edu/~phase/
+describes how to get and use xpp (Bard wrote xpp).
+
+These model files were submitted by:
+
+Dr. Sheng-Nan Wu, Han-Dong Chang, and Jiun-Shian Wu
+Dept Physiol
+Natl Cheng Kung U Med Coll
+Tainan 70101, Taiwan
+
+snwu@mail.ncku.edu.tw
+</pre>

@@ -1,0 +1,86 @@
+// Created by libAntimony v2.13.2
+function Rate_Law_for_N_increase(r, N, beta1)
+  r*N*(1 - beta1*N);
+end
+
+Rate_Law_for_N_increase is "Rate Law for N increase"
+
+function Rate_Law_for_T_increase(alpha1, T, alpha2, beta2, N)
+  alpha1*T*(1 - alpha2*T) + beta2*N*T;
+end
+
+Rate_Law_for_T_increase is "Rate Law for T increase"
+
+function Rate_Law_for_N_decrease(gamma_, N, T)
+  gamma_*N*T;
+end
+
+Rate_Law_for_N_decrease is "Rate Law for N decrease"
+
+
+model *Alharbi2019___Tumor_normal_model__TNM__of_the_development_of_tumor_cells_and_their_impact_on_normal_cell_dynamics()
+
+  // Compartments and Species:
+  compartment Whole_organism;
+  species Normal_cells in Whole_organism, Tumor_cells in Whole_organism;
+
+  // Reactions:
+  Normal_cell_growth:  => Normal_cells; Whole_organism*Rate_Law_for_N_increase(r, Normal_cells, beta1);
+  Normal_cell_death_inhibition: Normal_cells => ; Whole_organism*Rate_Law_for_N_decrease(gamma_, Normal_cells, Tumor_cells);
+  Tumor_cell_growth:  => Tumor_cells; Whole_organism*Rate_Law_for_T_increase(alpha1, Tumor_cells, alpha2, beta2, Normal_cells);
+
+  // Species initializations:
+  Normal_cells = 1;
+  Tumor_cells = 1;
+
+  // Compartment initializations:
+  Whole_organism = 1;
+
+  // Variable initializations:
+  r = 0.4312;
+  beta1 = 2.99e-06;
+  gamma_ = 0.9314;
+  alpha1 = 0.4426;
+  alpha2 = 0.4;
+  beta2 = 1.1891;
+
+  // Other declarations:
+  const Whole_organism, r, beta1, gamma_, alpha1, alpha2, beta2;
+
+  // Unit definitions:
+  unit length = metre;
+  unit area = metre^2;
+  unit volume = litre;
+  unit time_unit = 86400 second;
+  unit substance = mole;
+
+  // Display Names:
+  time_unit is "time";
+  gamma_ is "gamma";
+  Normal_cell_death_inhibition is "Normal_cell_death/inhibition";
+
+  // CV terms:
+  Whole_organism hypernym "http://identifiers.org/ncit/C13413"
+  Whole_organism property "http://identifiers.org/pato/PATO:0001993"
+  Normal_cells hypernym "http://identifiers.org/cl/CL:0000000"
+  Normal_cells property "http://identifiers.org/hp/HP:0032322"
+  Tumor_cells hypernym "http://identifiers.org/cl/CL:0001063"
+  Normal_cell_growth hypernym "http://identifiers.org/sbo/SBO:0000393"
+  Normal_cell_growth hypernym "http://identifiers.org/go/GO:0008283"
+  Normal_cell_death_inhibition hypernym "http://identifiers.org/sbo/SBO:0000394"
+  Normal_cell_death_inhibition hypernym "http://identifiers.org/sbo/SBO:0000169"
+  Normal_cell_death_inhibition hypernym "http://identifiers.org/go/GO:0008219"
+  Tumor_cell_growth hypernym "http://identifiers.org/go/GO:0008283"
+  Tumor_cell_growth hypernym "http://identifiers.org/sbo/SBO:0000393"
+end
+
+Alharbi2019___Tumor_normal_model__TNM__of_the_development_of_tumor_cells_and_their_impact_on_normal_cell_dynamics is "Alharbi2019 - Tumor-normal model (TNM) of the development of tumor cells and their impact on normal cell dynamics"
+
+Alharbi2019___Tumor_normal_model__TNM__of_the_development_of_tumor_cells_and_their_impact_on_normal_cell_dynamics model_entity_is "http://identifiers.org/biomodels.db/MODEL2108260002",
+                                                                                                                                  "http://identifiers.org/biomodels.db/BIOMD0000001037"
+Alharbi2019___Tumor_normal_model__TNM__of_the_development_of_tumor_cells_and_their_impact_on_normal_cell_dynamics propertyBearer "http://identifiers.org/go/GO:0002347"
+Alharbi2019___Tumor_normal_model__TNM__of_the_development_of_tumor_cells_and_their_impact_on_normal_cell_dynamics propertyBearer "http://identifiers.org/doid/DOID:162"
+Alharbi2019___Tumor_normal_model__TNM__of_the_development_of_tumor_cells_and_their_impact_on_normal_cell_dynamics propertyBearer "http://identifiers.org/ncit/C18670"
+Alharbi2019___Tumor_normal_model__TNM__of_the_development_of_tumor_cells_and_their_impact_on_normal_cell_dynamics taxon "http://identifiers.org/taxonomy/9606"
+Alharbi2019___Tumor_normal_model__TNM__of_the_development_of_tumor_cells_and_their_impact_on_normal_cell_dynamics description "http://identifiers.org/doi/10.1109/ACCESS.2019.2940060"
+Alharbi2019___Tumor_normal_model__TNM__of_the_development_of_tumor_cells_and_their_impact_on_normal_cell_dynamics property "http://identifiers.org/mamo/MAMO_0000046"

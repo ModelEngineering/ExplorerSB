@@ -1,0 +1,116 @@
+// Created by libAntimony v2.13.2
+function Constant_flux__irreversible(v)
+  v;
+end
+
+Constant_flux__irreversible is "Constant flux (irreversible)"
+
+function Rate_Law_for_N_increase(r, N, beta1, c1, V)
+  r*N*(1 - beta1*N) + c1*N*V;
+end
+
+Rate_Law_for_N_increase is "Rate Law for N increase"
+
+function Rate_Law_for_N_decrease(gamma_, N, T)
+  gamma_*N*T;
+end
+
+Rate_Law_for_N_decrease is "Rate Law for N decrease"
+
+function Rate_Law_for_T_increase(alpha1, T, alpha2, beta2, N)
+  alpha1*T*(1 - alpha2*T) + beta2*N*T;
+end
+
+Rate_Law_for_T_increase is "Rate Law for T increase"
+
+function Rate_Law_for_T_decrease(c2, T, V)
+  c2*T*V;
+end
+
+Rate_Law_for_T_decrease is "Rate Law for T decrease"
+
+
+model *Alharbi2019___Tumor_normal_vitamins_model__TNVM__of_the_effects_of_vitamins_on_delaying_the_growth_of_tumor_cells()
+
+  // Compartments and Species:
+  compartment Whole_organism;
+  species Normal_cells in Whole_organism, Tumor_cells in Whole_organism, Vitamins in Whole_organism;
+
+  // Reactions:
+  Normal_cell_growth:  => Normal_cells; Whole_organism*Rate_Law_for_N_increase(r, Normal_cells, beta1, c1, Vitamins);
+  Normal_cell_death_inhibition: Normal_cells => ; Whole_organism*Rate_Law_for_N_decrease(gamma_, Normal_cells, Tumor_cells);
+  Tumor_cell_growth:  => Tumor_cells; Whole_organism*Rate_Law_for_T_increase(alpha1, Tumor_cells, alpha2, beta2, Normal_cells);
+  Tumor_cell_inhibition: Tumor_cells => ; Whole_organism*Rate_Law_for_T_decrease(c2, Tumor_cells, Vitamins);
+  Vitamin_intake:  => Vitamins; Whole_organism*Constant_flux__irreversible(k1);
+  Vitamin_decay: Vitamins => ; Whole_organism*k2*Vitamins;
+
+  // Species initializations:
+  Normal_cells = 1;
+  Tumor_cells = 1;
+  Vitamins = 5;
+
+  // Compartment initializations:
+  Whole_organism = 1;
+
+  // Variable initializations:
+  r = 0.4312;
+  beta1 = 2.99e-06;
+  gamma_ = 0.9817;
+  alpha1 = 0.4426;
+  alpha2 = 0.4;
+  beta2 = 0.2291;
+  k1 = 0.8976;
+  k2 = 0.9611;
+  c1 = 0.2215;
+  c2 = 0.4975;
+
+  // Other declarations:
+  const Whole_organism, r, beta1, gamma_, alpha1, alpha2, beta2, k1, k2, c1;
+  const c2;
+
+  // Unit definitions:
+  unit length = metre;
+  unit area = metre^2;
+  unit volume = litre;
+  unit time_unit = 86400 second;
+  unit substance = mole;
+
+  // Display Names:
+  time_unit is "time";
+  gamma_ is "gamma";
+  Normal_cell_death_inhibition is "Normal_cell_death/inhibition";
+
+  // CV terms:
+  Whole_organism hypernym "http://identifiers.org/ncit/C13413"
+  Whole_organism property "http://identifiers.org/pato/PATO:0001993"
+  Normal_cells hypernym "http://identifiers.org/cl/CL:0000000"
+  Normal_cells property "http://identifiers.org/hp/HP:0032322"
+  Tumor_cells hypernym "http://identifiers.org/cl/CL:0001063"
+  Vitamins hypernym "http://identifiers.org/ncit/C944"
+  Normal_cell_growth hypernym "http://identifiers.org/sbo/SBO:0000393"
+  Normal_cell_growth hypernym "http://identifiers.org/go/GO:0008283"
+  Normal_cell_death_inhibition hypernym "http://identifiers.org/sbo/SBO:0000394"
+  Normal_cell_death_inhibition hypernym "http://identifiers.org/sbo/SBO:0000169"
+  Normal_cell_death_inhibition hypernym "http://identifiers.org/go/GO:0008219"
+  Tumor_cell_growth hypernym "http://identifiers.org/sbo/SBO:0000393"
+  Tumor_cell_growth hypernym "http://identifiers.org/go/GO:0008283"
+  Tumor_cell_inhibition hypernym "http://identifiers.org/sbo/SBO:0000169"
+  Tumor_cell_inhibition hypernym "http://identifiers.org/sbo/SBO:0000394"
+  Vitamin_intake hypernym "http://identifiers.org/ncit/C25538"
+  Vitamin_intake hypernym "http://identifiers.org/sbo/SBO:0000393"
+  Vitamin_decay hypernym "http://identifiers.org/sbo/SBO:0000394"
+end
+
+Alharbi2019___Tumor_normal_vitamins_model__TNVM__of_the_effects_of_vitamins_on_delaying_the_growth_of_tumor_cells is "Alharbi2019 - Tumor-normal-vitamins model (TNVM) of the effects of vitamins on delaying the growth of tumor cells"
+
+Alharbi2019___Tumor_normal_vitamins_model__TNVM__of_the_effects_of_vitamins_on_delaying_the_growth_of_tumor_cells model_entity_is "http://identifiers.org/biomodels.db/MODEL2108260003",
+                                                                                                                                  "http://identifiers.org/biomodels.db/BIOMD0000001038"
+Alharbi2019___Tumor_normal_vitamins_model__TNVM__of_the_effects_of_vitamins_on_delaying_the_growth_of_tumor_cells hypernym "http://identifiers.org/go/GO:0002347"
+Alharbi2019___Tumor_normal_vitamins_model__TNVM__of_the_effects_of_vitamins_on_delaying_the_growth_of_tumor_cells propertyBearer "http://identifiers.org/efo/0002755"
+Alharbi2019___Tumor_normal_vitamins_model__TNVM__of_the_effects_of_vitamins_on_delaying_the_growth_of_tumor_cells propertyBearer "http://identifiers.org/ncit/C18670"
+Alharbi2019___Tumor_normal_vitamins_model__TNVM__of_the_effects_of_vitamins_on_delaying_the_growth_of_tumor_cells propertyBearer "http://identifiers.org/doid/DOID:162"
+Alharbi2019___Tumor_normal_vitamins_model__TNVM__of_the_effects_of_vitamins_on_delaying_the_growth_of_tumor_cells propertyBearer "http://identifiers.org/ncit/C16016"
+Alharbi2019___Tumor_normal_vitamins_model__TNVM__of_the_effects_of_vitamins_on_delaying_the_growth_of_tumor_cells propertyBearer "http://identifiers.org/ncit/C15824"
+Alharbi2019___Tumor_normal_vitamins_model__TNVM__of_the_effects_of_vitamins_on_delaying_the_growth_of_tumor_cells taxon "http://identifiers.org/taxonomy/9606"
+Alharbi2019___Tumor_normal_vitamins_model__TNVM__of_the_effects_of_vitamins_on_delaying_the_growth_of_tumor_cells description "http://identifiers.org/doi/10.1109/ACCESS.2019.2940060"
+Alharbi2019___Tumor_normal_vitamins_model__TNVM__of_the_effects_of_vitamins_on_delaying_the_growth_of_tumor_cells property "http://identifiers.org/mamo/MAMO_0000046"
