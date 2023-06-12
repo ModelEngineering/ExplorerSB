@@ -2,7 +2,7 @@ declare global {
   interface Context {
     project_id: string,
     runid: string,
-    abstract: string,
+    abstract: string | null,
     citation: string | null,
     doi: string | null,
     paper_url: string | null,
