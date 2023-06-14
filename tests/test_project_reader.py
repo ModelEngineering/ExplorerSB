@@ -1,5 +1,5 @@
 import src.ExplorerSB.constants as cn
-from src.ExplorerSB.project_reader import Project
+from src.ExplorerSB.project_reader import ProjectReader
 from src.ExplorerSB.project_builder import ProjectBuilder
 
 import pandas as pd
@@ -19,10 +19,10 @@ CONTEXT_FILE = os.path.join(DATA_DIR, "test_context.csv")
 #############################
 # Tests
 #############################
-class TestProject(unittest.TestCase):
+class TestProjectReader(unittest.TestCase):
 
     def setUp(self):
-        self.project = Project(PROJECT_ID, data_dir=DATA_DIR)
+        self.project = ProjectReader(PROJECT_ID, data_dir=DATA_DIR)
 
     def testConstructor(self):
         if IGNORE_TEST:

@@ -35,12 +35,13 @@ class ProjectReader():
             project_id: unique identifier for a project
             data_dir: directory in which project context is stored
         """
+        self.corpus_manager = CORPUS_MANAGER
         for idx, key in enumerate(cn.CONTEXT_KEYS):
             if key != cn.PROJECT_ID:
                 try:
-                    self.__setattr__(key, CORPUS_MANAGER.project_df.loc[self.project_id, key])
+                    self.__setattr__(key, self.corpus_manager.project_df.loc[project_id, key])
                 except Exception as exp:
-                    raise RuntimeError("Missing key %s" % key)
+                    raise RuntimeError("Missing key %s:" % key)
 
     def _getZipDirPath(self):
         return os.path.join(self.data_dir, cn.ZIP_PAT % self.runid)
