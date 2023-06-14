@@ -45,14 +45,14 @@ class ProjectReader():
                 except Exception as exp:
                     raise RuntimeError("Missing key %s:" % key)
 
-    def _getZipDirPath(self):
+    def getZipDirPath(self):
         return os.path.join(self.data_dir, cn.ZIP_PAT % self.runid)
     
     def listFiles(self)->typing.List[str]:
         """
         Creates a list of the files present in the project zip.
         """
-        zip_file = self._getZipDirPath()
+        zip_file = self.getZipDirPath()
         with zipfile.ZipFile(zip_file,'r') as zip:
             ffiles = zip.namelist()
         return ffiles
@@ -67,7 +67,7 @@ class ProjectReader():
         Returns:
             str
         """
-        zip_path = self._getZipDirPath()
+        zip_path = self.getZipDirPath()
         ffiles = self.listFiles()
         if not filename in ffiles:
             raise ValueError("File %s not found in %s" % (filename, zip_path))
@@ -127,7 +127,7 @@ class ProjectReader():
             excluded_project_ids.append(project_id)
             # Check if reporting
             total = count + 1
-            if count % report_interval == 0:
+            if (count % report_interval == 0) and (count > 0):
                 print("***Processed project id=%s, runid=%s (%d)."
                        % (project.project_id, project.runid, total))
             yield project
