@@ -1,0 +1,122 @@
+// More modular file, including CB from external SES file
+{load_file("nrngui.hoc")}
+objectvar save_window_, rvp_
+objectvar scene_vector_[5]
+objectvar ocbox_, ocbox_list_, scene_, scene_list_
+{ocbox_list_ = new List()  scene_list_ = new List()}
+{pwman_place(0,0,0)}
+
+// Load channel definitions
+// Load active channels so we can play with them
+{load_file("chan-DmNaT-ODowd.hoc")
+load_file("chan-DmNaP-DmNav10.hoc")
+load_file("chan-DmKdr-Marley.hoc")
+load_file("chan-DmKA-Marley.hoc")
+}
+
+//load CellBuilder
+// can also load neuron-CB.ses
+{load_file("neuron-CB-ext-axon.ses")}
+
+//Begin PointProcessManager
+{
+load_file("pointman.hoc")
+}
+{
+electrode ocbox_ = new PointProcessManager(0)
+}
+{object_push(ocbox_)}
+{
+mt.select("IClamp") i = mt.selected()
+ms[i] = new MechanismStandard("IClamp")
+ms[i].set("del", 50, 0)
+ms[i].set("dur", 100, 0)
+ms[i].set("amp", 0.05, 0)
+mt.select("VClamp") i = mt.selected()
+ms[i] = new MechanismStandard("VClamp")
+ms[i].set("dur", 5.75, 0)
+ms[i].set("dur", 35, 1)
+ms[i].set("dur", 9.2, 2)
+ms[i].set("amp", -60, 0)
+ms[i].set("amp", -90, 1)
+ms[i].set("amp", -60, 2)
+ms[i].set("gain", 10000, 0)
+ms[i].set("rstim", 1, 0)
+ms[i].set("tau1", 0.002, 0)
+ms[i].set("tau2", 23, 0)
+ms[i].set("e0", 0.0060049, 0)
+ms[i].set("vo0", -59.986, 0)
+ms[i].set("vi0", -59.988, 0)
+ms[i].set("fac", 0, 0)
+mt.select("IClamp") i = mt.selected() maction(i)
+hoc_ac_ = 1
+sec.sec move() d1.flip_to(0)
+}
+{object_pop() doNotify()}
+{
+ocbox_ = ocbox_.v1
+ocbox_.map("PointProcessManager", 8, 193, 284.16, 701.76)
+}
+objref ocbox_
+//End PointProcessManager
+
+{
+xpanel("RunControl", 0)
+v_init = -60
+xvalue("Init","v_init", 1,"stdinit()", 1, 1 )
+xbutton("Init & Run","run()")
+xbutton("Stop","stoprun=1")
+runStopAt = 5
+xvalue("Continue til","runStopAt", 1,"{continuerun(runStopAt) stoprun=1}", 1, 1 )
+runStopIn = 1
+xvalue("Continue for","runStopIn", 1,"{continuerun(t + runStopIn) stoprun=1}", 1, 1 )
+xbutton("Single Step","steprun()")
+t = 200
+xvalue("t","t", 2 )
+tstop = 200
+xvalue("Tstop","tstop", 1,"tstop_changed()", 0, 1 )
+dt = 0.025
+xvalue("dt","dt", 1,"setdt()", 0, 1 )
+steps_per_ms = 40
+xvalue("Points plotted/ms","steps_per_ms", 1,"setdt()", 0, 1 )
+screen_update_invl = 0.1
+xvalue("Scrn update invl","screen_update_invl", 1,"", 0, 1 )
+realtime = 1.12
+xvalue("Real Time","realtime", 0,"", 0, 1 )
+xpanel(893,777)
+}
+
+// load common funcs
+load_file("fitfuncs.hoc")
+
+// set values of cap1 (02)
+set_Ra(189)
+set_cm(0.7)
+set_g_pas(3.013e-5)
+set_g_seal_nS(0.015)
+set_cap_elec_pF(1.51)
+set_R_series_MO(27.7)
+print_elec_cell()
+
+// set values of cap4 (34)
+/*set_Ra(222)
+set_cm(0.95)
+set_g_pas(7.64e-5)
+set_g_seal_nS(0.33)
+set_cap_elec_pF(8.41e-5)
+set_R_series_MO(71.62)
+print_elec_cell()*/
+
+// 50ms delay, 2nA, decay for 100ms with 0.3ms tau
+/*expDecayIClamp(50, 2, .3, 100)
+
+// decay tau 2ms
+stopPlay()
+expDecayIClamp(50, 2, 2, 100)
+*/
+
+// calc morph stats
+load_file("stats.hoc")
+
+// save state in this file
+state_file_name = "state-neuron-CB+act+elec+ext-axon.bin"

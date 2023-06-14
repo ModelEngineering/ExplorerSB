@@ -1,0 +1,215 @@
+## Set file for ML.ode on Fri Dec  2 11:32:51 2016
+3   Number of equations and auxiliaries
+17   Number of parameters
+# Numerical stuff
+1    nout
+40    nullcline mesh
+10   CVode
+10000  total
+0.2  DeltaT
+0  T0
+0  Transient
+100000000  Bound
+1e-12  DtMin
+1  DtMax
+1e-07  Tolerance
+0.001  Abs. Tolerance
+0  Max Delay
+100   Eigenvector iterates
+0.001  Eigenvector tolerance
+0.001  Newton tolerance
+0  Poincare plane
+1e-05  Boundary value tolerance
+1e-05  Boundary value epsilon
+20   Boundary value iterates
+0   Poincare None
+1   Poincare variable
+1   Poincare sign
+0   Stop on Section
+0   Delay flag
+10000  Current time
+10000  Last Time
+0   MyStart
+1   INFLAG
+# Delays
+-60.899  
+0.014873  
+0.0
+# Bndry conds
+0
+0
+0
+# Old ICs
+-60.899  V
+0.014873  W
+0  Z
+# Ending  ICs
+-30.41373410193427  V
+0.006753409974050034  W
+0.006796009840755567  Z
+# Parameters
+41  I
+0.0001  eps
+4  g
+-84  vk
+-60  vl
+120  vca
+2  s
+-17  vbar
+8  gk
+2  gl
+4  gca
+22  cm
+-1.2  v1
+18  v2
+12  v3
+17  v4
+0.0666667  phi
+# Graphics
+0.7071097251469876  rm
+-0.4999999999826661  rm
+0.4999958366025516  rm
+0.7071038372138505  rm
+0.5000041633974484  rm
+-0.4999999999826661  rm
+0  rm
+0.7071038372138505  rm
+0.7071097251469876  rm
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+-1000   
+1000   
+0    
+0   3DFlag
+1   Timeflag
+0   Colorflag
+0   Type
+1  color scale
+0   minscale
+10000   xmax
+0   xmin
+29.33050155639648   ymax
+-60.89899826049805   ymin
+12   zmax
+-12   zmin
+5000   
+0.0002   
+-15.78424835205078   
+0.0221656997329993   
+0   
+0.08333333333333333   
+45   Theta
+45   Phi
+0    xshft
+0    yshft
+0    zshft
+0   xlo
+-60.89899826049805   ylo
+0   
+-80   
+10000   xhi
+29.33050155639648   yhi
+10000   
+40   
+# Transpose variables etc
+V
+2   n columns
+1   n rows
+1   row skip
+1   col skip
+1   row 0
+# Coupling stuff for H funs
+0
+0
+0
+# Array plot stuff
+
+1   NCols
+0   Row 1
+50   NRows
+8   RowSkip
+0  Zmin
+1  Zmax
+# Torus information 
+0    Torus flag 1=ON
+6.283185307179586  Torus period
+# Range information
+I
+-1   eq-range stab col
+0   shoot flag 1=on
+10   eq-range steps
+0  eq_range low
+1  eq_range high
+V
+V
+20   Range steps
+0   Cycle color 1=on
+1   Reset data 1=on
+1   Use old I.C.s 1=yes
+0  Par1 low
+0  Par2 low
+1  Par1 high
+1  Par2 high
+I
+0   BVP side
+0   color cycle flag 1=on
+10   BVP range steps
+0  BVP range low
+1  BVP range high
+RHS etc ...
+dV/dT=(I+Z*G*(VK-V)+GL*(VL-V)+GK*W*(VK-V)+GCA*MINF(V)*(VCA-V))/CM
+dW/dT=LAMW(V)*(WINF(V)-W)
+dZ/dT=EPS*(1/(1+EXP(-(V-VBAR)/S))-Z)
+
+User-defined functions:
+MINF(V) = .5*(1+TANH((V-V1)/V2))  
+WINF(V) = .5*(1+TANH((V-V3)/V4))  
+LAMW(V) = PHI*COSH((V-V3)/(2*V4))  

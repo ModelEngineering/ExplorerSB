@@ -1,0 +1,83 @@
+<html><pre>
+This is the readme for the models for the paper:
+
+Prescott SA, Ratte S, De Koninck Y, Sejnowski TJ. Pyramidal neurons
+switch from integrators in vitro to resonators under in vivo-like
+conditions. J. Neurophysiol. In press.
+
+Abstract: During wakefulness, pyramidal neurons in the intact brain
+are bombarded by synaptic input that causes tonic depolarization,
+increased membrane conductance (i.e. shunting), and noisy fluctuations
+in membrane potential; by comparison, pyramidal neurons in acute
+slices typically experience little background input. Such differences
+in operating conditions can compromise extrapolation of in vitro data
+to explain neuronal operation in vivo. For instance, pyramidal neurons
+have been identified as integrators (i.e. class 1 neurons according to
+Hodgkin's classification of intrinsic excitability) based on in vitro
+experiments, but that classification is inconsistent with the ability
+of hippocampal pyramidal neurons to oscillate/resonate at theta
+frequency since intrinsic oscillatory behavior is limited to class 2
+neurons. Using long depolarizing stimuli and dynamic clamp to
+reproduce in vivo-like conditions in slice experiments, we show that
+CA1 hippocampal pyramidal cells switch from integrators to resonators,
+i.e. from class 1 to class 2 excitability. The switch is explained by
+increased outward current contributed by the M-type potassium current
+I(M), which shifts the balance of inward and outward currents active
+at perithreshold potentials and thereby converts the spike initiating
+mechanism as predicted by dynamical analysis of our computational
+model. Perithreshold activation of I(M) is enhanced by the
+depolarizing shift in spike threshold caused by shunting and/or sodium
+channel inactivation secondary to tonic depolarization. Our
+conclusions were validated by multiple comparisons between simulation
+and experimental data. Thus, even so-called "intrinsic" properties may
+differ qualitatively between in vitro and in vivo conditions.
+ 
+
+Model Notes:
+
+The Morris-Lecar-type model included here shows how spike initiating
+dynamics can be influenced by external factors like the level of
+background synaptic input.  High levels of synaptic input cause
+shunting (i.e. increased membrane conductance) and tonic
+depolarization which can cause activation/inactivation of
+voltage-sensitive currents.  In this study, we show that shunting
+and/or tonic depolarization can convert a neuron exhibiting class 1
+excitability (spike initiation through a saddle-node on invariant
+circle bifurcation) to class 2 excitability (spike initiation through
+a subcritical Hopf bifurcation).  One importance consequence is that
+class 2 neurons can oscillate/resonate whereas class 1 neurons cannot.
+
+In the first model, ML(noNainactivation).ode, there is no sodium
+channel inactivation.  Try varying gshunt and/or gM to add/remove
+shunting and adaptation from the model.  Be sure to include
+small-amplitude noise (sigma>0) in order to see noise-induced
+oscillations.
+
+In the second model, ML(withNainactivation).ode, sodium channel
+inactivation is included.  Strength of inactivation is controlled by
+alpha_h; set alpha_h to 1 to turn off this mechanism.  In this model,
+other parameters have been adjusted to correspond to those described
+in Figure 9B of the paper.
+
+The main idea is that shunting and/or tonic depolarization (causing
+inactivation of sodium channels or activation of M channels) will lead
+to depolarizing shift in voltage threshold.  Shifting threshold
+influences how strongly certain currents will activate at voltages
+just below threshold.  Increased subthreshold activation of the
+delayed-rectifier potassium current can lead to high-frequency
+oscillations.  Increased subtheshold activation of the M-type
+potassium current can lead to theta-frequency oscillations.  An
+important conclusion of this study is that although M-type potassium
+current is present in CA1 pyramidal neurons, that current may not be
+strongly activated at subthrehsold potentials under in vitro
+conditions whereas it would more strongly activated under in vivo
+conditions because of the shift in threshold caused by background
+synaptic input.  The resulting shift in balance of inward and outward
+currents near threshold can qualitatively change the spike initiating
+mechanism, with important consequences for the integrative properties
+of the neuron.
+
+The code contains numerous comments that help explain the model.  For
+more information about XPP, visit
+<a href="http://www.scholarpedia.org/article/XPPAUT">http://www.scholarpedia.org/article/XPPAUT</a> or
+<a href="http://www.math.pitt.edu/~bard/xpp/xpp.html">http://www.math.pitt.edu/~bard/xpp/xpp.html</a>.

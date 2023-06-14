@@ -1,0 +1,197 @@
+// Experiment with 2-component axon extention tail, and Na-K channels
+// in all compartments
+
+// nrngui stuff and ion chans
+load_file("inc-first.ses")
+
+strdef file_name, ses_file
+file_name = "ext-axon-70um-10alphasynapses"
+
+sprint(ses_file, "neuron-CB-ext-axon-2pieces-chans-%s.ses", file_name)
+
+//load CellBuilder
+{load_file(ses_file)}
+
+
+{
+xpanel("RunControl", 0)
+v_init = -60
+xvalue("Init","v_init", 1,"stdinit()", 1, 1 )
+xbutton("Init & Run","run()")
+xbutton("Stop","stoprun=1")
+runStopAt = 5
+xvalue("Continue til","runStopAt", 1,"{continuerun(runStopAt) stoprun=1}", 1, 1 )
+runStopIn = 1
+xvalue("Continue for","runStopIn", 1,"{continuerun(t + runStopIn) stoprun=1}", 1, 1 )
+xbutton("Single Step","steprun()")
+t = 200
+xvalue("t","t", 2 )
+tstop = 20
+xvalue("Tstop","tstop", 1,"tstop_changed()", 0, 1 )
+dt = 0.025
+xvalue("dt","dt", 1,"setdt()", 0, 1 )
+steps_per_ms = 40
+xvalue("Points plotted/ms","steps_per_ms", 1,"setdt()", 0, 1 )
+screen_update_invl = 0.1
+xvalue("Scrn update invl","screen_update_invl", 1,"", 0, 1 )
+realtime = 1.12
+xvalue("Real Time","realtime", 0,"", 0, 1 )
+xpanel(893,777)
+}
+
+// load common funcs
+load_file("fitfuncs.hoc")
+
+print_elec_cell()
+
+// calc morph stats
+load_file("stats.hoc")
+
+load_file("v-graph-bigger-axon-2pieces.ses")
+
+load_file("neuron-PointProcessMgr-ext-axon-2pieces-chans-ext-axon-70um-10alphasynapses.ses")
+
+load_file("vclamp_soma_-60mV.ses")
+
+// save state in this file
+sprint(state_file_name, "state-neuron-CB+act+elec+ext-axon-2piece-chans-%s.bin", file_name)
+
+// small adjustments
+
+// loop and set random timing for synapses
+// use NetStim and NetCon
+
+// use ExpSyn object
+objref ns, nc, syn
+
+/*
+iterator set_syn() { local i
+  for i = 1, numarg()-1 {
+    access $oi.sec
+    syn = new ExpSyn(0.5)
+    syn.tau = 0.1 
+    syn.e = 0
+    iterator_statement
+  }
+}
+
+for set_syn(dendrite[685] sec) print secname()
+// => doesn't work
+
+// Create SectionList
+objref synsecs
+synsecs = new SectionList()
+
+// Add preselected sections
+dendrite[685] synsecs.append()
+dendrite[524] synsecs.append()
+dendrite[520] synsecs.append()
+dendrite[626] synsecs.append()
+dendrite[205] synsecs.append()
+dendrite[357] synsecs.append()
+dendrite[464] synsecs.append()
+dendrite[588] synsecs.append()
+dendrite[513] synsecs.append()
+dendrite[48] synsecs.append()
+
+// Loop over sections and add synapse
+forsec synsecs {
+    print secname()
+    syn = new ExpSyn(0.5)
+    syn.tau = 0.1 
+    syn.e = 0
+}
+*/
+
+// OR do like this:
+// http://www.neuron.yale.edu/phpbb/viewtopic.php?f=2&t=2423
+// Use VecStim defined in examples:
+// /usr/local/nrn/share/nrn/examples/nrniv/netcon/vecevent.*
+
+// select some spike times
+objref vs, syntimes, aynrand, pc
+aynrand = new Random()
+pc = new ParallelContext()
+aynrand.ACG(pc.time())
+NUMSYNEVENTS = 1
+syntimes = new Vector(NUMSYNEVENTS) 
+
+// set vector elements
+proc set_times() { local i
+  for i = 2, numarg() {
+    $o1.x[i-2] = $i
+  }
+}
+
+set_times(syntimes, 10) 
+vs = new VecStim()
+vs.play(syntimes)
+
+// BUG: there was a Neuron bug here.  
+
+  objref eventvec
+
+
+/*
+* normalEventTimes(num, mean, var) - Returns a vector of normally distributed events.
+* Paramaters: 
+*   num: number of events
+*   mean, var: normal distritbution parameters in ms.
+*/
+proc normalEventTimes() { local i
+  eventvec = new Vector($1)
+  aynrand.normal($2, $3)
+  eventvec.setrand(aynrand)
+  /*for (i=0; i < $1; i = i + 1) {
+    eventvec.x[i] = aynrand.repick()
+    print "event time = ", eventvec.x[i]
+  }*/
+  //return eventvec
+}
+
+iterator set_syn() { local i
+  for i = 1, numarg() {
+    access dendrite[$i]
+    syn = new ExpSyn(0.5)
+    syn.tau = 0.1 // tau
+    syn.e = 0     // reversal
+    vs = new VecStim()
+    normalEventTimes(3,10,1)
+    vs.play(eventvec)
+    //vs.play(syntimes)
+    ns = new NetCon(vs, syn)
+    ns.weight = 1
+    iterator_statement
+  }
+}
+
+
+/*
+ * synapses:
+ * top dend: 685, 524, 520, 626
+ * bot dend: 205, 357, 464, 588, 513, 48
+ */
+
+for set_syn(685, 205) print secname()
+
+/* TODO: 
+ X use SectionList instead of iterator
+ X better choose locations randomly? [for now assume these are mega-synapses]
+ - Take length of each segment into account while using random numbers? 
+*/
+
+// choose 10 locations
+/*dendrite[685] syn1 = new ExpSyn(0.5)
+syn.tau = 0.1 
+syn.e = 0
+
+
+nc = new NetStim(.5)
+nc.interval = 1
+nc.number = 3
+nc.start = 1
+nc.noise = 0
+ns = new NetCon(nc, syn)
+ns.weight = 1
+*/
+

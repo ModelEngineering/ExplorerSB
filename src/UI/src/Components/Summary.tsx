@@ -1,7 +1,9 @@
 const Summary = ({ context }: { context: Context }) => {
   const abstract = context.abstract;
-  let split = abstract.split("\n\n");
-  // TODO: add citation, doi, paper_url
+  let split = [""]
+  if(abstract !== null) {
+    split = abstract.split("\n\n");
+  }
   return (
     <div id="summary-container" className="box-style glassmorphism flex-col">
       <h2>Summary</h2>

@@ -1,0 +1,65 @@
+// Demyelinated axon project (Jay Coggan/CNL/Salk)
+
+
+load_file("nrngui.hoc")
+
+
+load_file("sbeta_jcns.hoc")
+
+///////////////////////////////////////////////////////
+
+
+createAxon()
+
+proc setupPhysiology() {
+	setRacm()
+	addchannels()
+}
+
+objref stim[2]
+
+
+
+proc setupBench() {
+	 
+	soma	 {
+			stim[0] = new IClamp(0.5)
+
+	
+	node[79] {
+			stim[1] = new IClamp(0.5)	
+		}
+	}
+
+} 
+
+
+proc setupExperiment() {
+
+		stim[0].del = 25
+		stim[0].dur = 0.7
+		stim[0].amp = 0 
+
+		stim[1].del = 25
+		stim[1].dur = 0.7
+		stim[1].amp = 0.2 
+
+
+		tstop = 100
+}
+
+
+
+
+////////////////////////////////////////////////////////
+
+setupPhysiology()
+setupBench()
+setupExperiment()
+
+
+////////////////////////////////////////////////////////
+
+access soma
+
+init()

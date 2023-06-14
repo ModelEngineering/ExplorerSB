@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This CellML file was generated on 10/10/2011 at 4:36:34 at PM using:
+
+COR (0.9.31.1409)
+Copyright 2002-2011 Dr Alan Garny
+http://cor.physiol.ox.ac.uk/ - cor@physiol.ox.ac.uk
+
+CellML 1.0 was used to generate this model
+http://www.cellml.org/
+-->
+<model name="dupont_erneux_1997" cmeta:id="dupont_erneux_1997" xmlns="http://www.cellml.org/cellml/1.0#" xmlns:cellml="http://www.cellml.org/cellml/1.0#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#">
+
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bqs="http://www.cellml.org/bqs/1.0#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#">
+  <rdf:Description rdf:about="">
+    <dc:creator rdf:parseType="Resource">
+      <vCard:N rdf:parseType="Resource">
+        <vCard:Family>Nielsen</vCard:Family>
+        <vCard:Given>Hanne</vCard:Given>
+      </vCard:N>
+      <vCard:EMAIL rdf:parseType="Resource">
+        <rdf:value>hnie010@aucklanduni.ac.nz</rdf:value>
+        <rdf:type rdf:resource="http://imc.org/vCard/3.0#internet"/>
+      </vCard:EMAIL>
+      <vCard:ORG rdf:parseType="Resource">
+        <vCard:Orgname>The University of Auckland</vCard:Orgname>
+        <vCard:Orgunit>Auckland Bioengineering Institute</vCard:Orgunit>
+      </vCard:ORG>
+    </dc:creator>
+    <dcterms:created rdf:parseType="Resource">
+      <dcterms:W3CDTF>2011-09-26</dcterms:W3CDTF>
+    </dcterms:created>
+  </rdf:Description>
+  <rdf:Description rdf:about="#dupont_erneux_1997">
+    <cmeta:species>Human</cmeta:species>
+    <cmeta:bio_entity>Liver</cmeta:bio_entity>
+    <cmeta:bio_entity>hepatocyte</cmeta:bio_entity>
+    <bqs:reference rdf:parseType="Resource">
+      <dc:subject rdf:parseType="Resource">
+        <bqs:subject_type>keyword</bqs:subject_type>
+        <rdf:value>
+          <rdf:Bag>
+            <rdf:li>hepatology</rdf:li>
+            <rdf:li>liver</rdf:li>
+ <rdf:li>hepatocyte</rdf:li>
+          </rdf:Bag>
+        </rdf:value>
+      </dc:subject>
+    </bqs:reference>
+    <bqs:reference rdf:parseType="Resource">
+      <bqs:Pubmed_id> 9448939 </bqs:Pubmed_id>
+      <bqs:JournalArticle rdf:parseType="Resource">
+        <dc:creator>
+          <rdf:Seq>
+            <rdf:li rdf:parseType="Resource">
+              <bqs:Person rdf:parseType="Resource">
+                <vCard:N rdf:parseType="Resource">
+                  <vCard:Family>Dupont</vCard:Family>
+                  <vCard:Given>G</vCard:Given>
+                </vCard:N>
+              </bqs:Person>
+            </rdf:li>
+            <rdf:li rdf:parseType="Resource">
+              <bqs:Person rdf:parseType="Resource">
+                <vCard:N rdf:parseType="Resource">
+                  <vCard:Family>Erneux</vCard:Family>
+                  <vCard:Given>C</vCard:Given>
+  <vCard:Other>Z</vCard:Other>
+                </vCard:N>
+              </bqs:Person>
+            </rdf:li>
+            
+<rdf:li rdf:parseType="Resource">
+              <bqs:Person rdf:parseType="Resource">
+                <vCard:N rdf:parseType="Resource">
+                  <vCard:Family>Marhl</vCard:Family>
+                  <vCard:Given>M</vCard:Given>
+                </vCard:N>
+              </bqs:Person>
+            </rdf:li>
+
+          </rdf:Seq>
+        </dc:creator>
+        <dc:title>
+          Simulations of the effects of inositol 1,4,5-trisphosphate 3-kinase and 5-phosphatase activities on Ca2+ oscillations
+          </dc:title>
+        <dcterms:issued rdf:parseType="Resource">
+          <dcterms:W3CDTF>2011-10-10</dcterms:W3CDTF>
+        </dcterms:issued>
+        <bqs:Journal rdf:parseType="Resource">
+          <dc:title>Cell Calcium</dc:title>
+        </bqs:Journal>
+        <bqs:volume>22(5)</bqs:volume>
+        <bqs:first_page>321</bqs:first_page>
+        <bqs:last_page>331</bqs:last_page>
+      </bqs:JournalArticle>
+    </bqs:reference>
+  </rdf:Description>
+</rdf:RDF>
+
+
+
+   <units name="micromole">
+      <unit units="mole" prefix="micro"/>
+   </units>
+   <units name="micromolar">
+      <unit units="micromole"/>
+      <unit units="litre" exponent="-1"/>
+   </units>
+   <units name="per_micromolar">
+      <unit units="micromolar" exponent="-1"/>
+   </units>
+   <units name="micromolar_per_second">
+      <unit units="micromolar"/>
+      <unit units="second" exponent="-1"/>
+   </units>
+   <units name="per_micromolar_per_second">
+      <unit units="micromolar" exponent="-1"/>
+      <unit units="second" exponent="-1"/>
+   </units>
+   <units name="per_second">
+      <unit units="second" exponent="-1"/>
+   </units>
+   <component name="environment">
+      <variable name="time" units="second" public_interface="out"/>
+   </component>
+   <component name="R_des">
+      <variable name="R_des" units="micromolar" initial_value="0.1" public_interface="out"/>
+      <variable name="K_plus" units="per_micromolar_per_second" public_interface="in"/>
+      <variable name="C_cyto" units="micromolar" public_interface="in"/>
+      <variable name="n_i" units="dimensionless" public_interface="in"/>
+      <variable name="K_act" units="micromolar" public_interface="in"/>
+      <variable name="n_a" units="dimensionless" public_interface="in"/>
+      <variable name="K_minus" units="per_second" public_interface="in"/>
+      <variable name="time" units="second" public_interface="in"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <apply>
+               <diff/>
+               <bvar>
+                  <ci>time</ci>
+               </bvar>
+               <ci>R_des</ci>
+            </apply>
+            <apply>
+               <minus/>
+               <apply>
+                  <times/>
+                  <ci>K_plus</ci>
+                  <apply>
+                     <power/>
+                     <ci>C_cyto</ci>
+                     <ci>n_i</ci>
+                  </apply>
+                  <cn cellml:units="second">1</cn>
+                  <apply>
+                     <times/>
+                     <apply>
+                        <divide/>
+                        <apply>
+                           <minus/>
+                           <cn cellml:units="micromolar">1</cn>
+                           <ci>R_des</ci>
+                        </apply>
+                        <apply>
+                           <plus/>
+                           <cn cellml:units="micromolar">1</cn>
+                           <apply>
+                              <power/>
+                              <apply>
+                                 <divide/>
+                                 <ci>C_cyto</ci>
+                                 <ci>K_act</ci>
+                              </apply>
+                              <ci>n_a</ci>
+                           </apply>
+                        </apply>
+                     </apply>
+                     <cn cellml:units="per_second">1</cn>
+                  </apply>
+               </apply>
+               <apply>
+                  <times/>
+                  <ci>K_minus</ci>
+                  <ci>R_des</ci>
+               </apply>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <component name="C_cyto">
+      <variable name="C_cyto" units="micromolar" initial_value="0.1" public_interface="out"/>
+      <variable name="K_1" units="per_second" public_interface="in"/>
+      <variable name="b" units="per_second" public_interface="in"/>
+      <variable name="n_i" units="dimensionless" public_interface="in"/>
+      <variable name="I_ra" units="micromolar" public_interface="in"/>
+      <variable name="Ca_tot" units="micromolar" public_interface="in"/>
+      <variable name="alpha" units="dimensionless" public_interface="in"/>
+      <variable name="V_MP" units="micromolar_per_second" public_interface="in"/>
+      <variable name="n_p" units="dimensionless" public_interface="in"/>
+      <variable name="K_p" units="micromolar" public_interface="in"/>
+      <variable name="time" units="second" public_interface="in"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <apply>
+               <diff/>
+               <bvar>
+                  <ci>time</ci>
+               </bvar>
+               <ci>C_cyto</ci>
+            </apply>
+            <apply>
+               <minus/>
+               <apply>
+                  <times/>
+                  <ci>K_1</ci>
+                  <cn cellml:units="second">1</cn>
+                  <apply>
+                     <plus/>
+                     <apply>
+                        <times/>
+                        <ci>b</ci>
+                        <cn cellml:units="second">1</cn>
+                     </apply>
+                     <apply>
+                        <times/>
+                        <ci>I_ra</ci>
+                        <cn cellml:units="per_micromolar">1</cn>
+                     </apply>
+                  </apply>
+                  <apply>
+                     <times/>
+                     <apply>
+                        <minus/>
+                        <ci>Ca_tot</ci>
+                        <apply>
+                           <times/>
+                           <ci>C_cyto</ci>
+                           <apply>
+                              <plus/>
+                              <ci>alpha</ci>
+                              <cn cellml:units="dimensionless">1</cn>
+                           </apply>
+                        </apply>
+                     </apply>
+                     <cn cellml:units="per_second">1</cn>
+                  </apply>
+               </apply>
+               <apply>
+                  <times/>
+                  <ci>V_MP</ci>
+                  <apply>
+                     <times/>
+                     <apply>
+                        <divide/>
+                        <apply>
+                           <power/>
+                           <ci>C_cyto</ci>
+                           <ci>n_p</ci>
+                        </apply>
+                        <apply>
+                           <plus/>
+                           <apply>
+                              <power/>
+                              <ci>K_p</ci>
+                              <ci>n_p</ci>
+                           </apply>
+                           <apply>
+                              <power/>
+                              <ci>C_cyto</ci>
+                              <ci>n_p</ci>
+                           </apply>
+                        </apply>
+                     </apply>
+                     <cn cellml:units="per_micromolar">1</cn>
+                  </apply>
+               </apply>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <component name="I_ra">
+      <variable name="I_ra" units="micromolar" public_interface="out"/>
+      <variable name="I_rable" units="micromolar" public_interface="in"/>
+      <variable name="K_act" units="micromolar" public_interface="in"/>
+      <variable name="C_cyto" units="micromolar" public_interface="in"/>
+      <variable name="n_a" units="dimensionless" public_interface="in"/>
+      <variable name="time" units="second" public_interface="in"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <ci>I_ra</ci>
+            <apply>
+               <divide/>
+               <apply>
+                  <times/>
+                  <ci>I_rable</ci>
+                  <cn cellml:units="dimensionless">1</cn>
+               </apply>
+               <apply>
+                  <plus/>
+                  <cn cellml:units="dimensionless">1</cn>
+                  <apply>
+                     <power/>
+                     <apply>
+                        <divide/>
+                        <ci>K_act</ci>
+                        <ci>C_cyto</ci>
+                     </apply>
+                     <ci>n_a</ci>
+                  </apply>
+               </apply>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <component name="I_rable">
+      <variable name="I_rable" units="micromolar" public_interface="out"/>
+      <variable name="R_des" units="micromolar" public_interface="in"/>
+      <variable name="IP3" units="micromolar" public_interface="in"/>
+      <variable name="K_IP" units="micromolar" public_interface="in"/>
+      <variable name="time" units="second" public_interface="in"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <ci>I_rable</ci>
+            <apply>
+               <divide/>
+               <apply>
+                  <times/>
+                  <apply>
+                     <minus/>
+                     <cn cellml:units="micromolar">1</cn>
+                     <ci>R_des</ci>
+                  </apply>
+                  <ci>IP3</ci>
+               </apply>
+               <apply>
+                  <plus/>
+                  <ci>K_IP</ci>
+                  <ci>IP3</ci>
+               </apply>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <component name="IP3">
+      <variable name="IP3" units="micromolar" initial_value="0.1" public_interface="out"/>
+      <variable name="V_PLC" units="micromolar" public_interface="in"/>
+      <variable name="V_3K" units="micromolar" public_interface="in"/>
+      <variable name="V_5P" units="micromolar" public_interface="in"/>
+      <variable name="time" units="second" public_interface="in"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <apply>
+               <diff/>
+               <bvar>
+                  <ci>time</ci>
+               </bvar>
+               <ci>IP3</ci>
+            </apply>
+            <apply>
+               <divide/>
+               <apply>
+                  <minus/>
+                  <apply>
+                     <minus/>
+                     <ci>V_PLC</ci>
+                     <ci>V_3K</ci>
+                  </apply>
+                  <ci>V_5P</ci>
+               </apply>
+               <cn cellml:units="second">1</cn>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <component name="V_PLC">
+      <variable name="V_PLC" units="micromolar" public_interface="out"/>
+      <variable name="V_plc" units="micromolar_per_second" public_interface="in"/>
+      <variable name="gamma" units="dimensionless" public_interface="in"/>
+      <variable name="time" units="second" public_interface="in"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <ci>V_PLC</ci>
+            <apply>
+               <times/>
+               <ci>gamma</ci>
+               <ci>V_plc</ci>
+               <cn cellml:units="second">1</cn>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <component name="V_3K">
+      <variable name="V_3K" units="micromolar" public_interface="out"/>
+      <variable name="IP3" units="micromolar" public_interface="in"/>
+      <variable name="V_k" units="micromolar_per_second" public_interface="in"/>
+      <variable name="K_k" units="micromolar" public_interface="in"/>
+      <variable name="C_cyto" units="micromolar" public_interface="in"/>
+      <variable name="n_d" units="dimensionless" public_interface="in"/>
+      <variable name="K_d" units="micromolar" public_interface="in"/>
+      <variable name="time" units="second" public_interface="in"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <ci>V_3K</ci>
+            <apply>
+               <times/>
+               <ci>V_k</ci>
+               <apply>
+                  <divide/>
+                  <ci>IP3</ci>
+                  <apply>
+                     <plus/>
+                     <ci>K_k</ci>
+                     <ci>IP3</ci>
+                  </apply>
+               </apply>
+               <apply>
+                  <divide/>
+                  <apply>
+                     <power/>
+                     <ci>C_cyto</ci>
+                     <ci>n_d</ci>
+                  </apply>
+                  <apply>
+                     <plus/>
+                     <apply>
+                        <power/>
+                        <ci>K_d</ci>
+                        <ci>n_d</ci>
+                     </apply>
+                     <apply>
+                        <power/>
+                        <ci>C_cyto</ci>
+                        <ci>n_d</ci>
+                     </apply>
+                  </apply>
+               </apply>
+               <cn cellml:units="second">1</cn>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <component name="V_5P">
+      <variable name="V_5P" units="micromolar" public_interface="out"/>
+      <variable name="IP3" units="micromolar" public_interface="in"/>
+      <variable name="IP4" units="micromolar" public_interface="in"/>
+      <variable name="V_p1" units="micromolar_per_second" public_interface="in"/>
+      <variable name="K_p1" units="micromolar" public_interface="in"/>
+      <variable name="K_p2" units="micromolar" public_interface="in"/>
+      <variable name="time" units="second" public_interface="in"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <ci>V_5P</ci>
+            <apply>
+               <times/>
+               <ci>V_p1</ci>
+               <cn cellml:units="second">1</cn>
+               <apply>
+                  <divide/>
+                  <ci>IP3</ci>
+                  <apply>
+                     <plus/>
+                     <apply>
+                        <times/>
+                        <ci>K_p1</ci>
+                        <apply>
+                           <plus/>
+                           <cn cellml:units="dimensionless">1</cn>
+                           <apply>
+                              <divide/>
+                              <ci>IP4</ci>
+                              <ci>K_p2</ci>
+                           </apply>
+                        </apply>
+                     </apply>
+                     <ci>IP3</ci>
+                  </apply>
+               </apply>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <component name="IP4">
+      <variable name="IP4" units="micromolar" initial_value="0.1" public_interface="out"/>
+      <variable name="V_3K" units="micromolar" public_interface="in"/>
+      <variable name="V_15P" units="micromolar" public_interface="in"/>
+      <variable name="k" units="per_second" public_interface="in"/>
+      <variable name="time" units="second" public_interface="in"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <apply>
+               <diff/>
+               <bvar>
+                  <ci>time</ci>
+               </bvar>
+               <ci>IP4</ci>
+            </apply>
+            <apply>
+               <minus/>
+               <apply>
+                  <times/>
+                  <apply>
+                     <minus/>
+                     <ci>V_3K</ci>
+                     <ci>V_15P</ci>
+                  </apply>
+                  <cn cellml:units="per_second">1</cn>
+               </apply>
+               <apply>
+                  <times/>
+                  <ci>k</ci>
+                  <ci>IP4</ci>
+               </apply>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <component name="V_15P">
+      <variable name="V_15P" units="micromolar" public_interface="out"/>
+      <variable name="IP3" units="micromolar" public_interface="in"/>
+      <variable name="IP4" units="micromolar" public_interface="in"/>
+      <variable name="V_p2" units="micromolar_per_second" public_interface="in"/>
+      <variable name="K_p1" units="micromolar" public_interface="in"/>
+      <variable name="K_p2" units="micromolar" public_interface="in"/>
+      <variable name="time" units="second" public_interface="in"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <ci>V_15P</ci>
+            <apply>
+               <divide/>
+               <apply>
+                  <times/>
+                  <ci>V_p2</ci>
+                  <cn cellml:units="second">1</cn>
+                  <ci>IP4</ci>
+               </apply>
+               <apply>
+                  <plus/>
+                  <apply>
+                     <times/>
+                     <ci>K_p2</ci>
+                     <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">1</cn>
+                        <apply>
+                           <divide/>
+                           <ci>IP3</ci>
+                           <ci>K_p1</ci>
+                        </apply>
+                     </apply>
+                  </apply>
+                  <ci>IP4</ci>
+               </apply>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <component name="model_parameters">
+      <variable name="V_plc" units="micromolar_per_second" initial_value="1.3" public_interface="out"/>
+      <variable name="V_k" units="micromolar_per_second" initial_value="0.5" public_interface="out"/>
+      <variable name="K_k" units="micromolar" initial_value="1" public_interface="out"/>
+      <variable name="K_d" units="micromolar" initial_value="0.3" public_interface="out"/>
+      <variable name="n_d" units="dimensionless" initial_value="2" public_interface="out"/>
+      <variable name="V_p1" units="micromolar_per_second" initial_value="5" public_interface="out"/>
+      <variable name="K_p1" units="micromolar" initial_value="10" public_interface="out"/>
+      <variable name="V_p2" units="micromolar_per_second" initial_value="0.2" public_interface="out"/>
+      <variable name="K_p2" units="micromolar" initial_value="2" public_interface="out"/>
+      <variable name="k" units="per_second" initial_value="0.01" public_interface="out"/>
+      <variable name="gamma" units="dimensionless" initial_value="0.2" public_interface="out"/>
+      <variable name="alpha" units="dimensionless" initial_value="0.1" public_interface="out"/>
+      <variable name="Ca_tot" units="micromolar" initial_value="80" public_interface="out"/>
+      <variable name="V_MP" units="micromolar_per_second" initial_value="4" public_interface="out"/>
+      <variable name="K_p" units="micromolar" initial_value="0.35" public_interface="out"/>
+      <variable name="n_p" units="dimensionless" initial_value="2" public_interface="out"/>
+      <variable name="K_act" units="micromolar" initial_value="0.56" public_interface="out"/>
+      <variable name="K_inh" units="micromolar" initial_value="0.15" public_interface="out"/>
+      <variable name="n_a" units="dimensionless" initial_value="3" public_interface="out"/>
+      <variable name="n_i" units="dimensionless" initial_value="4" public_interface="out"/>
+      <variable name="K_minus" units="per_second" initial_value="0.5" public_interface="out"/>
+      <variable name="K_plus" units="per_micromolar_per_second" public_interface="out"/>
+      <variable name="b" units="per_second" initial_value="7e-4" public_interface="out"/>
+      <variable name="K_1" units="per_second" initial_value="2.57" public_interface="out"/>
+      <variable name="K_IP" units="micromolar" initial_value="1" public_interface="out"/>
+      <variable name="time" units="second" public_interface="in"/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+         <apply>
+            <eq/>
+            <ci>K_plus</ci>
+            <apply>
+               <divide/>
+               <ci>K_minus</ci>
+               <apply>
+                  <power/>
+                  <ci>K_inh</ci>
+                  <ci>n_i</ci>
+               </apply>
+            </apply>
+         </apply>
+      </math>
+   </component>
+   <connection>
+      <map_components component_1="environment" component_2="model_parameters"/>
+      <map_variables variable_1="time" variable_2="time"/>
+   </connection>
+   <connection>
+      <map_components component_1="environment" component_2="R_des"/>
+      <map_variables variable_1="time" variable_2="time"/>
+   </connection>
+   <connection>
+      <map_components component_1="environment" component_2="C_cyto"/>
+      <map_variables variable_1="time" variable_2="time"/>
+   </connection>
+   <connection>
+      <map_components component_1="environment" component_2="I_ra"/>
+      <map_variables variable_1="time" variable_2="time"/>
+   </connection>
+   <connection>
+      <map_components component_1="environment" component_2="I_rable"/>
+      <map_variables variable_1="time" variable_2="time"/>
+   </connection>
+   <connection>
+      <map_components component_1="environment" component_2="IP3"/>
+      <map_variables variable_1="time" variable_2="time"/>
+   </connection>
+   <connection>
+      <map_components component_1="environment" component_2="V_PLC"/>
+      <map_variables variable_1="time" variable_2="time"/>
+   </connection>
+   <connection>
+      <map_components component_1="environment" component_2="V_3K"/>
+      <map_variables variable_1="time" variable_2="time"/>
+   </connection>
+   <connection>
+      <map_components component_1="environment" component_2="V_5P"/>
+      <map_variables variable_1="time" variable_2="time"/>
+   </connection>
+   <connection>
+      <map_components component_1="environment" component_2="IP4"/>
+      <map_variables variable_1="time" variable_2="time"/>
+   </connection>
+   <connection>
+      <map_components component_1="environment" component_2="V_15P"/>
+      <map_variables variable_1="time" variable_2="time"/>
+   </connection>
+   <connection>
+      <map_components component_1="R_des" component_2="model_parameters"/>
+      <map_variables variable_1="K_plus" variable_2="K_plus"/>
+      <map_variables variable_1="n_i" variable_2="n_i"/>
+      <map_variables variable_1="K_act" variable_2="K_act"/>
+      <map_variables variable_1="n_a" variable_2="n_a"/>
+      <map_variables variable_1="K_minus" variable_2="K_minus"/>
+   </connection>
+   <connection>
+      <map_components component_1="C_cyto" component_2="model_parameters"/>
+      <map_variables variable_1="K_1" variable_2="K_1"/>
+      <map_variables variable_1="b" variable_2="b"/>
+      <map_variables variable_1="Ca_tot" variable_2="Ca_tot"/>
+      <map_variables variable_1="alpha" variable_2="alpha"/>
+      <map_variables variable_1="V_MP" variable_2="V_MP"/>
+      <map_variables variable_1="n_p" variable_2="n_p"/>
+      <map_variables variable_1="K_p" variable_2="K_p"/>
+      <map_variables variable_1="n_i" variable_2="n_i"/>
+   </connection>
+   <connection>
+      <map_components component_1="I_ra" component_2="model_parameters"/>
+      <map_variables variable_1="n_a" variable_2="n_a"/>
+      <map_variables variable_1="K_act" variable_2="K_act"/>
+   </connection>
+   <connection>
+      <map_components component_1="I_rable" component_2="model_parameters"/>
+      <map_variables variable_1="K_IP" variable_2="K_IP"/>
+   </connection>
+   <connection>
+      <map_components component_1="V_PLC" component_2="model_parameters"/>
+      <map_variables variable_1="gamma" variable_2="gamma"/>
+      <map_variables variable_1="V_plc" variable_2="V_plc"/>
+   </connection>
+   <connection>
+      <map_components component_1="V_3K" component_2="model_parameters"/>
+      <map_variables variable_1="K_d" variable_2="K_d"/>
+      <map_variables variable_1="K_k" variable_2="K_k"/>
+      <map_variables variable_1="n_d" variable_2="n_d"/>
+      <map_variables variable_1="V_k" variable_2="V_k"/>
+   </connection>
+   <connection>
+      <map_components component_1="V_5P" component_2="model_parameters"/>
+      <map_variables variable_1="V_p1" variable_2="V_p1"/>
+      <map_variables variable_1="K_p1" variable_2="K_p1"/>
+      <map_variables variable_1="K_p2" variable_2="K_p2"/>
+   </connection>
+   <connection>
+      <map_components component_1="IP4" component_2="model_parameters"/>
+      <map_variables variable_1="k" variable_2="k"/>
+   </connection>
+   <connection>
+      <map_components component_1="V_15P" component_2="model_parameters"/>
+      <map_variables variable_1="V_p2" variable_2="V_p2"/>
+      <map_variables variable_1="K_p2" variable_2="K_p2"/>
+      <map_variables variable_1="K_p1" variable_2="K_p1"/>
+   </connection>
+   <connection>
+      <map_components component_1="I_rable" component_2="R_des"/>
+      <map_variables variable_1="R_des" variable_2="R_des"/>
+   </connection>
+   <connection>
+      <map_components component_1="C_cyto" component_2="R_des"/>
+      <map_variables variable_1="C_cyto" variable_2="C_cyto"/>
+   </connection>
+   <connection>
+      <map_components component_1="C_cyto" component_2="I_ra"/>
+      <map_variables variable_1="C_cyto" variable_2="C_cyto"/>
+      <map_variables variable_1="I_ra" variable_2="I_ra"/>
+   </connection>
+   <connection>
+      <map_components component_1="C_cyto" component_2="V_3K"/>
+      <map_variables variable_1="C_cyto" variable_2="C_cyto"/>
+   </connection>
+   <connection>
+      <map_components component_1="I_ra" component_2="I_rable"/>
+      <map_variables variable_1="I_rable" variable_2="I_rable"/>
+   </connection>
+   <connection>
+      <map_components component_1="IP3" component_2="I_rable"/>
+      <map_variables variable_1="IP3" variable_2="IP3"/>
+   </connection>
+   <connection>
+      <map_components component_1="IP3" component_2="V_PLC"/>
+      <map_variables variable_1="V_PLC" variable_2="V_PLC"/>
+   </connection>
+   <connection>
+      <map_components component_1="IP3" component_2="V_3K"/>
+      <map_variables variable_1="IP3" variable_2="IP3"/>
+      <map_variables variable_1="V_3K" variable_2="V_3K"/>
+   </connection>
+   <connection>
+      <map_components component_1="IP3" component_2="V_5P"/>
+      <map_variables variable_1="IP3" variable_2="IP3"/>
+      <map_variables variable_1="V_5P" variable_2="V_5P"/>
+   </connection>
+   <connection>
+      <map_components component_1="IP3" component_2="V_15P"/>
+      <map_variables variable_1="IP3" variable_2="IP3"/>
+   </connection>
+   <connection>
+      <map_components component_1="IP4" component_2="V_5P"/>
+      <map_variables variable_1="IP4" variable_2="IP4"/>
+   </connection>
+   <connection>
+      <map_components component_1="IP4" component_2="V_15P"/>
+      <map_variables variable_1="IP4" variable_2="IP4"/>
+      <map_variables variable_1="V_15P" variable_2="V_15P"/>
+   </connection>
+   <connection>
+      <map_components component_1="IP4" component_2="V_3K"/>
+      <map_variables variable_1="V_3K" variable_2="V_3K"/>
+   </connection>
+</model>

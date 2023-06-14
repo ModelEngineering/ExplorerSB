@@ -1,0 +1,192 @@
+// Created by libAntimony v2.13.2
+function Death_of_HPV_self_proliferating_cells_due_to_effector_cells(a, s13, s16)
+  a*s16*s13;
+end
+
+Death_of_HPV_self_proliferating_cells_due_to_effector_cells is "Death of HPV self-proliferating cells due to effector cells"
+
+function Logistic_term_for_Effector_cells_1(b, omega, s13, s16, s4)
+  omega*s13*s16*s16/(b*s4);
+end
+
+Logistic_term_for_Effector_cells_1 is "Logistic term for Effector cells_1"
+
+function Rate_Law_for_Production_of_HPV_due_to_HPVinfected_1(k1, mu, s12)
+  mu*k1*s12;
+end
+
+Rate_Law_for_Production_of_HPV_due_to_HPVinfected_1 is "Rate Law for Production of HPV due to HPVinfected_1"
+
+function Rate_Law_for_production_of_HIV_infected_cells_1(beta, e_rt, s2, s4)
+  (1 - e_rt)*beta*s4*s2;
+end
+
+Rate_Law_for_production_of_HIV_infected_cells_1 is "Rate Law for production of HIV infected cells_1"
+
+function Production_of_HPV_due_to_HPV_self_proliferating_1(k2, mu, s13)
+  mu*k2*s13;
+end
+
+Production_of_HPV_due_to_HPV_self_proliferating_1 is "Production of HPV due to HPV self-proliferating_1"
+
+function Productionof_HPV_infected_cells(N2, p, phi, psi, s12, s14, s2)
+  psi*s14*(((1 + p*s2)*N2 - s12)/(phi + (1 + p*s2)*N2 - s12));
+end
+
+Productionof_HPV_infected_cells is "Productionof HPV infected cells"
+
+function Death_of_HPV_self_proliferating_due_to_Effector_cells(a, s12, s16)
+  a*s12*s16;
+end
+
+Death_of_HPV_self_proliferating_due_to_Effector_cells is "Death of HPV self-proliferating due to Effector cells"
+
+function Rate_Law_for_Production_of_HIV_virion_1(N1, delta, e_pi, s3)
+  (1 - e_pi)*N1*delta*s3;
+end
+
+Rate_Law_for_Production_of_HIV_virion_1 is "Rate Law for Production of HIV virion_1"
+
+function Rate_Law_for_Production_of_Effector_cell_1_1(omega, s13, s16)
+  omega*s13*s16;
+end
+
+Rate_Law_for_Production_of_Effector_cell_1_1 is "Rate Law for Production of Effector cell_1_1"
+
+function Proliferation_of_HPV_self_proliferating(epi, r, s13)
+  r*epi*s13;
+end
+
+Proliferation_of_HPV_self_proliferating is "Proliferation of HPV self-proliferating"
+
+function Constant_flux__irreversible(v)
+  v;
+end
+
+Constant_flux__irreversible is "Constant flux (irreversible)"
+
+
+model *Verma2016___HIV_and_HPV_co_infection__T_cell_response()
+
+  // Compartments and Species:
+  compartment default;
+  species s2 in default, s3 in default, s4 in default, s14 in default, s16 in default;
+  species s13 in default, s12 in default;
+
+  // Reactions:
+  re1:  => s2; default*Rate_Law_for_Production_of_HIV_virion_1(N1, re1_delta, e_pi, s3);
+  re3: s2 => ; default*c1*s2;
+  re4: s4 => s3; default*Rate_Law_for_production_of_HIV_infected_cells_1(beta, e_rt, s2, s4);
+  re5:  => s4; default*Constant_flux__irreversible(s);
+  re7: s4 => ; default*d*s4;
+  re8: s3 => ; default*re8_k1*s3;
+  re9: s12 => s13; default*epi*s12;
+  re11:  => s14; default*Rate_Law_for_Production_of_HPV_due_to_HPVinfected_1(re11_k1, mu, s12);
+  re12: s12 => ; default*Death_of_HPV_self_proliferating_due_to_Effector_cells(re12_a, s12, s16);
+  re14: s13 => ; default*re14_k1*s13;
+  re15: s16 => ; default*Logistic_term_for_Effector_cells_1(re15_b, omega, s13, s16, s4);
+  re17: s13 => ; default*Death_of_HPV_self_proliferating_cells_due_to_effector_cells(re17_a, s13, s16);
+  re18: s12 => ; default*mu*s12;
+  re20: s14 => ; default*re20_k1*s14;
+  re24: s13 => 2 s13; default*Proliferation_of_HPV_self_proliferating(epi, re24_r, s13);
+  re25: s12 => 2 s12; default*Productionof_HPV_infected_cells(re25_N2, re25_p, re25_phi, re25_psi, s12, s14, s2);
+  re26: s16 => 2 s16; default*Rate_Law_for_Production_of_Effector_cell_1_1(omega, s13, s16);
+  Production_of_HPV_due_to_HPV_self_proliferating:  => s14; default*Production_of_HPV_due_to_HPV_self_proliferating_1(Production_of_HPV_due_to_HPV_self_proliferating_k2, mu, s13);
+
+  // Species initializations:
+  s2 = 48000;
+  s3 = beta*s4*s2;
+  s4 = 250000;
+  s14 = 0;
+  s16 = 0.01;
+  s13 = 0;
+  s12 = 1;
+
+  // Compartment initializations:
+  default = 1;
+
+  // Variable initializations:
+  beta = c1/(N1*s4);
+  e_rt = 0;
+  e_pi = 0;
+  epi = 0.5;
+  omega = 0.001;
+  mu = 0.048;
+  c1 = 23;
+  N1 = 467;
+  s = d*s4 + beta*s4*s2;
+  d = 0.01;
+  re1_delta = 1;
+  re8_k1 = 1;
+  re11_k1 = 1000;
+  re12_a = 0.01;
+  re14_k1 = 0.048;
+  re15_b = 3.5e-05;
+  re17_a = 0.01;
+  re20_k1 = 0.05;
+  re24_r = 0.1;
+  re25_N2 = 10000;
+  re25_p = 2.0833e-05;
+  re25_phi = 1000000;
+  re25_psi = 0.0067;
+  Production_of_HPV_due_to_HPV_self_proliferating_k2 = 1000;
+
+  // Other declarations:
+  const default, beta, e_rt, e_pi, epi, omega, mu, c1, N1, s, d;
+
+  // Unit definitions:
+  unit volume = 1e-3 litre;
+  unit time_unit = 86400 second;
+  unit substance = item;
+
+  // Display Names:
+  time_unit is "time";
+  s2 is "V";
+  s3 is "I";
+  s4 is "T";
+  s14 is "W";
+  s16 is "E";
+  s13 is "Y2";
+  s12 is "Y1";
+  re1 is "Production of HIV virion";
+  re3 is "Death of HIV";
+  re4 is "Production of HIV infected cells";
+  re5 is "Production of T cells";
+  re7 is "Decay of T cells";
+  re8 is "Decay of HIV-infected";
+  re9 is "Production of HPV-self-proliferating cells by HPV infected";
+  re11 is "Production of HPV due to HPVinfected";
+  re12 is "Death of HPV infected due to Effector cells";
+  re14 is "Decay of HPV self-proliferating";
+  re15 is "Logistic term for Effector cells";
+  re17 is "Death of HPV self-proliferating cells due to effector cells";
+  re18 is "Decay of HPV-infected cells";
+  re20 is "Decay of HPV";
+  re24 is "Proliferation of HPV self-proliferating cells";
+  re25 is "Productionof HPV infected cells";
+  re26 is "Production of Effector cell";
+  Production_of_HPV_due_to_HPV_self_proliferating is "Production of HPV due to HPV self proliferating";
+
+  // CV terms:
+  s2 instance "http://identifiers.org/ncit/C14219"
+  s3 property "http://identifiers.org/ncit/C97350"
+  s4 instance "http://identifiers.org/ncit/C97350"
+  s14 instance "http://identifiers.org/efo/0004510"
+  s16 instance "http://identifiers.org/ncit/C12543"
+  s13 instance "http://identifiers.org/ncit/C12578"
+  s12 instance "http://identifiers.org/ncit/C12578"
+end
+
+Verma2016___HIV_and_HPV_co_infection__T_cell_response is "Verma2016 - HIV and HPV co-infection, T-cell response"
+
+Verma2016___HIV_and_HPV_co_infection__T_cell_response class "http://identifiers.org/biomodels.db/MODEL1605030001",
+                                                            "http://identifiers.org/ncit/C15261",
+                                                            "http://identifiers.org/ncit/C14219",
+                                                            "http://identifiers.org/taxonomy/9606"
+Verma2016___HIV_and_HPV_co_infection__T_cell_response description "http://identifiers.org/taxonomy/9606",
+                                                                  "http://identifiers.org/pubmed/28060843"
+Verma2016___HIV_and_HPV_co_infection__T_cell_response model_entity_is "http://identifiers.org/biomodels.db/MODEL1605030001",
+                                                                      "http://identifiers.org/biomodels.db/BIOMD0000000872"
+Verma2016___HIV_and_HPV_co_infection__T_cell_response identity "http://identifiers.org/biomodels.db/MODEL1605030001"
+Verma2016___HIV_and_HPV_co_infection__T_cell_response property "http://identifiers.org/ncit/C15261"
+Verma2016___HIV_and_HPV_co_infection__T_cell_response property "http://identifiers.org/ncit/C14219"

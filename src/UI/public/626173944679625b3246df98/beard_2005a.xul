@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<window id="layout-diagram" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" style="overflow: auto" onload="setupDocument()">
+<hbox>
+	<scale id="zoom_scale" value="10" min="7" max="14" flex="4"/>
+	<label value="Zoom" control="zoom_scale" flex="1"/>
+	<button id="reset_button" label="Reset View" flex="1"/>
+	<spacer flex="34"/>
+</hbox>
+<script>
+<![CDATA[
+window.model_entities =
+  {
+
+			J_C1:
+
+			{	id: "J_C1",
+				y: 'Electron_flux_complex_I/J_C1',
+				x: 'Environment/t',
+				graph: 'Schematic Diagram: click channels to toggle display of graph traces above',
+				colour: '#FF0000',
+				linestyle: 'none'
+			},
+			
+			J_C3:
+
+			{	id: "J_C3",
+				y: 'Electron_flux_complex_III/J_C3',
+				x: 'Environment/t',
+				graph: 'Schematic Diagram: click channels to toggle display of graph traces above',
+				colour: '#FF0000',
+				linestyle: 'none'
+			},
+			
+			J_C4:
+
+			{	id: "J_C4",
+				y: 'Electron_flux_complex_IV/J_C4',
+				x: 'Environment/t',
+				graph: 'Schematic Diagram: click channels to toggle display of graph traces above',
+				colour: '#FF0000',
+				linestyle: 'none'
+			},
+			
+			Q:
+
+			{	id: "Q",
+				y: 'Q_concentration/Q',
+				x: 'Environment/t',
+				graph: 'Schematic Diagram: click channels to toggle display of graph traces above',
+				colour: '#FF0000',
+				linestyle: 'none'
+			},
+			
+			QH2:
+
+			{	id: "QH2",
+				y: 'dQH2_dt/QH2',
+				x: 'Environment/t',
+				graph: 'Schematic Diagram: click channels to toggle display of graph traces above',
+				colour: '#FF0000',
+				linestyle: 'none'
+			},
+			
+			NADH_x:
+
+			{	id: "NADH_x",
+				y: 'dNADH_x_dt/NADH_x',
+				x: 'Environment/t',
+				graph: 'Schematic Diagram: click channels to toggle display of graph traces above',
+				colour: '#FF0000',
+				linestyle: 'none'
+			},
+			
+			H_x:
+
+			{	id: "H_x",
+				y: 'dH_x_dt/H_x',
+				x: 'Environment/t',
+				graph: 'Schematic Diagram: click channels to toggle display of graph traces above',
+				colour: '#FF0000',
+				linestyle: 'none'
+			},
+			
+			J_F1:
+
+			{	id: "J_F1",
+				y: 'ATP_synthesis_flux/J_F1',
+				x: 'Environment/t',
+				graph: 'Schematic Diagram: click channels to toggle display of graph traces above',
+				colour: '#FF0000',
+				linestyle: 'none'
+			}
+			
+			
+			
+ // Repeat the above section for each controllable graph trace.
+ // Remember to add a comma to each repeat after the final },
+ // except for the final one!
+ 
+};
+
+function flushVisibilityInformation(entity_id, entity_colour)
+{
+	var message = "";
+	var entity;
+
+	if (typeof pcenv != "undefined")
+	{
+		for (var i in window.model_entities)
+		{
+			entity = window.model_entities[i];
+			if (typeof entity_id == "undefined" || entity_id == window.model_entities[i].id)
+			{
+				pcenv.selectTrace
+				(
+					entity.graph,
+					entity.x,
+					entity.y,
+					typeof entity_colour == "undefined" ? "" : entity_colour,
+					entity.linestyle
+				);
+			}
+			if (entity.linestyle != "none")
+				message += i + ", ";
+		}
+		pcenv.status(message == "" ? "No fluxes displayed" : "Displaying flux of " + message.slice(0, -2));
+	}
+}
+
+function processSelectEntity(event)
+{
+	if (typeof pcenv != "undefined")
+		pcenv.status("In processSelectEntity");
+
+	var entity = window.model_entities[window.svgIdToName[event.currentTarget.id]];
+
+	switch(entity.linestyle)
+	{
+	case "none":
+		entity.linestyle = "lines";
+		highlightEntity(event.currentTarget.id);
+		break;
+	case "lines":
+		entity.linestyle = "none";
+		unlightEntity(event.currentTarget.id);
+		break;
+	}
+
+	flushVisibilityInformation(entity.id);
+}
+
+function processContext(event)
+{
+	// if (event.button != 2)
+	//   return true;
+
+	var entity = window.model_entities[window.svgIdToName[event.currentTarget.id]];
+
+	if (entity.context == null)
+		return true;
+
+	var menu = document.getElementById("entityContextMenu");
+
+	for (var c = menu.firstChild, x = null; c != null; c = x)
+	{
+		x = c.nextSibling;
+		menu.removeChild(c);
+	}
+
+	for (var i in entity.context)
+	{
+		var item = entity.context[i];
+
+		var mitem = document.createElementNS
+		(
+			"http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul",
+			"menuitem"
+		);
+
+		mitem.setAttribute("label", item.label);
+		mitem.setAttribute("url", item.url);
+		mitem.addEventListener("command", processShowEntityURL, false);
+		menu.appendChild(mitem);
+	}
+
+	menu.showPopup(window.diagram, event.screenX, event.screenY, "context");
+
+	event.stopPropagation;
+	return false;
+}
+
+function processShowEntityURL(event)
+{
+	url = event.target.getAttribute("url");
+
+	window.open(url);
+
+	var hl = document.getElementById("hidden-link");
+	hl.href = url;
+
+	// This is ugly, but it is one way to force everything through the proper
+	// external handler...
+	var evt = document.createEvent("HTMLEvents");
+	evt.initEvent("click", true, true);
+	hl.dispatchEvent(evt);
+}
+
+function highlightEntity(id)
+{
+	for (var path = document.getElementById(id + "_path1"), i = 1; path != null; path = document.getElementById(id + "_path" + ++i))
+	{
+		if (!(i in window.model_entities[window.svgIdToName[id]].path_colours))
+			window.model_entities[window.svgIdToName[id]].path_colours[i] = path.attributes.getNamedItem("stroke").value;
+		path.attributes.getNamedItem("stroke").value = "#ff0000";
+	}
+}
+
+function highlightEntityOnRollover(event) {
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].colour)
+		flushVisibilityInformation(event.currentTarget.id, "#ffffff");
+
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].linestyle == "none")
+		highlightEntity(event.currentTarget.id);
+}
+
+function unlightEntity(id)
+{
+	for (var path = document.getElementById(id + "_path1"), i = 1; path != null; path = document.getElementById(id + "_path" + ++i))
+		path.attributes.getNamedItem("stroke").value = window.model_entities[window.svgIdToName[id]].path_colours[i];
+}
+
+function unlightEntityOnRollover(event) {
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].colour)
+		flushVisibilityInformation(event.currentTarget.id, window.model_entities[window.svgIdToName[event.currentTarget.id]].colour);
+
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].linestyle == "none")
+		unlightEntity(event.currentTarget.id);
+}
+
+var mouseDown = false;
+var initial_x;
+var initial_y;
+var viewBox;
+
+function startDrag(event)
+{
+	if (event.button)
+		return true;
+
+	mouseDown = true;
+
+	initial_x = parseInt(currentZoom * event.pageX + parseInt(viewBox.value.match(/^-?\d+/)[0]));
+	initial_y = parseInt(currentZoom * event.pageY + parseInt(viewBox.value.match(/^-?\d+\s+(-?(\d+))/)[1]));
+}
+
+function stopDrag(event)
+{
+	if (!event.button)
+		mouseDown = false;
+}
+
+function moveDrag(event)
+{
+	if (mouseDown == true)
+		viewBox.value = viewBox.value.replace(/^-?\d+\s+-?\d+/, parseInt(initial_x - currentZoom * event.pageX) + " " + parseInt(initial_y - currentZoom * event.pageY));
+}
+
+function reset()
+{
+	var zoom_scale = document.getElementById("zoom_scale")
+	zoom_scale.value = zoom_scale.originalValue;
+	viewBox.value = viewBox.originalValue;
+}
+
+var initialZoom;
+var currentZoom = 1;
+var initialHeight;
+var initialWidth;
+
+function zoomDiagram(event)
+{
+	currentZoom = initialZoom / event.currentTarget.value;
+	viewBox.value = viewBox.value.replace(/\d+\s+\d+$/, parseInt(initialHeight * currentZoom) + " " + parseInt(initialWidth * currentZoom));
+}
+
+function setupDocument()
+{
+	flushVisibilityInformation();
+
+	window.diagram = document.getElementById("sachse");
+
+	window.svgIdToName = {};
+
+	for (var name in window.model_entities)
+	{
+		var id = window.model_entities[name].id;
+		window.model_entities[name].path_colours = [];
+
+		var svg = document.getElementById(id);
+		window.svgIdToName[id] = name;
+
+		svg.addEventListener("click", processSelectEntity, false);
+		svg.addEventListener("contextmenu", processContext, false);
+		svg.addEventListener("mouseover", highlightEntityOnRollover ,false);
+		svg.addEventListener("mouseout", unlightEntityOnRollover, false);
+	}
+
+	document.getElementsByTagName("svg")[0].addEventListener("mousedown", startDrag, false);
+	document.addEventListener("mouseup", stopDrag, false);
+	document.addEventListener("mousemove", moveDrag, false);
+	document.getElementById("reset_button").addEventListener("click", reset, false);
+
+	document.getElementById("zoom_scale").addEventListener("change", zoomDiagram, false);
+	document.getElementById("zoom_scale").originalValue = document.getElementById("zoom_scale").value;
+
+	viewBox = document.getElementsByTagName("svg")[0].attributes.getNamedItem("viewBox");
+	viewBox.originalValue = viewBox.value;
+
+	initialZoom = document.getElementById("zoom_scale").value;
+	initialHeight = parseInt(viewBox.value.match(/(\d+)\s+\d+$/)[1]);
+	initialWidth = parseInt(viewBox.value.match(/\d+$/)[0]);
+}
+
+]]>
+</script>
+
+<popupset>
+  <menupopup id="entityContextMenu" />
+</popupset>
+
+// REMOVE THE XML HEADER FROM YOUR SVG DIAGRAM
+// AND THEN PASTE IT IN THIS SPACE, REPLACING THIS COMMENT!
+
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="712.771px" height="289.723px" viewBox="0 0 712.771 289.723" enable-background="new 0 0 712.771 289.723"
+	 xml:space="preserve">
+<image overflow="visible" width="718" height="278" xlink:href="beard_2005a.png"  transform="matrix(0.9999 0 0 0.9999 -5.1401 -7.832)">
+</image>
+<ellipse id="J_C1_path1" fill="none" cx="190.5" cy="159.723" rx="15.5" ry="15"/>
+<ellipse id="J_C3_path1" fill="none" cx="331" cy="162.723" rx="15.5" ry="15"/>
+<ellipse id="J_C4_path1" fill="none" cx="458.167" cy="162.723" rx="15.5" ry="15"/>
+<ellipse id="J_F1_path1" fill="none" cx="587.754" cy="162.723" rx="15.5" ry="15"/>
+<ellipse id="H_x__x_path1" fill="none" cx="331" cy="100.723" rx="15.5" ry="15"/>
+<ellipse id="NADH_x__x_path1" fill="none" cx="154.176" cy="218.334" rx="15.5" ry="15"/>
+<ellipse id="QH2_path1" fill="none" cx="260.397" cy="184.334" rx="15.5" ry="15"/>
+<ellipse id="Q_path1" fill="none" cx="145.676" cy="184.334" rx="15.5" ry="15"/>
+</svg>
+
+
+</window>
+

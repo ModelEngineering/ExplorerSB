@@ -1,0 +1,140 @@
+// Created by libAntimony v2.13.2
+function Constant_flux__irreversible(v)
+  v;
+end
+
+Constant_flux__irreversible is "Constant flux (irreversible)"
+
+function Rate_Law_for_BCG_killing(B, p_1, E)
+  B*p_1*E + B;
+end
+
+Rate_Law_for_BCG_killing is "Rate Law for BCG_killing"
+
+function Rate_Law_for_Effector_cell_activation_recruitment(E, p4, B, alpha, T_i)
+  E*p4*B + alpha*T_i;
+end
+
+Rate_Law_for_Effector_cell_activation_recruitment is "Rate Law for Effector_cell_activation/recruitment"
+
+function Rate_Law_for_Infected_tumor_cell_death(p3, E, T_i)
+  p3*E*T_i;
+end
+
+Rate_Law_for_Infected_tumor_cell_death is "Rate Law for Infected_tumor_cell_death"
+
+function Rate_Law_for_Tumor_growth(T_u, r, beta)
+  T_u*r*(1 - beta*T_u);
+end
+
+Rate_Law_for_Tumor_growth is "Rate Law for Tumor_growth"
+
+function Rate_Law_for_Effector_cell_inactivation_death(E, mu, p5, T_i)
+  E*mu + E*p5*T_i;
+end
+
+Rate_Law_for_Effector_cell_inactivation_death is "Rate Law for Effector_cell_inactivation/death"
+
+
+model *Bunimovich_Mendrazitsky2007___Mathematical_model_of_BCG_immunotherapy()
+
+  // Compartments and Species:
+  compartment Bladder;
+  species BCG in Bladder, Effector_cells in Bladder, Tumor_infected_cells in Bladder;
+  species Tumor_uninfected_cells in Bladder;
+
+  // Assignment Rules:
+  mu := mu2/mu1;
+
+  // Reactions:
+  BCG_production:  => BCG; Bladder*Constant_flux__irreversible(b);
+  Effector_cell_activation_recruitment:  => Effector_cells; Bladder*Rate_Law_for_Effector_cell_activation_recruitment(Effector_cells, p4, BCG, alpha, Tumor_infected_cells);
+  Effector_cell_inactivation_death: Effector_cells => ; Bladder*Rate_Law_for_Effector_cell_inactivation_death(Effector_cells, mu, p5, Tumor_infected_cells);
+  Tumor_growth:  => Tumor_uninfected_cells; Bladder*Rate_Law_for_Tumor_growth(Tumor_uninfected_cells, r, beta);
+  Tumor_infection: Tumor_uninfected_cells + BCG => Tumor_infected_cells; Bladder*p2*Tumor_uninfected_cells*BCG;
+  Infected_tumor_cell_death: Tumor_infected_cells => ; Bladder*Rate_Law_for_Infected_tumor_cell_death(p3, Effector_cells, Tumor_infected_cells);
+  BCG_killing: BCG => ; Bladder*Rate_Law_for_BCG_killing(BCG, p1, Effector_cells);
+
+  // Species initializations:
+  BCG = 0;
+  Effector_cells = 0.05;
+  Tumor_infected_cells = 0;
+  Tumor_uninfected_cells = 0.55;
+
+  // Compartment initializations:
+  Bladder = 1;
+
+  // Variable initializations:
+  mu1 = 1;
+  mu2 = 0.41;
+  p1 = 1.25;
+  p2 = 0.285;
+  p3 = 1.1;
+  p4 = 0.085;
+  p5 = 0.003;
+  alpha = 0.52;
+  beta = 0.0155;
+  r = 0.12;
+  b = 1.9;
+
+  // Other declarations:
+  var mu;
+  const Bladder, mu1, mu2, p1, p2, p3, p4, p5, alpha, beta, r, b;
+
+  // Unit definitions:
+  unit length = metre;
+  unit area = metre^2;
+  unit volume = litre;
+  unit time_unit = 86400 second;
+  unit substance = item;
+
+  // Display Names:
+  time_unit is "time";
+  Effector_cell_activation_recruitment is "Effector_cell_activation/recruitment";
+  Effector_cell_inactivation_death is "Effector_cell_inactivation/death";
+
+  // CV terms:
+  Bladder hypernym "http://identifiers.org/bto/BTO:0000123"
+  Bladder property "http://identifiers.org/hp/HP:0009725"
+  BCG hypernym "http://identifiers.org/taxonomy/33892"
+  Effector_cells hypernym "http://identifiers.org/cl/CL:0000911"
+  Effector_cells hypernym "http://identifiers.org/ncit/C28241"
+  Tumor_infected_cells hypernym "http://identifiers.org/cl/CL:0001063"
+  Tumor_infected_cells hypernym "http://identifiers.org/bto/BTO:0000152"
+  Tumor_infected_cells hypernym "http://identifiers.org/bto/BTO:0000362"
+  Tumor_uninfected_cells hypernym "http://identifiers.org/bto/BTO:0000362"
+  Tumor_uninfected_cells hypernym "http://identifiers.org/cl/CL:0001063"
+  Tumor_uninfected_cells property "http://identifiers.org/efo/0001460"
+  BCG_production hypernym "http://identifiers.org/omit/0008442"
+  BCG_production hypernym "http://identifiers.org/sbo/SBO:0000393"
+  Effector_cell_activation_recruitment hypernym "http://identifiers.org/go/GO:0042110"
+  Effector_cell_activation_recruitment hypernym "http://identifiers.org/sbo/SBO:0000393"
+  Effector_cell_activation_recruitment hypernym "http://identifiers.org/go/GO:0072678"
+  Effector_cell_inactivation_death hypernym "http://identifiers.org/ncit/C175900"
+  Effector_cell_inactivation_death hypernym "http://identifiers.org/sbo/SBO:0000394"
+  Effector_cell_inactivation_death hypernym "http://identifiers.org/go/GO:0008219"
+  Tumor_growth hypernym "http://identifiers.org/sbo/SBO:0000393"
+  Tumor_growth hypernym "http://identifiers.org/go/GO:0008283"
+  Tumor_infection hypernym "http://identifiers.org/ido/0000586"
+  Tumor_infection hypernym "http://identifiers.org/efo/0009429"
+  Infected_tumor_cell_death hypernym "http://identifiers.org/sbo/SBO:0000394"
+  Infected_tumor_cell_death hypernym "http://identifiers.org/go/GO:0001906"
+  Infected_tumor_cell_death hypernym "http://identifiers.org/go/GO:0008219"
+  BCG_killing hypernym "http://identifiers.org/go/GO:0042742"
+  BCG_killing hypernym "http://identifiers.org/go/GO:0008219"
+  BCG_killing hypernym "http://identifiers.org/sbo/SBO:0000394"
+end
+
+Bunimovich_Mendrazitsky2007___Mathematical_model_of_BCG_immunotherapy is "Bunimovich-Mendrazitsky2007 - Mathematical model of BCG immunotherapy"
+
+Bunimovich_Mendrazitsky2007___Mathematical_model_of_BCG_immunotherapy model_entity_is "http://identifiers.org/biomodels.db/MODEL2108190003",
+                                                                                      "http://identifiers.org/biomodels.db/BIOMD0000001034"
+Bunimovich_Mendrazitsky2007___Mathematical_model_of_BCG_immunotherapy container "http://identifiers.org/bto/BTO:0000123"
+Bunimovich_Mendrazitsky2007___Mathematical_model_of_BCG_immunotherapy propertyBearer "http://identifiers.org/ncit/C15438"
+Bunimovich_Mendrazitsky2007___Mathematical_model_of_BCG_immunotherapy propertyBearer "http://identifiers.org/efo/0011041"
+Bunimovich_Mendrazitsky2007___Mathematical_model_of_BCG_immunotherapy taxon "http://identifiers.org/taxonomy/9606"
+Bunimovich_Mendrazitsky2007___Mathematical_model_of_BCG_immunotherapy taxon "http://identifiers.org/taxonomy/33892"
+Bunimovich_Mendrazitsky2007___Mathematical_model_of_BCG_immunotherapy description "http://identifiers.org/pubmed/17457655"
+Bunimovich_Mendrazitsky2007___Mathematical_model_of_BCG_immunotherapy property "http://identifiers.org/go/GO:0002837",
+                                                                               "http://identifiers.org/doid/DOID:11054",
+                                                                               "http://identifiers.org/mamo/MAMO_0000046"

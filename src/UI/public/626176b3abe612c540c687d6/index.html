@@ -1,0 +1,78 @@
+<html>
+<head>
+<title>Ni et al. 2017 Human Atrial model</title>
+</head>
+<body>
+<p>
+Based on the code for the model by Ni et al. 2017 [1], which is an update of a model by Colman et al. (2013, 2017) [2, 3], which in turn was based on the 1998 model by Courtemanche et al. [4].
+The model includes a simplified version of the calcium subspaces used by Koivumaki et al. [5].
+</p>
+<p>
+The state derivatives from this implementation were verified against output from the original code.
+</p>
+<p>
+The model contained a mixture of volume and time units (pL, inherited from [5] and um^3, inherited from [4]).
+This was adjusted so that all rates are in 1/ms and all volumes in um^3.
+In doing so, a scaling mistake was discovered in the equations for the SR calcium concentrations (<code>Ca_SR1</code> and <code>Ca_SR2</code>), resulting in the dynamics being sped up.
+This was not corrected, so that the CellML implementation matches the published code.
+</p>
+<p>
+The stimulus was set to 0.5ms and -8000pA
+</p>
+<p>
+[1] Synergistic Anti-arrhythmic Effects in Human Atria with Combined Use of Sodium Blockers and Acacetin.
+    Ni, Whittaker, Zhang et al.
+    2017.
+    Frontiers in Physiology
+    https://doi.org/10.3389/fphys.2017.00946
+</p>
+<p>
+[2] Pro-arrhythmogenic effects of atrial fibrillation-induced electrical remodelling: insights from the three-dimensional virtual human atria.
+    Colman, Aslanidi, Zhang et al.
+    2013.
+    Journal of Physiology
+    https://doi.org/10.1113/jphysiol.2013.254987
+</p>
+<p>
+[3] In silico assessment of genetic variation in KCNA5 reveals multiple mechanisms of human atrial arrhythmogenesis.
+    Colman, Ni, Zhang, et al.
+    2017.
+    PLoS Computational Biology
+    https://doi.org/10.1371/journal.pcbi.1005587
+</p>
+<p>
+[4] Ionic mechanisms underlying human atrial action potential properties: insights from a mathematical model.
+    Courtemanche, Ramirez, Nattel
+    1998.
+    American Journal of Physiology
+    https://doi.org/10.1152/ajpheart.1998.275.1.H301
+</p>
+<p>
+[5] Impact of Sarcoplasmic Reticulum Calcium Release on Calcium Dynamics and Action Potential Morphology in Human Atrial Myocytes: A Computational Study.
+    Koivumaki JT, Korhonen T, Tavi P.
+    2011.
+    PLoS Comput Biol 7(1): e1001067.
+    https://doi.org/10.1371/journal.pcbi.1001067
+</p>
+<p>
+Original comments:
+</p>
+<p>
+ Implementation of IKur and INa state-dependent drug blockade. (using guarded-receptor model)
+</p>
+<p>
+ This is the updatd CNZ model, update from the Colman et al. model 2013 Journal of Physiology Paper,
+</p>
+<p>
+ Updates:  New IKur Model,
+ Modifications to the conductances of several key ionic currents.
+</p>
+<p>
+ Modifications to the Calcium dynamics model. change in the Refractory Parameters to make it faster, and thus
+ remove the alternans seen at 400 ms of BCL.
+</p>
+<p>
+ RMP: around -76 mV.
+</p>
+</body>
+</html>

@@ -18,25 +18,31 @@ const Visualization = ({ runid }: { runid: string }) => {
   const [displayMode, setDisplayMode] = useState<DisplayMode>(
     DisplayMode.Graph
   );
+  const [CSVs, setCSVs] = useState<CSVSelectOption[]>([]);
+  const [fileName, setFileName] = useState<CSVSelectOption[]>([]);
   const [data, setData] = useState<Object[]>([]);
   const [xVariable, setXVariable] = useState<string>();
-  const [allVariables, setAllVariables] = useState<SelectOption[]>([]);
-  const [displayedVariables, setDisplayedVariables] = useState<SelectOption[]>([]);
+  const [allVariables, setAllVariables] = useState<VariableSelectOption[]>([]);
+  const [displayedVariables, setDisplayedVariables] = useState<VariableSelectOption[]>([]);
 
   const [getPng, { ref }] = useCurrentPng();
 
   useEffect(() => {
-    if (xVariable !== undefined) {
+    if (data.length > 1) {
       setDisplayMode(DisplayMode.Graph);
-    } else if (data.length !== 0) {
+    } else if (data.length > 0) {
       setDisplayMode(DisplayMode.Table);
     } else {
       setDisplayMode(DisplayMode.None)
     }
   }, [xVariable]);
 
-  const onChange = (selectedList: SelectOption[]): void => {
+  const onChange = (selectedList: VariableSelectOption[]): void => {
     setDisplayedVariables(selectedList);
+  };
+
+  const onFileChange = (selectedList: CSVSelectOption[]): void => {
+    setFileName(selectedList);
   };
 
   const handleDownload = useCallback(async () => {
@@ -55,6 +61,8 @@ const Visualization = ({ runid }: { runid: string }) => {
       <h2>Data</h2>
       <VizDataLoader
         runid={runid}
+        fileName={fileName.length === 0 ? undefined : fileName[0].name}
+        setCSVs={(csvs) => {setCSVs(csvs); setFileName(csvs.slice(0, 1));}}
         setData={setData}
         setXVariable={setXVariable}
         setAllVariables={setAllVariables}
@@ -88,6 +96,9 @@ const Visualization = ({ runid }: { runid: string }) => {
           onChange={onChange}
           displayedVariables={displayedVariables}
           allVariables={allVariables}
+          CSVs={CSVs}
+          fileName={fileName}
+          onFileChange={onFileChange}
         />
       </div>
     </div>

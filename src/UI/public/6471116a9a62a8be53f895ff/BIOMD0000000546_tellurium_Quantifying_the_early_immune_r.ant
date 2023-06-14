@@ -1,0 +1,116 @@
+// Created by libAntimony v2.13.2
+function Function_for_re1_1(beta_a, default, s1, s3)
+  beta_a*s1*s3*default;
+end
+
+Function_for_re1_1 is "Function for re1_1"
+
+function Function_for_re7_0(pi_a, s2)
+  pi_a*s2;
+end
+
+Function_for_re7_0 is "Function for re7"
+
+function Function_for_re3_0(rho_E, s1)
+  rho_E*s1;
+end
+
+Function_for_re3_0 is "Function for re3"
+
+
+model *Miao2010___Innate_and_adaptive_immune_responses_to_primary_Influenza_A_Virus_infection()
+
+  // Compartments and Species:
+  compartment default;
+  species s1 in default, s2 in default, s3 in default;
+
+  // Reactions:
+  re1: SpeciesReference s1 => SpeciesReference_1 s2; default*Function_for_re1_1(beta_a, default, s1, s3);
+  re3:  => SpeciesReference_3 s1; default*Function_for_re3_0(rho_E, s1);
+  re5: SpeciesReference_4 s2 => ; default*delta_Es*s2;
+  re6: SpeciesReference_5 s3 => ; default*c_V*s3;
+  re7:  => SpeciesReference_6 s3; default*Function_for_re7_0(pi_a, s2);
+
+  // Species initializations:
+  s1 = 580000;
+  s1 has substance_per_volume;
+  s2 = 0;
+  s2 has substance_per_volume;
+  s3 = 1000;
+  s3 has substance_per_volume;
+
+  // Compartment initializations:
+  default = 1;
+  default has volume;
+
+  // Variable initializations:
+  rho_E = 6.2e-08;
+  rho_E has unit_0;
+  beta_a = 1e-06;
+  beta_a has unit_0;
+  delta_Es = 0.6;
+  delta_Es has unit_0;
+  pi_a = 100;
+  pi_a has unit_0;
+  c_V = 4.2;
+  c_V has unit_0;
+  SpeciesReference = 1;
+  SpeciesReference_1 = 1;
+  SpeciesReference_3 = 1;
+  SpeciesReference_4 = 1;
+  SpeciesReference_5 = 1;
+  SpeciesReference_6 = 1;
+
+  // Other declarations:
+  const default, rho_E, beta_a, delta_Es, pi_a, c_V;
+
+  // Unit definitions:
+  unit length = metre;
+  unit area = metre^2;
+  unit volume = litre;
+  unit time_unit = time_unit;
+  unit substance = mole;
+  unit unit_0 = mole;
+  unit extent = substance;
+  unit substance_per_volume = mole / litre;
+
+  // Display Names:
+  time_unit is "time";
+  unit_0 is "mol";
+  s1 is "Ep";
+  s2 is "Eps";
+  s3 is "V";
+  re1 is "re1 Viral Infection of epithelial cells";
+  re3 is "re3 Growth of uninfected epithelial cells";
+  re5 is "re5 Death of infected epithelial cells";
+  re6 is "re6 Viral Clearance";
+  re7 is "re7 Production of virus from infected epithelial cells";
+
+  // CV terms:
+  default hypernym "http://identifiers.org/fma/FMA:7195"
+  s1 hypernym "http://identifiers.org/fma/FMA:66768"
+  s2 hypernym "http://identifiers.org/fma/FMA:66768"
+  s3 hypernym "http://identifiers.org/taxonomy/132504"
+end
+
+Miao2010___Innate_and_adaptive_immune_responses_to_primary_Influenza_A_Virus_infection is "Miao2010 - Innate and adaptive immune responses to primary Influenza A Virus infection_1_1"
+
+Miao2010___Innate_and_adaptive_immune_responses_to_primary_Influenza_A_Virus_infection origin "http://identifiers.org/doid/DOID:8469",
+                                                                                              "http://identifiers.org/biomodels.db/MODEL1405150000",
+                                                                                              "http://identifiers.org/biomodels.db/BIOMD0000000546",
+                                                                                              "http://identifiers.org/go/GO:0045087",
+                                                                                              "http://identifiers.org/go/GO:0002250",
+                                                                                              "http://identifiers.org/taxonomy/132504",
+                                                                                              "http://identifiers.org/taxonomy/39107"
+Miao2010___Innate_and_adaptive_immune_responses_to_primary_Influenza_A_Virus_infection origin "http://identifiers.org/biomodels.db/MODEL1406230000"
+Miao2010___Innate_and_adaptive_immune_responses_to_primary_Influenza_A_Virus_infection model_entity_is "http://identifiers.org/biomodels.db/MODEL1405150000",
+                                                                                                       "http://identifiers.org/biomodels.db/BIOMD0000000546"
+Miao2010___Innate_and_adaptive_immune_responses_to_primary_Influenza_A_Virus_infection version "http://identifiers.org/doid/DOID:8469"
+Miao2010___Innate_and_adaptive_immune_responses_to_primary_Influenza_A_Virus_infection identity "http://identifiers.org/biomodels.db/MODEL1405150000"
+Miao2010___Innate_and_adaptive_immune_responses_to_primary_Influenza_A_Virus_infection identity "http://identifiers.org/biomodels.db/BIOMD0000000546"
+Miao2010___Innate_and_adaptive_immune_responses_to_primary_Influenza_A_Virus_infection hypernym "http://identifiers.org/go/GO:0045087"
+Miao2010___Innate_and_adaptive_immune_responses_to_primary_Influenza_A_Virus_infection hypernym "http://identifiers.org/go/GO:0002250"
+Miao2010___Innate_and_adaptive_immune_responses_to_primary_Influenza_A_Virus_infection taxon "http://identifiers.org/taxonomy/132504"
+Miao2010___Innate_and_adaptive_immune_responses_to_primary_Influenza_A_Virus_infection taxon "http://identifiers.org/taxonomy/39107"
+Miao2010___Innate_and_adaptive_immune_responses_to_primary_Influenza_A_Virus_infection description "http://identifiers.org/biomodels.db/MODEL1406230000",
+                                                                                                   "http://identifiers.org/pubmed/20410284"

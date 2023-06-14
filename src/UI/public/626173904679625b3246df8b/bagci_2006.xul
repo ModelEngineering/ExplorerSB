@@ -1,0 +1,1838 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<window id="layout-diagram" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" style="overflow: auto" onload="setupDocument()">
+<hbox>
+	<scale id="zoom_scale" value="10" min="7" max="14" flex="4"/>
+	<label value="Zoom" control="zoom_scale" flex="1"/>
+	<button id="reset_button" label="Reset View" flex="1"/>
+	<spacer flex="34"/>
+</hbox>
+<script>
+<![CDATA[
+window.model_entities =
+  {
+
+			
+	tBid: {
+		id: "tBid",
+		y: "tBid/tBid",
+		x: "environment/time",
+		graph: "Traces: Clickable Traces against Time (s)",
+		colour: "#ff9900",
+		linestyle: "none"
+	},
+
+	Bid: {
+		id: "Bid",
+		y: "Bid/Bid",
+		x: "environment/time",
+		graph: "Traces: Clickable Traces against Time (s)",
+		colour: "#ff00cc",
+		linestyle: "none"
+	},
+
+	IAP: {
+		id: "IAP",
+		y: "IAP/IAP",
+		x: "environment/time",
+		graph: "Traces: Clickable Traces against Time (s)",
+		colour: "#ffcc00",
+		linestyle: "none"
+	},
+
+
+	Bcl_2: {
+		id: "Bcl_2",
+		y: "Bcl_2/Bcl_2",
+		x: "environment/time",
+		graph: "Traces: Clickable Traces against Time (s)",
+		colour: "#ffff66",
+		linestyle: "none"
+	},
+
+
+	Casp8: {
+		id: "Casp8",
+		y: "Casp8/Casp8",
+		x: "environment/time",
+		graph: "Traces: Clickable Traces against Time (s)",
+		colour: "#66ff66",
+		linestyle: "none"
+	},
+	
+	Casp3: {
+		id: "Casp3",
+		y: "Casp3/Casp3",
+		x: "environment/time",
+		graph: "Traces: Clickable Traces against Time (s)",
+		colour: "#6ccff336ff66",
+		linestyle: "none"
+	},
+
+
+	Pro3: {
+		id: "Pro3",
+		y: "Pro3/Pro3",
+		x: "environment/time",
+		graph: "Traces: Clickable Traces against Time (s)",
+		colour: "#ff33cc",
+		linestyle: "none"
+	},
+
+
+	Casp9: {
+		id: "Casp9",
+		y: "Casp9/Casp9",
+		x: "environment/time",
+		graph: "Traces: Clickable Traces against Time (s)",
+		colour: "#00cc33",
+		linestyle: "none"
+	},
+
+
+	CytcApaf_1: {
+		id: "CytcApaf_1",
+		y: "CytcApaf_1/CytcApaf_1",
+		x: "environment/time",
+		graph: "Traces: Clickable Traces against Time (s)",
+		colour: "#66ff66",
+		linestyle: "none"
+	},
+
+
+	Bax: {
+		id: "Bax",
+		y: "Bax/Bax",
+		x: "environment/time",
+		graph: "Traces: Clickable Traces against Time (s)",
+		colour: "#3399ff",
+		linestyle: "none"
+	},
+
+
+	p53: {
+		id: "p53",
+		y: "model_constant/p53",
+		x: "environment/time",
+		graph: "Traces: Clickable Traces against Time (s)",
+		colour: "#66ff66",
+		linestyle: "none"
+	},
+
+
+	Pro9: {
+		id: "Pro9",
+		y: "Pro9/Pro9",
+		x: "environment/time",
+		graph: "Traces: Clickable Traces against Time (s)",
+		colour: "#ff0099",
+		linestyle: "none"
+	},
+
+
+	Cytc_mito: {
+		id: "Cytc_mito",
+		y: "Cytc_mito/Cytc_mito",
+		x: "environment/time",
+		graph: "Traces: Clickable Traces against Time (s)",
+		colour: "#33ff99",
+		linestyle: "none"
+	},
+
+
+	tBidBax: {
+		id: "tBidBax",
+		y: "tBidBax/tBidBax",
+		x: "environment/time",
+		graph: "Traces: Clickable Traces against Time (s)",
+		colour: "#66ffff",
+		linestyle: "none"
+	}
+	
+			
+ // Repeat the above section for each controllable graph trace.
+ // Remember to add a comma to each repeat after the final },
+ // except for the final one!
+ 
+};
+
+function flushVisibilityInformation(entity_id, entity_colour)
+{
+	var message = "";
+	var entity;
+
+	if (typeof pcenv != "undefined")
+	{
+		for (var i in window.model_entities)
+		{
+			entity = window.model_entities[i];
+			if (typeof entity_id == "undefined" || entity_id == window.model_entities[i].id)
+			{
+				pcenv.selectTrace
+				(
+					entity.graph,
+					entity.x,
+					entity.y,
+					typeof entity_colour == "undefined" ? "" : entity_colour,
+					entity.linestyle
+				);
+			}
+			if (entity.linestyle != "none")
+				message += i + ", ";
+		}
+		pcenv.status(message == "" ? "No fluxes displayed" : "Displaying flux of " + message.slice(0, -2));
+	}
+}
+
+function processSelectEntity(event)
+{
+	if (typeof pcenv != "undefined")
+		pcenv.status("In processSelectEntity");
+
+	var entity = window.model_entities[window.svgIdToName[event.currentTarget.id]];
+
+	switch(entity.linestyle)
+	{
+	case "none":
+		entity.linestyle = "lines";
+		highlightEntity(event.currentTarget.id);
+		break;
+	case "lines":
+		entity.linestyle = "none";
+		unlightEntity(event.currentTarget.id);
+		break;
+	}
+
+	flushVisibilityInformation(entity.id);
+}
+
+function processContext(event)
+{
+	// if (event.button != 2)
+	//   return true;
+
+	var entity = window.model_entities[window.svgIdToName[event.currentTarget.id]];
+
+	if (entity.context == null)
+		return true;
+
+	var menu = document.getElementById("entityContextMenu");
+
+	for (var c = menu.firstChild, x = null; c != null; c = x)
+	{
+		x = c.nextSibling;
+		menu.removeChild(c);
+	}
+
+	for (var i in entity.context)
+	{
+		var item = entity.context[i];
+
+		var mitem = document.createElementNS
+		(
+			"http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul",
+			"menuitem"
+		);
+
+		mitem.setAttribute("label", item.label);
+		mitem.setAttribute("url", item.url);
+		mitem.addEventListener("command", processShowEntityURL, false);
+		menu.appendChild(mitem);
+	}
+
+	menu.showPopup(window.diagram, event.screenX, event.screenY, "context");
+
+	event.stopPropagation;
+	return false;
+}
+
+function processShowEntityURL(event)
+{
+	url = event.target.getAttribute("url");
+
+	window.open(url);
+
+	var hl = document.getElementById("hidden-link");
+	hl.href = url;
+
+	// This is ugly, but it is one way to force everything through the proper
+	// external handler...
+	var evt = document.createEvent("HTMLEvents");
+	evt.initEvent("click", true, true);
+	hl.dispatchEvent(evt);
+}
+
+function highlightEntity(id)
+{
+	for (var path = document.getElementById(id + "_path1"), i = 1; path != null; path = document.getElementById(id + "_path" + ++i))
+	{
+		if (!(i in window.model_entities[window.svgIdToName[id]].path_colours))
+			window.model_entities[window.svgIdToName[id]].path_colours[i] = path.attributes.getNamedItem("stroke").value;
+		path.attributes.getNamedItem("stroke").value = "#ff0000";
+	}
+}
+
+function highlightEntityOnRollover(event) {
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].colour)
+		flushVisibilityInformation(event.currentTarget.id, "#ffffff");
+
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].linestyle == "none")
+		highlightEntity(event.currentTarget.id);
+}
+
+function unlightEntity(id)
+{
+	for (var path = document.getElementById(id + "_path1"), i = 1; path != null; path = document.getElementById(id + "_path" + ++i))
+		path.attributes.getNamedItem("stroke").value = window.model_entities[window.svgIdToName[id]].path_colours[i];
+}
+
+function unlightEntityOnRollover(event) {
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].colour)
+		flushVisibilityInformation(event.currentTarget.id, window.model_entities[window.svgIdToName[event.currentTarget.id]].colour);
+
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].linestyle == "none")
+		unlightEntity(event.currentTarget.id);
+}
+
+var mouseDown = false;
+var initial_x;
+var initial_y;
+var viewBox;
+
+function startDrag(event)
+{
+	if (event.button)
+		return true;
+
+	mouseDown = true;
+
+	initial_x = parseInt(currentZoom * event.pageX + parseInt(viewBox.value.match(/^-?\d+/)[0]));
+	initial_y = parseInt(currentZoom * event.pageY + parseInt(viewBox.value.match(/^-?\d+\s+(-?(\d+))/)[1]));
+}
+
+function stopDrag(event)
+{
+	if (!event.button)
+		mouseDown = false;
+}
+
+function moveDrag(event)
+{
+	if (mouseDown == true)
+		viewBox.value = viewBox.value.replace(/^-?\d+\s+-?\d+/, parseInt(initial_x - currentZoom * event.pageX) + " " + parseInt(initial_y - currentZoom * event.pageY));
+}
+
+function reset()
+{
+	var zoom_scale = document.getElementById("zoom_scale")
+	zoom_scale.value = zoom_scale.originalValue;
+	viewBox.value = viewBox.originalValue;
+}
+
+var initialZoom;
+var currentZoom = 1;
+var initialHeight;
+var initialWidth;
+
+function zoomDiagram(event)
+{
+	currentZoom = initialZoom / event.currentTarget.value;
+	viewBox.value = viewBox.value.replace(/\d+\s+\d+$/, parseInt(initialHeight * currentZoom) + " " + parseInt(initialWidth * currentZoom));
+}
+
+function setupDocument()
+{
+	flushVisibilityInformation();
+
+	window.diagram = document.getElementById("sachse");
+
+	window.svgIdToName = {};
+
+	for (var name in window.model_entities)
+	{
+		var id = window.model_entities[name].id;
+		window.model_entities[name].path_colours = [];
+
+		var svg = document.getElementById(id);
+		window.svgIdToName[id] = name;
+
+		svg.addEventListener("click", processSelectEntity, false);
+		svg.addEventListener("contextmenu", processContext, false);
+		svg.addEventListener("mouseover", highlightEntityOnRollover ,false);
+		svg.addEventListener("mouseout", unlightEntityOnRollover, false);
+	}
+
+	document.getElementsByTagName("svg")[0].addEventListener("mousedown", startDrag, false);
+	document.addEventListener("mouseup", stopDrag, false);
+	document.addEventListener("mousemove", moveDrag, false);
+	document.getElementById("reset_button").addEventListener("click", reset, false);
+
+	document.getElementById("zoom_scale").addEventListener("change", zoomDiagram, false);
+	document.getElementById("zoom_scale").originalValue = document.getElementById("zoom_scale").value;
+
+	viewBox = document.getElementsByTagName("svg")[0].attributes.getNamedItem("viewBox");
+	viewBox.originalValue = viewBox.value;
+
+	initialZoom = document.getElementById("zoom_scale").value;
+	initialHeight = parseInt(viewBox.value.match(/(\d+)\s+\d+$/)[1]);
+	initialWidth = parseInt(viewBox.value.match(/\d+$/)[0]);
+}
+
+]]>
+</script>
+
+<popupset>
+  <menupopup id="entityContextMenu" />
+</popupset>
+
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="423px" height="486px" viewBox="0 0 423 486" enable-background="new 0 0 423 486" xml:space="preserve">
+<g>
+	<path id="path31151_4_" fill="none" d="M290.89,234.585l8.239,7.041l-7.393,6.469c-3.332,3.046-8.97,5.048-15.367,5.048
+		c-10.229,0-18.527-5.127-18.527-11.443c0-6.324,8.296-11.446,18.527-11.446C282.252,230.251,287.496,231.944,290.89,234.585z"/>
+</g>
+<g id="Casp3">
+	
+		<radialGradient id="Casp3_path1_1_" cx="524.3748" cy="610.1299" r="16.1853" gradientTransform="matrix(1.5933 0 0 -0.6358 -221.2102 644.9147)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#A2FF5F"/>
+		<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+		<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+		<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+		<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+		<stop  offset="0.8174" style="stop-color:#67F35D"/>
+		<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+		<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+		<stop  offset="0.9915" style="stop-color:#07E05A"/>
+		<stop  offset="1" style="stop-color:#00DF5A"/>
+	</radialGradient>
+	<path id="Casp3_path1" fill="url(#Casp3_path1_1_)" stroke="#000000" d="M639.59,256.992c0,5.787-11.338,10.479-25.315,10.479
+		c-13.98,0-25.314-4.688-25.314-10.479c0-5.787,11.334-10.475,25.314-10.475C628.252,246.518,639.59,251.205,639.59,256.992z"/>
+	<text transform="matrix(1 0 0 1 596.6072 260.1914)" font-family="'ArialMT'" font-size="12">Casp3</text>
+</g>
+<g id="Casp9">
+	
+		<radialGradient id="Casp9_path1_1_" cx="562.032" cy="525.1973" r="16.1863" gradientTransform="matrix(1.5933 0 0 -0.6358 -221.2102 644.9147)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#A2FF5F"/>
+		<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+		<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+		<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+		<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+		<stop  offset="0.8174" style="stop-color:#67F35D"/>
+		<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+		<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+		<stop  offset="0.9915" style="stop-color:#07E05A"/>
+		<stop  offset="1" style="stop-color:#00DF5A"/>
+	</radialGradient>
+	<path id="Casp9_path1" fill="url(#Casp9_path1_1_)" stroke="#000000" d="M699.59,310.992c0,5.787-11.338,10.479-25.315,10.479
+		c-13.98,0-25.314-4.688-25.314-10.479c0-5.787,11.334-10.475,25.314-10.475C688.252,300.518,699.59,305.205,699.59,310.992z"/>
+	<text transform="matrix(1 0 0 1 656.6072 314.1914)" font-family="'ArialMT'" font-size="12">Casp9</text>
+</g>
+<g id="Casp8">
+	
+		<radialGradient id="Casp8_path1_1_" cx="342.3621" cy="775.2773" r="16.1863" gradientTransform="matrix(1.5933 0 0 -0.6358 -221.2102 644.9147)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#A2FF5F"/>
+		<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+		<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+		<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+		<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+		<stop  offset="0.8174" style="stop-color:#67F35D"/>
+		<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+		<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+		<stop  offset="0.9915" style="stop-color:#07E05A"/>
+		<stop  offset="1" style="stop-color:#00DF5A"/>
+	</radialGradient>
+	<path id="Casp8_path1" fill="url(#Casp8_path1_1_)" stroke="#000000" d="M349.59,151.992c0,5.786-11.338,10.478-25.315,10.478
+		c-13.981,0-25.315-4.688-25.315-10.478s11.334-10.476,25.315-10.476C338.252,141.518,349.59,146.205,349.59,151.992z"/>
+	<text transform="matrix(1 0 0 1 306.6062 155.1914)" font-family="'ArialMT'" font-size="12">Casp8</text>
+</g>
+<g id="Pro3">
+	
+		<radialGradient id="Pro3_path1_1_" cx="588.8123" cy="615.6348" r="16.1858" gradientTransform="matrix(1.5933 0 0 -0.6358 -221.2102 644.9147)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#A2FF5F"/>
+		<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+		<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+		<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+		<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+		<stop  offset="0.8174" style="stop-color:#67F35D"/>
+		<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+		<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+		<stop  offset="0.9915" style="stop-color:#07E05A"/>
+		<stop  offset="1" style="stop-color:#00DF5A"/>
+	</radialGradient>
+	<path id="Pro3_path1" fill="url(#Pro3_path1_1_)" stroke="#000000" d="M742.26,253.492c0,5.787-11.338,10.479-25.314,10.479
+		c-13.981,0-25.315-4.688-25.315-10.479c0-5.787,11.334-10.475,25.315-10.475C730.922,243.018,742.26,247.705,742.26,253.492z"/>
+	<text transform="matrix(1 0 0 1 704.9353 256.6914)" font-family="'ArialMT'" font-size="12">pro3</text>
+</g>
+<g id="Pro9">
+	
+		<radialGradient id="Pro9_path1_1_" cx="471.7556" cy="417.459" r="16.1863" gradientTransform="matrix(0.9475 0 0 -0.6358 115.6949 644.9147)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#A2FF5F"/>
+		<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+		<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+		<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+		<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+		<stop  offset="0.8174" style="stop-color:#67F35D"/>
+		<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+		<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+		<stop  offset="0.9915" style="stop-color:#07E05A"/>
+		<stop  offset="1" style="stop-color:#00DF5A"/>
+	</radialGradient>
+	<path id="Pro9_path1" fill="url(#Pro9_path1_1_)" stroke="#000000" d="M577.738,379.492c0,5.787-6.742,10.479-15.056,10.479
+		s-15.055-4.688-15.055-10.479c0-5.787,6.74-10.475,15.055-10.475C570.996,369.018,577.738,373.705,577.738,379.492z"/>
+	<text transform="matrix(0.5947 0 0 1 555.5427 382.6934)" font-family="'ArialMT'" font-size="12">pro9</text>
+</g>
+<g id="g36000" transform="translate(15.54048,33.77969)">
+	<path id="path34997" fill="#00FF70" stroke="#000000" d="M329.199,276.062c0,28.904-37.384,52.334-83.5,52.334
+		c-46.114,0-83.5-23.43-83.5-52.334c0-28.9,37.386-52.332,83.5-52.332C291.815,223.73,329.199,247.159,329.199,276.062z"/>
+	<path id="path34999" fill="#B9FF9F" stroke="#000000" d="M269.458,233.88c16.744,5.602,33.942,55.309,27.153,10.852
+		c-2.188-14.33,37.111,24.154,18.556,48.658c-9.647,12.742-75.199-83.008-23.292,10.701c7.453,13.453-14.342,12.248-16.081,11.352
+		c-23.081-11.9-63.813-88.914-32.585-2.449c3.125,8.656,0.438,9.102-6.336,9.102c-18.097,0-54.762-78.062-27.606-7.7
+		c2.409,6.239-33.589-14.146-38.468-31.507c-3.133-11.145,1.356-25.202,8.146-29.754c6.788-4.549,58.406,61.16,20.366-2.1
+		c-9.052-15.055,17.368-16.973,23.081-15.754c13.125,2.801,55.667,84.363,19.914,0C240.678,231.448,251.21,227.776,269.458,233.88z"
+		/>
+</g>
+<g>
+	<rect x="268.77" y="347.509" fill="#6D726D" stroke="#000000" width="3.938" height="34"/>
+	<rect x="286.77" y="347.509" fill="#6D726D" stroke="#000000" width="3.938" height="34"/>
+</g>
+<g>
+	
+		<radialGradient id="Cytc_mito_path2_1_" cx="284.0354" cy="483.9365" r="16.1863" gradientTransform="matrix(0.9805 0 0 -0.6358 -15.7516 644.9147)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#A2FF5F"/>
+		<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+		<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+		<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+		<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+		<stop  offset="0.8174" style="stop-color:#67F35D"/>
+		<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+		<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+		<stop  offset="0.9915" style="stop-color:#07E05A"/>
+		<stop  offset="1" style="stop-color:#00DF5A"/>
+	</radialGradient>
+	<path id="Cytc_mito_path2" fill="url(#Cytc_mito_path2_1_)" stroke="#000000" d="M278.324,337.229
+		c0,5.785-6.977,10.477-15.579,10.477c-8.604,0-15.579-4.689-15.579-10.477c0-5.789,6.976-10.478,15.579-10.478
+		C271.347,326.753,278.324,331.441,278.324,337.229z"/>
+	<text transform="matrix(0.6154 0 0 1 254.3342 340.4277)" font-family="'ArialMT'" font-size="12">Cyt c</text>
+</g>
+<g id="Cytc_mito">
+	
+		<radialGradient id="Cytc_mito_path1_1_" cx="275.4778" cy="582.6064" r="16.1863" gradientTransform="matrix(0.9607 0 0 -0.6358 -19.178 644.9147)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#A2FF5F"/>
+		<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+		<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+		<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+		<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+		<stop  offset="0.8174" style="stop-color:#67F35D"/>
+		<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+		<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+		<stop  offset="0.9915" style="stop-color:#07E05A"/>
+		<stop  offset="1" style="stop-color:#00DF5A"/>
+	</radialGradient>
+	<path id="Cytc_mito_path1" fill="url(#Cytc_mito_path1_1_)" stroke="#000000" d="M260.738,274.492
+		c0,5.787-6.836,10.479-15.265,10.479c-8.432,0-15.266-4.688-15.266-10.479c0-5.787,6.834-10.475,15.266-10.475
+		C253.902,264.018,260.738,268.705,260.738,274.492z"/>
+	<text transform="matrix(0.603 0 0 1 237.2322 277.6914)" font-family="'ArialMT'" font-size="12">Cyt c  </text>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="400.97" y1="149.802" x2="352.97" y2="149.802"/>
+		<polygon points="398.162,153.506 399.735,149.802 398.162,146.098 406.94,149.802 		"/>
+	</g>
+</g>
+<g id="Bid">
+	
+		<radialGradient id="Bid_path1_1_" cx="390.3767" cy="819.3164" r="16.1863" gradientTransform="matrix(1.5933 0 0 -0.6358 -221.2102 644.9147)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#A2FF5F"/>
+		<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+		<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+		<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+		<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+		<stop  offset="0.8174" style="stop-color:#67F35D"/>
+		<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+		<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+		<stop  offset="0.9915" style="stop-color:#07E05A"/>
+		<stop  offset="1" style="stop-color:#00DF5A"/>
+	</radialGradient>
+	<path id="Bid_path1" fill="url(#Bid_path1_1_)" stroke="#000000" d="M426.092,123.992c0,5.786-11.338,10.478-25.315,10.478
+		c-13.98,0-25.314-4.688-25.314-10.478s11.334-10.476,25.314-10.476C414.754,113.518,426.092,118.205,426.092,123.992z"/>
+	<text transform="matrix(1 0 0 1 392.1042 127.1914)" font-family="'ArialMT'" font-size="12">Bid</text>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="404.47" y1="170.509" x2="404.47" y2="140.801"/>
+		<polygon points="400.767,167.7 404.47,169.273 408.175,167.7 404.47,176.478 		"/>
+	</g>
+</g>
+<g id="tBid">
+	
+		<radialGradient id="tBid_path1_1_" cx="391.5369" cy="728.2129" r="16.1863" gradientTransform="matrix(1.5933 0 0 -0.6358 -221.2102 644.9147)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#A2FF5F"/>
+		<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+		<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+		<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+		<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+		<stop  offset="0.8174" style="stop-color:#67F35D"/>
+		<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+		<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+		<stop  offset="0.9915" style="stop-color:#07E05A"/>
+		<stop  offset="1" style="stop-color:#00DF5A"/>
+	</radialGradient>
+	<path id="tBid_path1" fill="url(#tBid_path1_1_)" stroke="#000000" d="M427.94,181.916c0,5.786-11.339,10.478-25.316,10.478
+		c-13.98,0-25.314-4.689-25.314-10.478s11.334-10.476,25.314-10.476C416.602,171.441,427.94,176.129,427.94,181.916z"/>
+	<text transform="matrix(1 0 0 1 393.9529 185.1152)" font-family="'ArialMT'" font-size="12">tBid</text>
+</g>
+<g id="p53">
+	
+		<radialGradient id="p53_path1_1_" cx="83.9783" cy="572.8633" r="14.7098" gradientTransform="matrix(1 0 0 1 330.7593 -306.9795)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#ADD153"/>
+		<stop  offset="0.4082" style="stop-color:#AAD051"/>
+		<stop  offset="0.5552" style="stop-color:#A6CF52"/>
+		<stop  offset="0.66" style="stop-color:#9ECC52"/>
+		<stop  offset="0.7448" style="stop-color:#93C850"/>
+		<stop  offset="0.8174" style="stop-color:#84C450"/>
+		<stop  offset="0.8817" style="stop-color:#76C052"/>
+		<stop  offset="0.9398" style="stop-color:#64BB52"/>
+		<stop  offset="0.9915" style="stop-color:#58B953"/>
+		<stop  offset="1" style="stop-color:#58B953"/>
+	</radialGradient>
+	<path id="p53_path1" fill="url(#p53_path1_1_)" stroke="#000000" stroke-miterlimit="3.8637" d="M397.32,265.98
+		c0-6.334,7.801-11.472,17.418-11.472c9.619,0,17.518,5.138,17.416,11.472c-0.021,1.307-1.021,2.557-1.898,3.082
+		c0,0-12.316-3.892-16.582,0c-2.361,2.153,0,8.196,0,8.196C405.582,276.27,397.32,271.595,397.32,265.98z"/>
+	<text transform="matrix(1 0 0 1 406.3923 266.0508)" font-family="'MyriadPro-Regular'" font-size="10">p53</text>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="391.385" y1="320.604" x2="397.556" y2="273.001"/>
+		<polygon points="388.074,317.341 391.543,319.376 395.42,318.294 390.617,326.523 		"/>
+	</g>
+</g>
+<line fill="none" x1="425.738" y1="224.509" x2="435.738" y2="280.509"/>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="438.301" y1="321.093" x2="428.066" y2="274.197"/>
+		<polygon points="434.084,319.141 438.037,319.886 441.32,317.561 439.573,326.925 		"/>
+	</g>
+</g>
+<g id="CytcApaf_1">
+	<g>
+		
+			<radialGradient id="CytcApaf_1_path2_1_" cx="364.4993" cy="338.8184" r="16.1858" gradientTransform="matrix(0.9805 0 0 -0.6358 -15.7516 644.9147)" gradientUnits="userSpaceOnUse">
+			<stop  offset="0" style="stop-color:#A2FF5F"/>
+			<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+			<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+			<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+			<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+			<stop  offset="0.8174" style="stop-color:#67F35D"/>
+			<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+			<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+			<stop  offset="0.9915" style="stop-color:#07E05A"/>
+			<stop  offset="1" style="stop-color:#00DF5A"/>
+		</radialGradient>
+		<path id="CytcApaf_1_path2" fill="url(#CytcApaf_1_path2_1_)" stroke="#000000" d="M357.219,429.492
+			c0,5.787-6.978,10.479-15.579,10.479c-8.604,0-15.578-4.688-15.578-10.479c0-5.787,6.976-10.475,15.578-10.475
+			C350.241,419.018,357.219,423.705,357.219,429.492z"/>
+		<text transform="matrix(0.6154 0 0 1 333.2288 432.6914)" font-family="'ArialMT'" font-size="12">Cyt c</text>
+	</g>
+	<g>
+		
+			<radialGradient id="CytcApaf_1_path1_1_" cx="354.6912" cy="364.7773" r="17.7368" gradientTransform="matrix(1.4784 0 0 -0.6358 -182.7357 644.9147)" gradientUnits="userSpaceOnUse">
+			<stop  offset="0" style="stop-color:#A2FF5F"/>
+			<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+			<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+			<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+			<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+			<stop  offset="0.8174" style="stop-color:#67F35D"/>
+			<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+			<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+			<stop  offset="0.9915" style="stop-color:#07E05A"/>
+			<stop  offset="1" style="stop-color:#00DF5A"/>
+		</radialGradient>
+		<path id="CytcApaf_1_path1" fill="url(#CytcApaf_1_path1_1_)" stroke="#000000" d="M367.381,412.988
+			c0,6.342-11.527,11.481-25.741,11.481c-14.217,0-25.74-5.139-25.74-11.481c0-6.342,11.523-11.479,25.74-11.479
+			C355.852,401.509,367.381,406.646,367.381,412.988z"/>
+		<text transform="matrix(0.9279 0 0 1 323.675 416.4941)" font-family="'ArialMT'" font-size="13.1499">Apaf-1</text>
+	</g>
+</g>
+<g>
+	<g>
+		<g>
+			
+				<radialGradient id="path16609_1_" cx="483.8259" cy="379.7734" r="16.1858" gradientTransform="matrix(0.9805 0 0 -0.6358 -15.7516 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_25_" fill="url(#path16609_1_)" stroke="#000000" d="M474.219,403.453c0,5.787-6.978,10.479-15.579,10.479
+				c-8.604,0-15.578-4.688-15.578-10.479c0-5.787,6.976-10.475,15.578-10.475C467.241,392.979,474.219,397.666,474.219,403.453z"/>
+			<text transform="matrix(0.6154 0 0 1 450.2283 406.6543)" font-family="'ArialMT'" font-size="12">Cyt c</text>
+		</g>
+		<g>
+			
+				<radialGradient id="path16609_2_" cx="433.8308" cy="405.7305" r="17.7368" gradientTransform="matrix(1.4784 0 0 -0.6358 -182.7357 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_26_" fill="url(#path16609_2_)" stroke="#000000" d="M484.381,386.949c0,6.342-11.527,11.482-25.741,11.482
+				c-14.217,0-25.74-5.14-25.74-11.482c0-6.342,11.523-11.479,25.74-11.479C472.852,375.471,484.381,380.607,484.381,386.949z"/>
+			<text transform="matrix(0.9279 0 0 1 440.6755 390.4561)" font-family="'ArialMT'" font-size="13.1499">Apaf-1</text>
+		</g>
+	</g>
+	<g>
+		<g>
+			
+				<radialGradient id="path16609_3_" cx="521.5623" cy="316.8613" r="16.1858" gradientTransform="matrix(0.9805 0 0 -0.6358 -15.7516 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_13_" fill="url(#path16609_3_)" stroke="#000000" d="M511.219,443.453c0,5.787-6.978,10.479-15.579,10.479
+				c-8.604,0-15.578-4.688-15.578-10.479c0-5.787,6.976-10.476,15.578-10.476C504.241,432.978,511.219,437.666,511.219,443.453z"/>
+			<text transform="matrix(0.6154 0 0 1 487.2283 446.6543)" font-family="'ArialMT'" font-size="12">Cyt c</text>
+		</g>
+		<g>
+			
+				<radialGradient id="path16609_4_" cx="458.8582" cy="342.8184" r="17.7368" gradientTransform="matrix(1.4784 0 0 -0.6358 -182.7357 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_12_" fill="url(#path16609_4_)" stroke="#000000" d="M521.381,426.949c0,6.342-11.528,11.481-25.741,11.481
+				c-14.217,0-25.74-5.139-25.74-11.481c0-6.342,11.523-11.479,25.74-11.479C509.852,415.471,521.381,420.607,521.381,426.949z"/>
+			<text transform="matrix(0.9279 0 0 1 477.6755 430.4561)" font-family="'ArialMT'" font-size="13.1499">Apaf-1</text>
+		</g>
+	</g>
+	<g>
+		<g>
+			
+				<radialGradient id="path16609_5_" cx="534.8201" cy="353.0352" r="16.1858" gradientTransform="matrix(0.9805 0 0 -0.6358 -15.7516 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_15_" fill="url(#path16609_5_)" stroke="#000000" d="M524.219,420.453c0,5.787-6.978,10.479-15.579,10.479
+				c-8.604,0-15.578-4.688-15.578-10.479c0-5.787,6.976-10.475,15.578-10.475C517.241,409.979,524.219,414.666,524.219,420.453z"/>
+			<text transform="matrix(0.6154 0 0 1 500.2283 423.6543)" font-family="'ArialMT'" font-size="12">Cyt c</text>
+		</g>
+		<g>
+			
+				<radialGradient id="path16609_6_" cx="467.6511" cy="378.9922" r="17.7373" gradientTransform="matrix(1.4784 0 0 -0.6358 -182.7357 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_14_" fill="url(#path16609_6_)" stroke="#000000" d="M534.381,403.949c0,6.342-11.528,11.482-25.741,11.482
+				c-14.217,0-25.74-5.14-25.74-11.482c0-6.342,11.523-11.479,25.74-11.479C522.853,392.471,534.381,397.607,534.381,403.949z"/>
+			<text transform="matrix(0.9279 0 0 1 490.6755 407.4561)" font-family="'ArialMT'" font-size="13.1499">Apaf-1</text>
+		</g>
+	</g>
+	<g>
+		<g>
+			
+				<radialGradient id="path16609_8_" cx="511.363" cy="379.7734" r="16.1858" gradientTransform="matrix(0.9805 0 0 -0.6358 -15.7516 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_17_" fill="url(#path16609_8_)" stroke="#000000" d="M501.219,403.453c0,5.787-6.978,10.479-15.579,10.479
+				c-8.604,0-15.578-4.688-15.578-10.479c0-5.787,6.976-10.475,15.578-10.475C494.241,392.979,501.219,397.666,501.219,403.453z"/>
+			<text transform="matrix(0.6154 0 0 1 477.2283 406.6543)" font-family="'ArialMT'" font-size="12">Cyt c</text>
+		</g>
+		<g>
+			
+				<radialGradient id="path16609_9_" cx="452.0935" cy="405.7305" r="17.7373" gradientTransform="matrix(1.4784 0 0 -0.6358 -182.7357 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_16_" fill="url(#path16609_9_)" stroke="#000000" d="M511.381,386.949c0,6.342-11.527,11.482-25.741,11.482
+				c-14.217,0-25.74-5.14-25.74-11.482c0-6.342,11.523-11.479,25.74-11.479C499.852,375.471,511.381,380.607,511.381,386.949z"/>
+			<text transform="matrix(0.9279 0 0 1 467.6736 390.4561)" font-family="'ArialMT'" font-size="13.1499">Apaf-1</text>
+		</g>
+	</g>
+	<g>
+		<g>
+			
+				<radialGradient id="path16609_10_" cx="480.8669" cy="312.9414" r="16.1863" gradientTransform="matrix(0.9805 0 0 -0.6358 -15.7516 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_27_" fill="url(#path16609_10_)" stroke="#000000" d="M471.317,445.945c0,5.787-6.979,10.479-15.579,10.479
+				c-8.604,0-15.578-4.688-15.578-10.479c0-5.787,6.975-10.476,15.578-10.476C464.34,435.47,471.317,440.158,471.317,445.945z"/>
+			<text transform="matrix(0.6154 0 0 1 447.3269 449.1445)" font-family="'ArialMT'" font-size="12">Cyt c</text>
+		</g>
+		<g>
+			
+				<radialGradient id="path16609_11_" cx="431.8679" cy="338.8994" r="17.7368" gradientTransform="matrix(1.4784 0 0 -0.6358 -182.7357 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_18_" fill="url(#path16609_11_)" stroke="#000000" d="M481.478,429.441c0,6.342-11.527,11.481-25.74,11.481
+				c-14.217,0-25.741-5.139-25.741-11.481s11.524-11.479,25.741-11.479C469.951,417.962,481.478,423.099,481.478,429.441z"/>
+			<text transform="matrix(0.9279 0 0 1 437.7732 432.9482)" font-family="'ArialMT'" font-size="13.1499">Apaf-1</text>
+		</g>
+	</g>
+	<g>
+		<g>
+			
+				<radialGradient id="path16609_19_" cx="456.2888" cy="348.3164" r="16.1858" gradientTransform="matrix(0.9805 0 0 -0.6358 -15.7516 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_29_" fill="url(#path16609_19_)" stroke="#000000" d="M447.219,423.453c0,5.787-6.978,10.479-15.579,10.479
+				c-8.604,0-15.578-4.688-15.578-10.479c0-5.787,6.976-10.475,15.578-10.475C440.241,412.979,447.219,417.666,447.219,423.453z"/>
+			<text transform="matrix(0.6154 0 0 1 423.2283 426.6543)" font-family="'ArialMT'" font-size="12">Cyt c</text>
+		</g>
+		<g>
+			
+				<radialGradient id="path16609_20_" cx="415.5681" cy="374.2744" r="17.7368" gradientTransform="matrix(1.4784 0 0 -0.6358 -182.7357 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_28_" fill="url(#path16609_20_)" stroke="#000000" d="M457.381,406.949c0,6.342-11.527,11.482-25.741,11.482
+				c-14.217,0-25.74-5.14-25.74-11.482c0-6.342,11.523-11.479,25.74-11.479C445.852,395.471,457.381,400.607,457.381,406.949z"/>
+			<text transform="matrix(0.9279 0 0 1 413.6746 410.4561)" font-family="'ArialMT'" font-size="13.1499">Apaf-1</text>
+		</g>
+	</g>
+</g>
+<g>
+	<g>
+		<g>
+			
+				<radialGradient id="path16609_21_" cx="693.0037" cy="378.9385" r="16.1863" gradientTransform="matrix(0.9805 0 0 -0.6358 -15.7516 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_43_" fill="url(#path16609_21_)" stroke="#000000" d="M679.317,403.984c0,5.787-6.979,10.479-15.579,10.479
+				c-8.604,0-15.578-4.689-15.578-10.479c0-5.787,6.975-10.476,15.578-10.476C672.34,393.509,679.317,398.197,679.317,403.984z"/>
+			<text transform="matrix(0.6154 0 0 1 655.3279 407.1855)" font-family="'ArialMT'" font-size="12">Cyt c</text>
+		</g>
+		<g>
+			
+				<radialGradient id="path16609_22_" cx="572.5603" cy="404.8965" r="17.7368" gradientTransform="matrix(1.4784 0 0 -0.6358 -182.7357 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_42_" fill="url(#path16609_22_)" stroke="#000000" d="M689.478,387.48c0,6.342-11.527,11.481-25.74,11.481
+				c-14.217,0-25.741-5.139-25.741-11.481c0-6.342,11.523-11.479,25.741-11.479C677.951,376.001,689.478,381.139,689.478,387.48z"/>
+			<text transform="matrix(0.9279 0 0 1 645.7732 390.9883)" font-family="'ArialMT'" font-size="13.1499">Apaf-1</text>
+		</g>
+	</g>
+	<g>
+		<g>
+			
+				<radialGradient id="path16609_23_" cx="730.74" cy="316.0254" r="16.1858" gradientTransform="matrix(0.9805 0 0 -0.6358 -15.7516 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_41_" fill="url(#path16609_23_)" stroke="#000000" d="M716.317,443.984c0,5.787-6.979,10.479-15.579,10.479
+				c-8.604,0-15.578-4.688-15.578-10.479c0-5.787,6.975-10.476,15.578-10.476C709.34,433.509,716.317,438.197,716.317,443.984z"/>
+			<text transform="matrix(0.6154 0 0 1 692.3279 447.1855)" font-family="'ArialMT'" font-size="12">Cyt c</text>
+		</g>
+		<g>
+			
+				<radialGradient id="path16609_24_" cx="597.5876" cy="341.9844" r="17.7368" gradientTransform="matrix(1.4784 0 0 -0.6358 -182.7357 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_40_" fill="url(#path16609_24_)" stroke="#000000" d="M726.478,427.48c0,6.342-11.527,11.481-25.74,11.481
+				c-14.217,0-25.741-5.139-25.741-11.481c0-6.342,11.523-11.479,25.741-11.479C714.951,416.001,726.478,421.139,726.478,427.48z"/>
+			<text transform="matrix(0.9279 0 0 1 682.7732 430.9883)" font-family="'ArialMT'" font-size="13.1499">Apaf-1</text>
+		</g>
+	</g>
+	<g>
+		<g>
+			
+				<radialGradient id="path16609_30_" cx="743.9978" cy="352.2002" r="16.1863" gradientTransform="matrix(0.9805 0 0 -0.6358 -15.7516 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_39_" fill="url(#path16609_30_)" stroke="#000000" d="M729.317,420.984c0,5.787-6.979,10.479-15.579,10.479
+				c-8.604,0-15.578-4.688-15.578-10.479c0-5.787,6.975-10.476,15.578-10.476C722.34,410.509,729.317,415.197,729.317,420.984z"/>
+			<text transform="matrix(0.6154 0 0 1 705.3279 424.1855)" font-family="'ArialMT'" font-size="12">Cyt c</text>
+		</g>
+		<g>
+			
+				<radialGradient id="path16609_31_" cx="606.3806" cy="378.1582" r="17.7373" gradientTransform="matrix(1.4784 0 0 -0.6358 -182.7357 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_38_" fill="url(#path16609_31_)" stroke="#000000" d="M739.478,404.48c0,6.342-11.527,11.481-25.74,11.481
+				c-14.217,0-25.741-5.139-25.741-11.481c0-6.342,11.523-11.479,25.741-11.479C727.951,393.001,739.478,398.139,739.478,404.48z"/>
+			<text transform="matrix(0.9279 0 0 1 695.7732 407.9883)" font-family="'ArialMT'" font-size="13.1499">Apaf-1</text>
+		</g>
+	</g>
+	<g>
+		<g>
+			
+				<radialGradient id="path16609_46_" cx="720.5408" cy="378.9385" r="16.1858" gradientTransform="matrix(0.9805 0 0 -0.6358 -15.7516 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_37_" fill="url(#path16609_46_)" stroke="#000000" d="M706.317,403.984c0,5.787-6.979,10.479-15.579,10.479
+				c-8.604,0-15.578-4.689-15.578-10.479c0-5.787,6.975-10.476,15.578-10.476C699.34,393.509,706.317,398.197,706.317,403.984z"/>
+			<text transform="matrix(0.6154 0 0 1 682.3279 407.1855)" font-family="'ArialMT'" font-size="12">Cyt c</text>
+		</g>
+		<g>
+			
+				<radialGradient id="path16609_47_" cx="590.824" cy="404.8965" r="17.7368" gradientTransform="matrix(1.4784 0 0 -0.6358 -182.7357 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_36_" fill="url(#path16609_47_)" stroke="#000000" d="M716.478,387.48c0,6.342-11.527,11.481-25.74,11.481
+				c-14.217,0-25.741-5.139-25.741-11.481c0-6.342,11.523-11.479,25.741-11.479C704.951,376.001,716.478,381.139,716.478,387.48z"/>
+			<text transform="matrix(0.9279 0 0 1 672.7732 390.9883)" font-family="'ArialMT'" font-size="13.1499">Apaf-1</text>
+		</g>
+	</g>
+	<g>
+		<g>
+			
+				<radialGradient id="path16609_48_" cx="690.0447" cy="312.1055" r="16.1858" gradientTransform="matrix(0.9805 0 0 -0.6358 -15.7516 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_35_" fill="url(#path16609_48_)" stroke="#000000" d="M676.416,446.476c0,5.787-6.979,10.479-15.579,10.479
+				c-8.604,0-15.578-4.689-15.578-10.479c0-5.786,6.976-10.475,15.578-10.475C669.437,436.001,676.416,440.689,676.416,446.476z"/>
+			<text transform="matrix(0.6154 0 0 1 652.4255 449.6768)" font-family="'ArialMT'" font-size="12">Cyt c</text>
+		</g>
+		<g>
+			
+				<radialGradient id="path16609_49_" cx="570.5984" cy="338.0645" r="17.7368" gradientTransform="matrix(1.4784 0 0 -0.6358 -182.7357 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_34_" fill="url(#path16609_49_)" stroke="#000000" d="M686.578,429.972c0,6.343-11.528,11.482-25.741,11.482
+				c-14.217,0-25.741-5.139-25.741-11.482c0-6.342,11.524-11.479,25.741-11.479C675.05,418.494,686.578,423.63,686.578,429.972z"/>
+			<text transform="matrix(0.9279 0 0 1 642.8728 433.4785)" font-family="'ArialMT'" font-size="13.1499">Apaf-1</text>
+		</g>
+	</g>
+	<g>
+		<g>
+			
+				<radialGradient id="path16609_50_" cx="665.4666" cy="347.4814" r="16.1863" gradientTransform="matrix(0.9805 0 0 -0.6358 -15.7516 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_33_" fill="url(#path16609_50_)" stroke="#000000" d="M652.317,423.984c0,5.787-6.979,10.479-15.579,10.479
+				c-8.604,0-15.578-4.688-15.578-10.479c0-5.787,6.975-10.476,15.578-10.476C645.34,413.509,652.317,418.197,652.317,423.984z"/>
+			<text transform="matrix(0.6154 0 0 1 628.3279 427.1855)" font-family="'ArialMT'" font-size="12">Cyt c</text>
+		</g>
+		<g>
+			
+				<radialGradient id="path16609_51_" cx="554.2976" cy="373.4404" r="17.7368" gradientTransform="matrix(1.4784 0 0 -0.6358 -182.7357 644.9147)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#A2FF5F"/>
+				<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+				<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+				<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+				<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+				<stop  offset="0.8174" style="stop-color:#67F35D"/>
+				<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+				<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+				<stop  offset="0.9915" style="stop-color:#07E05A"/>
+				<stop  offset="1" style="stop-color:#00DF5A"/>
+			</radialGradient>
+			<path id="path16609_32_" fill="url(#path16609_51_)" stroke="#000000" d="M662.478,407.48c0,6.342-11.527,11.481-25.74,11.481
+				c-14.217,0-25.741-5.139-25.741-11.481c0-6.342,11.523-11.479,25.741-11.479C650.951,396.001,662.478,401.139,662.478,407.48z"/>
+			<text transform="matrix(0.9279 0 0 1 618.7732 410.9883)" font-family="'ArialMT'" font-size="13.1499">Apaf-1</text>
+		</g>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="603.738" y1="416.802" x2="528.97" y2="416.802"/>
+		<polygon points="600.929,420.505 602.502,416.802 600.929,413.098 609.707,416.802 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="562.47" y1="412.509" x2="562.47" y2="389.802"/>
+		<polygon points="558.767,409.701 562.47,411.273 566.175,409.701 562.47,418.479 		"/>
+	</g>
+</g>
+<g id="Bax">
+	<g id="g11286_2_" transform="translate(60.71715,268.9214)">
+		
+			<radialGradient id="Bax_path1_1_" cx="223.4013" cy="-223.7798" r="12.2671" fx="223.2171" fy="-223.2252" gradientTransform="matrix(0.7933 0 0 -0.9698 150.1594 -150.9167)" gradientUnits="userSpaceOnUse">
+			<stop  offset="0" style="stop-color:#BFD4FF"/>
+			<stop  offset="0.3949" style="stop-color:#BDD3FF"/>
+			<stop  offset="0.5372" style="stop-color:#B6CFFF"/>
+			<stop  offset="0.6386" style="stop-color:#ABC7FF"/>
+			<stop  offset="0.7206" style="stop-color:#9ABDFF"/>
+			<stop  offset="0.7909" style="stop-color:#84AFFF"/>
+			<stop  offset="0.8531" style="stop-color:#689EFF"/>
+			<stop  offset="0.9093" style="stop-color:#488AFF"/>
+			<stop  offset="0.9593" style="stop-color:#2474FF"/>
+			<stop  offset="1" style="stop-color:#005EFF"/>
+		</radialGradient>
+		<path id="Bax_path1" fill="url(#Bax_path1_1_)" stroke="#000000" d="M338.097,67.924c0,4.967-3.291,8.99-7.354,8.99h-6.131
+			c-4.062,0-7.354-4.023-7.354-8.99v-3.996c0-4.967,3.29-8.992,7.354-8.992h6.131c4.063,0,7.354,4.025,7.354,8.992V67.924z"/>
+	</g>
+	<text transform="matrix(0.8848 0 0 1 380.6565 337.5508)" font-family="'ArialMT'" font-size="10.1524">Bax</text>
+</g>
+<g id="tBidBax">
+	<g>
+		
+			<radialGradient id="tBidBax_path2_1_" cx="343.2097" cy="545.7637" r="16.1863" gradientTransform="matrix(1.5933 0 0 -0.6358 -221.2102 644.9147)" gradientUnits="userSpaceOnUse">
+			<stop  offset="0" style="stop-color:#A2FF5F"/>
+			<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+			<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+			<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+			<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+			<stop  offset="0.8174" style="stop-color:#67F35D"/>
+			<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+			<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+			<stop  offset="0.9915" style="stop-color:#07E05A"/>
+			<stop  offset="1" style="stop-color:#00DF5A"/>
+		</radialGradient>
+		<path id="tBidBax_path2" fill="url(#tBidBax_path2_1_)" stroke="#000000" d="M350.94,297.916c0,5.787-11.339,10.479-25.316,10.479
+			c-13.98,0-25.314-4.688-25.314-10.479c0-5.787,11.334-10.475,25.314-10.475C339.602,287.441,350.94,292.128,350.94,297.916z"/>
+		<text transform="matrix(1 0 0 1 316.9529 301.1152)" font-family="'ArialMT'" font-size="12">tBid</text>
+	</g>
+	<g>
+		<g id="g11286_3_" transform="translate(60.71715,268.9214)">
+			
+				<radialGradient id="tBidBax_path1_1_" cx="151.5497" cy="-203.1567" r="12.2668" fx="151.3654" fy="-202.6021" gradientTransform="matrix(0.7933 0 0 -0.9698 150.1594 -150.9167)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#BFD4FF"/>
+				<stop  offset="0.3949" style="stop-color:#BDD3FF"/>
+				<stop  offset="0.5372" style="stop-color:#B6CFFF"/>
+				<stop  offset="0.6386" style="stop-color:#ABC7FF"/>
+				<stop  offset="0.7206" style="stop-color:#9ABDFF"/>
+				<stop  offset="0.7909" style="stop-color:#84AFFF"/>
+				<stop  offset="0.8531" style="stop-color:#689EFF"/>
+				<stop  offset="0.9093" style="stop-color:#488AFF"/>
+				<stop  offset="0.9593" style="stop-color:#2474FF"/>
+				<stop  offset="1" style="stop-color:#005EFF"/>
+			</radialGradient>
+			<path id="tBidBax_path1" fill="url(#tBidBax_path1_1_)" stroke="#000000" d="M281.097,47.924c0,4.967-3.291,8.99-7.354,8.99
+				h-6.131c-4.062,0-7.354-4.023-7.354-8.99v-3.996c0-4.967,3.29-8.992,7.354-8.992h6.131c4.063,0,7.354,4.025,7.354,8.992V47.924z"
+				/>
+		</g>
+		<text transform="matrix(0.8848 0 0 1 323.6565 317.5508)" font-family="'ArialMT'" font-size="10.1524">Bax</text>
+	</g>
+</g>
+<g id="Bcl_2">
+	
+		<radialGradient id="Bcl_2_path1_1_" cx="404.3572" cy="486.6641" r="16.1858" gradientTransform="matrix(1.2786 0 0 -0.6358 -68.4865 644.9147)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#FFFCDF"/>
+		<stop  offset="0.1203" style="stop-color:#FFFBDA"/>
+		<stop  offset="0.2662" style="stop-color:#FFF9CB"/>
+		<stop  offset="0.4255" style="stop-color:#FFF6B2"/>
+		<stop  offset="0.5943" style="stop-color:#FFF090"/>
+		<stop  offset="0.7706" style="stop-color:#FFEA64"/>
+		<stop  offset="0.9506" style="stop-color:#FFE22F"/>
+		<stop  offset="1" style="stop-color:#FFE01F"/>
+	</radialGradient>
+	<path id="Bcl_2_path1" fill="url(#Bcl_2_path1_1_)" stroke="#000000" d="M468.84,335.492c0,5.787-9.099,10.479-20.314,10.479
+		c-11.221,0-20.315-4.688-20.315-10.479c0-5.787,9.096-10.475,20.315-10.475C459.741,325.018,468.84,329.705,468.84,335.492z"/>
+	<text transform="matrix(0.8025 0 0 1 437.5564 338.6914)" font-family="'ArialMT'" font-size="12">Bcl-2</text>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="676.72" y1="329.302" x2="676.72" y2="377.302"/>
+		<polygon points="680.425,332.111 676.72,330.539 673.016,332.111 676.72,323.333 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="644.98" y1="256.484" x2="692.962" y2="255.123"/>
+		<polygon points="647.682,252.703 646.216,256.449 647.892,260.107 639.013,256.654 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="672.72" y1="259.302" x2="672.72" y2="297.509"/>
+		<polygon points="676.424,262.111 672.72,260.539 669.016,262.111 672.72,253.333 		"/>
+	</g>
+</g>
+<g>
+	<line fill="none" stroke="#000000" x1="404.297" y1="336.509" x2="427.738" y2="336.509"/>
+	<line fill="none" stroke="#000000" x1="403.738" y1="329.509" x2="403.738" y2="342.509"/>
+</g>
+<g>
+	
+		<radialGradient id="IAP_path2_1_" cx="649.4236" cy="522.8379" r="16.1863" gradientTransform="matrix(1.2 0 0 -0.6358 -30.6366 644.9147)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#FFFCDF"/>
+		<stop  offset="0.1203" style="stop-color:#FFFBDA"/>
+		<stop  offset="0.2662" style="stop-color:#FFF9CB"/>
+		<stop  offset="0.4255" style="stop-color:#FFF6B2"/>
+		<stop  offset="0.5943" style="stop-color:#FFF090"/>
+		<stop  offset="0.7706" style="stop-color:#FFEA64"/>
+		<stop  offset="0.9506" style="stop-color:#FFE22F"/>
+		<stop  offset="1" style="stop-color:#FFE01F"/>
+	</radialGradient>
+	<path id="IAP_path2" fill="url(#IAP_path2_1_)" stroke="#000000" d="M767.738,312.492c0,5.787-8.54,10.479-19.067,10.479
+		c-10.529,0-19.065-4.688-19.065-10.479c0-5.787,8.536-10.475,19.065-10.475C759.198,302.018,767.738,306.705,767.738,312.492z"/>
+	<text transform="matrix(0.7532 0 0 1 741.3884 315.6914)" font-family="'ArialMT'" font-size="12">IAP</text>
+</g>
+<line fill="none" x1="708.738" y1="311.509" x2="729.738" y2="311.509"/>
+<line fill="none" x1="593.738" y1="149.509" x2="632.738" y2="149.509"/>
+<line fill="none" x1="567.738" y1="154.509" x2="598.738" y2="154.509"/>
+<g>
+	<line fill="none" stroke="#000000" x1="703.297" y1="312.509" x2="726.738" y2="312.509"/>
+	<line fill="none" stroke="#000000" x1="702.738" y1="305.509" x2="702.738" y2="318.509"/>
+</g>
+<g>
+	<line fill="none" stroke="#000000" x1="715.302" y1="377.857" x2="746.143" y2="325.705"/>
+	<line fill="none" stroke="#000000" x1="708.542" y1="375.537" x2="719.731" y2="382.154"/>
+</g>
+<g id="IAP">
+	
+		<radialGradient id="IAP_path1_1_" cx="521.0906" cy="706.8604" r="16.1863" gradientTransform="matrix(1.2 0 0 -0.6358 -30.6366 644.9147)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#FFFCDF"/>
+		<stop  offset="0.1203" style="stop-color:#FFFBDA"/>
+		<stop  offset="0.2662" style="stop-color:#FFF9CB"/>
+		<stop  offset="0.4255" style="stop-color:#FFF6B2"/>
+		<stop  offset="0.5943" style="stop-color:#FFF090"/>
+		<stop  offset="0.7706" style="stop-color:#FFEA64"/>
+		<stop  offset="0.9506" style="stop-color:#FFE22F"/>
+		<stop  offset="1" style="stop-color:#FFE01F"/>
+	</radialGradient>
+	<path id="IAP_path1" fill="url(#IAP_path1_1_)" stroke="#000000" d="M613.738,195.492c0,5.786-8.54,10.478-19.067,10.478
+		c-10.529,0-19.065-4.688-19.065-10.478s8.536-10.476,19.065-10.476C605.198,185.018,613.738,189.705,613.738,195.492z"/>
+	<text transform="matrix(0.7532 0 0 1 587.3884 198.6914)" font-family="'ArialMT'" font-size="12">IAP</text>
+</g>
+<g>
+	<line fill="none" stroke="#000000" x1="606.199" y1="243.863" x2="601.921" y2="205.025"/>
+	<line fill="none" stroke="#000000" x1="599.344" y1="245.555" x2="612.265" y2="244.13"/>
+</g>
+<g>
+	<g>
+		<path fill="none" stroke="#000000" d="M643.672,381.755c-47.201-38.996-41.83-91.694,12.732-119.496"/>
+		<polygon points="655.583,266.833 655.302,262.822 652.22,260.234 661.722,259.55 		"/>
+	</g>
+</g>
+<g>
+	
+		<radialGradient id="path16609_52_" cx="573.074" cy="353.0469" r="16.1868" gradientTransform="matrix(0.9475 0 0 -0.6358 115.6949 644.9147)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#A2FF5F"/>
+		<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+		<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+		<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+		<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+		<stop  offset="0.8174" style="stop-color:#67F35D"/>
+		<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+		<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+		<stop  offset="0.9915" style="stop-color:#07E05A"/>
+		<stop  offset="1" style="stop-color:#00DF5A"/>
+	</radialGradient>
+	<path id="path16609_56_" fill="url(#path16609_52_)" stroke="#000000" d="M673.738,420.445c0,5.787-6.742,10.479-15.056,10.479
+		s-15.055-4.688-15.055-10.479c0-5.787,6.74-10.475,15.055-10.475C666.996,409.971,673.738,414.658,673.738,420.445z"/>
+	<text transform="matrix(0.5947 0 0 1 651.5427 423.6445)" font-family="'ArialMT'" font-size="12">pro9</text>
+</g>
+<g>
+	
+		<radialGradient id="path16609_53_" cx="600.5154" cy="354.5469" r="16.1858" gradientTransform="matrix(0.9475 0 0 -0.6358 115.6949 644.9147)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#A2FF5F"/>
+		<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+		<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+		<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+		<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+		<stop  offset="0.8174" style="stop-color:#67F35D"/>
+		<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+		<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+		<stop  offset="0.9915" style="stop-color:#07E05A"/>
+		<stop  offset="1" style="stop-color:#00DF5A"/>
+	</radialGradient>
+	<path id="path16609_57_" fill="url(#path16609_53_)" stroke="#000000" d="M699.738,419.492c0,5.787-6.742,10.479-15.056,10.479
+		s-15.055-4.688-15.055-10.479c0-5.787,6.74-10.475,15.055-10.475C692.996,409.018,699.738,413.705,699.738,419.492z"/>
+	<text transform="matrix(0.5947 0 0 1 677.5427 422.6914)" font-family="'ArialMT'" font-size="12">pro9</text>
+</g>
+<text transform="matrix(1 0 0 1 441.738 472.5098)" font-family="'ArialMT'" font-size="12">apoptosome</text>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="417.988" y1="160.599" x2="588.079" y2="253.38"/>
+		<polygon points="422.227,158.693 419.074,161.191 418.68,165.196 412.748,157.741 		"/>
+	</g>
+</g>
+<g>
+	<line fill="none" stroke="#000000" x1="475.184" y1="331.014" x2="590.015" y2="255.311"/>
+	<line fill="none" stroke="#000000" x1="468.592" y1="326.975" x2="475.749" y2="337.826"/>
+</g>
+<g>
+	<g>
+		<path fill="none" stroke="#000000" stroke-dasharray="3,3" d="M356.483,398.186c12.34-32.955,4.697-54.765-11.926-68.97"/>
+		<polygon points="354,394.257 356.917,397.029 360.937,396.855 354.39,403.775 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path fill="none" stroke="#000000" stroke-dasharray="3,3" d="M344.19,306.027c21.713-5.424,32.556,6.317,37.021,25.266"/>
+		<polygon points="346.017,301.753 345.389,305.729 347.812,308.941 338.399,307.475 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path fill="none" stroke="#000000" stroke-dasharray="4" d="M313.39,409.389c-26.903-16.574-37.604-36.914-38.841-57.604"/>
+		<polygon points="309.056,411.068 312.338,408.74 312.942,404.761 318.472,412.52 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path fill="none" stroke="#000000" stroke-dasharray="4" d="M416.699,434.224c-26.111,13.986-45.364,7.629-59.357-8.016"/>
+		<polygon points="415.972,438.816 415.609,434.808 412.474,432.285 421.961,431.406 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path fill="none" stroke="#000000" stroke-dasharray="4" d="M312.712,285.268c18.895-50.31,42.336-79.251,66.292-94.516"/>
+		<polygon points="310.233,281.335 313.147,284.109 317.167,283.939 310.614,290.855 		"/>
+	</g>
+</g>
+<text transform="matrix(1 0 0 1 251.7385 394.5098)" font-family="'ArialMT'" font-size="12">VAC</text>
+<text transform="matrix(1 0 0 1 586.738 138.5098)" font-family="'ArialMT'" font-size="12">Apoptosis</text>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" x1="624.72" y1="142.509" x2="624.72" y2="246.509"/>
+		<polygon points="628.424,145.317 624.72,143.745 621.016,145.317 624.72,136.54 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path fill="none" stroke="#000000" stroke-dasharray="4" d="M295.604,158.289c-52.281-12.433-83.937-32.06-102.084-53.911"/>
+		<polygon points="292.015,161.241 294.402,158.002 293.729,154.035 301.411,159.669 		"/>
+	</g>
+</g>
+<text transform="matrix(1 0 0 1 186.7385 260.5078)" font-family="'ArialMT'" font-size="12">mito</text>
+<g>
+	<g id="g59398" transform="translate(21.16987,-31.23187)">
+		<g id="g7045">
+			<g id="g7047">
+				<path id="path7049" fill="#BFDDFF" stroke="#0092DF" d="M474.52,122.607c0-1.944-2.948-3.52-6.589-3.52
+					c-3.639,0-6.588,1.575-6.588,3.52c0,1.94,2.949,3.516,6.588,3.516C471.571,126.123,474.52,124.548,474.52,122.607z"/>
+				<path id="path7051" fill="none" stroke="#0092DF" d="M467.931,119.088V94.459"/>
+			</g>
+			<g id="g7053">
+				<path id="path7055" fill="#BFDDFF" stroke="#0092DF" d="M459.414,122.607c0-1.944-2.954-3.52-6.589-3.52
+					c-3.64,0-6.588,1.575-6.588,3.52c0,1.94,2.948,3.516,6.588,3.516C456.46,126.123,459.414,124.548,459.414,122.607z"/>
+				<path id="path7057" fill="none" stroke="#0092DF" d="M452.825,119.088V94.459"/>
+			</g>
+			<g id="g7059">
+				<path id="path7061" fill="#BFDDFF" stroke="#0092DF" d="M444.305,122.607c0-1.944-2.952-3.52-6.59-3.52s-6.587,1.575-6.587,3.52
+					c0,1.94,2.949,3.516,6.587,3.516S444.305,124.548,444.305,122.607z"/>
+				<path id="path7063" fill="none" stroke="#0092DF" d="M437.716,119.088V94.459"/>
+			</g>
+			<g id="g7065">
+				<path id="path7067" fill="#BFDDFF" stroke="#0092DF" d="M519.853,122.607c0-1.944-2.951-3.52-6.59-3.52
+					c-3.638,0-6.587,1.575-6.587,3.52c0,1.94,2.949,3.516,6.587,3.516C516.902,126.123,519.853,124.548,519.853,122.607z"/>
+				<path id="path7069" fill="none" stroke="#0092DF" d="M513.263,119.088V94.459"/>
+			</g>
+			<g id="g7071">
+				<path id="path7073" fill="#BFDDFF" stroke="#0092DF" d="M504.741,122.607c0-1.944-2.949-3.52-6.589-3.52
+					s-6.588,1.575-6.588,3.52c0,1.94,2.948,3.516,6.588,3.516S504.741,124.548,504.741,122.607z"/>
+				<path id="path7075" fill="none" stroke="#0092DF" d="M498.152,119.088V94.459"/>
+			</g>
+			<g id="g7077">
+				<path id="path7079" fill="#BFDDFF" stroke="#0092DF" d="M489.633,122.607c0-1.944-2.952-3.52-6.59-3.52s-6.587,1.575-6.587,3.52
+					c0,1.94,2.949,3.516,6.587,3.516S489.633,124.548,489.633,122.607z"/>
+				<path id="path7081" fill="none" stroke="#0092DF" d="M483.043,119.088V94.459"/>
+			</g>
+			<g id="g7083">
+				<path id="path7085" fill="#BFDDFF" stroke="#0092DF" d="M482.079,88.075c0,1.941-2.951,3.518-6.59,3.518
+					s-6.587-1.576-6.587-3.518s2.948-3.518,6.587-3.518S482.079,86.135,482.079,88.075z"/>
+				<path id="path7087" fill="none" stroke="#0092DF" d="M475.489,91.593v24.629"/>
+			</g>
+			<g id="g7089">
+				<path id="path7091" fill="#BFDDFF" stroke="#0092DF" d="M466.968,88.075c0,1.941-2.952,3.518-6.59,3.518
+					s-6.587-1.576-6.587-3.518s2.949-3.518,6.587-3.518S466.968,86.135,466.968,88.075z"/>
+				<path id="path7093" fill="none" stroke="#0092DF" d="M460.378,91.593v24.629"/>
+			</g>
+			<g id="g7095">
+				<path id="path7097" fill="#BFDDFF" stroke="#0092DF" d="M451.858,88.075c0,1.941-2.952,3.518-6.591,3.518
+					c-3.635,0-6.587-1.576-6.587-3.518s2.952-3.518,6.587-3.518C448.906,84.557,451.858,86.135,451.858,88.075z"/>
+				<path id="path7099" fill="none" stroke="#0092DF" d="M445.268,91.593v24.629"/>
+			</g>
+			<g id="g7101">
+				<path id="path7103" fill="#BFDDFF" stroke="#0092DF" d="M527.406,88.075c0,1.941-2.951,3.518-6.587,3.518
+					c-3.639,0-6.591-1.576-6.591-3.518s2.952-3.518,6.591-3.518C524.455,84.557,527.406,86.135,527.406,88.075z"/>
+				<path id="path7105" fill="none" stroke="#0092DF" d="M520.819,91.593v24.629"/>
+			</g>
+			<g id="g7107">
+				<path id="path7109" fill="#BFDDFF" stroke="#0092DF" d="M512.298,88.075c0,1.941-2.949,3.518-6.587,3.518
+					c-3.639,0-6.59-1.576-6.59-3.518s2.951-3.518,6.59-3.518C509.348,84.557,512.298,86.135,512.298,88.075z"/>
+				<path id="path7111" fill="none" stroke="#0092DF" d="M505.711,91.593v24.629"/>
+			</g>
+			<g id="g7113">
+				<path id="path7115" fill="#BFDDFF" stroke="#0092DF" d="M497.185,88.075c0,1.941-2.948,3.518-6.587,3.518
+					c-3.638,0-6.59-1.576-6.59-3.518s2.952-3.518,6.59-3.518C494.237,84.557,497.185,86.135,497.185,88.075z"/>
+				<path id="path7117" fill="none" stroke="#0092DF" d="M490.598,91.593v24.629"/>
+			</g>
+		</g>
+		<g id="g7119">
+			<g id="g7121">
+				<path id="path7123" fill="#BFDDFF" stroke="#0092DF" d="M384.163,122.607c0-1.944-2.952-3.52-6.587-3.52
+					c-3.64,0-6.59,1.575-6.59,3.52c0,1.94,2.95,3.516,6.59,3.516C381.211,126.123,384.163,124.548,384.163,122.607z"/>
+				<path id="path7125" fill="none" stroke="#0092DF" d="M377.576,119.088V94.459"/>
+			</g>
+			<g id="g7127">
+				<path id="path7129" fill="#BFDDFF" stroke="#0092DF" d="M369.056,122.607c0-1.944-2.952-3.52-6.59-3.52s-6.587,1.575-6.587,3.52
+					c0,1.94,2.949,3.516,6.587,3.516C366.101,126.123,369.056,124.548,369.056,122.607z"/>
+				<path id="path7131" fill="none" stroke="#0092DF" d="M362.467,119.088V94.459"/>
+			</g>
+			<g id="g7133">
+				<path id="path7135" fill="#BFDDFF" stroke="#0092DF" d="M353.944,122.607c0-1.944-2.951-3.52-6.591-3.52
+					c-3.638,0-6.587,1.575-6.587,3.52c0,1.94,2.949,3.516,6.587,3.516C350.993,126.123,353.944,124.548,353.944,122.607z"/>
+				<path id="path7137" fill="none" stroke="#0092DF" d="M347.354,119.088V94.459"/>
+			</g>
+			<g id="g7139">
+				<path id="path7141" fill="#BFDDFF" stroke="#0092DF" d="M429.492,122.607c0-1.944-2.951-3.52-6.589-3.52
+					c-3.64,0-6.589,1.575-6.589,3.52c0,1.94,2.949,3.516,6.589,3.516C426.541,126.123,429.492,124.548,429.492,122.607z"/>
+				<path id="path7143" fill="none" stroke="#0092DF" d="M422.903,119.088V94.459"/>
+			</g>
+			<g id="g7145">
+				<path id="path7147" fill="#BFDDFF" stroke="#0092DF" d="M414.384,122.607c0-1.944-2.952-3.52-6.59-3.52
+					c-3.636,0-6.587,1.575-6.587,3.52c0,1.94,2.951,3.516,6.587,3.516C411.431,126.123,414.384,124.548,414.384,122.607z"/>
+				<path id="path7149" fill="none" stroke="#0092DF" d="M407.794,119.088V94.459"/>
+			</g>
+			<g id="g7151">
+				<path id="path7153" fill="#BFDDFF" stroke="#0092DF" d="M399.271,122.607c0-1.944-2.95-3.52-6.59-3.52
+					c-3.635,0-6.587,1.575-6.587,3.52c0,1.94,2.952,3.516,6.587,3.516C396.32,126.123,399.271,124.548,399.271,122.607z"/>
+				<path id="path7155" fill="none" stroke="#0092DF" d="M392.681,119.088V94.459"/>
+			</g>
+			<g id="g7157">
+				<path id="path7159" fill="#BFDDFF" stroke="#0092DF" d="M391.719,88.075c0,1.941-2.952,3.518-6.59,3.518
+					s-6.587-1.576-6.587-3.518s2.949-3.518,6.587-3.518S391.719,86.135,391.719,88.075z"/>
+				<path id="path7161" fill="none" stroke="#0092DF" d="M385.129,91.593v24.629"/>
+			</g>
+			<g id="g7163">
+				<path id="path7165" fill="#BFDDFF" stroke="#0092DF" d="M376.607,88.075c0,1.941-2.951,3.518-6.59,3.518
+					s-6.588-1.576-6.588-3.518s2.949-3.518,6.588-3.518C373.655,84.557,376.607,86.135,376.607,88.075z"/>
+				<path id="path7167" fill="none" stroke="#0092DF" d="M370.019,91.593v24.629"/>
+			</g>
+			<g id="g7169">
+				<path id="path7171" fill="#BFDDFF" stroke="#0092DF" d="M361.498,88.075c0,1.941-2.952,3.518-6.59,3.518
+					c-3.639,0-6.587-1.576-6.587-3.518s2.948-3.518,6.587-3.518C358.546,84.557,361.498,86.135,361.498,88.075z"/>
+				<path id="path7173" fill="none" stroke="#0092DF" d="M354.908,91.593v24.629"/>
+			</g>
+			<g id="g7175">
+				<path id="path7177" fill="#BFDDFF" stroke="#0092DF" d="M437.046,88.075c0,1.941-2.949,3.518-6.587,3.518
+					s-6.59-1.576-6.59-3.518s2.952-3.518,6.59-3.518S437.046,86.135,437.046,88.075z"/>
+				<path id="path7179" fill="none" stroke="#0092DF" d="M430.459,91.593v24.629"/>
+			</g>
+			<g id="g7181">
+				<path id="path7183" fill="#BFDDFF" stroke="#0092DF" d="M421.939,88.075c0,1.941-2.951,3.518-6.59,3.518
+					c-3.638,0-6.587-1.576-6.587-3.518s2.949-3.518,6.587-3.518C418.988,84.557,421.939,86.135,421.939,88.075z"/>
+				<path id="path7185" fill="none" stroke="#0092DF" d="M415.349,91.593v24.629"/>
+			</g>
+			<g id="g7187">
+				<path id="path7189" fill="#BFDDFF" stroke="#0092DF" d="M406.83,88.075c0,1.941-2.951,3.518-6.59,3.518
+					s-6.587-1.576-6.587-3.518s2.948-3.518,6.587-3.518S406.83,86.135,406.83,88.075z"/>
+				<path id="path7191" fill="none" stroke="#0092DF" d="M400.24,91.593v24.629"/>
+			</g>
+		</g>
+		<g id="g7193">
+			<g id="g7195">
+				<path id="path7197" fill="#BFDDFF" stroke="#0092DF" d="M293.805,122.607c0-1.944-2.952-3.52-6.59-3.52s-6.587,1.575-6.587,3.52
+					c0,1.94,2.949,3.516,6.587,3.516S293.805,124.548,293.805,122.607z"/>
+				<path id="path7199" fill="none" stroke="#0092DF" d="M287.215,119.088V94.459"/>
+			</g>
+			<g id="g7201">
+				<path id="path7203" fill="#BFDDFF" stroke="#0092DF" d="M278.695,122.607c0-1.944-2.952-3.52-6.589-3.52
+					c-3.638,0-6.587,1.575-6.587,3.52c0,1.94,2.948,3.516,6.587,3.516C275.744,126.123,278.695,124.548,278.695,122.607z"/>
+				<path id="path7205" fill="none" stroke="#0092DF" d="M272.106,119.088V94.459"/>
+			</g>
+			<g id="g7207">
+				<path id="path7209" fill="#BFDDFF" stroke="#0092DF" d="M263.584,122.607c0-1.944-2.952-3.52-6.59-3.52
+					c-3.635,0-6.587,1.575-6.587,3.52c0,1.94,2.952,3.516,6.587,3.516C260.632,126.123,263.584,124.548,263.584,122.607z"/>
+				<path id="path7211" fill="none" stroke="#0092DF" d="M256.994,119.088V94.459"/>
+			</g>
+			<g id="g7213">
+				<path id="path7215" fill="#BFDDFF" stroke="#0092DF" d="M339.135,122.607c0-1.944-2.952-3.52-6.59-3.52s-6.587,1.575-6.587,3.52
+					c0,1.94,2.949,3.516,6.587,3.516S339.135,124.548,339.135,122.607z"/>
+				<path id="path7217" fill="none" stroke="#0092DF" d="M332.545,119.088V94.459"/>
+			</g>
+			<g id="g7219">
+				<path id="path7221" fill="#BFDDFF" stroke="#0092DF" d="M324.023,122.607c0-1.944-2.949-3.52-6.59-3.52
+					c-3.638,0-6.587,1.575-6.587,3.52c0,1.94,2.949,3.516,6.587,3.516C321.073,126.123,324.023,124.548,324.023,122.607z"/>
+				<path id="path7223" fill="none" stroke="#0092DF" d="M317.432,119.088V94.459"/>
+			</g>
+			<g id="g7225">
+				<path id="path7227" fill="#BFDDFF" stroke="#0092DF" d="M308.917,122.607c0-1.944-2.955-3.52-6.59-3.52
+					c-3.639,0-6.59,1.575-6.59,3.52c0,1.94,2.951,3.516,6.59,3.516C305.962,126.123,308.917,124.548,308.917,122.607z"/>
+				<path id="path7229" fill="none" stroke="#0092DF" d="M302.327,119.088V94.459"/>
+			</g>
+			<g id="g7231">
+				<path id="path7233" fill="#BFDDFF" stroke="#0092DF" d="M301.358,88.075c0,1.941-2.952,3.518-6.591,3.518
+					c-3.635,0-6.587-1.576-6.587-3.518s2.952-3.518,6.587-3.518C298.406,84.557,301.358,86.135,301.358,88.075z"/>
+				<path id="path7235" fill="none" stroke="#0092DF" d="M294.767,91.593v24.629"/>
+			</g>
+			<g id="g7237">
+				<path id="path7239" fill="#BFDDFF" stroke="#0092DF" d="M286.249,88.075c0,1.941-2.952,3.518-6.587,3.518
+					c-3.638,0-6.589-1.576-6.589-3.518s2.952-3.518,6.589-3.518C283.297,84.557,286.249,86.135,286.249,88.075z"/>
+				<path id="path7241" fill="none" stroke="#0092DF" d="M279.662,91.593v24.629"/>
+			</g>
+			<g id="g7243">
+				<path id="path7245" fill="#BFDDFF" stroke="#0092DF" d="M271.14,88.075c0,1.941-2.949,3.518-6.591,3.518
+					c-3.635,0-6.587-1.576-6.587-3.518s2.952-3.518,6.587-3.518C268.19,84.557,271.14,86.135,271.14,88.075z"/>
+				<path id="path7247" fill="none" stroke="#0092DF" d="M264.55,91.593v24.629"/>
+			</g>
+			<g id="g7249">
+				<path id="path7251" fill="#BFDDFF" stroke="#0092DF" d="M346.687,88.075c0,1.941-2.951,3.518-6.587,3.518
+					c-3.638,0-6.59-1.576-6.59-3.518s2.952-3.518,6.59-3.518C343.735,84.557,346.687,86.135,346.687,88.075z"/>
+				<path id="path7253" fill="none" stroke="#0092DF" d="M340.1,91.593v24.629"/>
+			</g>
+			<g id="g7255">
+				<path id="path7257" fill="#BFDDFF" stroke="#0092DF" d="M331.581,88.075c0,1.941-2.952,3.518-6.59,3.518
+					c-3.636,0-6.586-1.576-6.586-3.518s2.952-3.518,6.586-3.518C328.629,84.557,331.581,86.135,331.581,88.075z"/>
+				<path id="path7259" fill="none" stroke="#0092DF" d="M324.991,91.593v24.629"/>
+			</g>
+			<g id="g7261">
+				<path id="path7263" fill="#BFDDFF" stroke="#0092DF" d="M316.47,88.075c0,1.941-2.952,3.518-6.59,3.518
+					c-3.635,0-6.587-1.576-6.587-3.518s2.952-3.518,6.587-3.518C313.517,84.557,316.47,86.135,316.47,88.075z"/>
+				<path id="path7265" fill="none" stroke="#0092DF" d="M309.88,91.593v24.629"/>
+			</g>
+		</g>
+		<g id="g7267">
+			<g id="g7269">
+				<path id="path7271" fill="#BFDDFF" stroke="#0092DF" d="M203.444,122.607c0-1.944-2.951-3.52-6.588-3.52
+					c-3.639,0-6.588,1.575-6.588,3.52c0,1.94,2.95,3.516,6.588,3.516C200.493,126.123,203.444,124.548,203.444,122.607z"/>
+				<path id="path7273" fill="none" stroke="#0092DF" d="M196.856,119.088V94.459"/>
+			</g>
+			<g id="g7275">
+				<path id="path7277" fill="#BFDDFF" stroke="#0092DF" d="M188.334,122.607c0-1.944-2.951-3.52-6.588-3.52
+					s-6.588,1.575-6.588,3.52c0,1.94,2.951,3.516,6.588,3.516S188.334,124.548,188.334,122.607z"/>
+				<path id="path7279" fill="none" stroke="#0092DF" d="M181.745,119.088V94.459"/>
+			</g>
+			<g id="g7281">
+				<path id="path7283" fill="#BFDDFF" stroke="#0092DF" d="M173.225,122.607c0-1.944-2.951-3.52-6.59-3.52
+					c-3.637,0-6.588,1.575-6.588,3.52c0,1.94,2.951,3.516,6.588,3.516C170.274,126.123,173.225,124.548,173.225,122.607z"/>
+				<path id="path7285" fill="none" stroke="#0092DF" d="M166.635,119.088V94.459"/>
+			</g>
+			<g id="g7287">
+				<path id="path7289" fill="#BFDDFF" stroke="#0092DF" d="M248.774,122.607c0-1.944-2.952-3.52-6.589-3.52
+					c-3.639,0-6.588,1.575-6.588,3.52c0,1.94,2.95,3.516,6.588,3.516C245.822,126.123,248.774,124.548,248.774,122.607z"/>
+				<path id="path7291" fill="none" stroke="#0092DF" d="M242.185,119.088V94.459"/>
+			</g>
+			<g id="g7293">
+				<path id="path7295" fill="#BFDDFF" stroke="#0092DF" d="M233.664,122.607c0-1.944-2.951-3.52-6.588-3.52
+					s-6.588,1.575-6.588,3.52c0,1.94,2.952,3.516,6.588,3.516C230.713,126.123,233.664,124.548,233.664,122.607z"/>
+				<path id="path7297" fill="none" stroke="#0092DF" d="M227.076,119.088V94.459"/>
+			</g>
+			<g id="g7299">
+				<path id="path7301" fill="#BFDDFF" stroke="#0092DF" d="M218.554,122.607c0-1.944-2.952-3.52-6.588-3.52
+					c-3.639,0-6.589,1.575-6.589,3.52c0,1.94,2.95,3.516,6.589,3.516C215.602,126.123,218.554,124.548,218.554,122.607z"/>
+				<path id="path7303" fill="none" stroke="#0092DF" d="M211.966,119.088V94.459"/>
+			</g>
+			<g id="g7305">
+				<path id="path7307" fill="#BFDDFF" stroke="#0092DF" d="M210.999,88.075c0,1.941-2.951,3.518-6.588,3.518
+					c-3.639,0-6.589-1.576-6.589-3.518s2.95-3.518,6.589-3.518C208.048,84.557,210.999,86.135,210.999,88.075z"/>
+				<path id="path7309" fill="none" stroke="#0092DF" d="M204.411,91.593v24.629"/>
+			</g>
+			<g id="g7311">
+				<path id="path7313" fill="#BFDDFF" stroke="#0092DF" d="M195.887,88.075c0,1.941-2.95,3.518-6.588,3.518
+					c-3.637,0-6.589-1.576-6.589-3.518s2.952-3.518,6.589-3.518C192.936,84.557,195.887,86.135,195.887,88.075z"/>
+				<path id="path7315" fill="none" stroke="#0092DF" d="M189.299,91.593v24.629"/>
+			</g>
+			<g id="g7317">
+				<path id="path7319" fill="#BFDDFF" stroke="#0092DF" d="M180.779,88.075c0,1.941-2.951,3.518-6.588,3.518
+					s-6.588-1.576-6.588-3.518s2.951-3.518,6.588-3.518S180.779,86.135,180.779,88.075z"/>
+				<path id="path7321" fill="none" stroke="#0092DF" d="M174.19,91.593v24.629"/>
+			</g>
+			<g id="g7323">
+				<path id="path7325" fill="#BFDDFF" stroke="#0092DF" d="M256.33,88.075c0,1.941-2.952,3.518-6.59,3.518
+					s-6.589-1.576-6.589-3.518s2.951-3.518,6.589-3.518S256.33,86.135,256.33,88.075z"/>
+				<path id="path7327" fill="none" stroke="#0092DF" d="M249.743,91.593v24.629"/>
+			</g>
+			<g id="g7329">
+				<path id="path7331" fill="#BFDDFF" stroke="#0092DF" d="M241.219,88.075c0,1.941-2.95,3.518-6.588,3.518
+					c-3.639,0-6.588-1.576-6.588-3.518s2.95-3.518,6.588-3.518C238.269,84.557,241.219,86.135,241.219,88.075z"/>
+				<path id="path7333" fill="none" stroke="#0092DF" d="M234.631,91.593v24.629"/>
+			</g>
+			<g id="g7335">
+				<path id="path7337" fill="#BFDDFF" stroke="#0092DF" d="M226.107,88.075c0,1.941-2.951,3.518-6.588,3.518
+					c-3.638,0-6.588-1.576-6.588-3.518s2.95-3.518,6.588-3.518S226.107,86.135,226.107,88.075z"/>
+				<path id="path7339" fill="none" stroke="#0092DF" d="M219.519,91.593v24.629"/>
+			</g>
+		</g>
+		<g id="g7341">
+			<g id="g7343">
+				<path id="path7345" fill="#BFDDFF" stroke="#0092DF" d="M113.085,122.607c0-1.944-2.951-3.52-6.588-3.52
+					c-3.639,0-6.588,1.575-6.588,3.52c0,1.94,2.95,3.516,6.588,3.516C110.134,126.123,113.085,124.548,113.085,122.607z"/>
+				<path id="path7347" fill="none" stroke="#0092DF" d="M106.496,119.088V94.459"/>
+			</g>
+			<g id="g7349">
+				<path id="path7351" fill="#BFDDFF" stroke="#0092DF" d="M97.975,122.607c0-1.944-2.951-3.52-6.59-3.52
+					c-3.637,0-6.588,1.575-6.588,3.52c0,1.94,2.951,3.516,6.588,3.516S97.975,124.548,97.975,122.607z"/>
+				<path id="path7353" fill="none" stroke="#0092DF" d="M91.386,119.088V94.459"/>
+			</g>
+			<g id="g7355">
+				<path id="path7357" fill="#BFDDFF" stroke="#0092DF" d="M82.864,122.607c0-1.944-2.951-3.52-6.589-3.52
+					c-3.637,0-6.588,1.575-6.588,3.52c0,1.94,2.952,3.516,6.588,3.516C79.913,126.123,82.864,124.548,82.864,122.607z"/>
+				<path id="path7359" fill="none" stroke="#0092DF" d="M76.275,119.088V94.459"/>
+			</g>
+			<g id="g7361">
+				<path id="path7363" fill="#BFDDFF" stroke="#0092DF" d="M158.415,122.607c0-1.944-2.951-3.52-6.589-3.52
+					c-3.636,0-6.587,1.575-6.587,3.52c0,1.94,2.951,3.516,6.587,3.516C155.464,126.123,158.415,124.548,158.415,122.607z"/>
+				<path id="path7365" fill="none" stroke="#0092DF" d="M151.826,119.088V94.459"/>
+			</g>
+			<g id="g7367">
+				<path id="path7369" fill="#BFDDFF" stroke="#0092DF" d="M143.305,122.607c0-1.944-2.953-3.52-6.59-3.52
+					c-3.638,0-6.588,1.575-6.588,3.52c0,1.94,2.95,3.516,6.588,3.516S143.305,124.548,143.305,122.607z"/>
+				<path id="path7371" fill="none" stroke="#0092DF" d="M136.716,119.088V94.459"/>
+			</g>
+			<g id="g7373">
+				<path id="path7375" fill="#BFDDFF" stroke="#0092DF" d="M128.195,122.607c0-1.944-2.951-3.52-6.588-3.52
+					c-3.639,0-6.588,1.575-6.588,3.52c0,1.94,2.95,3.516,6.588,3.516C125.244,126.123,128.195,124.548,128.195,122.607z"/>
+				<path id="path7377" fill="none" stroke="#0092DF" d="M121.607,119.088V94.459"/>
+			</g>
+			<g id="g7379">
+				<path id="path7381" fill="#BFDDFF" stroke="#0092DF" d="M120.638,88.075c0,1.941-2.951,3.518-6.59,3.518
+					c-3.637,0-6.588-1.576-6.588-3.518s2.952-3.518,6.588-3.518C117.687,84.557,120.638,86.135,120.638,88.075z"/>
+				<path id="path7383" fill="none" stroke="#0092DF" d="M114.049,91.593v24.629"/>
+			</g>
+			<g id="g7385">
+				<path id="path7387" fill="#BFDDFF" stroke="#0092DF" d="M105.53,88.075c0,1.941-2.951,3.518-6.588,3.518
+					s-6.588-1.576-6.588-3.518s2.951-3.518,6.588-3.518S105.53,86.135,105.53,88.075z"/>
+				<path id="path7389" fill="none" stroke="#0092DF" d="M98.941,91.593v24.629"/>
+			</g>
+			<g id="g7391">
+				<path id="path7393" fill="#BFDDFF" stroke="#0092DF" d="M90.421,88.075c0,1.941-2.951,3.518-6.588,3.518
+					c-3.638,0-6.588-1.576-6.588-3.518s2.951-3.518,6.588-3.518S90.421,86.135,90.421,88.075z"/>
+				<path id="path7395" fill="none" stroke="#0092DF" d="M83.833,91.593v24.629"/>
+			</g>
+			<g id="g7397">
+				<path id="path7399" fill="#BFDDFF" stroke="#0092DF" d="M165.97,88.075c0,1.941-2.95,3.518-6.588,3.518
+					c-3.639,0-6.589-1.576-6.589-3.518s2.951-3.518,6.589-3.518C163.02,84.557,165.97,86.135,165.97,88.075z"/>
+				<path id="path7401" fill="none" stroke="#0092DF" d="M159.382,91.593v24.629"/>
+			</g>
+			<g id="g7403">
+				<path id="path7405" fill="#BFDDFF" stroke="#0092DF" d="M150.858,88.075c0,1.941-2.951,3.518-6.588,3.518
+					c-3.638,0-6.588-1.576-6.588-3.518s2.95-3.518,6.588-3.518C147.907,84.557,150.858,86.135,150.858,88.075z"/>
+				<path id="path7407" fill="none" stroke="#0092DF" d="M144.27,91.593v24.629"/>
+			</g>
+			<g id="g7409">
+				<path id="path7411" fill="#BFDDFF" stroke="#0092DF" d="M135.75,88.075c0,1.941-2.951,3.518-6.588,3.518
+					c-3.639,0-6.59-1.576-6.59-3.518s2.951-3.518,6.59-3.518C132.799,84.557,135.75,86.135,135.75,88.075z"/>
+				<path id="path7413" fill="none" stroke="#0092DF" d="M129.162,91.593v24.629"/>
+			</g>
+		</g>
+		<g id="g7415">
+			<g id="g7417">
+				<path id="path7419" fill="#BFDDFF" stroke="#0092DF" d="M22.724,122.607c0-1.944-2.951-3.52-6.589-3.52s-6.588,1.575-6.588,3.52
+					c0,1.94,2.951,3.516,6.588,3.516C19.773,126.123,22.724,124.548,22.724,122.607z"/>
+				<path id="path7421" fill="none" stroke="#0092DF" d="M16.135,119.088V94.459"/>
+			</g>
+			<g id="g7423">
+				<path id="path7425" fill="#BFDDFF" stroke="#0092DF" d="M7.615,122.607c0-1.944-2.951-3.52-6.589-3.52
+					c-3.637,0-6.589,1.575-6.589,3.52c0,1.94,2.953,3.516,6.589,3.516C4.664,126.123,7.615,124.548,7.615,122.607z"/>
+				<path id="path7427" fill="none" stroke="#0092DF" d="M1.026,119.088V94.459"/>
+			</g>
+			<g id="g7429">
+				<path id="path7431" fill="#BFDDFF" stroke="#0092DF" d="M-7.493,122.607c0-1.944-2.953-3.52-6.588-3.52
+					c-3.637,0-6.588,1.575-6.588,3.52c0,1.94,2.951,3.516,6.588,3.516C-10.446,126.123-7.493,124.548-7.493,122.607z"/>
+				<path id="path7433" fill="none" stroke="#0092DF" d="M-14.081,119.088V94.459"/>
+			</g>
+			<g id="g7435">
+				<path id="path7437" fill="#BFDDFF" stroke="#0092DF" d="M68.055,122.607c0-1.944-2.951-3.52-6.589-3.52
+					c-3.637,0-6.588,1.575-6.588,3.52c0,1.94,2.951,3.516,6.588,3.516C65.104,126.123,68.055,124.548,68.055,122.607z"/>
+				<path id="path7439" fill="none" stroke="#0092DF" d="M61.466,119.088V94.459"/>
+			</g>
+			<g id="g7441">
+				<path id="path7443" fill="#BFDDFF" stroke="#0092DF" d="M52.946,122.607c0-1.944-2.951-3.52-6.588-3.52
+					c-3.639,0-6.588,1.575-6.588,3.52c0,1.94,2.95,3.516,6.588,3.516C49.995,126.123,52.946,124.548,52.946,122.607z"/>
+				<path id="path7445" fill="none" stroke="#0092DF" d="M46.358,119.088V94.459"/>
+			</g>
+			<g id="g7447">
+				<path id="path7449" fill="#BFDDFF" stroke="#0092DF" d="M37.835,122.607c0-1.944-2.95-3.52-6.588-3.52s-6.588,1.575-6.588,3.52
+					c0,1.94,2.951,3.516,6.588,3.516S37.835,124.548,37.835,122.607z"/>
+				<path id="path7451" fill="none" stroke="#0092DF" d="M31.246,119.088V94.459"/>
+			</g>
+			<g id="g7453">
+				<path id="path7455" fill="#BFDDFF" stroke="#0092DF" d="M30.281,88.075c0,1.941-2.951,3.518-6.588,3.518
+					s-6.588-1.576-6.588-3.518s2.951-3.518,6.588-3.518S30.281,86.135,30.281,88.075z"/>
+				<path id="path7457" fill="none" stroke="#0092DF" d="M23.692,91.593v24.629"/>
+			</g>
+			<g id="g7459">
+				<path id="path7461" fill="#BFDDFF" stroke="#0092DF" d="M15.17,88.075c0,1.941-2.951,3.518-6.589,3.518
+					c-3.637,0-6.588-1.576-6.588-3.518s2.951-3.518,6.588-3.518C12.219,84.557,15.17,86.135,15.17,88.075z"/>
+				<path id="path7463" fill="none" stroke="#0092DF" d="M8.581,91.593v24.629"/>
+			</g>
+			<g id="g7465">
+				<path id="path7467" fill="#BFDDFF" stroke="#0092DF" d="M0.061,88.075c0,1.941-2.951,3.518-6.588,3.518
+					c-3.639,0-6.589-1.576-6.589-3.518s2.951-3.518,6.589-3.518C-2.891,84.557,0.061,86.135,0.061,88.075z"/>
+				<path id="path7469" fill="none" stroke="#0092DF" d="M-6.528,91.593v24.629"/>
+			</g>
+			<g id="g7471">
+				<path id="path7473" fill="#BFDDFF" stroke="#0092DF" d="M75.609,88.075c0,1.941-2.951,3.518-6.588,3.518
+					c-3.639,0-6.588-1.576-6.588-3.518s2.95-3.518,6.588-3.518C72.658,84.557,75.609,86.135,75.609,88.075z"/>
+				<path id="path7475" fill="none" stroke="#0092DF" d="M69.021,91.593v24.629"/>
+			</g>
+			<g id="g7477">
+				<path id="path7479" fill="#BFDDFF" stroke="#0092DF" d="M60.501,88.075c0,1.941-2.951,3.518-6.59,3.518
+					c-3.637,0-6.588-1.576-6.588-3.518s2.951-3.518,6.588-3.518C57.55,84.557,60.501,86.135,60.501,88.075z"/>
+				<path id="path7481" fill="none" stroke="#0092DF" d="M53.911,91.593v24.629"/>
+			</g>
+			<g id="g7483">
+				<path id="path7485" fill="#BFDDFF" stroke="#0092DF" d="M45.389,88.075c0,1.941-2.951,3.518-6.59,3.518
+					c-3.637,0-6.588-1.576-6.588-3.518s2.952-3.518,6.588-3.518C42.438,84.557,45.389,86.135,45.389,88.075z"/>
+				<path id="path7487" fill="none" stroke="#0092DF" d="M38.8,91.593v24.629"/>
+			</g>
+		</g>
+	</g>
+	<g id="g1456">
+		<g id="g1458">
+			
+				<radialGradient id="rect78407_1_" cx="228.9973" cy="610.8945" r="14.6566" gradientTransform="matrix(0.7055 0.7087 0.7087 -0.7055 -410.5416 305.6104)" gradientUnits="userSpaceOnUse">
+				<stop  offset="0" style="stop-color:#D0C4E0"/>
+				<stop  offset="0.3949" style="stop-color:#C1D1EB"/>
+				<stop  offset="0.5372" style="stop-color:#B9CCE9"/>
+				<stop  offset="0.6386" style="stop-color:#AEC3E5"/>
+				<stop  offset="0.7206" style="stop-color:#9FB9E0"/>
+				<stop  offset="0.7909" style="stop-color:#8DABD9"/>
+				<stop  offset="0.8531" style="stop-color:#7596CD"/>
+				<stop  offset="0.9093" style="stop-color:#5C80C0"/>
+				<stop  offset="0.9593" style="stop-color:#476FB5"/>
+				<stop  offset="1" style="stop-color:#4165AE"/>
+			</radialGradient>
+			<path id="rect78407_3_" fill="url(#rect78407_1_)" stroke="#000000" d="M187.073,20.508l13.305,13.361
+				c1.696,1.704,1.69,4.462-0.015,6.16l-13.361,13.305c-1.704,1.696-4.465,1.69-6.161-0.015l-13.305-13.362
+				c-1.695-1.703-1.688-4.464,0.015-6.16l13.362-13.304C182.616,18.797,185.375,18.803,187.073,20.508z"/>
+			<g id="g1482">
+				<path id="path1484" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" d="M206.002,99.696V59.029
+					c-0.082-2.542-3.707-2.542-3.666,0l-0.003-0.155V99.54c-0.081,2.542-3.706,2.542-3.666,0l-0.002,0.074V58.946
+					c0.041-2.541-3.584-2.541-3.666,0v-0.24v40.668c-0.082,2.541-3.707,2.541-3.666,0v0.072V58.778c0.041-2.541-3.584-2.541-3.666,0
+					v-0.03v40.667c-0.081,2.541-3.706,2.541-3.665,0V58.748"/>
+				<path id="path1486" fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" d="M191.914,51.039l-7.955,7.955
+					l-7.954-7.955"/>
+			</g>
+		</g>
+	</g>
+	<g>
+		
+			<radialGradient id="path16609_54_" cx="222.4783" cy="872.8184" r="16.1863" gradientTransform="matrix(0.6739 0 0 -0.6498 59.6783 658.7473)" gradientUnits="userSpaceOnUse">
+			<stop  offset="0" style="stop-color:#A2FF5F"/>
+			<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+			<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+			<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+			<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+			<stop  offset="0.8174" style="stop-color:#67F35D"/>
+			<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+			<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+			<stop  offset="0.9915" style="stop-color:#07E05A"/>
+			<stop  offset="1" style="stop-color:#00DF5A"/>
+		</radialGradient>
+		<path id="path16609_44_" fill="url(#path16609_54_)" stroke="#000000" d="M220.314,91.589c0,5.914-4.796,10.708-10.708,10.708
+			c-5.915,0-10.708-4.792-10.708-10.708s4.794-10.706,10.708-10.706C215.519,80.884,220.314,85.675,220.314,91.589z"/>
+		<text transform="matrix(0.4139 0 0 1 203.8245 94.8604)" font-family="'ArialMT'" font-size="12.264">Pro8</text>
+	</g>
+	<g>
+		
+			<radialGradient id="path16609_55_" cx="181.3894" cy="851.0664" r="16.1863" gradientTransform="matrix(0.6739 0 0 -0.6498 59.6783 658.7473)" gradientUnits="userSpaceOnUse">
+			<stop  offset="0" style="stop-color:#A2FF5F"/>
+			<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+			<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+			<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+			<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+			<stop  offset="0.8174" style="stop-color:#67F35D"/>
+			<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+			<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+			<stop  offset="0.9915" style="stop-color:#07E05A"/>
+			<stop  offset="1" style="stop-color:#00DF5A"/>
+		</radialGradient>
+		<path id="path16609_45_" fill="url(#path16609_55_)" stroke="#000000" d="M192.625,105.723c0,5.913-4.796,10.708-10.708,10.708
+			c-5.915,0-10.708-4.793-10.708-10.708c0-5.916,4.794-10.706,10.708-10.706C187.829,95.018,192.625,99.808,192.625,105.723z"/>
+		<text transform="matrix(0.4139 0 0 1 176.135 108.9922)" font-family="'ArialMT'" font-size="12.264">Pro8</text>
+	</g>
+	<g>
+		
+			<radialGradient id="path16609_58_" cx="212.6687" cy="993.2393" r="16.1858" gradientTransform="matrix(1.2157 0 0 -0.6055 -127.0461 611.8834)" gradientUnits="userSpaceOnUse">
+			<stop  offset="0" style="stop-color:#A2FF5F"/>
+			<stop  offset="0.4082" style="stop-color:#A0FF5F"/>
+			<stop  offset="0.5552" style="stop-color:#99FD5F"/>
+			<stop  offset="0.66" style="stop-color:#8EFB5E"/>
+			<stop  offset="0.7448" style="stop-color:#7DF85E"/>
+			<stop  offset="0.8174" style="stop-color:#67F35D"/>
+			<stop  offset="0.8817" style="stop-color:#4BEE5C"/>
+			<stop  offset="0.9398" style="stop-color:#2BE85B"/>
+			<stop  offset="0.9915" style="stop-color:#07E05A"/>
+			<stop  offset="1" style="stop-color:#00DF5A"/>
+		</radialGradient>
+		<path id="path16609_7_" fill="url(#path16609_58_)" stroke="#000000" d="M150.811,10.476c0,5.51-8.651,9.978-19.316,9.978
+			c-10.667,0-19.314-4.466-19.314-9.978c0-5.512,8.647-9.976,19.314-9.976C142.16,0.501,150.811,4.965,150.811,10.476z"/>
+		<text transform="matrix(0.8012 0 0 1 118.0144 13.5225)" font-family="'ArialMT'" font-size="11.4273">FasL</text>
+	</g>
+	<g>
+		<g>
+			<path fill="none" stroke="#000000" stroke-dasharray="3,3" d="M169.695,27.875c8.032-8.135-2.124-15.458-20.136-21.658"/>
+			<polygon points="169.033,23.275 170.563,26.996 174.304,28.479 165.501,32.123 			"/>
+		</g>
+	</g>
+</g>
+<text transform="matrix(1 0 0 1 511.738 112.5078)" font-family="'ArialMT'" font-size="12">smooth muscle</text>
+</svg>
+</window>

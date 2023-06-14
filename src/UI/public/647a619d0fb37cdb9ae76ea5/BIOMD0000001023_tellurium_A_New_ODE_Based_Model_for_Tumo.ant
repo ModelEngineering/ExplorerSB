@@ -1,0 +1,132 @@
+// Created by libAntimony v2.13.2
+function Rate_Law_for_Normal_cell_growth(r, N, beta_1)
+  r*N*(1 - beta_1*N);
+end
+
+Rate_Law_for_Normal_cell_growth is "Rate Law for Normal_cell_growth"
+
+function Rate_Law_for_Normal_cell_death_inhibition(eta, N, I, gamma_, T)
+  eta*N*I + gamma_*N*T;
+end
+
+Rate_Law_for_Normal_cell_death_inhibition is "Rate Law for Normal_cell_death/inhibition"
+
+function Rate_Law_for_Tumor_cell_growth(alpha_1, T, alpha_2, beta_2, N)
+  alpha_1*T*(1 - alpha_2*T) + beta_2*N*T;
+end
+
+Rate_Law_for_Tumor_cell_growth is "Rate Law for Tumor_cell_growth"
+
+function Rate_Law_for_Tumor_cell_death_inhibition(alpha_3, T, I)
+  alpha_3*T*I;
+end
+
+Rate_Law_for_Tumor_cell_death_inhibition is "Rate Law for Tumor_cell_death/inhibition"
+
+function Rate_Law_for_Immune_cell_increase(sigma, rho, N, I, m, rho_1, T, m_1)
+  sigma + rho*N*I/(m + N) + rho_1*T*I/(m_1 + T);
+end
+
+Rate_Law_for_Immune_cell_increase is "Rate Law for Immune_cell_increase"
+
+function Rate_Law_for_Immune_cell_decrease(delta, I, mu, N, mu_1, T)
+  delta*I + mu*N*I + mu_1*T*I;
+end
+
+Rate_Law_for_Immune_cell_decrease is "Rate Law for Immune_cell_decrease"
+
+
+model *Alharbi2020___An_ODE_based_model_of_the_dynamics_of_tumor_cell_progression_and_its_effects_on_normal_cell_growth_and_immune_system_functionality()
+
+  // Compartments and Species:
+  compartment Whole_organism;
+  species Normal_cells in Whole_organism, Tumor_cells in Whole_organism, Immune_cells in Whole_organism;
+
+  // Reactions:
+  Normal_cell_growth:  => Normal_cells; Whole_organism*Rate_Law_for_Normal_cell_growth(r, Normal_cells, beta_1);
+  Normal_cell_death_inhibition: Normal_cells => ; Whole_organism*Rate_Law_for_Normal_cell_death_inhibition(eta, Normal_cells, Immune_cells, gamma_, Tumor_cells);
+  Tumor_cell_growth:  => Tumor_cells; Whole_organism*Rate_Law_for_Tumor_cell_growth(alpha_1, Tumor_cells, alpha_2, beta_2, Normal_cells);
+  Tumor_cell_death_inhibition: Tumor_cells => ; Whole_organism*Rate_Law_for_Tumor_cell_death_inhibition(alpha_3, Tumor_cells, Immune_cells);
+  Immune_cell_increase:  => Immune_cells; Whole_organism*Rate_Law_for_Immune_cell_increase(sigma, rho, Normal_cells, Immune_cells, m, rho_1, Tumor_cells, m_1);
+  Immune_cell_decrease: Immune_cells => ; Whole_organism*Rate_Law_for_Immune_cell_decrease(delta, Immune_cells, mu, Normal_cells, mu_1, Tumor_cells);
+
+  // Species initializations:
+  Normal_cells = 1;
+  Tumor_cells = 1;
+  Immune_cells = 1.22;
+
+  // Compartment initializations:
+  Whole_organism = 1;
+
+  // Variable initializations:
+  r = 0.4312;
+  beta_1 = 2.99e-06;
+  eta = 0.1379;
+  gamma_ = 0.9314;
+  alpha_1 = 0.4426;
+  alpha_2 = 0.4;
+  beta_2 = 1.189;
+  alpha_3 = 0.1469;
+  sigma = 0.7;
+  delta = 0.57;
+  mu = 0.813;
+  rho = 0.271;
+  m = 0.813;
+  mu_1 = 0.3634;
+  rho_1 = 0.7829;
+  m_1 = 0.862;
+
+  // Other declarations:
+  const Whole_organism, r, beta_1, eta, gamma_, alpha_1, alpha_2, beta_2;
+  const alpha_3, sigma, delta, mu, rho, m, mu_1, rho_1, m_1;
+
+  // Unit definitions:
+  unit length = metre;
+  unit area = metre^2;
+  unit volume = litre;
+  unit time_unit = 86400 second;
+  unit substance = mole;
+
+  // Display Names:
+  time_unit is "time";
+  gamma_ is "gamma";
+  Normal_cell_death_inhibition is "Normal_cell_death/inhibition";
+  Tumor_cell_death_inhibition is "Tumor_cell_death/inhibition";
+
+  // CV terms:
+  Whole_organism hypernym "http://identifiers.org/ncit/C13413"
+  Whole_organism property "http://identifiers.org/pato/PATO:0001993"
+  Normal_cells hypernym "http://identifiers.org/cl/CL:0000000"
+  Normal_cells property "http://identifiers.org/hp/HP:0032322"
+  Tumor_cells hypernym "http://identifiers.org/cl/CL:0001063"
+  Immune_cells hypernym "http://identifiers.org/ncit/C132890"
+  Normal_cell_growth hypernym "http://identifiers.org/go/GO:0008283"
+  Normal_cell_growth hypernym "http://identifiers.org/sbo/SBO:0000393"
+  Normal_cell_death_inhibition hypernym "http://identifiers.org/go/GO:0008219"
+  Normal_cell_death_inhibition hypernym "http://identifiers.org/sbo/SBO:0000394"
+  Normal_cell_death_inhibition hypernym "http://identifiers.org/sbo/SBO:0000169"
+  Tumor_cell_growth hypernym "http://identifiers.org/go/GO:0008283"
+  Tumor_cell_growth hypernym "http://identifiers.org/sbo/SBO:0000393"
+  Tumor_cell_death_inhibition hypernym "http://identifiers.org/go/GO:0008219"
+  Tumor_cell_death_inhibition hypernym "http://identifiers.org/sbo/SBO:0000169"
+  Tumor_cell_death_inhibition hypernym "http://identifiers.org/sbo/SBO:0000394"
+  Tumor_cell_death_inhibition hypernym "http://identifiers.org/go/GO:0001906"
+  Immune_cell_increase hypernym "http://identifiers.org/sbo/SBO:0000393"
+  Immune_cell_increase hypernym "http://identifiers.org/sbo/SBO:0000170"
+  Immune_cell_increase hypernym "http://identifiers.org/go/GO:0008283"
+  Immune_cell_decrease hypernym "http://identifiers.org/go/GO:0008219"
+  Immune_cell_decrease hypernym "http://identifiers.org/sbo/SBO:0000169"
+  Immune_cell_decrease hypernym "http://identifiers.org/sbo/SBO:0000394"
+end
+
+Alharbi2020___An_ODE_based_model_of_the_dynamics_of_tumor_cell_progression_and_its_effects_on_normal_cell_growth_and_immune_system_functionality is "Alharbi2020 - An ODE-based model of the dynamics of tumor cell progression and its effects on normal cell growth and immune system functionality"
+
+Alharbi2020___An_ODE_based_model_of_the_dynamics_of_tumor_cell_progression_and_its_effects_on_normal_cell_growth_and_immune_system_functionality model_entity_is "http://identifiers.org/biomodels.db/MODEL2107290002",
+                                                                                                                                                                 "http://identifiers.org/biomodels.db/BIOMD0000001023"
+Alharbi2020___An_ODE_based_model_of_the_dynamics_of_tumor_cell_progression_and_its_effects_on_normal_cell_growth_and_immune_system_functionality propertyBearer "http://identifiers.org/go/GO:0002418"
+Alharbi2020___An_ODE_based_model_of_the_dynamics_of_tumor_cell_progression_and_its_effects_on_normal_cell_growth_and_immune_system_functionality propertyBearer "http://identifiers.org/ncit/C18670"
+Alharbi2020___An_ODE_based_model_of_the_dynamics_of_tumor_cell_progression_and_its_effects_on_normal_cell_growth_and_immune_system_functionality propertyBearer "http://identifiers.org/doid/DOID:162"
+Alharbi2020___An_ODE_based_model_of_the_dynamics_of_tumor_cell_progression_and_its_effects_on_normal_cell_growth_and_immune_system_functionality propertyBearer "http://identifiers.org/go/GO:0002376"
+Alharbi2020___An_ODE_based_model_of_the_dynamics_of_tumor_cell_progression_and_its_effects_on_normal_cell_growth_and_immune_system_functionality taxon "http://identifiers.org/taxonomy/9606"
+Alharbi2020___An_ODE_based_model_of_the_dynamics_of_tumor_cell_progression_and_its_effects_on_normal_cell_growth_and_immune_system_functionality description "http://identifiers.org/doi/10.3390/math8081285"
+Alharbi2020___An_ODE_based_model_of_the_dynamics_of_tumor_cell_progression_and_its_effects_on_normal_cell_growth_and_immune_system_functionality property "http://identifiers.org/mamo/MAMO_0000046"

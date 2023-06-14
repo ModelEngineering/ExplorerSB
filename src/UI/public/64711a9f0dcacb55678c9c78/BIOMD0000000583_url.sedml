@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version4" xmlns:sbml="http://www.sbml.org/sbml/level2/version4" level="1" version="4">
+  <listOfModels>
+    <model id="BIOMD0000000583_url" language="urn:sedml:language:sbml" source="BIOMD0000000583_url.xml"/>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="auto_ten_seconds" initialTime="0" outputStartTime="0" outputEndTime="10" numberOfSteps="1000">
+      <algorithm name="CVODE" kisaoID="KISAO:0000019"/>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task1" modelReference="BIOMD0000000583_url" simulationReference="auto_ten_seconds"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="auto_time_for_task1" name="Time">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_time_for_task1_var </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_time_for_task1_var" symbol="urn:sedml:symbol:time" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Cdiff">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Cdiff__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Cdiff__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;Cdiff&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Commensal_Beneficial">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Commensal_Beneficial__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Commensal_Beneficial__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;Commensal_Beneficial&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Commensal_Dead">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Commensal_Dead__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Commensal_Dead__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;Commensal_Dead&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_tDC_LP">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_tDC_LP__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_tDC_LP__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;tDC_LP&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_tDC_MLN">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_tDC_MLN__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_tDC_MLN__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;tDC_MLN&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Commensal_Harmful">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Commensal_Harmful__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Commensal_Harmful__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;Commensal_Harmful&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_N_Lum">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_N_Lum__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_N_Lum__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;N_Lum&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_E">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_E__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_E__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;E&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_E_d">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_E_d__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_E_d__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;E_d&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_iDC_E">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_iDC_E__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_iDC_E__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;iDC_E&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_E_i">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_E_i__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_E_i__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;E_i&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_M_LP">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_M_LP__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_M_LP__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;M_LP&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_eDC_LP">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_eDC_LP__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_eDC_LP__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;eDC_LP&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_M0">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_M0__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_M0__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;M0&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_N_LP">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_N_LP__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_N_LP__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;N_LP&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Th17_LP">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Th17_LP__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Th17_LP__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;Th17_LP&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Th1_LP">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Th1_LP__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Th1_LP__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;Th1_LP&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_iTreg_LP">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_iTreg_LP__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_iTreg_LP__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;iTreg_LP&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_eDC_MLN">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_eDC_MLN__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_eDC_MLN__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;eDC_MLN&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_iTreg_MLN">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_iTreg_MLN__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_iTreg_MLN__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;iTreg_MLN&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_nT">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_nT__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_nT__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;nT&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Th17_MLN">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Th17_MLN__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Th17_MLN__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;Th17_MLN&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Th1_MLN">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Th1_MLN__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Th1_MLN__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;Th1_MLN&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Lumen">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Lumen__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Lumen__x" target="/sbml:sbml/sbml:model/sbml:listOfCompartments/sbml:compartment[@id=&apos;Lumen&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Epithelium">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Epithelium__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Epithelium__x" target="/sbml:sbml/sbml:model/sbml:listOfCompartments/sbml:compartment[@id=&apos;Epithelium&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_LP">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_LP__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_LP__x" target="/sbml:sbml/sbml:model/sbml:listOfCompartments/sbml:compartment[@id=&apos;LP&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_MLN">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_MLN__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_MLN__x" target="/sbml:sbml/sbml:model/sbml:listOfCompartments/sbml:compartment[@id=&apos;MLN&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Treg_Degradation">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Treg_Degradation__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Treg_Degradation__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;Treg_Degradation&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_eDC_Degradation">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_eDC_Degradation__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_eDC_Degradation__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;eDC_Degradation&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Th17_Degradation">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Th17_Degradation__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Th17_Degradation__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;Th17_Degradation&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Th1_Degradation">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Th1_Degradation__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Th1_Degradation__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;Th1_Degradation&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_N_Degradation">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_N_Degradation__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_N_Degradation__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;N_Degradation&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_E_Damage">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_E_Damage__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_E_Damage__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;E_Damage&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_eDC_Migration">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_eDC_Migration__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_eDC_Migration__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;eDC_Migration&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_eDC_Production">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_eDC_Production__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_eDC_Production__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;eDC_Production&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Cdiff_Death">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Cdiff_Death__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Cdiff_Death__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;Cdiff_Death&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_N_Activation_Migration">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_N_Activation_Migration__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_N_Activation_Migration__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;N_Activation_Migration&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Cdiff_Growth">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Cdiff_Growth__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Cdiff_Growth__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;Cdiff_Growth&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Treg_Migration">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Treg_Migration__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Treg_Migration__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;Treg_Migration&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Th1_Migration">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Th1_Migration__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Th1_Migration__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;Th1_Migration&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Th17_Plasticity">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Th17_Plasticity__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Th17_Plasticity__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;Th17_Plasticity&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Th17_Migration">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Th17_Migration__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Th17_Migration__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;Th17_Migration&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_E_Inflame">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_E_Inflame__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_E_Inflame__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;E_Inflame&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_E_i_Damage">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_E_i_Damage__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_E_i_Damage__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;E_i_Damage&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_M_Activation">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_M_Activation__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_M_Activation__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;M_Activation&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_M_Death">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_M_Death__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_M_Death__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;M_Death&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Commensal_Regrowth">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Commensal_Regrowth__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Commensal_Regrowth__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;Commensal_Regrowth&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_E_Heal">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_E_Heal__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_E_Heal__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;E_Heal&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_tDC_Production">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_tDC_Production__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_tDC_Production__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;tDC_Production&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_tDC_Migration">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_tDC_Migration__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_tDC_Migration__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;tDC_Migration&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_tDC_Degradation">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_tDC_Degradation__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_tDC_Degradation__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;tDC_Degradation&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Th17_Differentiation">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Th17_Differentiation__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Th17_Differentiation__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;Th17_Differentiation&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Th1_Differentiation">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Th1_Differentiation__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Th1_Differentiation__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;Th1_Differentiation&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Treg_Differentiation">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Treg_Differentiation__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Treg_Differentiation__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;Treg_Differentiation&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Commensal_Harmful_Death">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Commensal_Harmful_Death__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Commensal_Harmful_Death__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;Commensal_Harmful_Death&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Commensal_Death">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Commensal_Death__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Commensal_Death__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;Commensal_Death&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_E_i_Natural_Death">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_E_i_Natural_Death__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_E_i_Natural_Death__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;E_i_Natural_Death&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="autogen_report_for_task1" name="Auto-generated report for task1, including all symbols in SBML with mathematical meaning, both constant and variable.">
+      <listOfDataSets>
+        <dataSet id="autogen_time_for_task1" label="Time" dataReference="auto_time_for_task1"/>
+        <dataSet id="autogen_task1_Cdiff" label="Cdiff" dataReference="auto_dg_for_task1_Cdiff"/>
+        <dataSet id="autogen_task1_Commensal_Beneficial" label="Commensal_Beneficial" dataReference="auto_dg_for_task1_Commensal_Beneficial"/>
+        <dataSet id="autogen_task1_Commensal_Dead" label="Commensal_Dead" dataReference="auto_dg_for_task1_Commensal_Dead"/>
+        <dataSet id="autogen_task1_tDC_LP" label="tDC_LP" dataReference="auto_dg_for_task1_tDC_LP"/>
+        <dataSet id="autogen_task1_tDC_MLN" label="tDC_MLN" dataReference="auto_dg_for_task1_tDC_MLN"/>
+        <dataSet id="autogen_task1_Commensal_Harmful" label="Commensal_Harmful" dataReference="auto_dg_for_task1_Commensal_Harmful"/>
+        <dataSet id="autogen_task1_N_Lum" label="N_Lum" dataReference="auto_dg_for_task1_N_Lum"/>
+        <dataSet id="autogen_task1_E" label="E" dataReference="auto_dg_for_task1_E"/>
+        <dataSet id="autogen_task1_E_d" label="E_d" dataReference="auto_dg_for_task1_E_d"/>
+        <dataSet id="autogen_task1_iDC_E" label="iDC_E" dataReference="auto_dg_for_task1_iDC_E"/>
+        <dataSet id="autogen_task1_E_i" label="E_i" dataReference="auto_dg_for_task1_E_i"/>
+        <dataSet id="autogen_task1_M_LP" label="M_LP" dataReference="auto_dg_for_task1_M_LP"/>
+        <dataSet id="autogen_task1_eDC_LP" label="eDC_LP" dataReference="auto_dg_for_task1_eDC_LP"/>
+        <dataSet id="autogen_task1_M0" label="M0" dataReference="auto_dg_for_task1_M0"/>
+        <dataSet id="autogen_task1_N_LP" label="N_LP" dataReference="auto_dg_for_task1_N_LP"/>
+        <dataSet id="autogen_task1_Th17_LP" label="Th17_LP" dataReference="auto_dg_for_task1_Th17_LP"/>
+        <dataSet id="autogen_task1_Th1_LP" label="Th1_LP" dataReference="auto_dg_for_task1_Th1_LP"/>
+        <dataSet id="autogen_task1_iTreg_LP" label="iTreg_LP" dataReference="auto_dg_for_task1_iTreg_LP"/>
+        <dataSet id="autogen_task1_eDC_MLN" label="eDC_MLN" dataReference="auto_dg_for_task1_eDC_MLN"/>
+        <dataSet id="autogen_task1_iTreg_MLN" label="iTreg_MLN" dataReference="auto_dg_for_task1_iTreg_MLN"/>
+        <dataSet id="autogen_task1_nT" label="nT" dataReference="auto_dg_for_task1_nT"/>
+        <dataSet id="autogen_task1_Th17_MLN" label="Th17_MLN" dataReference="auto_dg_for_task1_Th17_MLN"/>
+        <dataSet id="autogen_task1_Th1_MLN" label="Th1_MLN" dataReference="auto_dg_for_task1_Th1_MLN"/>
+        <dataSet id="autogen_task1_Lumen" label="Lumen" dataReference="auto_dg_for_task1_Lumen"/>
+        <dataSet id="autogen_task1_Epithelium" label="Epithelium" dataReference="auto_dg_for_task1_Epithelium"/>
+        <dataSet id="autogen_task1_LP" label="LP" dataReference="auto_dg_for_task1_LP"/>
+        <dataSet id="autogen_task1_MLN" label="MLN" dataReference="auto_dg_for_task1_MLN"/>
+        <dataSet id="autogen_task1_Treg_Degradation" label="Treg_Degradation" dataReference="auto_dg_for_task1_Treg_Degradation"/>
+        <dataSet id="autogen_task1_eDC_Degradation" label="eDC_Degradation" dataReference="auto_dg_for_task1_eDC_Degradation"/>
+        <dataSet id="autogen_task1_Th17_Degradation" label="Th17_Degradation" dataReference="auto_dg_for_task1_Th17_Degradation"/>
+        <dataSet id="autogen_task1_Th1_Degradation" label="Th1_Degradation" dataReference="auto_dg_for_task1_Th1_Degradation"/>
+        <dataSet id="autogen_task1_N_Degradation" label="N_Degradation" dataReference="auto_dg_for_task1_N_Degradation"/>
+        <dataSet id="autogen_task1_E_Damage" label="E_Damage" dataReference="auto_dg_for_task1_E_Damage"/>
+        <dataSet id="autogen_task1_eDC_Migration" label="eDC_Migration" dataReference="auto_dg_for_task1_eDC_Migration"/>
+        <dataSet id="autogen_task1_eDC_Production" label="eDC_Production" dataReference="auto_dg_for_task1_eDC_Production"/>
+        <dataSet id="autogen_task1_Cdiff_Death" label="Cdiff_Death" dataReference="auto_dg_for_task1_Cdiff_Death"/>
+        <dataSet id="autogen_task1_N_Activation_Migration" label="N_Activation_Migration" dataReference="auto_dg_for_task1_N_Activation_Migration"/>
+        <dataSet id="autogen_task1_Cdiff_Growth" label="Cdiff_Growth" dataReference="auto_dg_for_task1_Cdiff_Growth"/>
+        <dataSet id="autogen_task1_Treg_Migration" label="Treg_Migration" dataReference="auto_dg_for_task1_Treg_Migration"/>
+        <dataSet id="autogen_task1_Th1_Migration" label="Th1_Migration" dataReference="auto_dg_for_task1_Th1_Migration"/>
+        <dataSet id="autogen_task1_Th17_Plasticity" label="Th17_Plasticity" dataReference="auto_dg_for_task1_Th17_Plasticity"/>
+        <dataSet id="autogen_task1_Th17_Migration" label="Th17_Migration" dataReference="auto_dg_for_task1_Th17_Migration"/>
+        <dataSet id="autogen_task1_E_Inflame" label="E_Inflame" dataReference="auto_dg_for_task1_E_Inflame"/>
+        <dataSet id="autogen_task1_E_i_Damage" label="E_i_Damage" dataReference="auto_dg_for_task1_E_i_Damage"/>
+        <dataSet id="autogen_task1_M_Activation" label="M_Activation" dataReference="auto_dg_for_task1_M_Activation"/>
+        <dataSet id="autogen_task1_M_Death" label="M_Death" dataReference="auto_dg_for_task1_M_Death"/>
+        <dataSet id="autogen_task1_Commensal_Regrowth" label="Commensal_Regrowth" dataReference="auto_dg_for_task1_Commensal_Regrowth"/>
+        <dataSet id="autogen_task1_E_Heal" label="E_Heal" dataReference="auto_dg_for_task1_E_Heal"/>
+        <dataSet id="autogen_task1_tDC_Production" label="tDC_Production" dataReference="auto_dg_for_task1_tDC_Production"/>
+        <dataSet id="autogen_task1_tDC_Migration" label="tDC_Migration" dataReference="auto_dg_for_task1_tDC_Migration"/>
+        <dataSet id="autogen_task1_tDC_Degradation" label="tDC_Degradation" dataReference="auto_dg_for_task1_tDC_Degradation"/>
+        <dataSet id="autogen_task1_Th17_Differentiation" label="Th17_Differentiation" dataReference="auto_dg_for_task1_Th17_Differentiation"/>
+        <dataSet id="autogen_task1_Th1_Differentiation" label="Th1_Differentiation" dataReference="auto_dg_for_task1_Th1_Differentiation"/>
+        <dataSet id="autogen_task1_Treg_Differentiation" label="Treg_Differentiation" dataReference="auto_dg_for_task1_Treg_Differentiation"/>
+        <dataSet id="autogen_task1_Commensal_Harmful_Death" label="Commensal_Harmful_Death" dataReference="auto_dg_for_task1_Commensal_Harmful_Death"/>
+        <dataSet id="autogen_task1_Commensal_Death" label="Commensal_Death" dataReference="auto_dg_for_task1_Commensal_Death"/>
+        <dataSet id="autogen_task1_E_i_Natural_Death" label="E_i_Natural_Death" dataReference="auto_dg_for_task1_E_i_Natural_Death"/>
+      </listOfDataSets>
+    </report>
+    <plot2D id="autogen_plot_for_task1" name="Auto-generated plot for task1, including all species.">
+      <xAxis name="Time" type="linear"/>
+      <yAxis name="Species" type="linear"/>
+      <listOfCurves>
+        <curve id="autogen_curve_task1_Cdiff" name="Cdiff" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_Cdiff"/>
+        <curve id="autogen_curve_task1_Commensal_Beneficial" name="Commensal_Beneficial" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_Commensal_Beneficial"/>
+        <curve id="autogen_curve_task1_Commensal_Dead" name="Commensal_Dead" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_Commensal_Dead"/>
+        <curve id="autogen_curve_task1_tDC_LP" name="tDC_LP" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_tDC_LP"/>
+        <curve id="autogen_curve_task1_tDC_MLN" name="tDC_MLN" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_tDC_MLN"/>
+        <curve id="autogen_curve_task1_Commensal_Harmful" name="Commensal_Harmful" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_Commensal_Harmful"/>
+        <curve id="autogen_curve_task1_N_Lum" name="N_Lum" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_N_Lum"/>
+        <curve id="autogen_curve_task1_E" name="E" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_E"/>
+        <curve id="autogen_curve_task1_E_d" name="E_d" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_E_d"/>
+        <curve id="autogen_curve_task1_iDC_E" name="iDC_E" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_iDC_E"/>
+        <curve id="autogen_curve_task1_E_i" name="E_i" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_E_i"/>
+        <curve id="autogen_curve_task1_M_LP" name="M_LP" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_M_LP"/>
+        <curve id="autogen_curve_task1_eDC_LP" name="eDC_LP" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_eDC_LP"/>
+        <curve id="autogen_curve_task1_M0" name="M0" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_M0"/>
+        <curve id="autogen_curve_task1_N_LP" name="N_LP" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_N_LP"/>
+        <curve id="autogen_curve_task1_Th17_LP" name="Th17_LP" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_Th17_LP"/>
+        <curve id="autogen_curve_task1_Th1_LP" name="Th1_LP" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_Th1_LP"/>
+        <curve id="autogen_curve_task1_iTreg_LP" name="iTreg_LP" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_iTreg_LP"/>
+        <curve id="autogen_curve_task1_eDC_MLN" name="eDC_MLN" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_eDC_MLN"/>
+        <curve id="autogen_curve_task1_iTreg_MLN" name="iTreg_MLN" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_iTreg_MLN"/>
+        <curve id="autogen_curve_task1_nT" name="nT" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_nT"/>
+        <curve id="autogen_curve_task1_Th17_MLN" name="Th17_MLN" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_Th17_MLN"/>
+        <curve id="autogen_curve_task1_Th1_MLN" name="Th1_MLN" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_Th1_MLN"/>
+      </listOfCurves>
+    </plot2D>
+  </listOfOutputs>
+</sedML>

@@ -1,0 +1,311 @@
+// Created by libAntimony v2.13.2
+function CWP_Logistic_1(k, r, s18)
+  r*s18*(1 - s18/k);
+end
+
+CWP_Logistic_1 is "CWP Logistic_1"
+
+function _1_2_MA_1(k, s34)
+  k*s34/2;
+end
+
+_1_2_MA_1 is "1/2 MA_1"
+
+function CWP_Hill_Inhibitor_2(TFa, TFi, ka, ki, n)
+  ka*TFa*(1/(1 + (TFi/ki)^n));
+end
+
+CWP_Hill_Inhibitor_2 is "CWP Hill Inhibitor_2"
+
+function CWP_hill_4(NOD1, n, shalve, vmax)
+  vmax*NOD1^n/(shalve^n + NOD1^n);
+end
+
+CWP_hill_4 is "CWP hill_4"
+
+function CWP_Hill_Inhibitor_3(RIG, ka, ki, n, s49)
+  ka*RIG*(1/(1 + (s49/ki)^n));
+end
+
+CWP_Hill_Inhibitor_3 is "CWP Hill Inhibitor_3"
+
+function CWP_hill_5(MAVS, n, shalve, vmax)
+  vmax*MAVS^n/(shalve^n + MAVS^n);
+end
+
+CWP_hill_5 is "CWP hill_5"
+
+function CWP_hill_6(IFN, n, shalve, vmax)
+  vmax*IFN^n/(shalve^n + IFN^n);
+end
+
+CWP_hill_6 is "CWP hill_6"
+
+function CWP_hill_7(IRF, n, shalve, vmax)
+  vmax*IRF^n/(shalve^n + IRF^n);
+end
+
+CWP_hill_7 is "CWP hill_7"
+
+function _1_2_MA_2(IFN, k)
+  k*IFN/2;
+end
+
+_1_2_MA_2 is "1/2 MA_2"
+
+function CWP_Hill_Inhibitor_1(ka, ki, n, s49, s7)
+  ka*s7*(1/(1 + (s49/ki)^n));
+end
+
+CWP_Hill_Inhibitor_1 is "CWP Hill Inhibitor_1"
+
+function CWP_hill_1(n, s18, shalve, vmax)
+  vmax*s18^n/(shalve^n + s18^n);
+end
+
+CWP_hill_1 is "CWP hill_1"
+
+function CWP_hill_2(n, s4, shalve, vmax)
+  vmax*s4^n/(shalve^n + s4^n);
+end
+
+CWP_hill_2 is "CWP hill_2"
+
+function CWP_hill_3(n, s34, shalve, vmax)
+  vmax*s34^n/(shalve^n + s34^n);
+end
+
+CWP_hill_3 is "CWP hill_3"
+
+function CWP_Hill_Inhibitor_4(X, ka, ki, n, s51)
+  ka*s51*(1/(1 + (X/ki)^n));
+end
+
+CWP_Hill_Inhibitor_4 is "CWP Hill Inhibitor_4"
+
+function CWP_hill_8(CytoE, n, shalve, vmax)
+  vmax*CytoE^n/(shalve^n + CytoE^n);
+end
+
+CWP_hill_8 is "CWP hill_8"
+
+function CWP_Hill_Inhibitor_5(X, ka, ki, n, s4)
+  ka*s4*(1/(1 + (X/ki)^n));
+end
+
+CWP_Hill_Inhibitor_5 is "CWP Hill Inhibitor_5"
+
+function _1_2_MA_3(CytoE, k)
+  k*CytoE/2;
+end
+
+_1_2_MA_3 is "1/2 MA_3"
+
+
+model *Philipson2015___Innate_immune_response_modulated_by_NLRX1()
+
+  // Compartments and Species:
+  compartment default;
+  species HP in default, NLRX1 in default, CytoL in default, MyD88 in default;
+  species TRAF6 in default, NFkB in default, IFN in default, NOD1 in default;
+  species RIG in default, MAVS in default, IRF in default, TFa in default;
+  species CytoE in default, TFi in default, X in default;
+
+  // Reactions:
+  MyD88_a_HP:  => MyD88; default*CWP_hill_1(n, HP, MyD88_a_HP_shalve, MyD88_a_HP_vmax);
+  MyD88_d: MyD88 => ; default*MyD88_d_k1*MyD88;
+  TRAF_d: TRAF6 => ; default*TRAF_d_k1*TRAF6;
+  NFkB_a1:  => NFkB; default*CWP_Hill_Inhibitor_1(NFkB_a1_ka, NFkB_a1_ki, n, NLRX1, TRAF6);
+  NFkB_d: NFkB => ; default*NFkB_d_k1*NFkB;
+  CytoL_a:  => CytoL; default*CWP_hill_2(n, NFkB, CytoL_a_shalve, CytoL_a_vmax);
+  CytoL_d: CytoL => ; default*CytoL_d_k1*CytoL;
+  NLRX1_d: NLRX1 => ; default*NLRX1_d_k1*NLRX1;
+  MyD88_a:  => MyD88; default*CWP_hill_3(n, CytoL, MyD88_a_shalve, MyD88_a_vmax);
+  HP_a:  => HP; default*CWP_Logistic_1(HP_a_k, HP_a_r, HP);
+  HP_CytoL: HP => ; default*_1_2_MA_1(HP_CytoL_k, CytoL);
+  NLRX1_TF:  => NLRX1; default*CWP_Hill_Inhibitor_2(TFa, TFi, NLRX1_TF_ka, NLRX1_TF_ki, n);
+  NFkB_a2:  => NFkB; default*CWP_hill_4(NOD1, n, NFkB_a2_shalve, NFkB_a2_vmax);
+  RIG_a_HP:  => RIG; default*CWP_hill_1(n, HP, RIG_a_HP_shalve, RIG_a_HP_vmax);
+  RIG_d: RIG => ; default*RIG_d_k1*RIG;
+  MAVS_a:  => MAVS; default*CWP_Hill_Inhibitor_3(RIG, MAVS_a_ka, MAVS_a_ki, n, NLRX1);
+  MAVS_d: MAVS => ; default*MAVS_d_k1*MAVS;
+  IRF_a1:  => IRF; default*CWP_hill_5(MAVS, n, IRF_a1_shalve, IRF_a1_vmax);
+  IRF_a2:  => IRF; default*CWP_hill_4(NOD1, n, IRF_a2_shalve, IRF_a2_vmax);
+  IRF_a3:  => IRF; default*CWP_hill_6(IFN, n, IRF_a3_shalve, IRF_a3_vmax);
+  IRF_d: IRF => ; default*IRF_d_k1*IRF;
+  IFN_a:  => IFN; default*CWP_hill_7(IRF, n, IFN_a_shalve, IFN_a_vmax);
+  IFN_d: IFN => ; default*IFN_d_k1*IFN;
+  NOD_a:  => NOD1; default*CWP_hill_1(n, HP, NOD_a_shalve, NOD_a_vmax);
+  NOD_d: NOD1 => ; default*NOD_d_k1*NOD1;
+  HP_IFN: HP => ; default*_1_2_MA_2(IFN, HP_IFN_k);
+  TRAF_a:  => TRAF6; default*CWP_Hill_Inhibitor_4(X, TRAF_a_ka, TRAF_a_ki, n, MyD88);
+  TFa_a:  => TFa; default*CWP_hill_3(n, CytoL, TFa_a_shalve, TFa_a_vmax);
+  TFa_d: TFa => ; default*TFa_d_k1*TFa;
+  TFi_a:  => TFi; default*CWP_hill_8(CytoE, n, TFi_a_shalve, TFi_a_vmax);
+  TFi_d: TFi => ; default*TFi_d_k1*TFi;
+  CytoE_a:  => CytoE; default*CWP_Hill_Inhibitor_5(X, CytoE_a_ka, CytoE_a_ki, n, NFkB);
+  CytoE_d: CytoE => ; default*CytoE_d_k1*CytoE;
+  X_a:  => X; default*CWP_hill_2(n, NFkB, X_a_shalve, X_a_vmax);
+  X_d: X => ; default*X_d_k1*X;
+  HP_CytoE: HP => ; default*_1_2_MA_3(CytoE, HP_CytoE_k);
+
+  // Species initializations:
+  HP = 4.4;
+  NLRX1 = 0.9;
+  CytoL = 1;
+  MyD88 = 0.9;
+  TRAF6 = 0.9;
+  NFkB = 0.9;
+  IFN = 1;
+  NOD1 = 0.9;
+  RIG = 0.9;
+  MAVS = 0.6;
+  IRF = 1;
+  TFa = 1;
+  CytoE = 1;
+  TFi = 1;
+  X = 1;
+
+  // Compartment initializations:
+  default = 1;
+
+  // Variable initializations:
+  n = 1;
+  n has unit_0;
+  MyD88_a_HP_shalve = 0.00167454;
+  MyD88_a_HP_vmax = 0.00211822;
+  MyD88_d_k1 = 0.00123453;
+  TRAF_d_k1 = 0.0103771;
+  NFkB_a1_ka = 1.16764;
+  NFkB_a1_ki = 0.0477912;
+  NFkB_d_k1 = 0.0750704;
+  CytoL_a_shalve = 0.00405;
+  CytoL_a_vmax = 0.096005;
+  CytoL_d_k1 = 0.00608;
+  NLRX1_d_k1 = 0.00593;
+  MyD88_a_shalve = 0.00154977;
+  MyD88_a_vmax = 0.00283798;
+  HP_a_k = 6.47754;
+  HP_a_r = 0.0231262;
+  HP_CytoL_k = 0.00457697;
+  NLRX1_TF_ka = 0.42313;
+  NLRX1_TF_ki = 0.008882;
+  NFkB_a2_shalve = 1.88462;
+  NFkB_a2_vmax = 0.634738;
+  RIG_a_HP_shalve = 0.0014314;
+  RIG_a_HP_vmax = 0.0118174;
+  RIG_d_k1 = 0.00103772;
+  MAVS_a_ka = 0.00747772;
+  MAVS_a_ki = 0.0334969;
+  MAVS_d_k1 = 0.001592;
+  IRF_a1_shalve = 1.44358;
+  IRF_a1_vmax = 0.0062174;
+  IRF_a2_shalve = 9.6499;
+  IRF_a2_vmax = 0.0980063;
+  IRF_a3_shalve = 44.7674;
+  IRF_a3_vmax = 0.301374;
+  IRF_d_k1 = 0.00478922;
+  IFN_a_shalve = 49.9288;
+  IFN_a_vmax = 0.489838;
+  IFN_d_k1 = 0.00523856;
+  NOD_a_shalve = 0.00178531;
+  NOD_a_vmax = 0.0066234;
+  NOD_d_k1 = 0.00122637;
+  HP_IFN_k = 1e-05;
+  TRAF_a_ka = 0.739178;
+  TRAF_a_ki = 0.0881285;
+  TFa_a_shalve = 0.798454;
+  TFa_a_vmax = 0.0205163;
+  TFa_d_k1 = 0.00830409;
+  TFi_a_shalve = 3.08354;
+  TFi_a_vmax = 0.0902778;
+  TFi_d_k1 = 0.032462;
+  CytoE_a_ka = 12.2028;
+  CytoE_a_ki = 0.0480683;
+  CytoE_d_k1 = 0.0367629;
+  X_a_shalve = 0.003976;
+  X_a_vmax = 0.0463933;
+  X_d_k1 = 0.00222793;
+  HP_CytoE_k = 0.00015;
+
+  // Other declarations:
+  const default, n;
+
+  // Unit definitions:
+  unit time_unit = 60 second;
+  unit substance = 1e-3 mole;
+  unit unit_0 = 1 / dimensionless^-0;
+
+  // Display Names:
+  time_unit is "time";
+  unit_0 is "1";
+
+  // CV terms:
+  default hypernym "http://identifiers.org/ncit/C26055"
+  HP hypernym "http://identifiers.org/ncit/C14289"
+  NLRX1 hypernym "http://identifiers.org/uniprot/Q86UT6"
+  CytoL hypernym "http://identifiers.org/ncit/C20464"
+  MyD88 hypernym "http://identifiers.org/uniprot/Q99836"
+  TRAF6 hypernym "http://identifiers.org/uniprot/Q9Y4K3"
+  NFkB hypernym "http://identifiers.org/ncit/C17380"
+  IFN hypernym "http://identifiers.org/ncit/C20493"
+  NOD1 hypernym "http://identifiers.org/uniprot/Q9Y239"
+  IRF version "http://identifiers.org/uniprot/Q14653"
+  IRF version "http://identifiers.org/uniprot/Q92985"
+  TFa hypernym "http://identifiers.org/ncit/C17207"
+  CytoE hypernym "http://identifiers.org/ncim/C20464"
+  TFi hypernym "http://identifiers.org/ncit/C17207"
+  n hypernym "http://identifiers.org/ncit/C48923"
+  MyD88_a_HP hypernym "http://identifiers.org/sbo/SBO:0000393"
+  MyD88_d hypernym "http://identifiers.org/sbo/SBO:0000179"
+  TRAF_d hypernym "http://identifiers.org/sbo/SBO:0000179"
+  NFkB_a1 hypernym "http://identifiers.org/sbo/SBO:0000393"
+  NFkB_d hypernym "http://identifiers.org/sbo/SBO:0000179"
+  CytoL_a hypernym "http://identifiers.org/sbo/SBO:0000393"
+  CytoL_d hypernym "http://identifiers.org/sbo/SBO:0000179"
+  NLRX1_d hypernym "http://identifiers.org/sbo/SBO:0000179"
+  MyD88_a hypernym "http://identifiers.org/sbo/SBO:0000393"
+  HP_a hypernym "http://identifiers.org/sbo/SBO:0000393"
+  HP_CytoL hypernym "http://identifiers.org/sbo/SBO:0000179"
+  NLRX1_TF hypernym "http://identifiers.org/sbo/SBO:0000393"
+  NFkB_a2 hypernym "http://identifiers.org/sbo/SBO:0000393"
+  RIG_a_HP hypernym "http://identifiers.org/sbo/SBO:0000393"
+  RIG_d hypernym "http://identifiers.org/sbo/SBO:0000179"
+  MAVS_a hypernym "http://identifiers.org/sbo/SBO:0000393"
+  MAVS_d hypernym "http://identifiers.org/sbo/SBO:0000179"
+  IRF_a1 hypernym "http://identifiers.org/sbo/SBO:0000393"
+  IRF_a2 hypernym "http://identifiers.org/sbo/SBO:0000393"
+  IRF_a3 hypernym "http://identifiers.org/sbo/SBO:0000393"
+  IRF_d hypernym "http://identifiers.org/sbo/SBO:0000179"
+  IFN_a hypernym "http://identifiers.org/sbo/SBO:0000393"
+  IFN_d hypernym "http://identifiers.org/sbo/SBO:0000179"
+  NOD_a hypernym "http://identifiers.org/sbo/SBO:0000393"
+  NOD_d hypernym "http://identifiers.org/sbo/SBO:0000179"
+  HP_IFN hypernym "http://identifiers.org/sbo/SBO:0000179"
+  TRAF_a hypernym "http://identifiers.org/sbo/SBO:0000393"
+  TFa_a hypernym "http://identifiers.org/sbo/SBO:0000393"
+  TFa_d hypernym "http://identifiers.org/sbo/SBO:0000179"
+  TFi_a hypernym "http://identifiers.org/sbo/SBO:0000393"
+  TFi_d hypernym "http://identifiers.org/sbo/SBO:0000179"
+  CytoE_a hypernym "http://identifiers.org/sbo/SBO:0000393"
+  CytoE_d hypernym "http://identifiers.org/sbo/SBO:0000179"
+  X_a hypernym "http://identifiers.org/sbo/SBO:0000393"
+  X_d hypernym "http://identifiers.org/sbo/SBO:0000179"
+  HP_CytoE hypernym "http://identifiers.org/sbo/SBO:0000179"
+end
+
+Philipson2015___Innate_immune_response_modulated_by_NLRX1 is "Philipson2015 - Innate immune response modulated by NLRX1"
+
+Philipson2015___Innate_immune_response_modulated_by_NLRX1 model_entity_is "http://identifiers.org/biomodels.db/MODEL1508180000",
+                                                                          "http://identifiers.org/biomodels.db/BIOMD0000000596"
+Philipson2015___Innate_immune_response_modulated_by_NLRX1 identity "http://identifiers.org/biomodels.db/MODEL1508180000"
+Philipson2015___Innate_immune_response_modulated_by_NLRX1 identity "http://identifiers.org/biomodels.db/BIOMD0000000596"
+Philipson2015___Innate_immune_response_modulated_by_NLRX1 container "http://identifiers.org/bto/BTO:0000141"
+Philipson2015___Innate_immune_response_modulated_by_NLRX1 property "http://identifiers.org/doid/DOID:3686"
+Philipson2015___Innate_immune_response_modulated_by_NLRX1 property "http://identifiers.org/mamo/MAMO_0000046"
+Philipson2015___Innate_immune_response_modulated_by_NLRX1 property "http://identifiers.org/go/GO:0044403"
+Philipson2015___Innate_immune_response_modulated_by_NLRX1 property "http://identifiers.org/go/GO:0045087"
+Philipson2015___Innate_immune_response_modulated_by_NLRX1 property "http://identifiers.org/go/GO:0009617"
+Philipson2015___Innate_immune_response_modulated_by_NLRX1 taxon "http://identifiers.org/taxonomy/210"
+Philipson2015___Innate_immune_response_modulated_by_NLRX1 taxon "http://identifiers.org/taxonomy/10090"
+Philipson2015___Innate_immune_response_modulated_by_NLRX1 description "http://identifiers.org/pubmed/26367386"

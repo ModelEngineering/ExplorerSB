@@ -2,7 +2,7 @@ declare global {
   interface Context {
     project_id: string,
     runid: string,
-    abstract: string,
+    abstract: string | null,
     citation: string | null,
     doi: string | null,
     paper_url: string | null,
@@ -13,9 +13,19 @@ declare global {
     snippet: string,
   }
 
-  interface SelectOption {
+  interface VariableSelectOption {
     label: string,
     value: string,
+    [x: string]: any,
+  }
+
+  interface CSVSelectOption {
+    name: string,
+    [x: string]: any,
+  }
+
+  interface ModelFileSelectOption {
+    name: string,
     [x: string]: any,
   }
 }

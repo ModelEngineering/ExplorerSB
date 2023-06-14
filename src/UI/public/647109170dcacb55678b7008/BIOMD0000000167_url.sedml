@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sedML xmlns="http://sed-ml.org/sed-ml/level1/version4" xmlns:sbml="http://www.sbml.org/sbml/level2" level="1" version="4">
+  <listOfModels>
+    <model id="BIOMD0000000167_url" language="urn:sedml:language:sbml" source="BIOMD0000000167_url.xml"/>
+  </listOfModels>
+  <listOfSimulations>
+    <uniformTimeCourse id="auto_ten_seconds" initialTime="0" outputStartTime="0" outputEndTime="10" numberOfSteps="1000">
+      <algorithm name="CVODE" kisaoID="KISAO:0000019"/>
+    </uniformTimeCourse>
+  </listOfSimulations>
+  <listOfTasks>
+    <task id="task1" modelReference="BIOMD0000000167_url" simulationReference="auto_ten_seconds"/>
+  </listOfTasks>
+  <listOfDataGenerators>
+    <dataGenerator id="auto_time_for_task1" name="Time">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_time_for_task1_var </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_time_for_task1_var" symbol="urn:sedml:symbol:time" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_stat_sol">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_stat_sol__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_stat_sol__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;stat_sol&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Pstat_sol">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Pstat_sol__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Pstat_sol__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;Pstat_sol&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_statKinase_sol">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_statKinase_sol__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_statKinase_sol__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;statKinase_sol&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_PstatDimer_sol">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_PstatDimer_sol__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_PstatDimer_sol__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;PstatDimer_sol&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_PstatDimer_nuc">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_PstatDimer_nuc__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_PstatDimer_nuc__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;PstatDimer_nuc&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_stat_nuc">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_stat_nuc__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_stat_nuc__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;stat_nuc&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_Pstat_nuc">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_Pstat_nuc__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_Pstat_nuc__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;Pstat_nuc&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_statPhosphatase_nuc">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_statPhosphatase_nuc__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_statPhosphatase_nuc__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;statPhosphatase_nuc&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_species_test">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_species_test__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_species_test__x" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id=&apos;species_test&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_nuc">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_nuc__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_nuc__x" target="/sbml:sbml/sbml:model/sbml:listOfCompartments/sbml:compartment[@id=&apos;nuc&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_sol">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_sol__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_sol__x" target="/sbml:sbml/sbml:model/sbml:listOfCompartments/sbml:compartment[@id=&apos;sol&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_nm">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_nm__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_nm__x" target="/sbml:sbml/sbml:model/sbml:listOfCompartments/sbml:compartment[@id=&apos;nm&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_PstatDimerisation">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_PstatDimerisation__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_PstatDimerisation__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;PstatDimerisation&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_statDephosphorylation">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_statDephosphorylation__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_statDephosphorylation__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;statDephosphorylation&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_statPhosphorylation">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_statPhosphorylation__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_statPhosphorylation__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;statPhosphorylation&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_PstatDimerisationNuc">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_PstatDimerisationNuc__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_PstatDimerisationNuc__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;PstatDimerisationNuc&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_PstatDimer__import">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_PstatDimer__import__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_PstatDimer__import__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;PstatDimer__import&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_stat_export">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_stat_export__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_stat_export__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;stat_export&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+    <dataGenerator id="auto_dg_for_task1_stat_import">
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <ci> auto_dg_for_task1_stat_import__x </ci>
+      </math>
+      <listOfVariables>
+        <variable id="auto_dg_for_task1_stat_import__x" target="/sbml:sbml/sbml:model/sbml:listOfReactions/sbml:reaction[@id=&apos;stat_import&apos;]" taskReference="task1"/>
+      </listOfVariables>
+    </dataGenerator>
+  </listOfDataGenerators>
+  <listOfOutputs>
+    <report id="autogen_report_for_task1" name="Auto-generated report for task1, including all symbols in SBML with mathematical meaning, both constant and variable.">
+      <listOfDataSets>
+        <dataSet id="autogen_time_for_task1" label="Time" dataReference="auto_time_for_task1"/>
+        <dataSet id="autogen_task1_stat_sol" label="stat_sol" dataReference="auto_dg_for_task1_stat_sol"/>
+        <dataSet id="autogen_task1_Pstat_sol" label="Pstat_sol" dataReference="auto_dg_for_task1_Pstat_sol"/>
+        <dataSet id="autogen_task1_statKinase_sol" label="statKinase_sol" dataReference="auto_dg_for_task1_statKinase_sol"/>
+        <dataSet id="autogen_task1_PstatDimer_sol" label="PstatDimer_sol" dataReference="auto_dg_for_task1_PstatDimer_sol"/>
+        <dataSet id="autogen_task1_PstatDimer_nuc" label="PstatDimer_nuc" dataReference="auto_dg_for_task1_PstatDimer_nuc"/>
+        <dataSet id="autogen_task1_stat_nuc" label="stat_nuc" dataReference="auto_dg_for_task1_stat_nuc"/>
+        <dataSet id="autogen_task1_Pstat_nuc" label="Pstat_nuc" dataReference="auto_dg_for_task1_Pstat_nuc"/>
+        <dataSet id="autogen_task1_statPhosphatase_nuc" label="statPhosphatase_nuc" dataReference="auto_dg_for_task1_statPhosphatase_nuc"/>
+        <dataSet id="autogen_task1_species_test" label="species_test" dataReference="auto_dg_for_task1_species_test"/>
+        <dataSet id="autogen_task1_nuc" label="nuc" dataReference="auto_dg_for_task1_nuc"/>
+        <dataSet id="autogen_task1_sol" label="sol" dataReference="auto_dg_for_task1_sol"/>
+        <dataSet id="autogen_task1_nm" label="nm" dataReference="auto_dg_for_task1_nm"/>
+        <dataSet id="autogen_task1_PstatDimerisation" label="PstatDimerisation" dataReference="auto_dg_for_task1_PstatDimerisation"/>
+        <dataSet id="autogen_task1_statDephosphorylation" label="statDephosphorylation" dataReference="auto_dg_for_task1_statDephosphorylation"/>
+        <dataSet id="autogen_task1_statPhosphorylation" label="statPhosphorylation" dataReference="auto_dg_for_task1_statPhosphorylation"/>
+        <dataSet id="autogen_task1_PstatDimerisationNuc" label="PstatDimerisationNuc" dataReference="auto_dg_for_task1_PstatDimerisationNuc"/>
+        <dataSet id="autogen_task1_PstatDimer__import" label="PstatDimer__import" dataReference="auto_dg_for_task1_PstatDimer__import"/>
+        <dataSet id="autogen_task1_stat_export" label="stat_export" dataReference="auto_dg_for_task1_stat_export"/>
+        <dataSet id="autogen_task1_stat_import" label="stat_import" dataReference="auto_dg_for_task1_stat_import"/>
+      </listOfDataSets>
+    </report>
+    <plot2D id="autogen_plot_for_task1" name="Auto-generated plot for task1, including all species.">
+      <xAxis name="Time" type="linear"/>
+      <yAxis name="Species" type="linear"/>
+      <listOfCurves>
+        <curve id="autogen_curve_task1_stat_sol" name="stat_sol" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_stat_sol"/>
+        <curve id="autogen_curve_task1_Pstat_sol" name="Pstat_sol" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_Pstat_sol"/>
+        <curve id="autogen_curve_task1_statKinase_sol" name="statKinase_sol" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_statKinase_sol"/>
+        <curve id="autogen_curve_task1_PstatDimer_sol" name="PstatDimer_sol" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_PstatDimer_sol"/>
+        <curve id="autogen_curve_task1_PstatDimer_nuc" name="PstatDimer_nuc" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_PstatDimer_nuc"/>
+        <curve id="autogen_curve_task1_stat_nuc" name="stat_nuc" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_stat_nuc"/>
+        <curve id="autogen_curve_task1_Pstat_nuc" name="Pstat_nuc" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_Pstat_nuc"/>
+        <curve id="autogen_curve_task1_statPhosphatase_nuc" name="statPhosphatase_nuc" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_statPhosphatase_nuc"/>
+        <curve id="autogen_curve_task1_species_test" name="species_test" logX="false" xDataReference="auto_time_for_task1" logY="false" yDataReference="auto_dg_for_task1_species_test"/>
+      </listOfCurves>
+    </plot2D>
+  </listOfOutputs>
+</sedML>

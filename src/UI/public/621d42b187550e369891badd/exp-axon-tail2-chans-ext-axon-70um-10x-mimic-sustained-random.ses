@@ -1,0 +1,109 @@
+// Experiment with 2-component axon extention tail, and Na-K channels
+// in all compartments
+
+// nrngui stuff and ion chans
+load_file("inc-first.ses")
+
+strdef file_name, ses_file, cb_file_name
+file_name = "ext-axon-70um-10x-mimic-sustained-random"
+
+cb_file_name = "ext-axon-70um-10x-mimic-sustained"
+
+sprint(ses_file, "neuron-CB-ext-axon-2pieces-chans-%s.ses", cb_file_name)
+
+//load CellBuilder
+{load_file(ses_file)}
+
+{
+xpanel("RunControl", 0)
+v_init = -60
+xvalue("Init","v_init", 1,"stdinit()", 1, 1 )
+xbutton("Init & Run","run()")
+xbutton("Stop","stoprun=1")
+runStopAt = 5
+xvalue("Continue til","runStopAt", 1,"{continuerun(runStopAt) stoprun=1}", 1, 1 )
+runStopIn = 1
+xvalue("Continue for","runStopIn", 1,"{continuerun(t + runStopIn) stoprun=1}", 1, 1 )
+xbutton("Single Step","steprun()")
+t = 200
+xvalue("t","t", 2 )
+tstop = 1000
+xvalue("Tstop","tstop", 1,"tstop_changed()", 0, 1 )
+dt = 0.025
+xvalue("dt","dt", 1,"setdt()", 0, 1 )
+steps_per_ms = 40
+xvalue("Points plotted/ms","steps_per_ms", 1,"setdt()", 0, 1 )
+screen_update_invl = 0.1
+xvalue("Scrn update invl","screen_update_invl", 1,"", 0, 1 )
+realtime = 1.12
+xvalue("Real Time","realtime", 0,"", 0, 1 )
+xpanel(893,777)
+}
+
+// load common funcs
+load_file("fitfuncs.hoc")
+
+print_elec_cell()
+
+// calc morph stats
+load_file("stats.hoc")
+
+load_file("v-graph-bigger-axon-2pieces.ses")
+
+// enable or disable VC
+load_file("vclamp_soma_-60mV.ses")
+
+// save state in this file
+sprint(state_file_name, "state-neuron-CB+act+elec+ext-axon-2piece-chans-%s.bin", file_name)
+
+// load state first because it overrides parameters
+strdef state_w_syn
+sprint(state_w_syn, "state-neuron-CB+act+elec+ext-axon-2piece-chans-%s-synapse-saved.bin", file_name)
+
+restoreStateFromFile(state_w_syn)
+
+// small adjustments
+
+// increase VC duration
+VClamp[0].dur[0] = 1000
+
+// use ExpSyn object
+objref ns[11], nc[11], syn[11]
+objref aynrand_num, aynrand_start, pc
+magepsc = 20
+interval = 10
+
+aynrand_num = new Random()
+pc = new ParallelContext()
+aynrand_num.ACG(pc.time())
+aynrand_num.normal(15, 140)
+
+aynrand_start = new Random()
+aynrand_start.ACG(pc.time())
+aynrand_start.normal(200, 1500)
+
+proc set_syn() { local i, numsyn
+  numsyn = numarg()
+  for i = 1, numsyn {
+    printf("dendrite[%d]\n", $i)
+    access dendrite[$i]
+    syn[i] = new ExpSyn(0.5)
+    nc[i] = new NetStim(.5)
+    ns[i] = new NetCon(nc[i], syn[i])
+    syn[i].tau = 5
+    syn[i].e = 0
+    nc[i].interval = interval
+    nc[i].number = 3 + aynrand_num.repick()
+    nc[i].start = 10 + aynrand_start.repick() //+ (i-1)*interval/numsyn 
+    nc[i].noise = 0
+    ns[i].weight = .00018 * magepsc
+  }
+}
+
+/*
+ * synapses:
+ * top dend: 685, 524, 520, 626
+ * bot dend: 205, 357, 464, 588, 513, 48
+ */
+
+set_syn(685, 524, 520, 626, 205, 357, 464, 588, 513, 48)

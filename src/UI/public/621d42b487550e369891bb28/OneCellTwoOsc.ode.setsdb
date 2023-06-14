@@ -1,0 +1,245 @@
+## Set file for OneCellTwoOsc.ode on Thu Jan 16 20:14:41 2014
+8   Number of equations and auxiliaries
+20   Number of parameters
+# Numerical stuff
+1    nout
+40    nullcline mesh
+8   Qual RK
+10000  total
+0.1  DeltaT
+0  T0
+0  Transient
+500001  Bound
+1e-12  DtMin
+1  DtMax
+0.001  Tolerance
+0.001  Abs. Tolerance
+0  Max Delay
+100   Eigenvector iterates
+0.001  Eigenvector tolerance
+0.001  Newton tolerance
+0  Poincare plane
+1e-05  Boundary value tolerance
+1e-05  Boundary value epsilon
+20   Boundary value iterates
+0   Poincare None
+1   Poincare variable
+1   Poincare sign
+0   Stop on Section
+0   Delay flag
+10000  Current time
+10000  Last Time
+1   MyStart
+1   INFLAG
+# Delays
+-50  
+0.004  
+0.33  
+0.03  
+0.93  
+# Bndry conds
+0
+0
+0
+0
+0
+# Old ICs
+-53.90067040881341  V
+0.001974612756708118  N
+0.3801759147096553  H
+0.02217569847910465  C
+0.9155099622361579  L
+# Ending  ICs
+-52.69960139445568  V
+0.002664185795415279  N
+0.4224931269351594  H
+0.02768333422670577  C
+0.936512829933472  L
+# Parameters
+21  Cms
+0  I_aps
+11.2  gk
+28  gna
+2  gnap
+2.3  gl
+0.74  Kcan
+0.97  ncan
+0.7  gcan
+0.95  I
+1.25  Ct
+2.5e-05  fi
+31000  P
+1  Ki
+0.4  Ka
+400  Ve
+0.2  Ke
+0.005  A
+0.4  Kd
+0.185  sigma
+# Graphics
+0.7071097251469876  rm
+-0.4999999999826661  rm
+0.4999958366025516  rm
+0.7071038372138505  rm
+0.5000041633974482  rm
+-0.4999999999826661  rm
+0  rm
+0.7071038372138505  rm
+0.7071097251469876  rm
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+0    
+1    
+2    
+1    
+0    
+-1000   
+1000   
+0    
+0   3DFlag
+1   Timeflag
+0   Colorflag
+0   Type
+1  color scale
+0   minscale
+10000   xmax
+0   xmin
+10   ymax
+-60   ymin
+12   zmax
+-12   zmin
+5000   
+0.0002   
+-25   
+0.02857142857142857   
+0   
+0.08333333333333333   
+45   Theta
+45   Phi
+0    xshft
+0    yshft
+0    zshft
+0   xlo
+-60   ylo
+0   
+-60   
+10000   xhi
+10   yhi
+10000   
+10   
+# Transpose variables etc
+V
+2   n columns
+1   n rows
+1   row skip
+1   col skip
+1   row 0
+# Coupling stuff for H funs
+0
+0
+0
+0
+0
+# Array plot stuff
+
+1   NCols
+0   Row 1
+50   NRows
+8   RowSkip
+0  Zmin
+1  Zmax
+# Torus information 
+0    Torus flag 1=ON
+6.283185307179586  Torus period
+# Range information
+Cms
+-1   eq-range stab col
+0   shoot flag 1=on
+10   eq-range steps
+0  eq_range low
+1  eq_range high
+V
+V
+20   Range steps
+0   Cycle color 1=on
+1   Reset data 1=on
+1   Use old I.C.s 1=yes
+0  Par1 low
+0  Par2 low
+1  Par1 high
+1  Par2 high
+Cms
+0   BVP side
+0   color cycle flag 1=on
+10   BVP range steps
+0  BVP range low
+1  BVP range high
+RHS etc ...
+dV/dT=(-I_K-I_NA-I_NAP-I_L-I_APS-I_CAN)/CMS
+dN/dT=(NINF-N)/TAUN
+dH/dT=(HINF-H)/TAUH
+dC/dT=FI*(J_ER_IN-J_ER_OUT)
+dL/dT=A*(KD-(C+KD)*L)
+CE=CE
+ICAN=I_CAN
+INAPS=I_NAP
+
+where ...
+MINF = 1/(1+EXP((V-VM) /SM))    
+NINF = 1/(1+EXP((V-VN) /SN))   
+MINFP = 1/(1+EXP((V-VMP)/SMP))   
+HINF = 1/(1+EXP((V-VH) /SH))   
+TAUN = TAUNB/COSH((V-VN)/(2*SN))   
+TAUH = TAUHB/COSH((V-VH)/(2*SH))   
+I_NA = GNA*MINF^3*(1-N)*(V-VNA)   
+I_K = GK*N^4*(V-VK)   
+I_NAP = GNAP*MINFP*H*(V-VNA)   
+I_L = GL*(V-VLEAKS)   
+CANINF = 1/(1+(KCAN/C)^NCAN)   
+I_CAN = GCAN*CANINF*(V-VNA)   
+J_ER_IN = (LL + P*( (I*C*L)/( (I+KI)*(C+KA) ) )^3 )*(CE - C)   
+J_ER_OUT = VE*C^2/(KE^2+C^2)   
+CE =  (CT - C)/SIGMA   

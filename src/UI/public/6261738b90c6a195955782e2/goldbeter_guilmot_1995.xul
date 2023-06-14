@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<window id="layout-diagram" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" style="overflow: auto" onload="setupDocument()">
+
+<script>
+<![CDATA[
+window.model_entities =
+  {
+
+			
+	C: {
+		id: "C",
+		y: "C/C",
+		x: "environment/time",
+		graph: "Traces of clickable elements against time (minutes)",
+		colour: "#ff9900",
+		linestyle: "none"
+	},
+
+	M: {
+		id: "M",
+		y: "M/M",
+		x: "environment/time",
+		graph: "Traces of clickable elements against time (minutes)",
+		colour: "#ff00cc",
+		linestyle: "none"
+	},
+
+	X: {
+		id: "X",
+		y: "X/X",
+		x: "environment/time",
+		graph: "Traces of clickable elements against time (minutes)",
+		colour: "#cc00ff",
+		linestyle: "none"
+	},
+
+	V1: {
+		id: "V1",
+		y: "V_1/V_1",
+		x: "environment/time",
+		graph: "Traces of clickable elements against time (minutes)",
+		colour: "#cc3333",
+		linestyle: "none"
+	},
+
+	V3: {
+		id: "V3",
+		y: "V_3/V_3",
+		x: "environment/time",
+		graph: "Traces of clickable elements against time (minutes)",
+		colour: "#ccff00",
+		linestyle: "none"
+	}
+	
+			
+ // Repeat the above section for each controllable graph trace.
+ // Remember to add a comma to each repeat after the final },
+ // except for the final one!
+ 
+};
+
+function flushVisibilityInformation(entity_id, entity_colour)
+{
+	var message = "";
+	var entity;
+
+	if (typeof pcenv != "undefined")
+	{
+		for (var i in window.model_entities)
+		{
+			entity = window.model_entities[i];
+			if (typeof entity_id == "undefined" || entity_id == window.model_entities[i].id)
+			{
+				pcenv.selectTrace
+				(
+					entity.graph,
+					entity.x,
+					entity.y,
+					typeof entity_colour == "undefined" ? "" : entity_colour,
+					entity.linestyle
+				);
+			}
+			if (entity.linestyle != "none")
+				message += i + ", ";
+		}
+		pcenv.status(message == "" ? "No fluxes displayed" : "Displaying flux of " + message.slice(0, -2));
+	}
+}
+
+function processSelectEntity(event)
+{
+	if (typeof pcenv != "undefined")
+		pcenv.status("In processSelectEntity");
+
+	var entity = window.model_entities[window.svgIdToName[event.currentTarget.id]];
+
+	switch(entity.linestyle)
+	{
+	case "none":
+		entity.linestyle = "lines";
+		highlightEntity(event.currentTarget.id);
+		break;
+	case "lines":
+		entity.linestyle = "none";
+		unlightEntity(event.currentTarget.id);
+		break;
+	}
+
+	flushVisibilityInformation(entity.id);
+}
+
+function processContext(event)
+{
+	// if (event.button != 2)
+	//   return true;
+
+	var entity = window.model_entities[window.svgIdToName[event.currentTarget.id]];
+
+	if (entity.context == null)
+		return true;
+
+	var menu = document.getElementById("entityContextMenu");
+
+	for (var c = menu.firstChild, x = null; c != null; c = x)
+	{
+		x = c.nextSibling;
+		menu.removeChild(c);
+	}
+
+	for (var i in entity.context)
+	{
+		var item = entity.context[i];
+
+		var mitem = document.createElementNS
+		(
+			"http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul",
+			"menuitem"
+		);
+
+		mitem.setAttribute("label", item.label);
+		mitem.setAttribute("url", item.url);
+		mitem.addEventListener("command", processShowEntityURL, false);
+		menu.appendChild(mitem);
+	}
+
+	menu.showPopup(window.diagram, event.screenX, event.screenY, "context");
+
+	event.stopPropagation;
+	return false;
+}
+
+function processShowEntityURL(event)
+{
+	url = event.target.getAttribute("url");
+
+	window.open(url);
+
+	var hl = document.getElementById("hidden-link");
+	hl.href = url;
+
+	// This is ugly, but it is one way to force everything through the proper
+	// external handler...
+	var evt = document.createEvent("HTMLEvents");
+	evt.initEvent("click", true, true);
+	hl.dispatchEvent(evt);
+}
+
+function highlightEntity(id)
+{
+	for (var path = document.getElementById(id + "_path1"), i = 1; path != null; path = document.getElementById(id + "_path" + ++i))
+	{
+		if (!(i in window.model_entities[window.svgIdToName[id]].path_colours))
+			window.model_entities[window.svgIdToName[id]].path_colours[i] = path.attributes.getNamedItem("stroke").value;
+		path.attributes.getNamedItem("stroke").value = "#ff0000";
+	}
+}
+
+function highlightEntityOnRollover(event) {
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].colour)
+		flushVisibilityInformation(event.currentTarget.id, "#ffffff");
+
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].linestyle == "none")
+		highlightEntity(event.currentTarget.id);
+}
+
+function unlightEntity(id)
+{
+	for (var path = document.getElementById(id + "_path1"), i = 1; path != null; path = document.getElementById(id + "_path" + ++i))
+		path.attributes.getNamedItem("stroke").value = window.model_entities[window.svgIdToName[id]].path_colours[i];
+}
+
+function unlightEntityOnRollover(event) {
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].colour)
+		flushVisibilityInformation(event.currentTarget.id, window.model_entities[window.svgIdToName[event.currentTarget.id]].colour);
+
+	if (window.model_entities[window.svgIdToName[event.currentTarget.id]].linestyle == "none")
+		unlightEntity(event.currentTarget.id);
+}
+
+var mouseDown = false;
+var initial_x;
+var initial_y;
+var viewBox;
+
+function startDrag(event)
+{
+	if (event.button)
+		return true;
+
+	mouseDown = true;
+
+	initial_x = parseInt(currentZoom * event.pageX + parseInt(viewBox.value.match(/^-?\d+/)[0]));
+	initial_y = parseInt(currentZoom * event.pageY + parseInt(viewBox.value.match(/^-?\d+\s+(-?(\d+))/)[1]));
+}
+
+function stopDrag(event)
+{
+	if (!event.button)
+		mouseDown = false;
+}
+
+function moveDrag(event)
+{
+	if (mouseDown == true)
+		viewBox.value = viewBox.value.replace(/^-?\d+\s+-?\d+/, parseInt(initial_x - currentZoom * event.pageX) + " " + parseInt(initial_y - currentZoom * event.pageY));
+}
+
+function reset()
+{
+	var zoom_scale = document.getElementById("zoom_scale")
+	zoom_scale.value = zoom_scale.originalValue;
+	viewBox.value = viewBox.originalValue;
+}
+
+var initialZoom;
+var currentZoom = 1;
+var initialHeight;
+var initialWidth;
+
+function zoomDiagram(event)
+{
+	currentZoom = initialZoom / event.currentTarget.value;
+	viewBox.value = viewBox.value.replace(/\d+\s+\d+$/, parseInt(initialHeight * currentZoom) + " " + parseInt(initialWidth * currentZoom));
+}
+
+function setupDocument()
+{
+	flushVisibilityInformation();
+
+	window.diagram = document.getElementById("sachse");
+
+	window.svgIdToName = {};
+
+	for (var name in window.model_entities)
+	{
+		var id = window.model_entities[name].id;
+		window.model_entities[name].path_colours = [];
+
+		var svg = document.getElementById(id);
+		window.svgIdToName[id] = name;
+
+		svg.addEventListener("click", processSelectEntity, false);
+		svg.addEventListener("contextmenu", processContext, false);
+		svg.addEventListener("mouseover", highlightEntityOnRollover ,false);
+		svg.addEventListener("mouseout", unlightEntityOnRollover, false);
+	}
+
+	document.getElementsByTagName("svg")[0].addEventListener("mousedown", startDrag, false);
+	document.addEventListener("mouseup", stopDrag, false);
+	document.addEventListener("mousemove", moveDrag, false);
+	document.getElementById("reset_button").addEventListener("click", reset, false);
+
+	document.getElementById("zoom_scale").addEventListener("change", zoomDiagram, false);
+	document.getElementById("zoom_scale").originalValue = document.getElementById("zoom_scale").value;
+
+	viewBox = document.getElementsByTagName("svg")[0].attributes.getNamedItem("viewBox");
+	viewBox.originalValue = viewBox.value;
+
+	initialZoom = document.getElementById("zoom_scale").value;
+	initialHeight = parseInt(viewBox.value.match(/(\d+)\s+\d+$/)[1]);
+	initialWidth = parseInt(viewBox.value.match(/\d+$/)[0]);
+}
+
+]]>
+</script>
+
+<popupset>
+  <menupopup id="entityContextMenu" />
+</popupset>
+
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="328.948px" height="332.895px" viewBox="0 0 328.948 332.895" enable-background="new 0 0 328.948 332.895"
+	 xml:space="preserve">
+<g>
+	
+		<radialGradient id="path31151_1_" cx="-68.9712" cy="779.3115" r="16.6906" gradientTransform="matrix(1 0 0 -1 126.311 929.1367)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#FFDB9E"/>
+		<stop  offset="0.2912" style="stop-color:#FFD89D"/>
+		<stop  offset="0.4343" style="stop-color:#FECF99"/>
+		<stop  offset="0.545" style="stop-color:#FCC290"/>
+		<stop  offset="0.6392" style="stop-color:#FAAE81"/>
+		<stop  offset="0.7229" style="stop-color:#F79674"/>
+		<stop  offset="0.799" style="stop-color:#F47A61"/>
+		<stop  offset="0.8695" style="stop-color:#F15D4C"/>
+		<stop  offset="0.9348" style="stop-color:#EF4139"/>
+		<stop  offset="0.9951" style="stop-color:#EE3234"/>
+		<stop  offset="1" style="stop-color:#EE3234"/>
+	</radialGradient>
+	<path id="path31151_3_" fill="url(#path31151_1_)" stroke="#010101" d="M69.744,142.712l8.24,7.041l-7.393,6.469
+		c-3.332,3.045-8.971,5.047-15.368,5.047c-10.23,0-18.527-5.127-18.527-11.443c0-6.324,8.295-11.445,18.527-11.445
+		C61.105,138.378,66.349,140.072,69.744,142.712z"/>
+	<text transform="matrix(1 0 0 1 50.4917 152.7598)" fill="#010101" font-family="'MyriadPro-Regular'" font-size="10">M</text>
+	<text transform="matrix(0.7 0 0 0.7 58.5317 156.0898)" fill="#010101" font-family="'MyriadPro-Regular'" font-size="10"> </text>
+	<text transform="matrix(0.7 0 0 0.7 60.0156 149.4297)" fill="#010101" font-family="'MyriadPro-Regular'" font-size="10">+</text>
+</g>
+<g id="M">
+	
+		<radialGradient id="M_path1_1_" cx="77.6958" cy="779.3115" r="16.6909" gradientTransform="matrix(1 0 0 -1 126.311 929.1367)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#FFDB9E"/>
+		<stop  offset="0.2912" style="stop-color:#FFD89D"/>
+		<stop  offset="0.4343" style="stop-color:#FECF99"/>
+		<stop  offset="0.545" style="stop-color:#FCC290"/>
+		<stop  offset="0.6392" style="stop-color:#FAAE81"/>
+		<stop  offset="0.7229" style="stop-color:#F79674"/>
+		<stop  offset="0.799" style="stop-color:#F47A61"/>
+		<stop  offset="0.8695" style="stop-color:#F15D4C"/>
+		<stop  offset="0.9348" style="stop-color:#EF4139"/>
+		<stop  offset="0.9951" style="stop-color:#EE3234"/>
+		<stop  offset="1" style="stop-color:#EE3234"/>
+	</radialGradient>
+	<path id="M_path1" fill="url(#M_path1_1_)" stroke="#010101" d="M216.411,142.712l8.24,7.041l-7.393,6.469
+		c-3.332,3.045-8.971,5.047-15.368,5.047c-10.23,0-18.527-5.127-18.527-11.443c0-6.324,8.295-11.445,18.527-11.445
+		C207.772,138.378,213.016,140.072,216.411,142.712z"/>
+	<text transform="matrix(1 0 0 1 199.9858 152.7607)" fill="#010101" font-family="'MyriadPro-Regular'" font-size="10">M</text>
+</g>
+<g>
+	
+		<radialGradient id="path16609_2_" cx="64.6587" cy="-286.1685" r="16.1858" gradientTransform="matrix(1.5933 0 0 0.6358 35.2984 450.639)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#ACD152"/>
+		<stop  offset="0.4082" style="stop-color:#ABD152"/>
+		<stop  offset="0.5552" style="stop-color:#A6CF54"/>
+		<stop  offset="0.66" style="stop-color:#A0CD53"/>
+		<stop  offset="0.7448" style="stop-color:#93C951"/>
+		<stop  offset="0.8174" style="stop-color:#84C551"/>
+		<stop  offset="0.8817" style="stop-color:#74C054"/>
+		<stop  offset="0.9398" style="stop-color:#63BC54"/>
+		<stop  offset="0.9915" style="stop-color:#59BA53"/>
+		<stop  offset="1" style="stop-color:#57BA53"/>
+	</radialGradient>
+	<path id="path16609_3_" fill="url(#path16609_2_)" stroke="#010101" d="M163.634,268.692c0,5.786-11.338,10.478-25.316,10.478
+		c-13.98,0-25.314-4.689-25.314-10.478s11.334-10.475,25.314-10.475C152.296,258.217,163.634,262.905,163.634,268.692z"/>
+	<g>
+		<text transform="matrix(1 0 0 1 132.6362 271.6279)" fill="#010101" font-family="'MyriadPro-Regular'" font-size="10">X</text>
+		<text transform="matrix(0.7 0 0 0.7 138.3452 274.958)" fill="#010101" font-family="'MyriadPro-Regular'" font-size="10"> </text>
+		<text transform="matrix(0.7 0 0 0.7 139.8296 268.2979)" fill="#010101" font-family="'MyriadPro-Regular'" font-size="10">+</text>
+	</g>
+</g>
+<g id="X">
+	
+		<radialGradient id="X_path1_1_" cx="149.7026" cy="-286.1685" r="16.1858" gradientTransform="matrix(1.5933 0 0 0.6358 35.2984 450.639)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#ACD152"/>
+		<stop  offset="0.4082" style="stop-color:#ABD152"/>
+		<stop  offset="0.5552" style="stop-color:#A6CF54"/>
+		<stop  offset="0.66" style="stop-color:#A0CD53"/>
+		<stop  offset="0.7448" style="stop-color:#93C951"/>
+		<stop  offset="0.8174" style="stop-color:#84C551"/>
+		<stop  offset="0.8817" style="stop-color:#74C054"/>
+		<stop  offset="0.9398" style="stop-color:#63BC54"/>
+		<stop  offset="0.9915" style="stop-color:#59BA53"/>
+		<stop  offset="1" style="stop-color:#57BA53"/>
+	</radialGradient>
+	<path id="X_path1" fill="url(#X_path1_1_)" stroke="#010101" d="M299.134,268.691c0,5.787-11.338,10.479-25.316,10.479
+		c-13.98,0-25.314-4.689-25.314-10.479c0-5.787,11.334-10.474,25.314-10.474C287.796,258.217,299.134,262.904,299.134,268.691z"/>
+	<g>
+		<text transform="matrix(1 0 0 1 270.9644 271.6279)" fill="#010101" font-family="'MyriadPro-Regular'" font-size="10">X</text>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#010101" stroke-dasharray="3,3" x1="126.47" y1="32.39" x2="126.47" y2="87.39"/>
+		<polygon fill="#010101" points="122.767,84.581 126.47,86.154 130.174,84.581 126.47,93.359 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path fill="none" stroke="#010101" d="M192.534,162.269c0,16.906-28.772,35.621-64.121,35.621s-64.006-13.704-64.006-30.61"/>
+		<polygon fill="#010101" points="68.11,170.088 64.407,168.516 60.703,170.088 64.407,161.311 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path fill="none" stroke="#010101" d="M64.407,137.39c0-16.906,28.771-35.621,64.121-35.621c35.349,0,64.006,13.704,64.006,30.61"
+			/>
+		<polygon fill="#010101" points="188.831,129.57 192.534,131.143 196.238,129.57 192.534,138.348 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#010101" stroke-dasharray="3,3" x1="205.763" y1="160.39" x2="205.763" y2="214.39"/>
+		<polygon fill="#010101" points="202.06,211.581 205.763,213.154 209.467,211.581 205.763,220.359 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path fill="none" stroke="#010101" d="M269.327,281.269c0,16.906-28.885,35.621-64.371,35.621
+			c-35.487,0-64.256-13.704-64.256-30.61"/>
+		<polygon fill="#010101" points="144.403,289.088 140.7,287.516 136.996,289.088 140.7,280.311 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path fill="none" stroke="#010101" d="M140.7,256.39c0-16.906,28.884-35.621,64.371-35.621c35.486,0,64.256,13.704,64.256,30.61"
+			/>
+		<polygon fill="#010101" points="265.624,248.57 269.327,250.143 273.031,248.57 269.327,257.348 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#010101" stroke-dasharray="3,3" x1="280.263" y1="259.39" x2="280.263" y2="35.224"/>
+		<polygon fill="#010101" points="283.966,38.032 280.263,36.459 276.559,38.032 280.263,29.254 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#010101" x1="151.785" y1="28.393" x2="299.134" y2="28.393"/>
+		<polygon fill="#010101" points="296.326,32.096 297.898,28.393 296.326,24.688 305.103,28.393 		"/>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#010101" x1="22.369" y1="28.393" x2="94.597" y2="28.393"/>
+		<polygon fill="#010101" points="91.789,32.096 93.361,28.393 91.789,24.688 100.566,28.393 		"/>
+	</g>
+</g>
+<g id="g2886">
+	<g id="g8433_1_">
+		
+			<radialGradient id="path8425_2_" cx="-121.189" cy="34.8779" r="9.9071" gradientTransform="matrix(-1.5879 0 0 1.1269 -65.9646 63.4698)" gradientUnits="userSpaceOnUse">
+			<stop  offset="0" style="stop-color:#AFE0E7"/>
+			<stop  offset="0.3652" style="stop-color:#AFE0E9"/>
+			<stop  offset="0.5444" style="stop-color:#ACDFED"/>
+			<stop  offset="0.6833" style="stop-color:#A2DDF1"/>
+			<stop  offset="0.8013" style="stop-color:#9BD0F0"/>
+			<stop  offset="0.905" style="stop-color:#96BAE3"/>
+			<stop  offset="0.9991" style="stop-color:#9E9CCD"/>
+			<stop  offset="1" style="stop-color:#90AEDB"/>
+		</radialGradient>
+		<path id="path8425_1_" fill="url(#path8425_2_)" stroke="#010101" d="M108.191,97.851c3.688-2.221,9.725-3.883,16.658-3.883
+			c11.096,0,20.088,3.941,20.088,8.805c0,4.865-8.992,8.807-20.088,8.807c-6.377,0-13.166-2.043-16.846-4.074l6.035-4.865
+			L108.191,97.851z"/>
+	</g>
+	<text transform="matrix(1 0 0 1 115.0405 106.2744)" fill="#010101" font-family="'Myriad-Roman'" font-size="10">cdc25</text>
+</g>
+<g>
+	
+		<radialGradient id="path16609_4_" cx="57.2217" cy="-400.6753" r="16.186" gradientTransform="matrix(1.5933 0 0 0.6358 35.2984 450.639)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#C2DA65"/>
+		<stop  offset="0.4082" style="stop-color:#C2DA65"/>
+		<stop  offset="0.5552" style="stop-color:#BDD967"/>
+		<stop  offset="0.66" style="stop-color:#B9D766"/>
+		<stop  offset="0.7448" style="stop-color:#B1D466"/>
+		<stop  offset="0.8174" style="stop-color:#A8D166"/>
+		<stop  offset="0.8817" style="stop-color:#9DCE66"/>
+		<stop  offset="0.9398" style="stop-color:#93CA65"/>
+		<stop  offset="0.9915" style="stop-color:#89C762"/>
+		<stop  offset="1" style="stop-color:#87C763"/>
+	</radialGradient>
+	<path id="path16609_1_" fill="url(#path16609_4_)" stroke="#010101" d="M151.786,195.889c0,5.786-11.338,10.478-25.316,10.478
+		c-13.981,0-25.315-4.689-25.315-10.478s11.334-10.476,25.315-10.476C140.448,185.414,151.786,190.102,151.786,195.889z"/>
+	<text transform="matrix(1 0 0 1 113.0239 199.4121)" font-family="'MyriadPro-Regular'" font-size="12">wee1</text>
+</g>
+<g id="C">
+	
+		<radialGradient id="C_path1_1_" cx="57.2217" cy="-664.1172" r="16.1858" gradientTransform="matrix(1.5933 0 0 0.6358 35.2984 450.639)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0" style="stop-color:#ACD152"/>
+		<stop  offset="0.4082" style="stop-color:#ABD152"/>
+		<stop  offset="0.5552" style="stop-color:#A6CF54"/>
+		<stop  offset="0.66" style="stop-color:#A0CD53"/>
+		<stop  offset="0.7448" style="stop-color:#93C951"/>
+		<stop  offset="0.8174" style="stop-color:#84C551"/>
+		<stop  offset="0.8817" style="stop-color:#74C054"/>
+		<stop  offset="0.9398" style="stop-color:#63BC54"/>
+		<stop  offset="0.9915" style="stop-color:#59BA53"/>
+		<stop  offset="1" style="stop-color:#57BA53"/>
+	</radialGradient>
+	<path id="C_path1" fill="url(#C_path1_1_)" stroke="#010101" d="M151.785,28.393c0,5.786-11.338,10.478-25.315,10.478
+		c-13.98,0-25.314-4.689-25.314-10.478s11.334-10.476,25.314-10.476C140.447,17.918,151.785,22.605,151.785,28.393z"/>
+	<text transform="matrix(1 0 0 1 121.7749 29.6641)" fill="#010101" font-family="'MyriadPro-Regular'" font-size="10">C</text>
+	<text transform="matrix(0.7 0 0 0.7 127.5757 32.9941)" fill="#010101" font-family="'MyriadPro-Regular'" font-size="10">1</text>
+</g>
+<g id="V1">
+	
+		<ellipse id="V1_path1" transform="matrix(0.9997 -0.025 0.025 0.9997 -3.0772 3.2058)" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="0.8485" cx="126.469" cy="124.476" rx="13.787" ry="9.925"/>
+	<text transform="matrix(1 0 0 1 120.9673 128)" font-family="'MyriadPro-Regular'" font-size="12">V</text>
+	<text transform="matrix(0.7 0 0 0.7 127.6636 131.9961)" font-family="'MyriadPro-Regular'" font-size="12">1</text>
+</g>
+<text transform="matrix(1 0 0 1 120.9673 176.9961)" font-family="'MyriadPro-Regular'" font-size="12">V</text>
+<text transform="matrix(0.7 0 0 0.7 127.6636 180.9922)" font-family="'MyriadPro-Regular'" font-size="12">2</text>
+<g id="V3">
+	
+		<ellipse id="V3_path1" transform="matrix(0.9997 -0.025 0.025 0.9997 -5.8213 5.226)" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="0.8485" cx="205.763" cy="235.055" rx="13.787" ry="9.925"/>
+	<text transform="matrix(1 0 0 1 200.2612 236.5791)" font-family="'MyriadPro-Regular'" font-size="12">V</text>
+	<text transform="matrix(0.7 0 0 0.7 206.9565 240.5752)" font-family="'MyriadPro-Regular'" font-size="12">3</text>
+</g>
+<text transform="matrix(1 0 0 1 200.2612 308.0752)" font-family="'MyriadPro-Regular'" font-size="12">V</text>
+<text transform="matrix(0.7 0 0 0.7 206.9565 312.0713)" font-family="'MyriadPro-Regular'" font-size="12">4</text>
+</svg>
+</window>

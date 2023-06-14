@@ -1,0 +1,19 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Sine approximations in CellML</title>
+</head>
+<body>
+<p>
+	This workspace provides a collection CellML models primarily developed for testing software tools and the model repository. There are models for calculating sine using the MathML <code>sin</code> operator, a parabolic approximation, and a differential equation approximation.
+</p>
+<p>
+	The CellML document <a href="sin_approximations_import.xml/view"><code>sin_approximations_import.xml</code></a> is the top-level CellML model. It imports the three sub-models which define the three ways of calculating sine. The SED-ML document <a href="sin_approximations_sedml.xml/view"><code>sin_approximations_sedml.xml</code></a> describes a simulation experiment which computes a sine wave over the interval 0 to 2*pi using these three methods and plots a graph showing that they all give similar results (see image below). <a href="sin_approximations_import.xml/view"><code>sin_approximations_import.xml</code></a> also contains a <a href="http://code.google.com/p/cellml-simulator/">CSim</a> <i>summary description</i> of the simulation experiment defined in <a href="sin_approximations_sedml.xml/view"><code>sin_approximations_sedml.xml</code></a> such that CSim can be used to perform the actual numerical computations required to produce the data shown in the graph below.
+</p>
+<img width="80%" src="SED-ML web tools screenshot.png"/>
+<p>
+	OpenCell version 0.8 can also be used to perform the same simulation experiment, with the results plotted below highlighting the differences between the three methods a bit better:
+	<img width="80%" src="OpenCell-results.png"/>
+</p>
+</body>
+</html>

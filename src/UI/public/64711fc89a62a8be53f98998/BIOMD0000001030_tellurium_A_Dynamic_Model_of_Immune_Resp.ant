@@ -1,0 +1,104 @@
+// Created by libAntimony v2.13.2
+function Rate_Law_for_u_production(lambda, u)
+  lambda*u;
+end
+
+Rate_Law_for_u_production is "Rate Law for u production"
+
+function Rate_Law_for_u_consumption(kappa, y, u)
+  kappa*y*u;
+end
+
+Rate_Law_for_u_consumption is "Rate Law for u consumption"
+
+function Rate_Law_for_x_production(beta, u)
+  beta*u;
+end
+
+Rate_Law_for_x_production is "Rate Law for x production"
+
+function Rate_Law_for_y_production(mu, u, x)
+  mu*(u/x);
+end
+
+Rate_Law_for_y_production is "Rate Law for y production"
+
+
+model *Sontag2017___Dynamic_model_of_immune_responses_to_antigen_presentation_by_tumor_or_pathogen()
+
+  // Compartments and Species:
+  compartment Whole_organism;
+  species $Antigen_expressing_cells in Whole_organism, Regulatory_cells in Whole_organism;
+  species Effector_cells in Whole_organism;
+
+  // Assignment Rules:
+  Antigen_expressing_cells := piecewise(time - 99, time >= 100, 1);
+
+  // Reactions:
+  pathogen_tumor_production:  => $Antigen_expressing_cells; Whole_organism*Rate_Law_for_u_production(lambda, Antigen_expressing_cells);
+  pathogen_tumor_consumption: $Antigen_expressing_cells => ; Whole_organism*Rate_Law_for_u_consumption(kappa, Effector_cells, Antigen_expressing_cells);
+  regulatory_production:  => Regulatory_cells; Whole_organism*Rate_Law_for_x_production(beta, Antigen_expressing_cells);
+  regulatory_consumption: Regulatory_cells => ; Whole_organism*delta_x*Regulatory_cells;
+  effector_production:  => Effector_cells; Whole_organism*Rate_Law_for_y_production(mu, Antigen_expressing_cells, Regulatory_cells);
+  effector_consumption: Effector_cells => ; Whole_organism*detla_y*Effector_cells;
+
+  // Species initializations:
+  Regulatory_cells = 1;
+  Effector_cells = 1;
+
+  // Compartment initializations:
+  Whole_organism = 1;
+
+  // Variable initializations:
+  lambda = 0;
+  kappa = 0;
+  delta_x = 1;
+  beta = 1;
+  mu = 1;
+  detla_y = 1;
+
+  // Other declarations:
+  const Whole_organism, lambda, kappa, delta_x, beta, mu, detla_y;
+
+  // Unit definitions:
+  unit length = metre;
+  unit area = metre^2;
+  unit volume = litre;
+  unit time_unit = 86400 second;
+  unit substance = item;
+
+  // Display Names:
+  time_unit is "time";
+  Antigen_expressing_cells is "Antigen-expressing_cells";
+  pathogen_tumor_production is "pathogen/tumor_production";
+  pathogen_tumor_consumption is "pathogen/tumor_consumption";
+
+  // CV terms:
+  Whole_organism hypernym "http://identifiers.org/ncit/C13413"
+  Whole_organism property "http://identifiers.org/pato/PATO:0001993"
+  Antigen_expressing_cells hypernym "http://identifiers.org/ido/0000528"
+  Antigen_expressing_cells hypernym "http://identifiers.org/cl/CL:0001063"
+  Antigen_expressing_cells property "http://identifiers.org/chebi/CHEBI:59132"
+  Regulatory_cells hypernym "http://identifiers.org/cl/CL:0000815"
+  Effector_cells hypernym "http://identifiers.org/cl/CL:0000911"
+  pathogen_tumor_production hypernym "http://identifiers.org/sbo/SBO:0000393"
+  pathogen_tumor_consumption hypernym "http://identifiers.org/sbo/SBO:0000394"
+  regulatory_production hypernym "http://identifiers.org/sbo/SBO:0000393"
+  regulatory_consumption hypernym "http://identifiers.org/sbo/SBO:0000394"
+  effector_production hypernym "http://identifiers.org/sbo/SBO:0000393"
+  effector_consumption hypernym "http://identifiers.org/sbo/SBO:0000394"
+end
+
+Sontag2017___Dynamic_model_of_immune_responses_to_antigen_presentation_by_tumor_or_pathogen is "Sontag2017 - Dynamic model of immune responses to antigen presentation by tumor or pathogen"
+
+Sontag2017___Dynamic_model_of_immune_responses_to_antigen_presentation_by_tumor_or_pathogen model_entity_is "http://identifiers.org/biomodels.db/MODEL2108160001",
+                                                                                                            "http://identifiers.org/biomodels.db/BIOMD0000001030"
+Sontag2017___Dynamic_model_of_immune_responses_to_antigen_presentation_by_tumor_or_pathogen container "http://identifiers.org/bto/BTO:0005810"
+Sontag2017___Dynamic_model_of_immune_responses_to_antigen_presentation_by_tumor_or_pathogen propertyBearer "http://identifiers.org/go/GO:0002507"
+Sontag2017___Dynamic_model_of_immune_responses_to_antigen_presentation_by_tumor_or_pathogen propertyBearer "http://identifiers.org/go/GO:0019882"
+Sontag2017___Dynamic_model_of_immune_responses_to_antigen_presentation_by_tumor_or_pathogen propertyBearer "http://identifiers.org/go/GO:0006955"
+Sontag2017___Dynamic_model_of_immune_responses_to_antigen_presentation_by_tumor_or_pathogen taxon "http://identifiers.org/taxonomy/7742"
+Sontag2017___Dynamic_model_of_immune_responses_to_antigen_presentation_by_tumor_or_pathogen description "http://identifiers.org/pubmed/28131824"
+Sontag2017___Dynamic_model_of_immune_responses_to_antigen_presentation_by_tumor_or_pathogen property "http://identifiers.org/biomodels.teddy/TEDDY_0000034",
+                                                                                                     "http://identifiers.org/biomodels.teddy/TEDDY_0000043",
+                                                                                                     "http://identifiers.org/mamo/MAMO_0000046"

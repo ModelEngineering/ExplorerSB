@@ -1,0 +1,51 @@
+This is the README file for the 3D model associated with the paper:
+
+Denizot, A., Arizono, M., Nägerl, V., Soula, H., Berry, H. (2019). Simulation of calcium signaling in fine astrocytic processes: effect of spatial properties on spontaneous activity. 
+
+This model requires STEPS software, which is freely available at http://steps.sourceforge.net/STEPS/default.php
+This model corresponds to the GCaMP model presented in Fig6 of the paper (see also Material & Methods section for more information on the different models developed).
+
+
+HOW TO RUN THE CODE 
+-----------
+First, you need to download STEPS at http://steps.sourceforge.net/STEPS/default.php or directly at https://github.com/CNS-OIST/STEPS
+Dependencies for STEPS are described on the README file at https://github.com/CNS-OIST/STEPS. 
+
+The model requires that the following packages are installed:
+- numpy
+- pickle
+- sys
+- pyqtgraph
+
+The model is divided in 3 python files:
+
+****
+ip3r_model_mesh_gcamp.py 
+This file contains 2 functions:
+- getModel(), that defines all molecules, reactions, reaction constants involved in the model
+- gen_geom(), that imports the geometry from the file "astrocyte.inp". It also loads ER and plasma membrane surfaces triangles from the file "cylinder_mesh.txt". 
+
+****
+3d_gcamp.py 
+This file sets initial conditions and runs the simulation while recording data in a file.
+To run this script, simply call the function with python with an integer i as an argument that will be the seed for the given simulation. The output file, sim_gcamp.i with i the seed, contains in each line the number of ca_GCaMP6s molecule and the number of open IP3R channel. Time between two lines corresponds to 1 ms but can be manually changed by the user at line 11.
+Example command:
+python 3d_gcamp.py 1
+
+****
+3d_gcamp_visual.py 
+This file also sets initial conditions and runs simulation as 3d_gcamp.py but should be run in case you want to visualize the model in a movie within the mesh. IP3 molecules are represented in red, GCaMP6s-ca molecules in yellow and IP3R molecules (on ER membrane) in blue. The astrocytic process is simplified as being a cylinder of 100nm in radius and 1 micrometer long. The ER is a thiner cylinder within the mesh. For more details, see Material & Methods section of the article.
+Example command:
+python 3d_gcamp_visual.py 1
+
+##################
+### MESH FILES ###
+##################
+- cylinder_mesh.txt contains information on triangles belonging to ER surface and plasma membrane surface
+- astrocyte.inp contains the 3d mesh illustrated in Fig6 of the paper, mimicking a realistic astrocytic process volume
+
+Please note that all files must be stored in the same folder for the model to run. A simulation takes about 5h40min to run on a HP ZBook Studio G3.
+
+
+Contact:
+audrey.denizot@inria.fr

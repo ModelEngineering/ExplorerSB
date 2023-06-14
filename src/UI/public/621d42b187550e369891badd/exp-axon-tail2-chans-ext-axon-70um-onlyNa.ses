@@ -1,0 +1,153 @@
+// Experiment with 2-component axon extention tail, and only Na channels in SIZ compartments 
+
+// nrngui stuff and ion chans
+load_file("inc-first.ses")
+
+strdef file_name, ses_file
+file_name = "ext-axon-70um-onlyNa"
+
+sprint(ses_file, "neuron-CB-ext-axon-2pieces-chans-%s.ses", file_name)
+
+//load CellBuilder
+{load_file(ses_file)}
+
+
+{
+xpanel("RunControl", 0)
+v_init = -60
+xvalue("Init","v_init", 1,"stdinit()", 1, 1 )
+xbutton("Init & Run","run()")
+xbutton("Stop","stoprun=1")
+runStopAt = 5
+xvalue("Continue til","runStopAt", 1,"{continuerun(runStopAt) stoprun=1}", 1, 1 )
+runStopIn = 1
+xvalue("Continue for","runStopIn", 1,"{continuerun(t + runStopIn) stoprun=1}", 1, 1 )
+xbutton("Single Step","steprun()")
+t = 200
+xvalue("t","t", 2 )
+tstop = 110
+xvalue("Tstop","tstop", 1,"tstop_changed()", 0, 1 )
+dt = 0.025
+xvalue("dt","dt", 1,"setdt()", 0, 1 )
+steps_per_ms = 40
+xvalue("Points plotted/ms","steps_per_ms", 1,"setdt()", 0, 1 )
+screen_update_invl = 0.1
+xvalue("Scrn update invl","screen_update_invl", 1,"", 0, 1 )
+realtime = 1.12
+xvalue("Real Time","realtime", 0,"", 0, 1 )
+xpanel(893,777)
+}
+
+// load common funcs
+load_file("fitfuncs.hoc")
+
+print_elec_cell()
+
+// calc morph stats
+load_file("stats.hoc")
+
+load_file("v-graph-bigger-axon-2pieces.ses")
+
+load_file("vclamp_-85_to_-25mV.ses")
+
+load_file("graph-i-vc-ext-axon.ses")
+
+// save state in this file
+sprint(state_file_name, "state-neuron-CB+act+elec+ext-axon-2piece-chans-%s.bin", file_name)
+
+// Save voltage from multiple points in the cell
+objref axonv[8]
+axonv[0] = new Vector()
+axonv[1] = new Vector()
+axonv[2] = new Vector()
+axonv[3] = new Vector()
+axonv[4] = new Vector()
+axonv[5] = new Vector()
+axonv[6] = new Vector()
+axonv[7] = new Vector()
+
+// (1) end towards soma, (0) end distal
+// axon[13] attaches to soma, axon[0] distal end
+
+// axon[12].nseg=1
+// axon[13].nseg=1
+// record axon[12].v(0.5) & record axon[13].v(0.5)
+// axon[13].ri=25.045413
+// axon[12].ri=6.2445732
+axon[13] axonv[6].record(&v(0.5))
+axon[12] axonv[7].record(&v(0.5))
+axonv[6].label("axon[13](0.5)")
+axonv[7].label("axon[12](0.5)")
+
+// axon[6] to axon[7] (both have nseg=1)
+// axon[7].ri(0.5) = 1.8150921
+axon[7] axonv[0].record(&v(0.5))
+axon[6] axonv[1].record(&v(0.5))
+axonv[0].label("axon[7](0.5)")
+axonv[1].label("axon[6](0.5)")
+
+// here we switch
+// (0) end towards soma, (1) end distal
+// axon_ext[1].nseg=25
+// record axon_ext[1].v(0.02) & .v(0.06)
+// .ri(0.06) = 98.22134
+access axon_ext[1] 
+axonv[2].record(&v(0.02))
+axonv[3].record(&v(0.06))
+axonv[2].label("axon_ext[1](0.02)")
+axonv[3].label("axon_ext[1](0.06)")
+
+// axon_ext[0].nseg=5
+// record axon_ext[0].v(0.3) & .v(0.5)
+// .ri(0.06) = 52.640496
+access axon_ext[0] 
+axonv[4].record(&v(0.3))
+axonv[5].record(&v(0.5))
+axonv[4].label("axon_ext[0](0.3)")
+axonv[5].label("axon_ext[0](0.5)")
+
+
+// saves vector into file, uses vector's label for name
+// Usage: saveVec(vector, name_append)
+// vector: object to write
+// name_append: Name to append to file_name
+proc saveVec() { strdef savefilename
+  objref savefile
+  sprint(savefilename, "data-%s_%s_%s_dt_%fms.bin", file_name, $o1.label(), $s2, dt)
+  savefile=new File(savefilename)
+  savefile.wopen()
+  n = $o1.vwrite(savefile)
+  if (n == 1) { print "Wrote '", savefilename, "'.\n"
+  }
+  savefile.close()
+}
+
+// run pas and active and save data
+// Usage: runSave(name_append)
+// name_append: will be appended after "pas"/"act"
+proc runSave() { strdef savename
+  // start w pas
+  axon_ext[1].gmax_DmNaT = 0
+  axon_ext[1].gmax_DmNaP = 0
+
+  // run
+  run()
+
+  // after running, save the files
+  sprint(savename, "pas%s", $s1)
+  print axonv.size()
+  for i = 0, 7 {
+    saveVec(axonv[i], savename)
+  }
+
+  // run active & save data
+  sprint(savename, "act%s", $s1)
+  axon_ext[1].gmax_DmNaT = 0.24 // orig
+  //axon_ext[1].gmax_DmNaT = 0.05   
+  axon_ext[1].gmax_DmNaP = 0.00011 // orig
+  //axon_ext[1].gmax_DmNaP = 0.0003
+  run()
+  for i = 0, 7 {
+    saveVec(axonv[i], savename)
+  }
+}

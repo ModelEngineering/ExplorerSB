@@ -1,0 +1,21 @@
+objectvar save_window_, rvp_
+objectvar scene_vector_[6]
+objectvar ocbox_, ocbox_list_, scene_, scene_list_
+{ocbox_list_ = new List()  scene_list_ = new List()}
+{
+save_window_ = new Graph(0)
+save_window_.size(14.825,183.075,-63.1783,-7.46167)
+scene_vector_[4] = save_window_
+{save_window_.view(14.825, -63.1783, 168.25, 55.7167, 446, 493, 360, 312.64)}
+graphList[2].append(save_window_)
+save_window_.save_name("graphList[2].")
+save_window_.addvar("electrode", "electrode.v( 1 )", 1, 1, 0.6, 0.710411, 2)
+save_window_.addvar("soma", "soma[0].v( 0.5 )", 1, 1, 0.6, 0.709411, 2)
+save_window_.addvar("axon (prox)", "axon[13].v( 0.5 )", 6, 1, 0.6, 0.707588, 2)
+save_window_.addexpr("axon (mid)", "axon[7].v( 0.5 )", 2, 1, 0.6, 0.704823, 2)
+save_window_.addexpr("axon (dist)", "axon[0].v( 0.5 )", 7, 1, 0.6, 0.7, 2)
+save_window_.addexpr("bot dend1", "dendrite[120].v( 0.5 )", 4, 1, 0.6, 0.699839, 2)
+save_window_.addexpr("bot dend2", "dendrite[535].v( 0.5 )", 3, 1, 0.6, 0.690193, 2)
+}
+objectvar scene_vector_[1]
+{doNotify()}

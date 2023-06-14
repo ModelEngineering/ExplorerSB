@@ -1,0 +1,219 @@
+// Created by libAntimony v2.13.2
+function Rate_Law_for_M1_polarisation(M1, r0_m1, r_m1_u, T_u, h_u, M2_u, r0_m2, r_m2_v, V, h_v)
+  M1*(r0_m1 + r_m1_u*(T_u/(h_u + T_u))) - M2_u*(r0_m2 + r_m2_v*(V/(h_v + V)));
+end
+
+Rate_Law_for_M1_polarisation is "Rate Law for M1_polarisation"
+
+function Rate_Law_for_M2_infection(beta_2, V, M2_u)
+  beta_2*V*M2_u;
+end
+
+Rate_Law_for_M2_infection is "Rate Law for M2_infection"
+
+function Rate_Law_for_infected_tumour_lysis_elimination(delta_i1, T_i, d_i, M1, h_m, M2_u)
+  delta_i1*T_i + d_i*T_i*(M1/(h_m + M2_u));
+end
+
+Rate_Law_for_infected_tumour_lysis_elimination is "Rate Law for infected_tumour_lysis/elimination"
+
+function Rate_Law_for_M1_activation_growth(a1_v, V, a1_i, T_i, a1_u, T_u, p_m1, M1, M2_u, K2)
+  a1_v*V + a1_i*T_i + a1_u*T_u + p_m1*M1*(1 - (M1 + M2_u)/K2);
+end
+
+Rate_Law_for_M1_activation_growth is "Rate Law for M1_activation/growth"
+
+function Rate_Law_for_tumour_elimination(d_u, T_u, M1, h_m, M2_u)
+  d_u*T_u*(M1/(h_m + M2_u));
+end
+
+Rate_Law_for_tumour_elimination is "Rate Law for tumour_elimination"
+
+function Rate_Law_for_tumour_infection(beta, V, T_u)
+  beta*V*T_u;
+end
+
+Rate_Law_for_tumour_infection is "Rate Law for tumour_infection"
+
+function Rate_Law_for_tumour_growth_production(r, T_u, K1, d_m, M2_u, h_m)
+  r*T_u*(1 - T_u/K1) + d_m*T_u*(M2_u/(h_m + M2_u));
+end
+
+Rate_Law_for_tumour_growth_production is "Rate Law for tumour_growth/production"
+
+function Rate_Law_for_virus_death_elimination(omega, V, delta_v, M1, h_m, M2_u)
+  omega*V + delta_v*V*(M1/(h_m + M2_u));
+end
+
+Rate_Law_for_virus_death_elimination is "Rate Law for virus_death/elimination"
+
+function Rate_Law_for_virus_production(b, delta_i1, T_i, c, delta_i2, M2_i)
+  b*delta_i1*T_i + c*delta_i2*M2_i;
+end
+
+Rate_Law_for_virus_production is "Rate Law for virus_production"
+
+function Rate_Law_for_M2_activation_growth(a2_u, T_u, p_m2, M2_u, M1, K2)
+  a2_u*T_u + p_m2*M2_u*(1 - (M1 + M2_u)/K2);
+end
+
+Rate_Law_for_M2_activation_growth is "Rate Law for M2_activation/growth"
+
+
+model *Almuallem2020___Virus_macrophage_tumour_interactions_in_oncolytic_viral_therapies()
+
+  // Compartments and Species:
+  compartment Whole_organism;
+  species Uninfected_tumour_cells in Whole_organism, Infected_tumour_cells in Whole_organism;
+  species M1_macrophages in Whole_organism, Uninfected_M2_macrophages in Whole_organism;
+  species Infected_M2_macrophages in Whole_organism, Oncolytic_viruses in Whole_organism;
+
+  // Reactions:
+  tumour_growth_production:  => Uninfected_tumour_cells; Whole_organism*Rate_Law_for_tumour_growth_production(r, Uninfected_tumour_cells, K1, d_m, Uninfected_M2_macrophages, h_m);
+  tumour_infection: Uninfected_tumour_cells => Infected_tumour_cells; Whole_organism*Rate_Law_for_tumour_infection(beta1, Oncolytic_viruses, Uninfected_tumour_cells);
+  tumour_elimination: Uninfected_tumour_cells => ; Whole_organism*Rate_Law_for_tumour_elimination(d_u, Uninfected_tumour_cells, M1_macrophages, h_m, Uninfected_M2_macrophages);
+  infected_tumour_lysis_elimination: Infected_tumour_cells => ; Whole_organism*Rate_Law_for_infected_tumour_lysis_elimination(delta_i1, Infected_tumour_cells, d_i, M1_macrophages, h_m, Uninfected_M2_macrophages);
+  M1_activation_growth:  => M1_macrophages; Whole_organism*Rate_Law_for_M1_activation_growth(a1_v, Oncolytic_viruses, a1_i, Infected_tumour_cells, a1_u, Uninfected_tumour_cells, p_m1, M1_macrophages, Uninfected_M2_macrophages, K2);
+  M1_polarisation: M1_macrophages -> Uninfected_M2_macrophages; Whole_organism*Rate_Law_for_M1_polarisation(M1_macrophages, r0_m1, r_u_m1, Uninfected_tumour_cells, h_u, Uninfected_M2_macrophages, r0_m2, r_v_m2, Oncolytic_viruses, h_v);
+  M1_death: M1_macrophages => ; Whole_organism*d_e1*M1_macrophages;
+  M2_activation_growth:  => Uninfected_M2_macrophages; Whole_organism*Rate_Law_for_M2_activation_growth(a2_u, Uninfected_tumour_cells, p_m2, Uninfected_M2_macrophages, M1_macrophages, K2);
+  M2_infection: Uninfected_M2_macrophages => Infected_M2_macrophages; Whole_organism*Rate_Law_for_M2_infection(beta2, Oncolytic_viruses, Uninfected_M2_macrophages);
+  M2_death: Uninfected_M2_macrophages => ; Whole_organism*d_e2*Uninfected_M2_macrophages;
+  infected_M2_lysis: Infected_M2_macrophages => ; Whole_organism*delta_i2*Infected_M2_macrophages;
+  virus_production:  => Oncolytic_viruses; Whole_organism*Rate_Law_for_virus_production(b, delta_i1, Infected_tumour_cells, c, delta_i2, Infected_M2_macrophages);
+  virus_death_elimination: Oncolytic_viruses => ; Whole_organism*Rate_Law_for_virus_death_elimination(omega, Oncolytic_viruses, delta_v, M1_macrophages, h_m, Uninfected_M2_macrophages);
+
+  // Species initializations:
+  Uninfected_tumour_cells = 0.0005;
+  Infected_tumour_cells = 0;
+  M1_macrophages = 2.5e-06;
+  Uninfected_M2_macrophages = 2.5e-07;
+  Infected_M2_macrophages = 0;
+  Oncolytic_viruses = 1e-05;
+
+  // Compartment initializations:
+  Whole_organism = 1;
+
+  // Variable initializations:
+  r = 0.62;
+  K1 = 1;
+  g1 = 0;
+  beta1 = 10;
+  d_u = 1;
+  d_m = 0.2;
+  delta_i1 = 0.4;
+  d_i = 2;
+  a1_v = 0.025;
+  a1_i = 0.00025;
+  a1_u = 1.25e-07;
+  p_m1 = 0.57;
+  r0_m1 = 0.001;
+  r0_m2 = 0.001;
+  r_u_m1 = 1;
+  r_v_m2 = 0;
+  d_e1 = 0.88;
+  d_e2 = 0.12;
+  p_m2 = 0.57;
+  K2 = 1;
+  g2 = 0;
+  beta2 = 500;
+  delta_i2 = 0.52;
+  b = 25;
+  c = 8;
+  omega = 2;
+  delta_v = 5e-05;
+  h_u = 0.0001;
+  h_v = 1e-06;
+  h_m = 0.00025;
+  a2_u = 2.5e-07;
+
+  // Other declarations:
+  const Whole_organism, r, K1, g1, beta1, d_u, d_m, delta_i1, d_i, a1_v, a1_i;
+  const a1_u, p_m1, r0_m1, r0_m2, r_u_m1, r_v_m2, d_e1, d_e2, p_m2, K2, g2;
+  const beta2, delta_i2, b, c, omega, delta_v, h_u, h_v, h_m, a2_u;
+
+  // Unit definitions:
+  unit length = metre;
+  unit area = metre^2;
+  unit volume = litre;
+  unit time_unit = 86400 second;
+  unit substance = item;
+
+  // Display Names:
+  time_unit is "time";
+  Infected_tumour_cells is "Infected tumour_cells";
+  tumour_growth_production is "tumour_growth/production";
+  infected_tumour_lysis_elimination is "infected_tumour_lysis/elimination";
+  M1_activation_growth is "M1_activation/growth";
+  M2_activation_growth is "M2_activation/growth";
+  virus_death_elimination is "virus_death/elimination";
+
+  // CV terms:
+  Whole_organism hypernym "http://identifiers.org/ncit/C13413"
+  Whole_organism property "http://identifiers.org/pato/PATO:0001993"
+  Uninfected_tumour_cells hypernym "http://identifiers.org/cl/CL:0001063"
+  Uninfected_tumour_cells hypernym "http://identifiers.org/ncit/C12959"
+  Uninfected_tumour_cells property "http://identifiers.org/efo/0001460"
+  Uninfected_tumour_cells property "http://identifiers.org/chebi/CHEBI:144829"
+  Infected_tumour_cells hypernym "http://identifiers.org/ncit/C12959"
+  Infected_tumour_cells hypernym "http://identifiers.org/bto/BTO:0000152"
+  Infected_tumour_cells hypernym "http://identifiers.org/cl/CL:0001063"
+  Infected_tumour_cells property "http://identifiers.org/chebi/CHEBI:144829"
+  M1_macrophages hypernym "http://identifiers.org/cl/CL:0000863"
+  M1_macrophages hypernym "http://identifiers.org/bto/BTO:0006110"
+  Uninfected_M2_macrophages hypernym "http://identifiers.org/bto/BTO:0006111"
+  Uninfected_M2_macrophages hypernym "http://identifiers.org/cl/CL:0000890"
+  Uninfected_M2_macrophages property "http://identifiers.org/efo/0001460"
+  Infected_M2_macrophages hypernym "http://identifiers.org/bto/BTO:0000152"
+  Infected_M2_macrophages hypernym "http://identifiers.org/cl/CL:0000890"
+  Infected_M2_macrophages hypernym "http://identifiers.org/bto/BTO:0006111"
+  Oncolytic_viruses hypernym "http://identifiers.org/taxonomy/11276"
+  Oncolytic_viruses hypernym "http://identifiers.org/ncit/C717"
+  Oncolytic_viruses hypernym "http://identifiers.org/ido/0000508"
+  tumour_growth_production hypernym "http://identifiers.org/go/GO:0008283"
+  tumour_growth_production hypernym "http://identifiers.org/ncit/C19098"
+  tumour_growth_production hypernym "http://identifiers.org/sbo/SBO:0000393"
+  tumour_infection hypernym "http://identifiers.org/ncit/C3439"
+  tumour_infection hypernym "http://identifiers.org/ido/0000586"
+  tumour_elimination hypernym "http://identifiers.org/go/GO:0001906"
+  tumour_elimination hypernym "http://identifiers.org/go/GO:0008219"
+  tumour_elimination hypernym "http://identifiers.org/sbo/SBO:0000394"
+  infected_tumour_lysis_elimination hypernym "http://identifiers.org/go/GO:0001906"
+  infected_tumour_lysis_elimination hypernym "http://identifiers.org/go/GO:0008219"
+  infected_tumour_lysis_elimination hypernym "http://identifiers.org/go/GO:0044659"
+  infected_tumour_lysis_elimination hypernym "http://identifiers.org/sbo/SBO:0000394"
+  M1_activation_growth hypernym "http://identifiers.org/go/GO:0008283"
+  M1_activation_growth hypernym "http://identifiers.org/go/GO:0042116"
+  M1_activation_growth hypernym "http://identifiers.org/sbo/SBO:0000393"
+  M1_polarisation hypernym "http://identifiers.org/go/GO:0043030"
+  M1_polarisation hypernym "http://identifiers.org/ncit/C52566"
+  M1_death hypernym "http://identifiers.org/sbo/SBO:0000394"
+  M1_death hypernym "http://identifiers.org/go/GO:0008219"
+  M2_activation_growth hypernym "http://identifiers.org/go/GO:0008283"
+  M2_activation_growth hypernym "http://identifiers.org/go/GO:0042116"
+  M2_activation_growth hypernym "http://identifiers.org/sbo/SBO:0000393"
+  M2_infection hypernym "http://identifiers.org/ido/0000586"
+  M2_infection hypernym "http://identifiers.org/ncit/C3439"
+  M2_death hypernym "http://identifiers.org/sbo/SBO:0000394"
+  M2_death hypernym "http://identifiers.org/go/GO:0008219"
+  infected_M2_lysis hypernym "http://identifiers.org/sbo/SBO:0000394"
+  infected_M2_lysis hypernym "http://identifiers.org/go/GO:0008219"
+  infected_M2_lysis hypernym "http://identifiers.org/go/GO:0044659"
+  virus_production hypernym "http://identifiers.org/go/GO:0044659"
+  virus_production hypernym "http://identifiers.org/sbo/SBO:0000393"
+  virus_death_elimination hypernym "http://identifiers.org/ncit/C26011"
+  virus_death_elimination hypernym "http://identifiers.org/sbo/SBO:0000394"
+end
+
+Almuallem2020___Virus_macrophage_tumour_interactions_in_oncolytic_viral_therapies is "Almuallem2020 - Virus-macrophage-tumour interactions in oncolytic viral therapies"
+
+Almuallem2020___Virus_macrophage_tumour_interactions_in_oncolytic_viral_therapies model_entity_is "http://identifiers.org/biomodels.db/MODEL2108190002",
+                                                                                                  "http://identifiers.org/biomodels.db/BIOMD0000001033"
+Almuallem2020___Virus_macrophage_tumour_interactions_in_oncolytic_viral_therapies propertyBearer "http://identifiers.org/ncit/C15438"
+Almuallem2020___Virus_macrophage_tumour_interactions_in_oncolytic_viral_therapies propertyBearer "http://identifiers.org/ncit/C62713"
+Almuallem2020___Virus_macrophage_tumour_interactions_in_oncolytic_viral_therapies taxon "http://identifiers.org/taxonomy/9606"
+Almuallem2020___Virus_macrophage_tumour_interactions_in_oncolytic_viral_therapies description "http://identifiers.org/pubmed/33525118"
+Almuallem2020___Virus_macrophage_tumour_interactions_in_oncolytic_viral_therapies property "http://identifiers.org/doid/DOID:1612",
+                                                                                           "http://identifiers.org/go/GO:0002837",
+                                                                                           "http://identifiers.org/go/GO:0046730",
+                                                                                           "http://identifiers.org/mamo/MAMO_0000046"

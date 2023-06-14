@@ -1,0 +1,115 @@
+// Created by libAntimony v2.13.2
+function Rate_Law_for_uninfected_cancer_cell_growth(x, f)
+  f*x;
+end
+
+Rate_Law_for_uninfected_cancer_cell_growth is "Rate Law for uninfected_cancer_cell_growth"
+
+function Rate_Law_for_cancer_cell_infection(x, v)
+  x*v;
+end
+
+Rate_Law_for_cancer_cell_infection is "Rate Law for cancer_cell_infection"
+
+function Rate_Law_for_virus_infection_removal(m, x, v, h)
+  m*x*v + h*v;
+end
+
+Rate_Law_for_virus_infection_removal is "Rate Law for virus_infection/removal"
+
+
+model *Al_Tuwairqi2020___Dynamics_of_cancer_radiovirotherapy()
+
+  // Compartments and Species:
+  compartment Whole_organism;
+  species uninfected_cancer_cells in Whole_organism, infected_cancer_cells in Whole_organism;
+  species free_virus in Whole_organism, damaged_cancer_cells in Whole_organism;
+
+  // Reactions:
+  uninfected_cancer_cell_growth:  => uninfected_cancer_cells; Whole_organism*Rate_Law_for_uninfected_cancer_cell_growth(uninfected_cancer_cells, f);
+  cancer_cell_infection: uninfected_cancer_cells => infected_cancer_cells; Whole_organism*Rate_Law_for_cancer_cell_infection(uninfected_cancer_cells, free_virus);
+  infected_cancer_cell_lysis: infected_cancer_cells => free_virus; Whole_organism*infected_cancer_cell_lysis_k1*infected_cancer_cells;
+  virus_infection_removal: free_virus => ; Whole_organism*Rate_Law_for_virus_infection_removal(m, uninfected_cancer_cells, free_virus, h);
+  radiotherapy_uninfected_cells: uninfected_cancer_cells => damaged_cancer_cells; Whole_organism*alpha_1*uninfected_cancer_cells;
+  radiotherapy_infected_cells: infected_cancer_cells => damaged_cancer_cells; Whole_organism*alpha_2*infected_cancer_cells;
+  damaged_cell_removal: damaged_cancer_cells => ; Whole_organism*alpha_3*damaged_cancer_cells;
+
+  // Events:
+  radiotherapy: at time >= 35: alpha_3 = 0.9, alpha_2 = 0.5, alpha_1 = 0.5;
+
+  // Species initializations:
+  uninfected_cancer_cells = 0.4;
+  infected_cancer_cells = 0;
+  free_virus = 0.1;
+  damaged_cancer_cells = 0;
+
+  // Compartment initializations:
+  Whole_organism = 1;
+
+  // Variable initializations:
+  alpha_1 = 0;
+  alpha_2 = 0;
+  alpha_3 = 0;
+  f = 0;
+  h = 0.15;
+  m = 0.02;
+  infected_cancer_cell_lysis_k1 = 1;
+
+  // Other declarations:
+  var alpha_1, alpha_2, alpha_3;
+  const Whole_organism, f, h, m;
+
+  // Unit definitions:
+  unit length = metre;
+  unit area = metre^2;
+  unit volume = (1e-3 metre)^3;
+  unit time_unit = 3600e2 second;
+  unit substance = item;
+
+  // Display Names:
+  time_unit is "time";
+  virus_infection_removal is "virus_infection/removal";
+
+  // CV terms:
+  Whole_organism hypernym "http://identifiers.org/ncit/C13413"
+  Whole_organism property "http://identifiers.org/pato/PATO:0001993"
+  uninfected_cancer_cells hypernym "http://identifiers.org/cl/CL:0001063"
+  uninfected_cancer_cells property "http://identifiers.org/chebi/CHEBI:144829"
+  uninfected_cancer_cells property "http://identifiers.org/efo/0001460"
+  infected_cancer_cells hypernym "http://identifiers.org/cl/CL:0001063"
+  infected_cancer_cells hypernym "http://identifiers.org/bto/BTO:0000152"
+  infected_cancer_cells property "http://identifiers.org/chebi/CHEBI:144829"
+  free_virus hypernym "http://identifiers.org/ido/0000508"
+  free_virus hypernym "http://identifiers.org/ncit/C717"
+  damaged_cancer_cells hypernym "http://identifiers.org/cl/CL:0001063"
+  damaged_cancer_cells property "http://identifiers.org/pato/PATO:0001167"
+  damaged_cancer_cells property "http://identifiers.org/chebi/CHEBI:144829"
+  uninfected_cancer_cell_growth hypernym "http://identifiers.org/sbo/SBO:0000393"
+  uninfected_cancer_cell_growth hypernym "http://identifiers.org/go/GO:0008283"
+  cancer_cell_infection hypernym "http://identifiers.org/ncit/C3439"
+  cancer_cell_infection hypernym "http://identifiers.org/ido/0000586"
+  infected_cancer_cell_lysis hypernym "http://identifiers.org/go/GO:0044659"
+  infected_cancer_cell_lysis hypernym "http://identifiers.org/go/GO:0008219"
+  infected_cancer_cell_lysis hypernym "http://identifiers.org/sbo/SBO:0000394"
+  virus_infection_removal hypernym "http://identifiers.org/sbo/SBO:0000394"
+  virus_infection_removal hypernym "http://identifiers.org/go/GO:0046718"
+  radiotherapy_uninfected_cells hypernym "http://identifiers.org/go/GO:0071478"
+  radiotherapy_uninfected_cells hypernym "http://identifiers.org/ncit/C61555"
+  radiotherapy_infected_cells hypernym "http://identifiers.org/go/GO:0071478"
+  radiotherapy_infected_cells hypernym "http://identifiers.org/ncit/C61555"
+  damaged_cell_removal hypernym "http://identifiers.org/go/GO:0008219"
+  damaged_cell_removal hypernym "http://identifiers.org/sbo/SBO:0000394"
+end
+
+Al_Tuwairqi2020___Dynamics_of_cancer_radiovirotherapy is "Al-Tuwairqi2020 - Dynamics of cancer radiovirotherapy - Phase II treatment"
+
+Al_Tuwairqi2020___Dynamics_of_cancer_radiovirotherapy model_entity_is "http://identifiers.org/biomodels.db/MODEL2108170001",
+                                                                      "http://identifiers.org/biomodels.db/BIOMD0000001032"
+Al_Tuwairqi2020___Dynamics_of_cancer_radiovirotherapy propertyBearer "http://identifiers.org/ncit/C15313"
+Al_Tuwairqi2020___Dynamics_of_cancer_radiovirotherapy propertyBearer "http://identifiers.org/ncit/C62713"
+Al_Tuwairqi2020___Dynamics_of_cancer_radiovirotherapy propertyBearer "http://identifiers.org/ncit/C15438"
+Al_Tuwairqi2020___Dynamics_of_cancer_radiovirotherapy taxon "http://identifiers.org/taxonomy/9606"
+Al_Tuwairqi2020___Dynamics_of_cancer_radiovirotherapy description "http://identifiers.org/pubmed/32738266"
+Al_Tuwairqi2020___Dynamics_of_cancer_radiovirotherapy property "http://identifiers.org/doid/DOID:162",
+                                                               "http://identifiers.org/go/GO:0002837",
+                                                               "http://identifiers.org/mamo/MAMO_0000046"

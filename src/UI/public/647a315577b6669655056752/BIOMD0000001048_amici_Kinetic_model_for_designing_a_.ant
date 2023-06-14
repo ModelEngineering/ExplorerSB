@@ -1,0 +1,126 @@
+// Created by libAntimony v2.13.2
+function Mass_action_2(b, k1, product, substrate, k2)
+  b*k1*substrate - k2*product;
+end
+
+Mass_action_2 is "Mass action 2"
+
+function auto_amplification(a, r, T0, Tum)
+  a*r*Tum*(1 - Tum/T0);
+end
+
+auto_amplification is "auto-amplification"
+
+function Mass_action_4(k1, b, k2, product, modifier)
+  k1*modifier - b*k2*product;
+end
+
+Mass_action_4 is "Mass action 4"
+
+function function_for_cell_detachment(n, k1, substrate, b, k2, modifier)
+  n*(k1*substrate - b*k2*modifier);
+end
+
+function_for_cell_detachment is "function for cell detachment"
+
+function clearance_0(d, c, Tplas)
+  d*c*Tplas;
+end
+
+clearance_0 is "clearance"
+
+
+model *Siddhartha2002___Kinetic_modelling_of_cancer_therapies()
+
+  // Compartments and Species:
+  compartment Tumor;
+  species Ttum in Tumor, Tplas in Tumor, Tnew in Tumor;
+
+  // Reactions:
+  migration_to_bloodstream: Ttum => Tplas; Tumor*Mass_action_2(b, kf1, Tplas, Ttum, kr1);
+  clearance: Tplas => ; Tumor*clearance_0(d, c, Tplas);
+  cell_attachment_to_new_tumor:  => Tnew; Tumor*Mass_action_4(kf2, b, kr2, Tnew, Tplas);
+  new_tumor_auto_amplification:  => Tnew; Tumor*auto_amplification(a, r, T0, Tnew);
+  old_tumor_auto_amplification:  => Ttum; Tumor*auto_amplification(a, r, T0, Ttum);
+  cell_detachment: Tplas => ; Tumor*function_for_cell_detachment(n, kf2, Tplas, b, kr2, Tnew);
+
+  // Species initializations:
+  Ttum = 1000000;
+  Tplas = 4000000;
+  Tnew = 0;
+
+  // Compartment initializations:
+  Tumor = 1;
+
+  // Variable initializations:
+  a = 0.2;
+  b = 0.2;
+  c = 0.67;
+  d = 1;
+  kf1 = 0.067;
+  kf2 = 0.00067;
+  kr1 = 0.00067;
+  kr2 = 0.067;
+  T0 = 3000000;
+  n = 10;
+  r = 0.069;
+
+  // Other declarations:
+  const Tumor, a, b, c, d, kf1, kf2, kr1, kr2, T0, n, r;
+
+  // Unit definitions:
+  unit length = metre;
+  unit area = metre^2;
+  unit volume = litre;
+  unit time_unit = 86400 second;
+  unit substance = mole;
+
+  // Display Names:
+  time_unit is "time";
+  migration_to_bloodstream is "migration to bloodstream";
+  cell_attachment_to_new_tumor is "cell attachment to new tumor";
+  new_tumor_auto_amplification is "new tumor auto-amplification";
+  old_tumor_auto_amplification is "old tumor auto-amplification";
+  cell_detachment is "cell detachment";
+
+  // SBO terms:
+  kf1.sboTerm = 9
+  kf2.sboTerm = 9
+  kr1.sboTerm = 9
+  kr2.sboTerm = 9
+
+  // CV terms:
+  Tumor identity "http://identifiers.org/ncit/C98275"
+  Ttum identity "http://identifiers.org/ncit/C3262"
+  Tplas property "http://identifiers.org/ncit/C62970"
+  Tnew identity "http://identifiers.org/ncit/C8509"
+  a hypernym "http://identifiers.org/sbo/SBO:0000405"
+  b hypernym "http://identifiers.org/sbo/SBO:0000405"
+  c hypernym "http://identifiers.org/sbo/SBO:0000006"
+  d hypernym "http://identifiers.org/sbo/SBO:0000405"
+  kf1 identity "http://identifiers.org/sbo/SBO:0000009"
+  kf2 identity "http://identifiers.org/sbo/SBO:0000009"
+  kr1 identity "http://identifiers.org/sbo/SBO:0000009"
+  kr2 identity "http://identifiers.org/sbo/SBO:0000009"
+  T0 hypernym "http://identifiers.org/sbo/SBO:0000006"
+  n hypernym "http://identifiers.org/sbo/SBO:0000006"
+  r hypernym "http://identifiers.org/sbo/SBO:0000006"
+  migration_to_bloodstream hypernym "http://identifiers.org/go/GO:0090130"
+  clearance hypernym "http://identifiers.org/ncit/C94618"
+  cell_attachment_to_new_tumor hypernym "http://identifiers.org/ncit/C61470"
+  new_tumor_auto_amplification hypernym "http://identifiers.org/go/GO:0040007"
+  old_tumor_auto_amplification hypernym "http://identifiers.org/go/GO:0040007"
+  cell_detachment hypernym "http://identifiers.org/ncit/C42882"
+end
+
+Siddhartha2002___Kinetic_modelling_of_cancer_therapies is "Siddhartha2002 - Kinetic modelling of cancer therapies"
+
+Siddhartha2002___Kinetic_modelling_of_cancer_therapies model_entity_is "http://identifiers.org/biomodels.db/MODEL2204120001",
+                                                                       "http://identifiers.org/biomodels.db/BIOMD0000001048"
+Siddhartha2002___Kinetic_modelling_of_cancer_therapies container "http://identifiers.org/ncit/C98275"
+Siddhartha2002___Kinetic_modelling_of_cancer_therapies taxon "http://identifiers.org/taxonomy/9606"
+Siddhartha2002___Kinetic_modelling_of_cancer_therapies description "http://identifiers.org/pubmed/12379154"
+Siddhartha2002___Kinetic_modelling_of_cancer_therapies property "http://identifiers.org/ncit/C3224",
+                                                                "http://identifiers.org/ncit/C16212",
+                                                                "http://identifiers.org/ncit/C3058",
+                                                                "http://identifiers.org/mamo/MAMO_0000046"

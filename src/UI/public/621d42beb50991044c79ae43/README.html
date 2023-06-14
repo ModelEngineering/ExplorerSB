@@ -1,0 +1,83 @@
+<html>
+<p>Model of the Mammalian ET cell
+</p>
+<p>Computational model and files to recreate the results from the paper "A Computational Model of the Mammalian External Tufted Cell" <a href="https://doi.org/10.1016/j.jtbi.2018.10.003">https://doi.org/10.1016/j.jtbi.2018.10.003</a>
+</p>
+<p>Author: Ryan Viertel
+</p>
+<dl>
+  <dt><strong>Usage</strong></dt>
+<dd>data = ET(input,sampling_rate);
+</dd></dl>
+<p>input: input vector, if no input then just a vector of zeros
+</p>
+<p>sampling_rate: rate at which the input vector should be sampled. 1000 for milisecond
+</p>
+<p>returns the following struct:
+</p>
+<p>data.T - time vector data.X - ODE variables at each time step
+</p>
+<p>data.X(:,1) - Membrane Potential<br/>
+data.X(:,2) - nK<br/>
+data.X(:,3) - hNaP<br/>
+data.X(:,4) - hH<br/>
+data.X(:,5) - mLVA<br/>
+data.X(:,6) - hLVA<br/>
+data.X(:,7) - mBK<br/>
+data.X(:,8) - Calcium<br/>
+data.X(:,9) - nHVK<br/>
+data.events - list of spike events
+</p>
+<p>data.which - event type
+</p>
+<p>1 - spike<br/>
+2 - burst start<br/>
+3 - burst end<br/>
+data.current - system currents
+</p>
+<p>data.current(:,1) = transient sodium<br/>
+data.current(:,2) = fast potassium<br/>
+data.current(:,3) = leak<br/>
+data.current(:,4) = persistent sodium<br/>
+data.current(:,5) = hyperpolarization activated
+data.current(:,6) = LVA calcium<br/>
+data.current(:,7) = HVA calcium<br/>
+data.current(:,8) = large conductance potassium
+  data.current(:,9) = HVK current<br/>
+  <p/>
+<strong>Example:</strong><p/>
+<strong>% create the input vector</strong><br/>
+input = zeros(1,5000);
+</p>
+<p><strong>% run the model</strong><br/>
+data = ET(input,1000);
+</p>
+<p><strong>% plot the voltage trace</strong><br/>
+plot(data.T,data.X(:,1))
+</p>
+You should see a figure like this:<p/>
+<img src="./screenshot.png" alt="screenshot">
+<p><strong>ME-PCM</strong><br/>
+The code used to sample the model throughout parameter space to determine stability and investigate the effect of model parameters on model output is found in the ME-PCM directory
+</p>
+<p><strong>xpp</strong><br/>
+The ODE file to recreate the bifurcation diagram is found in the xpp directory</p>
+<p/>
+<strong>Notes on figure 6</strong><p/>
+<ol>
+  <li>The steps to exactly recreate each of the panels in figure 6 are time consuming. I exported the raw data from xpp to Matlab and cleaned and plotted it there. You can roughly recreate the bifurcation diagram though by following these steps
+  </li><li>open bifurcation.ode in xpp
+  </li><li>integrate the system until it reaches steady state (i g followed by i l several times in xpp)
+  </li><li>open auto under the File menu
+  </li><li>Trace out the steady state (f r while auto is open. You then have to grab each of the endpoints and extend the steady state integration. To extend the solution on the right you have to change ds to a positive value)
+  </li><li>After tracing out the stead state, you can grab the Hopf bifurcation point on the left, and press r p to begin tracing out the periodic orbit.
+</li></ol>
+<p>After creating the bifurcation diagram, I traced the trajectory of the full system and overlaid the data. This could be done in xpp or matlab. Finally, the lower panels can all be recreated by fixing the value of mBK, then in the V-nK plane plotting trajectories by picking some initial conditions in the upper right quadrant. I hope that helps, let me know if you have questions.
+</p>
+<p><strong>Notes on parallel run time for ME-PCM (uq):</strong>
+<p/> See the paper for more details.  we ran the 390625 total simulations for about 7 seconds of simulated time (roughly 10 seconds real time for each simulation).  We did this on 11 dual socket nodes, 6 cores per socket for a total of 132 cores.  This took about 6 hours and 40 minutes to run.
+</p>
+<p>The task is dominated by the time it takes to run the simulations, and running all of the simulations is embarrassingly parallel, so really its just a question of what resources are available and how many simulations you want to run.
+</p>
+
+</html>

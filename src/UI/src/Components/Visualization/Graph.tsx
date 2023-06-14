@@ -26,7 +26,7 @@ const ChromaticScale = [
 ];
 
 const Graph = forwardRef(function Graph(
-  { data, xVariable, variables, displayMode}: { data: Object[]; xVariable: string | undefined; variables: SelectOption[]; displayMode: DisplayMode},
+  { data, xVariable, variables, displayMode}: { data: Object[]; xVariable: string | undefined; variables: VariableSelectOption[]; displayMode: DisplayMode},
   ref: any
   ) {
   const [localVariables, setLocalVariables] = useState<string[]>([]);
@@ -39,7 +39,7 @@ const Graph = forwardRef(function Graph(
   }, [variables]);
   return (
     <div id="graph-container" className={displayMode === DisplayMode.Graph ? "" : "hidden"}>
-      {xVariable === undefined ? <p>Graph not Available</p> :
+      {data.length <= 1 ? <p>Graph not Available</p> :
       <ResponsiveContainer minWidth="0" width="100%" height="100%">
         <LineChart
           width={500}

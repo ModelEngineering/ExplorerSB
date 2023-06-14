@@ -1,0 +1,218 @@
+/* De Schutter model conductances in De Schutter-Rapp cell      */
+/* conversion from GENESIS by Jenny Davie, Arnd Roth,
+   Volker Steuber, Erik De Schutter & Michael Hausser 28.8.2004 */
+/* Injection of arbitrary current waveform at the soma 5.2.2016 */
+
+/********************************************/
+/************ initial parameters ************/
+/********************************************/
+
+t = 0                  /* simulation starts at t = 0 ms */
+dt = 0.05              /* time step, ms  -- matching the time step of the current waveform */
+steps_per_ms = 20      /* reciprocal of dt */
+Vrest = -68            /* resting potential, mV */
+v_init = Vrest
+celsius = 37           /* invoke Q10 for conductances and kinetics */
+tstop = 21000          /* simulation stops at t = 21000 ms */
+
+/********************************************/
+/*************** make geometry **************/
+/********************************************/
+
+xopen("Purk2M0.nrn")   /* load the morphology file */
+
+/*************** passive membrane properties  ***********/
+
+membranecap = 1.64     // specific membrane capacitance in uF cm^-2
+membraneresist = 30000 // specific membrane resistance in ohm cm^2 for dendrite
+somamembraneresist = 10000
+axialresist = 250      // axial resistivity in ohm cm
+
+forall {insert Leak el_Leak=-80 Ra=axialresist}
+
+forsec "dend" {gl_Leak=1.0/membraneresist Ra=axialresist cm=1.0*membranecap}
+
+forsec md {gl_Leak=1.0/membraneresist Ra=axialresist cm=1.0*membranecap}
+
+forsec "soma" {gl_Leak=1/somamembraneresist Ra=axialresist cm=1.0*membranecap}
+
+spine_dens = 13
+spine_area = 1.33
+
+func spinecomp() { local a
+	maxdiam = 0
+	for (x) if (diam(x) > maxdiam) maxdiam = diam(x)
+	if (maxdiam <= 3.17) { // spine correction only for thin dendrites
+		a = 0
+		for(x) a=a+area(x)
+
+		F = (L*spine_area*spine_dens + a)/a
+	} else {
+		F = 1 // no spine correction for larger dendrites
+	}
+	return F
+}
+
+proc add_spines() {
+		spinecomp()
+		gl_Leak = spinecomp()/membraneresist
+		cm = spinecomp()*membranecap
+}
+
+forsec "dend" add_spines()
+
+
+/*************** insert active conductances  ***********/
+
+shell_depth = 0.2 // um
+
+soma {
+insert NaF gnabar_NaF = 7.5
+insert NaP gnabar_NaP= 0.001 // default is correct value for soma
+//insert CaP gcabar_CaP = 0.0 // no P type Ca Ch in soma
+insert CaT gcabar_CaT = 0.0005 // default is correct value for soma and dend
+insert Kh1 gkbar_Kh1 = 0.0003 // default is correct value for soma, Ih uses only K ions here
+insert Kh2 gkbar_Kh2 = 0.0003 // default is correct value for soma, Ih uses only K ions here
+insert Kdr gkbar_Kdr = 0.6 // default is correct value for soma
+insert KMnew2 gkbar_KMnew2 = 0.00004 // default is correct value for soma
+insert KA gkbar_KA = 0.015 // default is correct value for soma
+//insert KC gkbar_KC = 0.0 // no BK Ch in soma
+//insert K2 gkbar_K2 = 0.0 // no KCa in soma
+insert cad
+equivalentDepth = shell_depth - shell_depth^2/diam
+// GENESIS calculates shell area as (outer circle area - inner circle area)
+// our calcium diffusion had used depth * outer circumference
+depth_cad = equivalentDepth
+
+cai = 4e-5 cao = 2.4
+eca = 12.5*log(cao/cai)
+ion_style("ca_ion", 1, 1, 0, 0, 0) // was ("ca_ion", 1, 1, 0, 1, 0)
+ena = 45 // mV Na+ reversal potential
+ek = -85 // mV K+ reversal potential
+}
+
+forsec "dend" {
+
+/* gmax as in DeSchutter 1994 PM9 'rest of dendrite' */
+
+//insert NaF gnabar_NaF = 0.0
+//insert NaP gnabar_NaP = 0.0
+insert CaP gcabar_CaP = 0.0045
+insert CaT gcabar_CaT = 0.0005
+//insert Kh1 gkbar_Kh1 = 0.0
+//insert Kh2 gkbar_Kh2 = 0.0
+//insert Kdr gkbar_Kdr = 0.0
+insert KMnew2 gkbar_KMnew2 = 0.000013
+//insert KA gkbar_KA = 0.0
+insert KC gkbar_KC = 0.08
+insert K2 gkbar_K2 = 0.00039
+insert cad
+equivalentDepth = shell_depth - shell_depth^2/diam
+// GENESIS calculates shell area as (outer circle are - inner circle area)
+// our calcium diffusion had used depth * outer circumference
+depth_cad = equivalentDepth
+
+cai = 4e-5 cao = 2.4
+ion_style("ca_ion", 1, 1, 1, 1, 0) // was ("ca_ion", 1, 1, 0, 1, 0)
+//ena = 45 // mV Na+ reversal potential
+ek = -85 // mV K+ reversal potential
+}
+
+/* add (the same) conductences to main dend, the spine necks and spine heads*/
+
+forsec md {
+/* gmax as in DeSchutter 1994 PM9 'Main Dendrite'*/
+//insert NaF gnabar_NaF = 0.0
+//insert NaP gnabar_NaP = 0.0
+insert CaP gcabar_CaP = 0.0045
+insert CaT gcabar_CaT = 0.0005
+//insert Kh1 gkbar_Kh1 = 0.0
+//insert Kh2 gkbar_Kh2 = 0.0
+insert Kdr gkbar_Kdr = 0.06
+insert KMnew2 gkbar_KMnew2 = 0.000010
+insert KA gkbar_KA = 0.002
+insert KC gkbar_KC = 0.08
+insert K2 gkbar_K2 = 0.00039
+insert cad
+equivalentDepth = shell_depth - shell_depth^2/diam
+// GENESIS calculates shell area as (outer circle are - inner circle area)
+// our calcium diffusion had used depth * outer circumference
+depth_cad = equivalentDepth
+
+cai = 4e-5 cao = 2.4
+ion_style("ca_ion", 1, 1, 1, 1, 0) // was ("ca_ion", 1, 1, 0, 1, 0)
+//ena = 45 // mV Na+ reversal potential
+ek = -85 // mV K+ reversal potential
+}
+
+access soma
+
+// somatic current pulse to prepare the cell in the spiking state
+objectvar mypulse
+
+soma mypulse = new IClamp(0.5) // inject into soma
+mypulse.del = 0   // ms
+mypulse.dur = 200 // ms
+mypulse.amp = 1   // nA
+
+// somatic current injection for noise waveform
+objectvar mystim
+
+soma mystim = new IClamp(0.5) // inject into soma
+mystim.del = 0   // ms
+mystim.dur = 1e9 // ms
+mystim.amp = 0   // nA
+
+// read in current waveform
+objectvar ifile, ivector, vfile, vvector
+
+ifile = new File()
+ifile.ropen("input_increasing_noise.txt")
+
+ivector = new Vector()
+ilength = ivector.scanf(ifile)
+print "length of file read = ", ilength
+ifile.close()
+
+//file read in is in pA, convert to nA
+ivector.mul(0.001)
+
+//mean current in file is -0.15 nA, shift to 0 nA
+ivector.add(0.15)
+
+//change gain (scale only standard deviation in case the waveform has zero mean)
+ivector.mul(4.0)
+
+//add offset (nA)
+ivector.add(-0.1)
+
+ivector.play_remove()
+ivector.play(&mystim.amp, dt)
+
+// set up writing of membrane potential to a file
+vvector = new Vector()
+vvector.record(&soma.v(0.5))
+
+// procedure for writing output file of soma.v values
+proc writeoutput() {
+vfile = new File()
+vfile.wopen("soma_voltage.txt")
+
+vvector.printf(vfile, "%16.10g\n")
+
+vfile.close()
+}
+
+
+proc metarun() {local myvar
+
+	for(myvar = 1; myvar < 2; myvar = myvar + 1) {
+		run()
+		writeoutput()
+	}
+}
+
+metarun()
+
+// quit()
+
