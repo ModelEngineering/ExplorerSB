@@ -36,6 +36,8 @@ class ProjectReader():
             data_dir: directory in which project context is stored
         """
         self.corpus_manager = CORPUS_MANAGER
+        self.data_dir = data_dir
+        self.project_id = project_id
         for idx, key in enumerate(cn.CONTEXT_KEYS):
             if key != cn.PROJECT_ID:
                 try:
@@ -55,7 +57,7 @@ class ProjectReader():
             ffiles = zip.namelist()
         return ffiles
 
-    def getFile(self, filename:str)->str:
+    def getFileAsStr(self, filename:str)->str:
         """
         Obtains the contents of a file in the cache for this project.
 
@@ -65,15 +67,33 @@ class ProjectReader():
         Returns:
             str
         """
-        zip_path = self._getZipFilePath()
+        zip_path = self._getZipDirPath()
         ffiles = self.listFiles()
         if not filename in ffiles:
             raise ValueError("File %s not found in %s" % (filename, zip_path))
-        with zipfile.ZipFile(zip_file,'r') as zip:
+        with zipfile.ZipFile(zip_path,'r') as zip:
             with zip.open(filename) as myfile:
-                csv_bytes = zip.read(myfile)
-        return csv_bytes.decode()
+                csv_bytes = myfile.readlines()
+        csv_str = [b.decode() for b in csv_bytes]
+        result_str = "".join(csv_str) 
+        return result_str
     
+    def getCsvFileAsDf(self, filename:str)->pd.DataFrame:
+        """
+        Obtains the contents of a file in the cache for this project.
+
+        Args:
+            filename with extension
+
+        Returns:
+            pd.DataFrame
+        """
+        if not filename.endswith(".csv"):
+            raise ValueError("Filename must end with .csv")
+        csv_str = self.getFileAsStr(filename)
+        df = pd.read_csv(StringIO(csv_str))
+        return df
+
     @classmethod 
     def iterateProjects(cls, ignored_project_ids:typing.List[str]=None,
                         first:int=0, last:int=None, report_interval:int=None):
@@ -87,17 +107,16 @@ class ProjectReader():
         Yields:
             Iterator[ProjectReader]: initialized project.
         """
-        if cls.PROJECT_DF is None:
-            raise RuntimeError("PROJECT_DF is not initialized!")
+        num_project = CORPUS_MANAGER.num_project
         if last is None:
-            last = len(cls.PROJECT_IDS) + 1
+            last = num_project
         if report_interval is None:
-            report_interval = len(cls.PROJECT_IDS) + 1
+            report_interval = num_project // 10
         if ignored_project_ids is None:
             ignored_project_ids = []
         excluded_project_ids = list(ignored_project_ids)
         #
-        for count, project_id in enumerate(cls.PROJECT_IDS):
+        for count, project_id in enumerate(CORPUS_MANAGER.project_df.index):
             if project_id in excluded_project_ids:
                 continue
             if count < first:
@@ -105,7 +124,6 @@ class ProjectReader():
             if count > last:
                 continue
             project = ProjectReader(project_id)
-            project.initialize()
             excluded_project_ids.append(project_id)
             # Check if reporting
             total = count + 1

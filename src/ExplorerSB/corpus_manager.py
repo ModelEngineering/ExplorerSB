@@ -25,6 +25,7 @@ class CorpusManager(object):
         self.data_dir = data_dir
         self.context_path = os.path.join(self.data_dir, cn.CONTEXT_FILE_NAME) + ".csv"
         self.project_df = pd.read_csv(self.context_path)
+        self.num_project = len(self.project_df)
         self.project_df = self.project_df.drop_duplicates()
         self.project_df = self.project_df.set_index(cn.PROJECT_ID)
         self.project_ids = self.project_df.index.to_list()
