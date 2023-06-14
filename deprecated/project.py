@@ -1,10 +1,4 @@
-'''Abstraction for a project. Uses data produced by ProjectBuild'''
-
-"""
-Conventions:
-    In general, the key for a dictionary is the project_id.
-    Dictionaries with an "inv" prefix, have a value of project_id.
-"""
+'''Reads data produced by ProjectBuilder'''
 
 
 import src.ExplorerSB.constants as cn

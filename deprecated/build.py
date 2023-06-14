@@ -5,7 +5,7 @@ The build is done in sections so that builds can be done selectively.
 '''
 
 import src.ExplorerSB.constants as cn
-from src.ExplorerSB.project import Project
+from src.ExplorerSB.project_reader import Project
 from src.ExplorerSB import util
 from src.ExplorerSB.json_converter import convertCSVToJSON
 

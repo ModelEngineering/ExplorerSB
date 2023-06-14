@@ -17,6 +17,7 @@ TRACE_LEVEL = 0  # 0: no trace, 1: major steps, 2: trace minor steps
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.dirname(PROJECT_DIR)
 LOCAL_DIR = os.path.join(PROJECT_DIR, "local")
+TMP_DIR = os.path.join(PROJECT_DIR, "tmp")
 STAGE_DIR = os.path.join(PROJECT_DIR, "staging")
 TEST_DIR = os.path.join(PROJECT_DIR, "tests")
 DATA_DIR = os.path.join(PROJECT_DIR, "data")
