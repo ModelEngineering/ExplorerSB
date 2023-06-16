@@ -101,11 +101,16 @@ body {
   font-style: italic;
 }
 
+.external-icon {
+  font-size: 1rem;
+  transform: translateY(.15rem);
+}
+
 #summary-model-container {
   width: auto;
   margin: 0 1rem;
-
 }
+
 #summary-container {
   z-index: 1;
   padding: 1rem;
@@ -145,7 +150,27 @@ body {
 #model {
   padding: 1rem;
   justify-content: flex-start;
-  flex: 1 1 calc(50% - .5rem); 
+  flex-grow: 0; 
+  flex-shrink: 1;
+  width: 50%;
+}
+
+#model-file-container {
+  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  justify-content: flex-start;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-color: #707070 #B2B2B2;
+  scrollbar-width: thin;
+}
+
+.model-text {
+  width: 100%;
+  flex-wrap: wrap;
+  word-wrap: break-word;
 }
 
 #data-frame-container {
