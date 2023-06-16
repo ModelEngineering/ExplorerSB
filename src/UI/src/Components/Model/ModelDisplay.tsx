@@ -6,19 +6,12 @@ const ModelDisplay = ({
   fileName: string;
   data: string;
 }) => {
-  if(fileName.endsWith(".png") || fileName.endsWith(".jpg")) {
-    return (
-      <div id="model-file-container">
-        <img src={data} alt={fileName} />
-      </div>
-    );
-  } else if(fileName.endsWith(".ant")) {
-    return (
+  return (
     <div id="model-file-container">
-      <CodeBlock codeString={data}/>
+      {fileName.endsWith(".png") || fileName.endsWith(".jpg") ? (<img src={data} alt={fileName} />) : (<></>)}
+      {fileName.endsWith(".ant") ? (<CodeBlock codeString={data}/>) : (<></>)}
     </div>
-    );
-  }
+  )
 }
 
 export default ModelDisplay;
