@@ -41,7 +41,7 @@ const VizSidebar = ({
       <div id="viz-sidebar-bottom" className="flex-col">
         <button
           className="viz-sidebar-button"
-          title="Download as PNG"
+          title="Download Project Files as Zip"
           disabled={displayMode === DisplayMode.None}
           onClick={handleDownload}
         >

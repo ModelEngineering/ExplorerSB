@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useDeferredValue } from "react";
 import SearchInput from "./Searchbar/SearchInput";
 import SearchIndex from "./Searchbar/SearchIndex";
 
@@ -12,6 +12,7 @@ const Searchbar = ({ landing }: { landing?: boolean}) => {
   const [results, setResults] = useState<ContextWithSnippets[]>([]);
   const [displayResults, setDisplayResults] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
+  const deferredQuery = useDeferredValue(query);
   useSearchFocus(ref, setDisplayResults);
 
   const onQueryUpdate = (query: string) => {
@@ -26,7 +27,7 @@ const Searchbar = ({ landing }: { landing?: boolean}) => {
       className={landing ? "flex-col landing-search" : "flex-col"}
     >
       <SearchInput setQuery={onQueryUpdate} query={query} numResults={results.length}/>
-      <SearchIndex data={data} query={query} setResult={setResults} />
+      <SearchIndex data={data} query={deferredQuery} setResult={setResults} />
       <SearchDisplay
         display={displayResults}
         query={query}

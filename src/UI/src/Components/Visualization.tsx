@@ -1,12 +1,11 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Graph from "./Visualization/Graph";
 import Table from "./Visualization/Table";
 import VizDataLoader from "./Visualization/VizDataLoader";
 import VizSettings from "./Visualization/VizSettings";
-import { useCurrentPng } from "recharts-to-png";
-import FileSaver from "file-saver";
 import VizSidebar from "./Visualization/VizSidebar";
 import DataNotFound from "./Visualization/DataNotFound";
+import VizDownloader from "./Visualization/VizDownloader";
 
 export enum DisplayMode {
   Graph,
@@ -23,9 +22,7 @@ const Visualization = ({ runid }: { runid: string }) => {
   const [data, setData] = useState<Object[]>([]);
   const [xVariable, setXVariable] = useState<string>();
   const [allVariables, setAllVariables] = useState<VariableSelectOption[]>([]);
-  const [displayedVariables, setDisplayedVariables] = useState<VariableSelectOption[]>([]);
-
-  const [getPng, { ref }] = useCurrentPng();
+  const [displayedVariables, setDisplayedVariables] = useState<VariableSelectOption[]>([])
 
   useEffect(() => {
     if (data.length > 1) {
@@ -45,13 +42,7 @@ const Visualization = ({ runid }: { runid: string }) => {
     setFileName(selectedList);
   };
 
-  const handleDownload = useCallback(async () => {
-    const png = await getPng();
-
-    if (png) {
-      FileSaver.saveAs(png, "Chart.png");
-    }
-  }, [getPng]);
+  const handleDownload = () => VizDownloader(runid)
 
   return (
     <div
@@ -74,7 +65,6 @@ const Visualization = ({ runid }: { runid: string }) => {
           {/* if we found a matching time series X variable, we can display a graph, otherwise we display a table */}
           <Graph
             data={data}
-            ref={ref}
             xVariable={xVariable}
             variables={displayedVariables}
             displayMode={displayMode}
