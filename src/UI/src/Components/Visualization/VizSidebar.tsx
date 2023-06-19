@@ -9,13 +9,11 @@ const VizSidebar = ({
   handleDownload,
   graphDisabled,
   tableDisabled,
-  displayMode,
   setDisplayMode,
 }: {
   handleDownload: React.MouseEventHandler<HTMLButtonElement>;
   graphDisabled: boolean;
   tableDisabled: boolean;
-  displayMode: DisplayMode;
   setDisplayMode: Function;
 }) => {
   return (

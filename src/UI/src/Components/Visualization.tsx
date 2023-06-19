@@ -78,7 +78,6 @@ const Visualization = ({ runid }: { runid: string }) => {
             handleDownload={handleDownload}
             graphDisabled={xVariable === undefined}
             tableDisabled={data.length === 0}
-            displayMode={displayMode}
             setDisplayMode={setDisplayMode}
           />
         </div>
