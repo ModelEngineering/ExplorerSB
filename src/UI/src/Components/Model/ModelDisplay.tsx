@@ -8,7 +8,7 @@ const ModelDisplay = ({
 }) => {
   return (
     <div id="model-file-container">
-      {fileName.endsWith(".png") || fileName.endsWith(".jpg") && data !== null ? (<img src={data} alt={fileName} />) : (<></>)}
+      {fileName.endsWith(".png") || fileName.endsWith(".jpg") && data !== null ? (<img className="model-image" src={data} alt={fileName} />) : (<></>)}
       {fileName.endsWith(".ant") && data !== null ? (<CodeBlock codeString={data}/>) : (<></>)}
     </div>
   )

@@ -42,7 +42,6 @@ const VizSidebar = ({
         <button
           className="viz-sidebar-button"
           title="Download Project Files as Zip"
-          disabled={displayMode === DisplayMode.None}
           onClick={handleDownload}
         >
           <DownloadIcon />
