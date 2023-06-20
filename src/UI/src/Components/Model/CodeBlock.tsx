@@ -1,9 +1,9 @@
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { vscDarkPlus as stylesheet } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const CodeBlock = ({codeString} : {codeString : string}) => {
   return (
-    <SyntaxHighlighter language="javascript" style={vscDarkPlus} showLineNumbers={true}>
+    <SyntaxHighlighter language="markup" style={stylesheet} showLineNumbers={true}>
       {codeString}
     </SyntaxHighlighter>
   );

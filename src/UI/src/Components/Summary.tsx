@@ -2,6 +2,7 @@ import {BiLinkExternal as LinkIcon} from "react-icons/bi";
 
 const Summary = ({ context }: { context: Context }) => {
   const abstract = context.abstract;
+  const proj_id = context.project_id;
   let split = [""]
   if(abstract !== null) {
     split = abstract.split("\n\n");
@@ -17,8 +18,9 @@ const Summary = ({ context }: { context: Context }) => {
         {split.map((paragraph, index) => (
           <p className="summary-abstract" key={index}>{paragraph}</p>
         ))}
-        <h3>URL</h3>
-        {context.paper_url != null && (<a className="summary-url" href={context.paper_url}>{context.paper_url} <LinkIcon className="external-icon"/></a>)}
+        <h3>URLs</h3>
+        {context.paper_url != null && (<p> Paper URL: <a className="summary-url" href={context.paper_url}>{context.paper_url} <LinkIcon className="external-icon"/></a></p>)}
+        <p>BioSimulations: <a className="summary-url" href={`//api.biosimulations.org/projects/${proj_id}`}>http://api.biosimulations.org/projects/{proj_id} <LinkIcon className="external-icon"/></a></p> 
       </div>
     </div>
   );
