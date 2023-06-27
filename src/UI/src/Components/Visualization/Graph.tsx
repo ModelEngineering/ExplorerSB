@@ -87,7 +87,7 @@ const Graph = forwardRef(function Graph(
             contentStyle={{ background: "#FFFFFF" }}
             wrapperStyle={{ zIndex: 1000 }}
             formatter={(value : string) => parseFloat(value).toFixed(4)}
-            labelFormatter={(label) => parseFloat(label).toFixed(4)}
+            labelFormatter={(label) => parseFloat(label).toFixed(2)}
           />
           <Legend
             verticalAlign="bottom"
@@ -108,7 +108,7 @@ const Graph = forwardRef(function Graph(
               />
             );
           })}
-          <Brush dataKey={xVariable} tickFormatter={(value) => parseFloat(value).toFixed(4)}/>
+          <Brush dataKey={xVariable} tickFormatter={(value) => parseFloat(value).toFixed(2)}/>
         </LineChart>
       </ResponsiveContainer>
       }
