@@ -18,9 +18,9 @@ const Summary = ({ context }: { context: Context }) => {
         {split.map((paragraph, index) => (
           <p className="summary-abstract" key={index}>{paragraph}</p>
         ))}
-        <h3>URLs</h3>
-        {context.paper_url != null && (<p> Paper URL: <a className="summary-url" href={context.paper_url}>{context.paper_url} <LinkIcon className="external-icon"/></a></p>)}
-        <p>BioSimulations: <a className="summary-url" href={`//api.biosimulations.org/projects/${proj_id}`}>http://api.biosimulations.org/projects/{proj_id} <LinkIcon className="external-icon"/></a></p> 
+        <h3>Associated Links</h3>
+        {context.paper_url != null && (<p> <a className="summary-url" href={context.paper_url}>Link to Paper <LinkIcon className="external-icon"/></a></p>)}
+        <p><a className="summary-url" href={`//api.biosimulations.org/projects/${proj_id}`}>Link to BioSimulations <LinkIcon className="external-icon"/></a></p> 
       </div>
     </div>
   );

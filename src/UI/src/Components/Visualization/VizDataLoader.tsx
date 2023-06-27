@@ -13,7 +13,7 @@ const VizDataLoader = ({
   runid: string;
   fileName: string | undefined;
   setData: Dispatch<SetStateAction<Object[]>>;
-  setXVariable: Dispatch<SetStateAction<string | undefined>>;
+  setXVariable: Dispatch<SetStateAction<string>>;
   setAllVariables: Dispatch<SetStateAction<VariableSelectOption[]>>;
   setDisplayedVariables: Dispatch<SetStateAction<VariableSelectOption[]>>;
   setCSVs: (csvs: { name: string, label: string, value: string }[]) => void;
@@ -78,7 +78,7 @@ const VizDataLoader = ({
         );
       });
       setData([]);
-      setXVariable(undefined);
+      setXVariable("");
       setAllVariables([]);
       setDisplayedVariables([]);
     }

@@ -20,7 +20,7 @@ const Visualization = ({ runid }: { runid: string }) => {
   const [CSVs, setCSVs] = useState<CSVSelectOption[]>([]);
   const [fileName, setFileName] = useState<CSVSelectOption[]>([]);
   const [data, setData] = useState<Object[]>([]);
-  const [xVariable, setXVariable] = useState<string>();
+  const [xVariable, setXVariable] = useState<string>("");
   const [allVariables, setAllVariables] = useState<VariableSelectOption[]>([]);
   const [displayedVariables, setDisplayedVariables] = useState<VariableSelectOption[]>([])
 
@@ -76,7 +76,7 @@ const Visualization = ({ runid }: { runid: string }) => {
           <DataNotFound displayMode={displayMode}/>
           <VizSidebar
             handleDownload={handleDownload}
-            graphDisabled={xVariable === undefined}
+            graphDisabled={xVariable === ""}
             tableDisabled={data.length === 0}
             setDisplayMode={setDisplayMode}
           />

@@ -9,6 +9,7 @@ import {
   Legend,
   ResponsiveContainer,
   Brush,
+  Text,
 } from "recharts";
 import { DisplayMode } from "../Visualization";
 
@@ -26,7 +27,7 @@ const ChromaticScale = [
 ];
 
 const Graph = forwardRef(function Graph(
-  { data, xVariable, variables, displayMode}: { data: Object[]; xVariable: string | undefined; variables: VariableSelectOption[]; displayMode: DisplayMode},
+  { data, xVariable, variables, displayMode}: { data: Object[]; xVariable: string; variables: VariableSelectOption[]; displayMode: DisplayMode},
   ref: any
   ) {
   const [localVariables, setLocalVariables] = useState<string[]>([]);
@@ -37,6 +38,22 @@ const Graph = forwardRef(function Graph(
 
     return () => clearTimeout(updateVariables);
   }, [variables]);
+  const interval = Math.floor(data.length / 7);
+  const CustomXAxisTick = ({ x, y, payload }: any) => {
+    if (payload && payload.value) {
+      return (
+        <Text
+            fontSize={"16px"}
+            width={"12px"}
+            x={x} 
+            y={y} 
+            textAnchor="middle" 
+            verticalAnchor="start"
+        >{payload.value.toFixed(2)}</Text>
+      );
+    }
+    return null;
+  };
   return (
     <div id="graph-container" className={displayMode === DisplayMode.Graph ? "" : "hidden"}>
       {data.length <= 1 ? <p>Graph not Available</p> :
@@ -58,9 +75,10 @@ const Graph = forwardRef(function Graph(
           <XAxis
             height={70}
             dataKey={xVariable}
-            label={{ offset: 20, value: "Time", position: "insideBottom" }}
-            interval={"equidistantPreserveStart"}
-            domain={['auto', 'auto']}
+            tick={<CustomXAxisTick />}
+            label={{ offset: 20, value: xVariable, position: "insideBottom" }}
+            interval={interval}
+            domain={['dataMin', 'dataMax']}
           />
           <YAxis label={{ value: "Value", angle: "-90", position: "left" }} domain={['auto', 'auto']}/>
           <Tooltip
@@ -68,6 +86,8 @@ const Graph = forwardRef(function Graph(
             position={{ y: 0 }}
             contentStyle={{ background: "#FFFFFF" }}
             wrapperStyle={{ zIndex: 1000 }}
+            formatter={(value : string) => parseFloat(value).toFixed(4)}
+            labelFormatter={(label) => parseFloat(label).toFixed(4)}
           />
           <Legend
             verticalAlign="bottom"
@@ -88,7 +108,7 @@ const Graph = forwardRef(function Graph(
               />
             );
           })}
-          <Brush dataKey={xVariable}/>
+          <Brush dataKey={xVariable} tickFormatter={(value) => parseFloat(value).toFixed(4)}/>
         </LineChart>
       </ResponsiveContainer>
       }
