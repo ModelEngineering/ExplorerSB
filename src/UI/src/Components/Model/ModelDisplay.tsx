@@ -1,4 +1,5 @@
 import CodeBlock from "./CodeBlock";
+import ImageDisplay from "./ImageDisplay";
 const ModelDisplay = ({
   fileName,
   data
@@ -8,7 +9,7 @@ const ModelDisplay = ({
 }) => {
   return (
     <div id="model-file-container">
-      {fileName.endsWith(".png") || fileName.endsWith(".jpg") && data !== null ? (<img className="model-image" src={data} alt={fileName} />) : (<></>)}
+      {fileName.endsWith(".png") || fileName.endsWith(".jpg") && data !== null ? (<ImageDisplay fileName={fileName} data={data}/>) : (<></>)}
       {fileName.endsWith(".ant") && data !== null ? (<CodeBlock codeString={data}/>) : (<></>)}
     </div>
   )
