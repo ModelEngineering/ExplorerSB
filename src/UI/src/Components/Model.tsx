@@ -5,6 +5,8 @@ import { useState } from "react";
 import ModelFileLoader from "./Model/ModelFileLoader";
 import ModelDisplay from "./Model/ModelDisplay";
 
+import "./CSS/Model.css";
+
 const Model = ({ runid }: { runid: string }) => {
   const [displayedModelFile, setDisplayedModelFile] = useState<ModelFileSelectOption[]>([]);
   const [modelFiles, setModelFiles] = useState<ModelFileSelectOption[]>([]);

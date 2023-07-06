@@ -1,3 +1,5 @@
+import "./CSS/Footer.css"
+
 function Footer() {
   return (
     <div id="footer">

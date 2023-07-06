@@ -5,6 +5,9 @@ import SearchIndex from "./Searchbar/SearchIndex";
 import contextJson from "../Assets/context.json";
 import SearchDisplay from "./Searchbar/SearchDisplay";
 import useSearchFocus from "./Searchbar/useSearchFocus";
+
+import "./CSS/Searchbar.css";
+
 const data = contextJson;
 
 const Searchbar = ({ landing }: { landing?: boolean}) => {

@@ -1,5 +1,6 @@
 import {BiLinkExternal as LinkIcon} from "react-icons/bi";
 
+import "./CSS/Summary.css";
 const Summary = ({ context }: { context: Context }) => {
   const abstract = context.abstract;
   const proj_id = context.project_id;

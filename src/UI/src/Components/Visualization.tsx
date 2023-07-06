@@ -7,6 +7,8 @@ import VizSidebar from "./Visualization/VizSidebar";
 import DataNotFound from "./Visualization/DataNotFound";
 import VizDownloader from "./Visualization/VizDownloader";
 
+import "./CSS/Visualization.css";
+
 export enum DisplayMode {
   Graph,
   Table,
