@@ -10,6 +10,9 @@ const ImageDisplay = ({
   return (
     <TransformWrapper
       centerZoomedOut={true}
+      doubleClick={{
+        mode: 'reset'
+      }}
     >
       <TransformComponent wrapperStyle={{width: "100%", height: "100%"}} contentStyle={{width: "100%", height: "100%"}}>
         <img className="model-image" src={data} alt={fileName} />
