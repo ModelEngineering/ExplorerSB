@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply text-sm;
+  }
+
+  a {
+    @apply text-blue-500;
+    @apply underline;
+  }
+  h2 {
+    @apply text-lg;
+    @apply font-bold;
+  }
+  
+  h3 {
+    @apply text-base;
+    @apply font-bold;
+  }
+
+  @screen md {
+    body {
+      @apply text-base;
+    }
+
+    h2 {
+      @apply text-xl;
+    }
+
+    h3 {
+      @apply text-lg;
+    }
+  }
+
+  @screen lg {
+    h2 {
+      @apply text-xl;
+    }
+    h3 {
+      @apply text-lg;
+    }
+  }
+}
+
+.styled-scrollbar {
+  scrollbar-color: #999999 #3333332d;
+  scrollbar-width: thin;
+}
+
+.styled-scrollbar:hover {
+  scrollbar-color: #686868 #3333332d;
+  scrollbar-width: thin;
+}
+
+.styled-scrollbar::-webkit-scrollbar {
+  width: 10px; /* Mostly for vertical scrollbars */
+  height: 10px; /* Mostly for horizontal scrollbars */
+}
+.styled-scrollbar::-webkit-scrollbar-thumb { /* Foreground */
+  background: #999;
+}
+.styled-scrollbar::-webkit-scrollbar-track { /* Background */
+  background: #333;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  width: 100vw;
+}
+
+.glassmorphism {
+  background: rgba( 186, 230, 253, 0.75 ); 
+  box-shadow: 0 10px 10px -4px rgba(105, 139, 145, 0.5);
+  backdrop-filter: blur( 4px );
+  -webkit-backdrop-filter: blur( 4px );
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.37);
+}
+
+/* multiselect-react-dropdown */
+.multiSelectContainer { 
+  width: 100%;
+  background-color: white;
+}
+
+.searchWrapper {
+  overflow: hidden;
+}
+
+#search_input {
+  width: fit-content;
+  color: black;
+}
+
+.optionContainer {
+  scrollbar-color: #707070 #B2B2B2;
+  scrollbar-width: thin;
+}
+
+.icon_down_dir::before {
+  display: none;
+}
+
+.select-dropdown-arrow {
+  font-size: 1.5rem;
+  transform: translateX(-.5rem) translateY(.15rem);
+  color: gray;
+}
+
+.linenumber {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Table styling */
+
+#table-container {
+  background-color: rgb(255, 255, 255);
+  height: 100%;
+  width: 95%;
+  overflow-x: auto;
+  scrollbar-color: #707070 #B2B2B2;
+  scrollbar-width: thin;
+}
+
+#table-container table {
+  height: 100%;
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: separate;
+}
+
+#table-container th {
+  /* Apply both top and bottom borders to the <th> */
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+
+#table-container td {
+  /* For cells, apply the border to one of each side only (right but not left, bottom but not top) */
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+
+#table-container th:first-child,
+#table-container td:first-child {
+  /* Apply a left border on the first <td> or <th> in a row */
+  border-left: 2px solid;
+}
+
+#table-container tr {
+  background-color: white;
+  border: 2px solid;
+}
+
+#table-container th, td {
+  background-color: white;
+  padding: .7rem;
+}
+
+#table-container th {
+  position: sticky;
+  top: 0;
+}
+
+.rc-table {
+  width: 100%;
+  height: 100%;
+}
