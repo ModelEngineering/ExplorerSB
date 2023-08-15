@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useState, useEffect } from "react";
 import Graph from "./visualization/graph";
 import Table from "./visualization/table";
@@ -48,11 +48,11 @@ const Visualization = ({ runid }: { runid: string }) => {
   const handleDownload = () => VizDownloader(runid);
 
   return (
-    <div
+    <section
       id="data-frame-container"
-      className="glassmorphism flex flex-col w-full p-4 gap-2 lg:max-h-[700px]"
+      className="glassmorphism flex w-full flex-col gap-2 p-4 lg:max-h-[700px]"
     >
-      <h2>Data</h2>
+      <h2>Data (Uncurated)</h2>
       <VizDataLoader
         runid={runid}
         fileName={fileName.length === 0 ? undefined : fileName[0].name}
@@ -66,9 +66,20 @@ const Visualization = ({ runid }: { runid: string }) => {
         setDisplayedVariables={setDisplayedVariables}
       />
 
-      <div id="viz-container" className="flex flex-col gap-2 z-1 justify-between h-full lg:flex-row lg:gap-4">
-        <div id="viz-frame" className="flex flex-row h-[600px] w-full lg:w-1/2">
-          {/* if we found a matching time series X variable, we can display a graph, otherwise we display a table */}
+      <div
+        id="viz-container"
+        className="z-1 flex h-full flex-col justify-between gap-2 lg:flex-row lg:gap-4"
+      >
+        <div
+          id="viz-frame"
+          className="flex h-[300px] w-full flex-col md:h-[600px] lg:w-3/4 lg:flex-row-reverse"
+        >
+          <VizSidebar
+            handleDownload={handleDownload}
+            graphDisabled={xVariable === ""}
+            tableDisabled={data.length === 0}
+            setDisplayMode={setDisplayMode}
+          />
           <Graph
             data={data}
             xVariable={xVariable}
@@ -82,12 +93,6 @@ const Visualization = ({ runid }: { runid: string }) => {
             displayMode={displayMode}
           />
           <DataNotFound displayMode={displayMode} />
-          <VizSidebar
-            handleDownload={handleDownload}
-            graphDisabled={xVariable === ""}
-            tableDisabled={data.length === 0}
-            setDisplayMode={setDisplayMode}
-          />
         </div>
         <VizSettings
           onChange={onChange}
@@ -98,7 +103,7 @@ const Visualization = ({ runid }: { runid: string }) => {
           onFileChange={onFileChange}
         />
       </div>
-    </div>
+    </section>
   );
 };
 

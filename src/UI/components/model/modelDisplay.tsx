@@ -8,6 +8,8 @@ import ImageDisplay from "./imageDisplay";
 // It renders the CodeBlock component if the file is an ant file
 // It renders nothing if the file is not an image or an ant file
 
+const SUPPORTED_FILE_TYPES = [".ant", ".m", ".py", ".jl", ".r", ".txt"];
+const SUPPORTED_IMAGE_TYPES = [".png", ".jpg"];
 const ModelDisplay = ({
   fileName,
   data
@@ -17,8 +19,8 @@ const ModelDisplay = ({
 }) => {
   return (
     <div id="model-file-container" className="group flex flex-col -z-1 justify-start overflow-y-auto overflow-x-auto styled-scrollbar">
-      {fileName.endsWith(".png") || fileName.endsWith(".jpg") && data !== null ? (<ImageDisplay fileName={fileName} data={data}/>) : (<></>)}
-      {fileName.endsWith(".ant") && data !== null ? (<CodeBlock codeString={data}/>) : (<></>)}
+      {SUPPORTED_IMAGE_TYPES.some((value) => fileName.endsWith(value)) && data !== null ? (<ImageDisplay fileName={fileName} data={data}/>) : (<></>)}
+      {SUPPORTED_FILE_TYPES.some((value) => fileName.endsWith(value)) && data !== null ? (<CodeBlock codeString={data}/>) : (<></>)}
     </div>
   )
 }

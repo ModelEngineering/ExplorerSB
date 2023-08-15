@@ -18,7 +18,7 @@ const VizSettings = ({
   onFileChange(value: CSVSelectOption[]): void;
 }) => {
   return (
-    <div id="viz-settings-container" className="flex flex-col gap-2 lg:w-1/2">
+    <div id="viz-settings-container" className="flex flex-col gap-2 lg:w-1/4">
       <h3>Settings</h3>
       <Multiselect
         options={CSVs} // Options to display in the dropdown

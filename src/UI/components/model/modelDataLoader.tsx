@@ -7,7 +7,7 @@ import { useEffect } from "react";
 // It then sets the model files with the setModelFiles function
 // It renders nothing
 
-const SUPPORTED_FILE_TYPES = [".png", ".jpg", ".ant"];
+const SUPPORTED_FILE_TYPES = [".png", ".jpg", ".ant", ".m", ".py", ".jl", ".r", ".txt"];
 const ModelDataLoader = ({
   runid,
   setModelFiles,

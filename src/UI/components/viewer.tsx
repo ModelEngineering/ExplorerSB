@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import Multiselect from "multiselect-react-dropdown";
 import { BiChevronDown as ChevronDown } from "react-icons/bi";
 import ModelDataLoader from "./model/modelDataLoader";

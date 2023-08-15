@@ -35,17 +35,17 @@ export default function Results({ runid }: { runid: string }) {
     notFound();
   } else {
     return ( loading ? <div>Loading... </div> :
-      <div className="flex flex-col m-4 gap-4">
+      <div className="flex flex-col gap-4 p-4 w-full items-center">
         <Header / >
         <Title title={result.title} proj_id={result.project_id}/>
-        <div id="summary-model-container" className="flex flex-col lg:flex-row gap-4">
+        <section id="summary-model-container" className="flex flex-col lg:flex-row gap-4">
           <Summary context={result}/>
           <Viewer runid={runid}/>
-        </div>
+        </section>
         <Visualization runid={runid}/>
-        <div id="footer" className="flex-row">
+        <footer id="footer" className="flex-row]">
           <Footer />
-        </div>
+        </footer>
       </div>
     )
   }
