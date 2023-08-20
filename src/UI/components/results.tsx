@@ -38,7 +38,7 @@ export default function Results({ runid }: { runid: string }) {
       <div className="flex flex-col gap-4 p-4 w-full items-center">
         <Header / >
         <Title title={result.title} proj_id={result.project_id}/>
-        <section id="summary-model-container" className="flex flex-col lg:flex-row gap-4">
+        <section id="summary-model-container" className="flex flex-col lg:flex-row gap-4 w-full">
           <Summary context={result}/>
           <Viewer runid={runid}/>
         </section>
