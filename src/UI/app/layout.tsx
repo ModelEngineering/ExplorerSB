@@ -1,3 +1,4 @@
+import GoogleAnalytics from "@/components/googleAnalytics";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
@@ -21,6 +22,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={rubik.className}>
+      {process.env.GA_TRACKING_ID && (
+        <GoogleAnalytics GA_TRACKING_ID={process.env.GA_TRACKING_ID} />
+      )}
       <body>{children}</body>
     </html>
   );
