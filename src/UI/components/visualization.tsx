@@ -72,7 +72,7 @@ const Visualization = ({ runid }: { runid: string }) => {
       >
         <div
           id="viz-frame"
-          className="flex h-[300px] w-full flex-col md:h-[600px] lg:w-3/4 lg:flex-row-reverse"
+          className="flex h-[600px] w-full flex-col md:h-[600px] lg:w-3/4 lg:flex-row-reverse"
         >
           <VizSidebar
             handleDownload={handleDownload}

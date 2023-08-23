@@ -1,20 +1,8 @@
 import { useState, useEffect } from "react";
 import { DisplayMode } from "../visualization";
 import { VegaLite } from "react-vega";
-import { LayerSpec } from "vega-lite/build/src/spec";
+import { useMediaQuery } from "react-responsive";
 
-const ChromaticScale = [
-  "#4e79a7",
-  "#f28e2c",
-  "#e15759",
-  "#76b7b2",
-  "#59a14f",
-  "#edc949",
-  "#af7aa1",
-  "#ff9da7",
-  "#9c755f",
-  "#bab0ab",
-];
 
 const Graph = ({
   data,
@@ -27,10 +15,8 @@ const Graph = ({
   variables: VariableSelectOption[];
   displayMode: DisplayMode;
 }) => {
-  const [layers, setLayers] = useState<any[]>([]);
-  const graphData = {
-    table: data,
-  };
+  const isMobile = useMediaQuery({ query: '(max-width: 640px)' })
+  const [graphData, setGraphData] = useState<any>({});
   useEffect(() => {
     if (!xVariable) {
       return;
@@ -38,44 +24,55 @@ const Graph = ({
     if (!variables || variables.length === 0) {
       return;
     }
-    const layersUpdate = variables.map((value, index) => {
-      return {
-        mark: {
-          stroke: ChromaticScale[index % ChromaticScale.length],
-          strokeWidth: 3,
-          type: "line",
-          tooltip: true,
-        },
-        encoding: {
-          x: { field: `${xVariable}`, type: "quantitative", title: "Time" },
-          y: { field: `${value.label}`, type: "quantitative" },
-        },
-      };
+    let dataMorph: Object[] = [];
+    variables.forEach((value, index) => {
+      dataMorph = dataMorph.concat(
+        data.map((row) => {
+          return {
+            time: row[xVariable],
+            value: row[value.label],
+            variable: value.label,
+          };
+        }),
+      );
     });
-    setLayers(layersUpdate);
-  }, [variables, xVariable]);
-  if (layers.length === 0) {
+    console.log(dataMorph);
+    setGraphData({ data: dataMorph });
+  }, [data, variables, xVariable]);
+  if (graphData === undefined || Object.keys(graphData).length === 0) {
     return <></>;
   }
+  const legendOrientation = isMobile ? "bottom" : "right";
   const spec = {
     padding: 10,
     background: "#f0f9ff",
     width: "container",
     height: "container",
+    mark: {type: "line", tooltip: true},
     encoding: {
-      y: {
-        axis: { title: "Value" },
-      }
+      x: { field: "time", type: "quantitative" },
+      y: { field: "value", type: "quantitative" },
+      color: {
+        field: "variable",
+        type: "nominal",
+        legend: {
+          title: "Variables",
+          symbolStrokeWidth: 10,
+          orient: legendOrientation,
+          columns: 1,
+        },
+        scale: {
+          scheme: "category20",
+        },
+      },
     },
-    // title: "Title",
-    layer: layers,
-    data: { name: "table" },
+    data: { name: "data" },
   } as const;
   return (
     <div
       id="graph-container"
       className={
-        "h-[260px] md:h-[560px] lg:h-[600px] w-full" +
+        "h-[560px] w-full md:h-[560px] lg:h-[600px]" +
         (displayMode === DisplayMode.Graph ? "" : " hidden")
       }
     >
