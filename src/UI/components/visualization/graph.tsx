@@ -3,7 +3,6 @@ import { DisplayMode } from "../visualization";
 import { VegaLite } from "react-vega";
 import { useMediaQuery } from "react-responsive";
 
-
 const Graph = ({
   data,
   xVariable,
@@ -29,14 +28,15 @@ const Graph = ({
       dataMorph = dataMorph.concat(
         data.map((row) => {
           return {
+            // @ts-ignore
             time: row[xVariable],
+            // @ts-ignore
             value: row[value.label],
             variable: value.label,
           };
         }),
       );
     });
-    console.log(dataMorph);
     setGraphData({ data: dataMorph });
   }, [data, variables, xVariable]);
   if (graphData === undefined || Object.keys(graphData).length === 0) {
