@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect } from "react";
 import Papa from "papaparse";
 
+// This component loads data from a simulation run and sets it in the parent component's state
 const VizDataLoader = ({
   runid,
   fileName,
@@ -18,7 +19,9 @@ const VizDataLoader = ({
   setDisplayedVariables: Dispatch<SetStateAction<VariableSelectOption[]>>;
   setCSVs: (csvs: { name: string, label: string, value: string }[]) => void;
 }) => {
+  // UseEffect hook to load the list of CSV files when the component mounts or when the runid changes
   useEffect(() => {
+    // Fetch the directory data from the server using the runid
     const getDirectory = async () => {
       const response = await fetch(`/${runid}/directory.json`)
         .then((response) => response.json())
@@ -26,6 +29,7 @@ const VizDataLoader = ({
         .catch((err) => console.log(err));
       return response;
     };
+    // Extract the list of CSV files from the directory data and set it in the parent component's state using the setCSVs function
     getDirectory().then((dirData: { file: string }[]) => {
       let csvs: string[] = [];
       dirData.forEach(({ file }) => {
@@ -40,7 +44,9 @@ const VizDataLoader = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [runid]);
 
+  // UseEffect hook to load data when the component mounts or when the runid or fileName changes
   useEffect(() => {
+    // Fetch the CSV data from the server using the runid and fileName
     const getDataset = async () => {
       const response = await fetch(`/${runid}/${fileName}`)
         .then((response) => response.text())
@@ -57,6 +63,7 @@ const VizDataLoader = ({
         .catch((err) => console.log(err));
       return response;
     };
+    // If the fileName is a CSV file, extract the data and set it in the parent component's state using the setData, setXVariable, setAllVariables, and setDisplayedVariables functions
     if (fileName !== undefined && fileName.endsWith(".csv")) {
       getDataset().then((CSVdata) => {
         if (CSVdata === undefined) {
@@ -78,12 +85,16 @@ const VizDataLoader = ({
           })
         );
       });
+    // If the fileName is not a CSV file, reset the parent component's state variables
+    } else {
       setData([]);
       setXVariable("");
       setAllVariables([]);
       setDisplayedVariables([]);
     }
   }, [runid, fileName, setData, setXVariable, setAllVariables, setDisplayedVariables]);
+
+  // Return an empty JSX element, as this component doesn't render anything
   return <></>;
 };
 

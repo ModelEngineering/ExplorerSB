@@ -1,19 +1,15 @@
 import { useEffect } from "react";
 
-// The ModelDataLoader component is used to load the model data
-// It takes in the runid and a function to set the model files as props
-// It fetches the directory.json file from the server, which lists every file associated with the runid
-// It then filters the files to only include the supported file types
-// It then sets the model files with the setModelFiles function
-// It renders nothing
-
+// Define the supported file types for the model files
 const SUPPORTED_FILE_TYPES = [".png", ".jpg", ".ant", ".m", ".py", ".jl", ".r", ".txt"];
+
+// Define the ModelDataLoader component
 const ModelDataLoader = ({
   runid,
   setModelFiles,
 }: {
-  runid: string;
-  setModelFiles: (modelFiles: ModelFileSelectOption[]) => void;
+  runid: string; // The runid associated with the model
+  setModelFiles: (modelFiles: ModelFileSelectOption[]) => void; // Function to set the model files
 }) => {
   useEffect(() => {
     // Fetches the directory.json file from the server
@@ -24,6 +20,7 @@ const ModelDataLoader = ({
         .catch((err) => console.log(err));
       return response;
     };
+
     // Filters the files to only include the supported file types
     getDirectory().then((dirData: { file: string }[]) => {
       let modelFiles: string[] = [];
@@ -35,14 +32,18 @@ const ModelDataLoader = ({
           }
         }
       });
-      setModelFiles(modelFiles.map((key) => {
-        return { name: key, label: key, value: key };
-      }));
+
+      // Set the model files with the setModelFiles function
+      setModelFiles(
+        modelFiles.map((key) => {
+          return { name: key, label: key, value: key };
+        })
+      );
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [runid]);
 
-  return <></>;
+  return <></>; // Return empty fragment
 };
 
-export default ModelDataLoader;
+export default ModelDataLoader; // Export the ModelDataLoader component

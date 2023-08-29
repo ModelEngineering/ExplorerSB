@@ -8,15 +8,18 @@ import VizSidebar from "./visualization/vizSidebar";
 import DataNotFound from "./visualization/dataNotFound";
 import VizDownloader from "./visualization/vizDownloader";
 
+// Enum for different display modes
 export enum DisplayMode {
   Graph,
   Table,
   None,
 }
-// TODO: Refactor this component
+
+// Define the Visualization component
 const Visualization = ({ runid }: { runid: string }) => {
+  // State variables to manage various aspects of visualization
   const [displayMode, setDisplayMode] = useState<DisplayMode>(
-    DisplayMode.Graph,
+    DisplayMode.Graph
   );
   const [CSVs, setCSVs] = useState<CSVSelectOption[]>([]);
   const [fileName, setFileName] = useState<CSVSelectOption[]>([]);
@@ -28,6 +31,7 @@ const Visualization = ({ runid }: { runid: string }) => {
   >([]);
 
   useEffect(() => {
+    // Determine the appropriate display mode based on data availability
     if (data.length > 1) {
       setDisplayMode(DisplayMode.Graph);
     } else if (data.length > 0) {
@@ -37,14 +41,17 @@ const Visualization = ({ runid }: { runid: string }) => {
     }
   }, [xVariable, data]);
 
+  // Handler for variable selection change
   const onChange = (selectedList: VariableSelectOption[]): void => {
     setDisplayedVariables(selectedList);
   };
 
+  // Handler for CSV file selection change
   const onFileChange = (selectedList: CSVSelectOption[]): void => {
     setFileName(selectedList);
   };
 
+  // Handler for initiating download
   const handleDownload = () => VizDownloader(runid);
 
   return (
@@ -107,4 +114,4 @@ const Visualization = ({ runid }: { runid: string }) => {
   );
 };
 
-export default Visualization;
+export default Visualization; // Export the Visualization component

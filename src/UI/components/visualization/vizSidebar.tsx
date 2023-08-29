@@ -5,6 +5,7 @@ import {
 } from "react-icons/bi";
 import { DisplayMode } from "../visualization";
 
+// This component displays the visualization sidebar, including buttons for changing the display mode and downloading project files
 const VizSidebar = ({
   handleDownload,
   graphDisabled,
@@ -21,6 +22,7 @@ const VizSidebar = ({
       id="viz-sidebar"
       className="flex w-full flex-row justify-start gap-1 lg:h-full lg:w-fit lg:flex-col"
     >
+      {/* Button for changing the display mode to graph */}
       <button
         className="h-8 w-8 rounded-t-lg bg-slate-700 bg-opacity-50 pl-2 text-center text-2xl hover:bg-opacity-70 lg:rounded-l-none lg:rounded-r-lg"
         title="View as Chart"
@@ -29,6 +31,8 @@ const VizSidebar = ({
       >
         <ChartIcon className="text-base" />
       </button>
+
+      {/* Button for changing the display mode to table */}
       <button
         className="h-8 w-8 rounded-t-lg bg-slate-700 bg-opacity-50 pl-2 text-center text-2xl hover:bg-opacity-70 lg:rounded-l-none lg:rounded-r-lg"
         title="View as Table"
@@ -37,6 +41,8 @@ const VizSidebar = ({
       >
         <TableIcon className="text-base" />
       </button>
+
+      {/* Button for downloading project files */}
       <button
         className="h-8 w-8 rounded-t-lg bg-slate-700 bg-opacity-50 pl-2 text-center text-2xl hover:bg-opacity-70 lg:rounded-l-none lg:rounded-r-lg"
         title="Download Project Files as Zip"

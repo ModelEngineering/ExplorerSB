@@ -2,6 +2,7 @@ import { MultiSelect } from "react-multi-select-component";
 import Multiselect from "multiselect-react-dropdown";
 import {BiChevronDown as ChevronDown} from "react-icons/bi";
 
+// This component displays visualization settings, including a file selector and a variable selector
 const VizSettings = ({
   onChange,
   allVariables,

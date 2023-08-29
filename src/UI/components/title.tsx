@@ -7,8 +7,15 @@ const Title = ({
 }) => {
   return (
     <section id="title" className="glassmorphism flex flex-col p-4 w-full">
-      <h2 id="title-text" className="font-semibold">Title: {title !== null ? title : "N/A"}</h2>
-      <h3 id="subtitle-text" className="italic break-words font-normal">Project ID: {proj_id}</h3>
+      {/* Display the title */}
+      <h2 id="title-text" className="font-semibold">
+        Title: {title !== null ? title : "N/A"}
+      </h2>
+
+      {/* Display the project ID */}
+      <h3 id="subtitle-text" className="italic break-words font-normal">
+        Project ID: {proj_id}
+      </h3>
     </section>
   );
 };

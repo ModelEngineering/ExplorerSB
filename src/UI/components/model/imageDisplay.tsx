@@ -1,31 +1,29 @@
 import Image from "next/image";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
-// The ImageDisplay component is used to display the image
-// It uses the react-zoom-pan-pinch library to allow the user to zoom in and out of the image
-// It takes in the file name and the binary blob data of the image as props
-// It renders the image and allows the user to zoom in and out of the image
-// It also allows the user to double click to reset the zoom
-
+// Define the ImageDisplay component
 const ImageDisplay = ({
   fileName,
   data,
 }: {
-  fileName: string;
-  data: string;
+  fileName: string; // The name of the image file
+  data: string; // The binary blob data of the image
 }) => {
   return (
+    // Wrap the image with TransformWrapper for zooming and panning functionality
     <TransformWrapper
-      centerZoomedOut={true}
+      centerZoomedOut={true} // Center the image when zoomed out
       doubleClick={{
-        mode: 'reset'
+        mode: 'reset' // Allow double click to reset the zoom
       }}
     >
-      <TransformComponent wrapperStyle={{width: "100%", height: "100%"}} contentStyle={{width: "100%", height: "100%"}}>
-        <Image className="w-full h-full object-contain" src={data} alt={fileName} width={10} height={10}/>
+      {/* Apply zooming and panning to the Image component */}
+      <TransformComponent wrapperStyle={{ width: "100%", height: "100%" }} contentStyle={{ width: "100%", height: "100%" }}>
+        {/* Display the image using the Next.js Image component */}
+        <Image className="w-full h-full object-contain" src={data} alt={fileName} width={10} height={10} />
       </TransformComponent>
     </TransformWrapper>
   );
 };
 
-export default ImageDisplay;
+export default ImageDisplay; // Export the ImageDisplay component

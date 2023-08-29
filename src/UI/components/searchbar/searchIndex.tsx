@@ -1,9 +1,10 @@
 import { useMemo, useEffect, useState } from "react";
 import lunr from "lunr";
-// allows us to store the data fields we want the search to return
+
+// Define an object to store data fields for search results
 const store: Record<string, Context> = {};
 
-// the lunr index, which indexes the data and allows us to search through it
+// Create a lunr index for searching data
 const createIndex = (data: Context[]) =>
   lunr(function () {
     this.field("title");
@@ -12,13 +13,15 @@ const createIndex = (data: Context[]) =>
     this.ref("runid");
     this.metadataWhitelist = ["position"];
 
+    // Add data entries to the index
     for (let entry = 0; entry < data.length; entry++) {
       let dataResult = data[entry] as Context;
-      store[dataResult.runid] = dataResult;
+      store[dataResult.runid] = dataResult; // Store the data for reference
       this.add(dataResult);
     }
   });
 
+// Define the SearchIndex component
 const SearchIndex = ({
   query,
   setResult,
@@ -27,6 +30,8 @@ const SearchIndex = ({
   setResult: Function;
 }) => {
   const [data, setData] = useState<Context[]>([]);
+
+  // Fetch context data on component mount
   useEffect(() => {
     const getDirectory = async () => {
       const response = await fetch(`/context.json`)
@@ -39,15 +44,23 @@ const SearchIndex = ({
       setData(context);
     });
   }, []);
+
+  // Create a lunr index when the data changes
   const index = useMemo(() => createIndex(data), [data]);
+
+  // Perform search and generate search results
   useEffect(() => {
     if (query === "") {
       setResult([]);
       return;
     }
+
     let results;
     try {
+      // Search the index for results
       results = index.search(query);
+
+      // Filter and process results
       setResult(
         results
           .filter((result) => result.score > 0.25)
@@ -60,6 +73,8 @@ const SearchIndex = ({
             const index = position.position[0][0];
             let length = position.position[0][1];
             let contextValue = contextWithSnippets[contextKey];
+
+            // Add highlight markers to the snippet
             if (contextValue === null) {
               return "";
             }
@@ -71,6 +86,8 @@ const SearchIndex = ({
               "**" +
               contextValue.slice(index + length);
             length += 2;
+
+            // Extract a snippet with context around the match
             const text = contextValue.substring(index - 40, index + length + 40);
             const startIndex = index - 40;
             const endIndex = index + length + 40;
@@ -93,7 +110,7 @@ const SearchIndex = ({
     }
   }, [query, index, setResult]);
 
-  return <></>;
+  return <></>; // Return an empty fragment
 };
 
-export default SearchIndex;
+export default SearchIndex; // Export the SearchIndex component

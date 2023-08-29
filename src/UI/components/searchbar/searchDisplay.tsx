@@ -1,17 +1,19 @@
 import Link from "next/link";
 
+// Define the SearchDisplay component
 const SearchDisplay = ({
   display,
   query,
   results,
 }: {
-  display: boolean;
-  query: string;
-  results: ContextWithSnippets[];
+  display: boolean; // Display flag for the search results container
+  query: string; // Current search query
+  results: ContextWithSnippets[]; // List of search results with snippets
 }) => {
   if (query === "") {
-    return <></>;
+    return <></>; // Don't display results if the query is empty
   }
+
   return (
     <div
       id="search-result-container"
@@ -20,12 +22,14 @@ const SearchDisplay = ({
         (display ? " glassmorphism" : " hidden")
       }
     >
-      {results.length != 0 ? (
+      {results.length !== 0 ? ( // Check if there are search results
         results.map((result, index) => {
           let text = null;
           if (result.snippet !== undefined) {
             text = result.snippet.split("**", 3);
           }
+
+          // Generate a link to the model page or a placeholder
           return (
             <Link
               key={result.runid !== undefined ? result.runid : 0}
@@ -54,6 +58,7 @@ const SearchDisplay = ({
           );
         })
       ) : (
+        // Display a "No Results Found" message if there are no results
         <button className="background-transparent z-10 w-full rounded-none border-0 border-t-2 border-t-slate-500 p-3 lg:p-4 text-left text-black hover:bg-sky-200 hover:border-t-2 focus:bg-sky-200 focus:border-t-2 [&>p]:overflow-hidden [&>p]:text-ellipsis [&>p]:whitespace-nowrap"
         style={{ borderTop: "0px" }}>
           <p className="font-bold">No Results Found</p>
@@ -63,4 +68,4 @@ const SearchDisplay = ({
   );
 };
 
-export default SearchDisplay;
+export default SearchDisplay; // Export the SearchDisplay component

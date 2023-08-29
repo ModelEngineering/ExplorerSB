@@ -1,3 +1,4 @@
+// This component displays the footer of the application
 function Footer() {
   return (
     <div className="flex justify-center">
@@ -5,4 +6,5 @@ function Footer() {
     </div>
   );
 }
+
 export default Footer;

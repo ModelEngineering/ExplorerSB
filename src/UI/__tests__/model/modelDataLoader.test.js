@@ -10,7 +10,7 @@ test('fetches and sets model files correctly', async () => {
     json: jest.fn().mockResolvedValueOnce([
       { file: 'file1.png' },
       { file: 'file2.jpg' },
-      { file: 'file3.txt' }, // Not supported
+      { file: 'file3.txx' }, // Not supported
     ]),
   });
 
