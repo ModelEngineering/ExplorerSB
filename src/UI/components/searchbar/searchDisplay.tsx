@@ -25,6 +25,9 @@ const SearchDisplay = ({
       {results.length !== 0 ? ( // Check if there are search results
         results.map((result, index) => {
           let text = null;
+          // the result snippet is a string with the format:
+          // <text>**<bold text>**<text>
+          // where the bold text is the matching query
           if (result.snippet !== undefined) {
             text = result.snippet.split("**", 3);
           }
@@ -41,9 +44,11 @@ const SearchDisplay = ({
                 className="background-transparent z-10 w-full rounded-none border-0 border-t-2 border-t-slate-500 p-3 lg:p-4 text-left text-black hover:bg-sky-200 hover:border-t-2 focus:bg-sky-200 focus:border-t-2 [&>p]:overflow-hidden [&>p]:text-ellipsis [&>p]:whitespace-nowrap"
                 style={index === 0 ? { borderTop: "0px" } : {}}
               >
+                {/* Display the model title and snippet */}
                 <p className="font-bold">
                   {result.title !== null ? result.title : "<Title Missing>"}
                 </p>
+                {/* Display the model snippet */}
                 {text !== null ? (
                   <p className="italic text-gray-500">
                     {text[0]}{" "}
