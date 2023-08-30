@@ -26,7 +26,7 @@ const Viewer = ({ runid }: { runid: string }) => {
       className="glassmorphism flex max-h-[500px] grow-0 flex-col gap-2 p-4 lg:h-[500px] lg:w-1/2"
     >
       {/* Display the model title */}
-      <h2>Model</h2>
+      <h2>Viewer</h2>
 
       {/* Load the model data */}
       <ModelDataLoader
