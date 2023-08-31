@@ -33,6 +33,8 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 This project is deployed on Cloudflare Pages. 
 
+The credentials associated with the Cloudflare Pages account uses the email hsaurolab@gmail.com and access to other users can be granted from that account.
+
 Info about deploying Next.js apps on Cloudflare pages can be found on [Cloudflare Docs](https://developers.cloudflare.com/pages/framework-guides/deploy-a-nextjs-site/).
 
 ## Tailwind CSS
@@ -54,6 +56,12 @@ npm run test
 ```
 
 Learn more about Jest with [Jest's documentation](https://jestjs.io/docs/getting-started).
+
+## Analytics
+
+Google Analytics is used to track user engagement for this project. The associated email is hsaurolab@gmail.com.
+
+The Cloudflare dashboard also offers analytics for the website if desired.
 
 ## Contributors
 
