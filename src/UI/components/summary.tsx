@@ -54,7 +54,7 @@ const Summary = ({ context }: { context: Context }) => {
         )}
         <a
           className="flex"
-          href={`//api.biosimulations.org/projects/${proj_id}`}
+          href={`//biosimulations.org/projects/${proj_id}`}
         >
           Link to BioSimulations <LinkIcon className="text-base" />
         </a>
