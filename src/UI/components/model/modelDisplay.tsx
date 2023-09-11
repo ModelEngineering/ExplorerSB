@@ -4,7 +4,7 @@ import ImageDisplay from "./imageDisplay";
 // Define the supported file types for code files
 const SUPPORTED_FILE_TYPES = [".ant", ".m", ".py", ".jl", ".r", ".txt"];
 // Define the supported image file types
-const SUPPORTED_IMAGE_TYPES = [".png", ".jpg"];
+const SUPPORTED_IMAGE_TYPES = [".png", ".jpg", ".svg"];
 
 // Define the ModelDisplay component
 const ModelDisplay = ({

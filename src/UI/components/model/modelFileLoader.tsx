@@ -40,7 +40,7 @@ const ModelFileLoader = ({
     };
 
     // Determine whether the file is an image or not
-    if (fileName.endsWith(".png") || fileName.endsWith(".jpg")) {
+    if (fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".svg")) {
       fetchImage(); // Fetch and display image files
     } else {
       getFile(); // Fetch and display other types of files
