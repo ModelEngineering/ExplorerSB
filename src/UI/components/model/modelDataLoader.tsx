@@ -26,7 +26,7 @@ const ModelDataLoader = ({
       let modelFiles: string[] = [];
       dirData.forEach(({ file }) => {
         for (const fileType of SUPPORTED_FILE_TYPES) {
-          if (file.endsWith(fileType)) {
+          if (file.toLowerCase().endsWith(fileType)) {
             modelFiles.push(file);
             break;
           }
