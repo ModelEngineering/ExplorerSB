@@ -1,5 +1,5 @@
 import { useState } from "react";
-import SyntaxHighlighter from "react-syntax-highlighter";
+import { Prism as SyntaxHighlighter} from "react-syntax-highlighter";
 import { vscDarkPlus as stylesheet } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { BiCopy as CopyIcon, BiCheck as CheckIcon } from "react-icons/bi";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -9,7 +9,7 @@ import { Roboto_Mono } from "next/font/google";
 const roboto_mono = Roboto_Mono({ subsets: ["latin"] });
 
 // Define the CodeBlock component
-const CodeBlock = ({ codeString }: { codeString: string }) => {
+const CodeBlock = ({ fileName, codeString }: { fileName: string, codeString: string }) => {
   const [copied, setCopied] = useState(false);
 
   // Function to handle copying to clipboard
@@ -32,7 +32,7 @@ const CodeBlock = ({ codeString }: { codeString: string }) => {
       {/* SyntaxHighlighter component for code display */}
       <SyntaxHighlighter
         codeTagProps={{ className: roboto_mono.className }} // Apply the font to the code
-        language="markup" // Specify the code language (markup syntax highlighting)
+        language={fileName.toLowerCase().endsWith(".py") ? "python" : "text"} // Specify code language - text or python for .py files
         style={stylesheet} // Apply the selected code highlighting style
         showLineNumbers={true} // Show line numbers
         customStyle={{ margin: "0" }} // Apply custom styling to the syntax highlighter

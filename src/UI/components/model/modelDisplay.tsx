@@ -21,7 +21,7 @@ const ModelDisplay = ({
       {SUPPORTED_IMAGE_TYPES.some((value) => fileName.endsWith(value)) && data !== null ? (<ImageDisplay fileName={fileName} data={data}/>) : (<></>)}
 
       {/* Render the CodeBlock component if the file is a supported code type */}
-      {SUPPORTED_FILE_TYPES.some((value) => fileName.endsWith(value)) && data !== null ? (<CodeBlock codeString={data}/>) : (<></>)}
+      {SUPPORTED_FILE_TYPES.some((value) => fileName.endsWith(value)) && data !== null ? (<CodeBlock fileName={fileName} codeString={data}/>) : (<></>)}
     </div>
   );
 };
