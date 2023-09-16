@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 // Define the supported file types for the model files
-const SUPPORTED_FILE_TYPES = [".png", ".jpg", ".ant", ".m", ".py", ".jl", ".r", ".txt"];
+const SUPPORTED_FILE_TYPES = [".png", ".svg", ".jpg", ".ant", ".m", ".py", ".jl", ".r", ".txt"];
 
 // Define the ModelDataLoader component
 const ModelDataLoader = ({
@@ -26,7 +26,7 @@ const ModelDataLoader = ({
       let modelFiles: string[] = [];
       dirData.forEach(({ file }) => {
         for (const fileType of SUPPORTED_FILE_TYPES) {
-          if (file.endsWith(fileType)) {
+          if (file.toLowerCase().endsWith(fileType)) {
             modelFiles.push(file);
             break;
           }

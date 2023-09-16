@@ -33,7 +33,7 @@ const VizDataLoader = ({
     getDirectory().then((dirData: { file: string }[]) => {
       let csvs: string[] = [];
       dirData.forEach(({ file }) => {
-        if (file.endsWith(".csv")) {
+        if (file.toLowerCase().endsWith(".csv")) {
           csvs.push(file);
         }
       });
@@ -64,7 +64,7 @@ const VizDataLoader = ({
       return response;
     };
     // If the fileName is a CSV file, extract the data and set it in the parent component's state using the setData, setXVariable, setAllVariables, and setDisplayedVariables functions
-    if (fileName !== undefined && fileName.endsWith(".csv")) {
+    if (fileName !== undefined && fileName.toLowerCase().endsWith(".csv")) {
       getDataset().then((CSVdata) => {
         if (CSVdata === undefined) {
           return;
