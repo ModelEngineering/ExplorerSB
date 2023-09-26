@@ -47,7 +47,7 @@ const Viewer = ({ runid }: { runid: string }) => {
       />
 
       {/* Display the model file dropdown */}
-      <Multiselect
+      <Multiselect className="z-20"
         data-testid="model-select"
         options={modelFiles} // Options to display in the dropdown
         selectedValues={displayedModelFile} // Preselected value to persist in dropdown
@@ -63,6 +63,7 @@ const Viewer = ({ runid }: { runid: string }) => {
         fileName={
           displayedModelFile.length === 0 ? "" : displayedModelFile[0].name
         }
+        runID={runid}
         data={file}
       />
     </div>

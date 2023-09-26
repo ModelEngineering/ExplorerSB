@@ -1,5 +1,6 @@
 import CodeBlock from "./codeBlock";
 import ImageDisplay from "./imageDisplay";
+import PdfDisplay from "./pdfDisplay";
 
 // Define the supported file types for code files
 const SUPPORTED_FILE_TYPES = [".ant", ".m", ".py", ".jl", ".r", ".txt"];
@@ -9,9 +10,11 @@ const SUPPORTED_IMAGE_TYPES = [".png", ".jpg", ".svg"];
 // Define the ModelDisplay component
 const ModelDisplay = ({
   fileName,
+  runID,
   data
 }: {
   fileName: string; // The name of the model file
+  runID: string; // The runID the file is associated with
   data: string; // The binary blob data of the file
 }) => {
   return (
@@ -22,6 +25,10 @@ const ModelDisplay = ({
 
       {/* Render the CodeBlock component if the file is a supported code type */}
       {SUPPORTED_FILE_TYPES.some((value) => fileName.toLowerCase().endsWith(value)) && data !== null ? (<CodeBlock fileName={fileName} codeString={data}/>) : (<></>)}
+      
+      {/* Render the PdfDisplay component if the file is a pdf file */}
+      {fileName.toLowerCase().endsWith(".pdf") && data !== null ? (<PdfDisplay runID={runID} fileName={fileName}/>) : (<></>)}
+    
     </div>
   );
 };

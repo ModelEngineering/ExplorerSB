@@ -43,8 +43,8 @@ const ModelFileLoader = ({
     if (fileName.toLowerCase().endsWith(".png") || fileName.toLowerCase().endsWith(".jpg") 
           || fileName.toLowerCase().endsWith(".svg")) {
       fetchImage(); // Fetch and display image files
-    } else {
-      getFile(); // Fetch and display other types of files
+    } else if (!fileName.toLowerCase().endsWith(".pdf")) {
+      getFile(); // Fetch and display other types of files (except pdf files)
     }
   }, [runid, fileName, setFile]); // Effect will run when runid, fileName, or setFile changes
 

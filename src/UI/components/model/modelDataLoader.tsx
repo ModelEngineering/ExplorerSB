@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 // Define the supported file types for the model files
-const SUPPORTED_FILE_TYPES = [".png", ".svg", ".jpg", ".ant", ".m", ".py", ".jl", ".r", ".txt"];
+const SUPPORTED_FILE_TYPES = [".png", ".svg", ".jpg", ".ant", ".m", ".py", ".jl", ".r", ".txt", ".pdf"];
 
 // Define the ModelDataLoader component
 const ModelDataLoader = ({
