@@ -57,6 +57,11 @@ npm run test
 
 Learn more about Jest with [Jest's documentation](https://jestjs.io/docs/getting-started).
 
+## Status
+
+Current Features - PDF viewer (pdfViewer component)
+Testing in progress ()
+
 ## Analytics
 
 Google Analytics is used to track user engagement for this project. The associated email is hsaurolab@gmail.com.
@@ -66,3 +71,4 @@ The Cloudflare dashboard also offers analytics for the website if desired.
 ## Contributors
 
 - [Tony Yuan](https://jhyn.dev)
+- Tanya Naveen
