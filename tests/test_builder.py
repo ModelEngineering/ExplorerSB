@@ -22,6 +22,7 @@ REMOVE_FILES = [CSV_CONTEXT_FILE, JSON_CONTEXT_FILE]
 #############################
 class TestBuilder(unittest.TestCase):
 
+    # Runs everytime I run a test
     def setUp(self):
         self.builder =  Builder(project_specification_csv=TEST_PROJECTS_CSV,
                                 stage_dir=STAGE_DIR, 
