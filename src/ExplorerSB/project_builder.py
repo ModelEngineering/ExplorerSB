@@ -77,6 +77,8 @@ class ProjectBuilder(ProjectBase):
         util.trace("Acquired fields from summary parser", 2)
         # Construct and populate the staging directory
         _ = self._makeStagingData()  # Download the output files
+        # TODO: Added SBML file here so that not eliminated in makeZipArchive with xml files
+        self._getSBMLFile()
         util.trace("Acquired staging data", 2)
         output_dir_path = self._downloadOutput()  # Download the output files
         if output_dir_path is None:
@@ -259,6 +261,30 @@ class ProjectBuilder(ProjectBase):
             return os.path.join(project_stage_dir, ffile)
         else:
             return None
+    
+    def _getSBMLFile(self):
+        # Assumptions: with a path to SBML file, can go to link and download
+        # See if there is an SBML file
+        paths = self.getFilePaths(self.stage_dir)
+        sbml_path = None
+        for path in paths:
+            splits = os.path.splitext(path)
+            if (splits[1] == ".xml") and ("manifest" not in path):
+                with open(path, "r") as fd:
+                    lines = fd.readlines()
+                model = "\n".join(lines)
+                if not "sbml" in model:
+                    continue
+                sbml_path = path
+                break
+        # Now copy the file at the url
+        if sbml_path is not None:
+            try:
+                project_dir = self.getProjectDir(self.stage_dir, is_create=True)
+                path = self._copyUrlFile(smbl_path, project_dir)
+            except:
+                pass
+
     
     def _makeReadableModel(self, is_write:bool=True, is_replace:bool=False)->str:
         """

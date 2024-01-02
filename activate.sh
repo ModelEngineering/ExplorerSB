@@ -1,3 +1,4 @@
 #!/bin/bash
-export PYTHONPATH=`pwd`:$PYTHONPATH
-source xsb/bin/activate
+source rep/bin/activate
+PYTHONPATH=/Users/juliep/Documents/SauroLab/ExplorerSB
+export PYTHONPATH
