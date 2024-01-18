@@ -7,12 +7,14 @@ import 'react-pdf/dist/esm/Page/TextLayer.css';
 import { TransformWrapper, TransformComponent, useControls } from "react-zoom-pan-pinch";
 import { BiZoomIn as ZoomIn, BiZoomOut as ZoomOut, BiReset as Reset } from "react-icons/bi";
 
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+
 // import worker
-import "pdfjs-dist/build/pdf.worker.entry";
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.js',
-  import.meta.url,
-).toString();
+// import "pdfjs-dist/build/pdf.worker.entry";
+// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+//   'pdfjs-dist/build/pdf.worker.min.js',
+//   import.meta.url,
+// ).toString();
 
 // define union type for pdf files
 type PDFFile = File | null;

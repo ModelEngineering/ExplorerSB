@@ -60,7 +60,7 @@ Learn more about Jest with [Jest's documentation](https://jestjs.io/docs/getting
 ## Status
 
 Current Features - PDF viewer (pdfViewer component)
-Testing in progress ()
+Testing in progress
 
 ## Analytics
 
